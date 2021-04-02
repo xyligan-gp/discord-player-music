@@ -1,7 +1,7 @@
 const { Client, Collection } = require('discord.js');
 const { readdir } = require('fs');
-const client = new Client();
 const config = require('./config.json');
+const client = new Client();
 const commands = new Collection();
 
 readdir('./events/', (err, files) => {

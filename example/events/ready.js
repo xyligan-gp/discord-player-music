@@ -1,7 +1,7 @@
-const { Client, Collection } = require('discord.js'), { readdir } = require('fs');
+const { Client, Collection } = require('discord.js');
+const { readdir } = require('fs');
 
 /**
- * 
  * @param {Client} bot 
  * @param {Collection} commands 
 */
