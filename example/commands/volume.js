@@ -18,7 +18,7 @@ module.exports.run = async (bot, message, args, player) => {
         return message.reply(`volume playback changed on **${data.volume}**`);
     })
     .catch(err => {
-        return message.channel.send(err.stack);
+        return message.reply(err.message);
     })
 }
 

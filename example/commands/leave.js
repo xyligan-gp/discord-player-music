@@ -10,10 +10,10 @@ const MusicPlayer = new (require('discord-player-music'))(new Client());
 module.exports.run = async (bot, message, args, player) => {
     player.leaveVoiceChannel(message.member)
     .then(data => {
-        return message.reply('bot leaved from the voice channel!');
+        return message.reply(`bot leaved from the voice channel **${data.voiceChannel.name}**`);
     })
     .catch(err => {
-        return message.channel.send(err.stack);
+        return message.reply(err.message);
     })
 }
 

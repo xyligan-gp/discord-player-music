@@ -12,10 +12,10 @@ module.exports.run = async (bot, message, args, player) => {
 
     player.getCurrentSongInfo(message.guild)
     .then(data => {
-        return message.channel.send(`Song Name: **${data.title}**\nSong URL: **${data.url}**`);
+        return message.channel.send(`Song Name: **${data.title}**\nSong URL: **${data.url}**\nSong Duration: **${data.duration.hours}:${data.duration.minutes}:${data.duration.seconds}**`);
     })
     .catch(err => {
-        return message.channel.send(err.stack);
+        return message.reply(err.message);
     })
 }
 

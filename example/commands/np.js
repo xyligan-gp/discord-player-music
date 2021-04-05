@@ -9,11 +9,25 @@ const MusicPlayer = new (require('discord-player-music'))(new Client());
 */
 module.exports.run = async (bot, message, args, player) => {
     player.createProgressBar(message.guild)
-    .then(data => {
-        return message.channel.send(new MessageEmbed().setColor('RANDOM').setDescription(data))
+    .then(progress => {
+        message.channel.send(progress)
+        player.getCurrentSongInfo(message.guild)
+        .then(song => {
+            let nowPlaying = new MessageEmbed()
+
+            .setColor('RANDOM')
+            .setTitle(':musical_note: | Info about current song!')
+            .setThumbnail(song.thumbnail)
+            .setDescription(`Song Name: **${song.title}**\nSong URL: **${song.url}**\nSong Duration: **${song.duration.hours}:${song.duration.minutes}:${song.duration.seconds}**\n\nProgress: ${progress}`)
+
+            return message.channel.send(nowPlaying);
+        })
+        .catch(err => {
+            return message.reply(err.message);
+        })
     })
     .catch(err => {
-        return message.channel.send(err.stack);
+        return message.reply(err.message);
     })
 }
 

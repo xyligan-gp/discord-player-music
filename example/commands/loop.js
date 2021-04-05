@@ -12,10 +12,10 @@ module.exports.run = async (bot, message, args, player) => {
 
     player.setLoopSong(message.guild)
     .then(data => {
-        return message.reply(`repeat mode current song **${data ? 'Enabled' : 'Disabled'}**`);
+        return message.reply(`repeat mode current song **${data.status ? 'Enabled' : 'Disabled'}**`);
     })
     .catch(err => {
-        return message.channel.send(err.stack);
+        return message.reply(err.message);
     })
 }
 

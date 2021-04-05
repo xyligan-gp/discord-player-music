@@ -20,7 +20,7 @@ module.exports.run = async (bot, message, args, player) => {
         return message.channel.send(data.map(video => `**[${video.index}]** - ${video.title}`).join('\n'));
     })
     .catch(err => {
-        return message.channel.send(err.stack);
+        return message.reply(err.message);
     })
 }
 

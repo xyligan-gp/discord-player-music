@@ -15,7 +15,7 @@ module.exports.run = async (bot, message, args, player) => {
         return message.reply('Song skipped successfully!');
     })
     .catch(err => {
-        return message.channel.send(err.stack);
+        return message.reply(err.message);
     })
 }
 

@@ -1,4 +1,4 @@
-const { Client, Collection } = require('discord.js');
+const { Client, Collection, MessageEmbed } = require('discord.js');
 const config = require('../config.json');
 const prefix = config.prefix;
 
@@ -21,18 +21,34 @@ module.exports.on = async (bot, commands) => {
     })
 
     player.on('playingSong', data => {
-        data.textChannel.send(`Song is playing!\n\nSong Name: ${data.songs[0].title}\nSong Url: ${data.songs[0].url}`);
+        let song = data.songs[0];
+
+        let nowPlaying = new MessageEmbed()
+
+        .setColor('RANDOM')
+        .setTitle(':musical_note: | Song is playing!')
+        .setThumbnail(song.thumbnail)
+        .setDescription(`Song Name: **${song.title}**\nSong URL: **${song.url}**\nSong Duration: **${song.duration.hours}:${song.duration.minutes}:${song.duration.seconds}**`)
+
+        data.textChannel.send(nowPlaying);
+    })
+
+    player.on('songAdded', song => {
+        let nowPlaying = new MessageEmbed()
+
+        .setColor('RANDOM')
+        .setTitle(':musical_note: | A song has been added to the queue!')
+        .setThumbnail(song.thumbnail)
+        .setDescription(`Song Name: **${song.title}**\nSong URL: **${song.url}**\nSong Duration: **${song.duration.hours}:${song.duration.minutes}:${song.duration.seconds}**`)
+
+        song.textChannel.send(nowPlaying);
     })
 
     player.on('queueEnded', data => {
-        data.textChannel.send('Queue ended!');
+        data.textChannel.send(new MessageEmbed().setColor('RANDOM').setDescription(`Server queue ended!`));
     })
 
-    player.on('songAdded', data => {
-        data.textChannel.send(`A song has been added to the queue!\n\nSong Name: ${data.title}\nSong Url: ${data.url}`);
-    })
-
-    player.on('playerError', error => {
+    player.on('playerError', err => {
         console.log(err);
     })
 }

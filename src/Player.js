@@ -9,7 +9,7 @@ module.exports = class MusicPlayer extends EventEmitter {
     constructor(client) {
         super();
 
-        if (!client) return new MusicPlayerError('You have not specified a bot client!');
+        if (!client) return new MusicPlayerError(`You have not specified a bot client!`);
 
         /**
          * Discord Client
@@ -36,7 +36,7 @@ module.exports = class MusicPlayer extends EventEmitter {
      * Method for videos playback
      * @param {Guild} guild Discord Guild 
      * @param {Object} song Song Object 
-     * @returns {Event | Error} Event | Error
+     * @returns {Promise<Event>} Module Event
     */
     play(guild, song) {
         return new Promise(async (resolve, reject) => {
@@ -50,37 +50,37 @@ module.exports = class MusicPlayer extends EventEmitter {
             }
 
             const dispatcher = serverQueue.connection
-                .play(ytdl(serverQueue.songs[0].url))
-                .on("finish", () => {
-                    if (serverQueue.songs.length < 1) return this.emit('queueEnded', serverQueue);
+            .play(ytdl(serverQueue.songs[0].url, { quality: 'highestaudio', filter: 'audioonly', highWaterMark: 1 << 25 }))
+            .on("finish", () => {
+                if (serverQueue.songs.length < 1) return this.emit('queueEnded', serverQueue);
 
-                    if (serverQueue.loop) {
-                        let lastsong = serverQueue.songs.shift();
+                if (serverQueue.loop) {
+                    let lastsong = serverQueue.songs.shift();
 
-                        serverQueue.songs.push(lastsong);
-                        this.play(guild, serverQueue.songs[0]);
+                    serverQueue.songs.push(lastsong);
+                    this.play(guild, serverQueue.songs[0]);
 
-                        resolve(this.emit('playingSong', serverQueue));
+                    resolve(this.emit('playingSong', serverQueue));
+                } else {
+                    serverQueue.songs.shift();
+                    this.play(guild, serverQueue.songs[0]);
+
+                    if (serverQueue.songs.length < 1) {
+                        serverQueue.voiceChannel.leave();
+                        this.queue.delete(guild.id);
+
+                        resolve(this.emit('queueEnded', serverQueue));
                     } else {
-                        serverQueue.songs.shift();
-                        this.play(guild, serverQueue.songs[0]);
-
-                        if (serverQueue.songs.length < 1) {
-                            serverQueue.voiceChannel.leave();
-                            this.queue.delete(guild.id);
-
-                            resolve(this.emit('queueEnded', serverQueue));
-                        } else {
-                            resolve(this.emit('playingSong', serverQueue));
-                        }
+                        resolve(this.emit('playingSong', serverQueue));
                     }
-                })
-                .on("error", error => {
-                    serverQueue.voiceChannel.leave();
-                    this.queue.delete(guild.id);
-                    reject(this.emit('playerError', error));
-                });
-            dispatcher.setVolumeLogarithmic(serverQueue.volume / 5);
+                }
+            })
+            .on("error", error => {
+                serverQueue.voiceChannel.leave();
+                this.queue.delete(guild.id);
+                resolve(this.emit('playerError', error));
+            });
+            dispatcher.setVolumeLogarithmic(serverQueue.volume);
         })
     }
 
@@ -89,19 +89,19 @@ module.exports = class MusicPlayer extends EventEmitter {
      * @param {GuildMember} member Discord Guild Member
      * @param {String} searchString Search String
      * @param {Message} message Discord Message
-     * @returns {Promise<Array | Error>} Array | Error
+     * @returns {Promise<Array>} Array
     */
     searchVideo(member, searchString, message) {
         return new Promise(async (resolve, reject) => {
             let song = {}
 
-           if (!searchString) throw new MusicPlayerError('Search String is not found!');
+            if (!searchString) return reject(new MusicPlayerError(`No search request found!`));
 
             const voiceChannel = member.voice.channel;
-            if (!voiceChannel) throw new MusicPlayerError('Voice channel not found!');
+            if (!voiceChannel) return new reject(MusicPlayerError(`User or voice channel is not found!`));
 
             const permissions = voiceChannel.permissionsFor(this.client.user);
-            if (!permissions.has('CONNECT') || !permissions.has('SPEAK')) throw new MusicPlayerError(`Don't have permissions CONNECT | SPEAK!`);
+            if (!permissions.has('CONNECT') || !permissions.has('SPEAK')) return reject(new MusicPlayerError(`Your client missing permissions CONNECT | SPEAK for connection to voice channel!`));
 
             try {
                 if (searchString.includes('https://')) {
@@ -153,7 +153,7 @@ module.exports = class MusicPlayer extends EventEmitter {
                     return resolve(this.getSongIndex(tracksArray, message));
                 }
             } catch (error) {
-                reject(error);
+                resolve(this.emit('playerError', error));
             }
         })
     }
@@ -162,7 +162,7 @@ module.exports = class MusicPlayer extends EventEmitter {
      * Method for getting song index
      * @param {Array} tracksArray Tracks Array
      * @param {Message} message Discord Message
-     * @returns {Number | Error} Number | Error 
+     * @returns {Promise<Number>} Number 
     */
     getSongIndex(tracksArray, message) {
         return new Promise(async (resolve, reject) => {
@@ -173,13 +173,13 @@ module.exports = class MusicPlayer extends EventEmitter {
                 collector.on('collect', msg => {
                     if (!isNaN(msg.content)) {
                         let number = Math.floor(msg.content);
-                        if (number < 1 || number > 10) throw new MusicPlayerError('The specifie value is not suitable!');
+                        if (number < 1 || number > 10) return reject(new MusicPlayerError(`The specifie value is not valid! Min value: 1, Max value: 10`));
 
-                        collector.stop()
+                        collector.stop();
                         return resolve(this.addSong(number, message.guild, tracksArray, message.channel, message.member.voice.channel));
                     } else {
-                        collector.stop()
-                        throw new MusicPlayerError('The specifie value is not suitable!');
+                        collector.stop();
+                        return reject(new MusicPlayerError(`The specifie value is not valid! Min value: 1, Max value: 10`));
                     }
                 })
             } catch (error) {
@@ -195,7 +195,7 @@ module.exports = class MusicPlayer extends EventEmitter {
      * @param {Array} tracksArray Songs Array 
      * @param {TextChannel} textChannel Discord Text Channel 
      * @param {VoiceChannel} voiceChannel Discord Voice Channel 
-     * @returns {Event | Error} Event | Error
+     * @returns {Promise<Event>} Event
     */
     addSong(index, guild, tracksArray, textChannel, voiceChannel) {
         return new Promise(async (resolve, reject) => {
@@ -204,13 +204,21 @@ module.exports = class MusicPlayer extends EventEmitter {
                 let serverQueue = await this.queue.get(guild.id);
                 let songObject = tracksArray[index - 1];
 
+                let duration = this.formatNumbers([songObject.duration.hours, songObject.duration.minutes, songObject.duration.seconds]);
+                
+                songObject.duration = {
+                    hours: duration[0],
+                    minutes: duration[1],
+                    seconds: duration[2]
+                }
+
                 if (!serverQueue) {
                     const queueConstruct = {
                         textChannel: textChannel,
                         voiceChannel: voiceChannel,
                         connection: connection,
                         songs: [],
-                        volume: 2,
+                        volume: 1,
                         loop: false,
                         playing: true
                     };
@@ -223,7 +231,7 @@ module.exports = class MusicPlayer extends EventEmitter {
                 } else {
                     await serverQueue.songs.push(songObject);
 
-                    await resolve(this.emit('songAdded', songObject));
+                    return await resolve(this.emit('songAdded', songObject));
                 }
             } catch (error) {
                 reject(error);
@@ -234,25 +242,25 @@ module.exports = class MusicPlayer extends EventEmitter {
     /**
      * Method for skipping songs in the queue
      * @param {Guild} guild Discord Guild
-     * @returns {Promise<boolean | Error>} Boolean | Error
+     * @returns {Promise<object>} Object
     */
     skipSong(guild) {
         return new Promise(async (resolve, reject) => {
             try {
-                let queue = await this.queue.get(guild.id);
-                if (!queue) throw new MusicPlayerError('ServerQueue is not found!');
+                let serverQueue = await this.queue.get(guild.id);
+                if (!serverQueue) return reject(new MusicPlayerError(`Server queue not found!`));
 
-                if (queue.songs.length < 2) {
-                    queue.songs = [];
-                    queue.voiceChannel.leave();
+                if (serverQueue.songs.length < 2) {
+                    serverQueue.songs = [];
+                    serverQueue.voiceChannel.leave();
                     this.queue.delete(guild.id);
 
-                    resolve(true);
+                    resolve({ status: true, song: null });
                 }
 
-                queue.connection.dispatcher.end();
+                serverQueue.connection.dispatcher.end();
 
-                resolve(true);
+                resolve({ status: true, song: serverQueue.songs[0] });
             } catch (error) {
                 reject(error);
             }
@@ -262,15 +270,15 @@ module.exports = class MusicPlayer extends EventEmitter {
     /**
      * Method for getting a queue of server songs
      * @param {Guild} guild Discord Guild
-     * @returns {Promise<Array | Error>} Array | Error
+     * @returns {Promise<Array>} Array
     */
     getQueue(guild) {
         return new Promise(async (resolve, reject) => {
             try {
-                let queue = await this.queue.get(guild.id);
-                if (!queue) throw new MusicPlayerError('ServerQueue is not found!');
+                let serverQueue = await this.queue.get(guild.id);
+                if (!serverQueue) return reject(new MusicPlayerError(`Server queue not found!`));
 
-                return resolve(queue.songs);
+                return resolve(serverQueue.songs);
             } catch (error) {
                 reject(error);
             }
@@ -280,17 +288,17 @@ module.exports = class MusicPlayer extends EventEmitter {
     /**
      * Method for setting the current song to repet from the server queue
      * @param {Guild} guild Discord Guild
-     * @returns {Promise<boolean | Error>} Boolean | Error
+     * @returns {Promise<object>} Object
     */
     setLoopSong(guild) {
         return new Promise(async (resolve, reject) => {
             try {
-                let queue = await this.queue.get(guild.id);
-                if (!queue) throw new MusicPlayerError('ServerQueue is not found!');
+                let serverQueue = await this.queue.get(guild.id);
+                if (!serverQueue) return reject(new MusicPlayerError(`Server queue not found!`));
 
-                queue.loop = !queue.loop;
+                serverQueue.loop = !serverQueue.loop;
 
-                return resolve(queue.loop);
+                return resolve({ status: serverQueue.loop, song: serverQueue.songs[0] });
             } catch (error) {
                 reject(error);
             }
@@ -300,22 +308,23 @@ module.exports = class MusicPlayer extends EventEmitter {
     /**
      * Method for setting to repeat server queue songs
      * @param {Guild} guild Discord Guild
-     * @returns {Promise<boolean | Error>} Boolean | Error
+     * @returns {Promise<object>} Object
     */
     setLoopQueue(guild) {
         return new Promise(async (resolve, reject) => {
             try {
-                let queue = await this.queue.get(guild.id);
-                if (!queue) throw new MusicPlayerError('ServerQueue is not found!');
-                if (queue.songs.length < 2) {
-                    queue.loop = !queue.loop;
+                let serverQueue = await this.queue.get(guild.id);
+                if (!serverQueue) return reject(new MusicPlayerError(`Server queue not found!`));
 
-                    resolve(queue.loop);
+                if (serverQueue.songs.length < 2) {
+                    serverQueue.loop = !serverQueue.loop;
+
+                    resolve({ status: serverQueue.loop, songs: serverQueue.songs });
                 }else{
-                    queue.loop = !queue.loop;
-                    queue.connection.dispatcher.end();
+                    serverQueue.loop = !serverQueue.loop;
+                    serverQueue.connection.dispatcher.end();
 
-                    resolve(queue.loop);
+                    resolve({ status: serverQueue.loop, songs: null });
                 }
             } catch (error) {
                 reject(error);
@@ -326,13 +335,13 @@ module.exports = class MusicPlayer extends EventEmitter {
     /**
      * Method for ending playing a queue of songs
      * @param {Guild} guild Discord Guild 
-     * @returns {Promise<boolean | Error>} Boolean | Error
+     * @returns {Promise<boolean>} Boolean
     */
     stopPlaying(guild) {
         return new Promise(async (resolve, reject) => {
             try {
                 let serverQueue = await this.queue.get(guild.id);
-                if (!serverQueue) throw new MusicPlayerError('ServerQueue is not found!');
+                if (!serverQueue) return reject(new MusicPlayerError(`Server queue not found!`));
 
                 serverQueue.songs = [];
                 serverQueue.voiceChannel.leave();
@@ -348,13 +357,13 @@ module.exports = class MusicPlayer extends EventEmitter {
     /**
      * Method to pause song playback
      * @param {Guild} guild Discord Guild
-     * @returns {Promise<boolean | Error>} Boolean | Error
+     * @returns {Promise<boolean>} Boolean
     */
     pausePlaying(guild) {
         return new Promise(async (resolve, reject) => {
             try {
                 let serverQueue = await this.queue.get(guild.id);
-                if (!serverQueue) throw new MusicPlayerError('ServerQueue is not found!');
+                if (!serverQueue) return reject(new MusicPlayerError(`Server queue not found!`));
 
                 if (serverQueue && serverQueue.playing) {
                     serverQueue.playing = false;
@@ -370,13 +379,13 @@ module.exports = class MusicPlayer extends EventEmitter {
     /**
      * Method to restore playing songs
      * @param {Guild} guild Discord Guild
-     * @returns {Promise<boolean | Error>} Boolean | Error
+     * @returns {Promise<boolean>} Boolean
     */
     resumePlaying(guild) {
         return new Promise(async (resolve, reject) => {
             try {
                 let serverQueue = await this.queue.get(guild.id);
-                if (!serverQueue) throw new MusicPlayerError('ServerQueue is not found!');
+                if (!serverQueue) return reject(new MusicPlayerError(`Server queue not found!`));
 
                 if (serverQueue && !serverQueue.playing) {
                     serverQueue.playing = true;
@@ -393,20 +402,21 @@ module.exports = class MusicPlayer extends EventEmitter {
      * Method for changing the playback volume of songs
      * @param {Guild} guild 
      * @param {Number} volumeValue 
-     * @returns {Promise<object | Error>} Object | Error
+     * @returns {Promise<object>} Object
     */
     setVolume(guild, volumeValue) {
         return new Promise(async (resolve, reject) => {
             try {
                 let serverQueue = await this.queue.get(guild.id);
-                if (!serverQueue) throw new MusicPlayerError('ServerQueue is not found!');
+                if (!serverQueue) return reject(new MusicPlayerError(`Server queue not found!`));
 
-                if (isNaN(volumeValue)) throw new MusicPlayerError('Invalid data type for: volumeValue');
+                if (isNaN(volumeValue)) return reject(new MusicPlayerError(`The specified value is not a valid!`));
                 let volume = Number(volumeValue);
 
-                if (volume < 0.1) throw new MusicPlayerError('The specified value is invalid: volumeValue');
+                if (volume < 0.1) return reject(new MusicPlayerError(`The specified value is not a valid! Min value: 0.1`));
 
-                serverQueue.connection.dispatcher.setVolumeLogarithmic(volume / 5);
+                serverQueue.connection.dispatcher.setVolumeLogarithmic(volume);
+                serverQueue.volume = volume;
 
                 resolve({ status: true, volume: volume });
             } catch (error) {
@@ -418,13 +428,14 @@ module.exports = class MusicPlayer extends EventEmitter {
     /**
      * Method for getting information about the current song
      * @param {Guild} guild Discord Guild
-     * @returns {Promise<object | Error>} Object | Error
+     * @returns {Promise<object>} Object
     */
     getCurrentSongInfo(guild) {
         return new Promise(async (resolve, reject) => {
             try {
                 let serverQueue = await this.queue.get(guild.id);
-                if (!serverQueue) throw new MusicPlayerError('ServerQueue is not found!');
+                if (!serverQueue) return reject(new MusicPlayerError(`Server queue not found!`));
+
                 let songInfo = serverQueue.songs[0];
 
                 let songObject = ({
@@ -437,9 +448,9 @@ module.exports = class MusicPlayer extends EventEmitter {
                     voiceChannel: songInfo.voiceChannel,
 
                     duration: {
-                        hours: Number(songInfo.duration.hours),
-                        minutes: Number(songInfo.duration.minutes),
-                        seconds: Number(songInfo.duration.seconds)
+                        hours: songInfo.duration.hours,
+                        minutes: songInfo.duration.minutes,
+                        seconds: songInfo.duration.seconds
                     }
                 })
 
@@ -453,15 +464,18 @@ module.exports = class MusicPlayer extends EventEmitter {
     /**
      * Method for joining your bot in voice channel 
      * @param {GuildMember} member Discord Guild Member 
-     * @returns {Promise<boolean | Error>} Boolean | Error 
+     * @returns {Promise<object>} Object 
     */
     joinVoiceChannel(member) {
         return new Promise(async (resolve, reject) => {
             try {
-                if(!member.voice.channel) return new MusicPlayerError('User in voice channel not found!');
+                if(!member.voice.channel) return reject(new MusicPlayerError(`User or voice channel is not found!`));
+                
+                let usersCollection = member.voice.channel.members;
+                if(usersCollection.get(this.client.user.id)) return reject(new MusicPlayerError(`The client is already in the voice channel!`));
 
                 await member.voice.channel.join();
-                resolve(true);
+                resolve({ status: true, voiceChannel: member.voice.channel });
             }catch(error){
                 reject(error);
             }
@@ -471,15 +485,18 @@ module.exports = class MusicPlayer extends EventEmitter {
     /**
      * Method for left your bot the voice channel
      * @param {GuildMember} member Discord Guild Member 
-     * @returns {Promise<boolean | Error>} Boolean | Error
+     * @returns {Promise<object>} Object
     */
     leaveVoiceChannel(member) {
         return new Promise(async (resolve, reject) => {
             try {
-                if(!member.voice.channel) return new MusicPlayerError('User in voice channel not found!');
+                if(!member.voice.channel) return reject(new MusicPlayerError(`User or voice channel is not found!`));
+
+                let usersCollection = member.voice.channel.members.each(user => user.id === this.client.user.id);
+                if(!usersCollection.get(this.client.user.id)) return reject(new MusicPlayerError(`The client is not already in the voice channel!`));
 
                 await member.voice.channel.leave();
-                resolve(true);
+                resolve({ status: true, voiceChannel: member.voice.channel });
             }catch(error){
                 reject(error);
             }
@@ -489,26 +506,26 @@ module.exports = class MusicPlayer extends EventEmitter {
     /**
      * Method for creating progress bar
      * @param {Guild} guild Discord Guild
-     * @returns {Promise<string | Error>} String | Error
+     * @returns {Promise<string>} String
     */
     createProgressBar(guild) {
         return new Promise(async (resolve, reject) => {
             try {
                 let serverQueue = this.queue.get(guild.id);
-                if (!serverQueue) throw new MusicPlayerError('ServerQueue is not found!');
+                if (!serverQueue) return reject(new MusicPlayerError(`Server queue not found!`));
 
-                const seconds = Math.floor((serverQueue.songs[0].duration.hours * 3600) + (serverQueue.songs[0].duration.minutes * 60) + serverQueue.songs[0].duration.seconds);
+                const seconds = Math.floor((Number(serverQueue.songs[0].duration.hours) * 3600) + (Number(serverQueue.songs[0].duration.minutes) * 60) + Number(serverQueue.songs[0].duration.seconds));
                 const total = Math.floor(seconds * 1000);
                 const current = Math.floor(serverQueue.connection.dispatcher.streamTime);
-                const size = 10;
+                const size = 11;
                 const line = '▬';
                 const slider = '🔘';
 
-                if (!total) return (`🔘▬▬▬▬▬▬▬▬▬▬▬▬▬▬ [0%]`);
-                if (!current) return (`🔘▬▬▬▬▬▬▬▬▬▬▬▬▬▬ [0%]`);
-                if (isNaN(total)) return (`🔘▬▬▬▬▬▬▬▬▬▬▬▬▬▬ [0%]`);
-                if (isNaN(current)) return (`🔘▬▬▬▬▬▬▬▬▬▬▬▬▬▬ [0%]`);
-                if (isNaN(size)) return (`🔘▬▬▬▬▬▬▬▬▬▬▬▬▬▬ [0%]`);
+                if (!total) return (`🔘▬▬▬▬▬▬▬▬▬▬  [0%]`);
+                if (!current) return (`🔘▬▬▬▬▬▬▬▬▬▬  [0%]`);
+                if (isNaN(total)) return (`🔘▬▬▬▬▬▬▬▬▬▬  [0%]`);
+                if (isNaN(current)) return (`🔘▬▬▬▬▬▬▬▬▬▬  [0%]`);
+                if (isNaN(size)) return (`🔘▬▬▬▬▬▬▬▬▬  [0%]`);
                 if (current > total) {
                     const bar = line.repeat(size + 2);
                     const percentage = (current / total) * 100;
@@ -522,7 +539,7 @@ module.exports = class MusicPlayer extends EventEmitter {
                     const bar = progressText + emptyProgressText;
                     const calculated = Math.floor(percentage * 100);
                     if (calculated < 5) {
-                        resolve(`🔘▬▬▬▬▬▬▬▬▬▬▬▬▬▬ [${calculated}%]`);
+                        resolve(`🔘▬▬▬▬▬▬▬▬▬▬ [${calculated}%]`);
                     } else {
                         resolve(`${bar} [${calculated}%]`);
                     }
@@ -531,6 +548,25 @@ module.exports = class MusicPlayer extends EventEmitter {
                 reject(error);
             }
         })
+    }
+
+    /**
+     * Method for formatting numbers.
+     * @param {Array} numbersArray Numbers Array
+     * @returns {Array} Array
+    */
+    formatNumbers(numbersArray) {
+        var numberArray = [];
+
+        for(let i = 0; i < numbersArray.length; i++) {
+            if(numbersArray[i] < 10) {
+                numberArray.push('0' + numbersArray[i]);
+            }else{
+                numberArray.push(String(numbersArray[i]));
+            }
+        }
+
+        return numberArray;
     }
 
     /**
