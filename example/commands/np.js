@@ -10,7 +10,6 @@ const MusicPlayer = new (require('discord-player-music'))(new Client());
 module.exports.run = async (bot, message, args, player) => {
     player.createProgressBar(message.guild)
     .then(progress => {
-        message.channel.send(progress)
         player.getCurrentSongInfo(message.guild)
         .then(song => {
             let nowPlaying = new MessageEmbed()
