@@ -16,8 +16,8 @@ module.exports.run = async (bot, message, args, player) => {
 
             .setColor('RANDOM')
             .setTitle(':musical_note: | Info about current song!')
-            .setThumbnail(song.thumbnail)
-            .setDescription(`Song Name: **${song.title}**\nSong URL: **${song.url}**\nSong Duration: **${song.duration.hours}:${song.duration.minutes}:${song.duration.seconds}**\n\nProgress: ${progress}`)
+            .setThumbnail(song.songInfo.thumbnail)
+            .setDescription(`Song Name: **${song.songInfo.title}**\nSong URL: **${song.songInfo.url}**\nSong Duration: **${song.songInfo.duration.hours}:${song.songInfo.duration.minutes}:${song.songInfo.duration.seconds}**\nSong Requested: <@${song.songInfo.requestedBy.id}>\n\n${progress}`)
 
             return message.channel.send(nowPlaying);
         })

@@ -15,7 +15,6 @@ module.exports.run = async (bot, message, args, player) => {
         .setColor('RANDOM')
         .setTitle('Server queue songs')
         .setDescription(data.map(song => `**- ${song.title} [${song.duration.hours}:${song.duration.minutes}:${song.duration.seconds}]**`).join('\n'))
-        .setFooter(`Requested: ${message.author.tag}`, message.author.displayAvatarURL({ dynamic: true }))
         .setTimestamp();
 
         return message.channel.send(queueEmbed);

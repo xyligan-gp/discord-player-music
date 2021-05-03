@@ -8,11 +8,14 @@ const MusicPlayer = new (require('discord-player-music'))(new Client());
  * @param {MusicPlayer} player 
 */
 module.exports.run = async (bot, message, args, player) => {
-    if(!message.member.voice.channel) return message.reply('join in voice channel, please!');
+    if (!message.member.voice.channel) return message.reply('join in voice channel, please!');
 
-    player.getCurrentSongInfo(message.guild)
+    let filter = args.join(' ');
+    if (!filter) return message.reply('send me filter name, please!');
+
+    player.setFilter(message.guild, filter)
     .then(data => {
-        return message.channel.send(`Song Name: **${data.songInfo.title}**\nSong URL: **${data.songInfo.url}**\nSong Duration: **${data.songInfo.duration.hours}:${data.songInfo.duration.minutes}:${data.songInfo.duration.seconds}**`);
+        return message.reply(`filter **${filter}** successfully installed!`);
     })
     .catch(err => {
         return message.reply(err.message);
@@ -20,5 +23,5 @@ module.exports.run = async (bot, message, args, player) => {
 }
 
 module.exports.help = {
-    name: 'songInfo'
+    name: 'filter'
 }

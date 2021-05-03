@@ -28,7 +28,7 @@ module.exports.on = async (bot, commands) => {
         .setColor('RANDOM')
         .setTitle(':musical_note: | Song is playing!')
         .setThumbnail(song.thumbnail)
-        .setDescription(`Song Name: **${song.title}**\nSong URL: **${song.url}**\nSong Duration: **${song.duration.hours}:${song.duration.minutes}:${song.duration.seconds}**`)
+        .setDescription(`Song Name: **${song.title}**\nSong URL: **${song.url}**\nSong Duration: **${song.duration.hours}:${song.duration.minutes}:${song.duration.seconds}**\nSong Requested: <@${song.requestedBy.id}>`)
 
         data.textChannel.send(nowPlaying);
     })
@@ -39,7 +39,7 @@ module.exports.on = async (bot, commands) => {
         .setColor('RANDOM')
         .setTitle(':musical_note: | A song has been added to the queue!')
         .setThumbnail(song.thumbnail)
-        .setDescription(`Song Name: **${song.title}**\nSong URL: **${song.url}**\nSong Duration: **${song.duration.hours}:${song.duration.minutes}:${song.duration.seconds}**`)
+        .setDescription(`Song Name: **${song.title}**\nSong URL: **${song.url}**\nSong Duration: **${song.duration.hours}:${song.duration.minutes}:${song.duration.seconds}**\nSong Requested: <@${song.requestedBy.id}> [${song.requestedBy.user.tag}]`)
 
         song.textChannel.send(nowPlaying);
     })
