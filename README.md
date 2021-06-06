@@ -37,7 +37,7 @@ client.login('token'); //https://discord.com/developers/
 /**
  * @param {Discord.Guild} guild Discord Guild 
  * @param {Object} song Song Object 
- * @returns {Promise<Event>} Module Event
+ * @returns {Promise<Event>} Returns the event of the module
 */
 player.play(guild, song);
 ```
@@ -48,22 +48,7 @@ player.play(guild, song);
  * @param {GuildMember} member Discord Guild Member
  * @param {String} searchString Search String
  * @param {Message} message Discord Message
- * @returns {Promise<[{
-                    index: Number,
-                    searchType: String,
-                    title: String,
-                    url: String,
-                    thumbnail: String,
-                    author: String,
-                    textChannel: TextChannel,
-                    voiceChannel: VoiceChannel,
-                    requestedBy: GuildMember,
-                    duration: {
-                        hours: Number,
-                        minutes: Number,
-                        seconds: Number
-                    }
-                }]>} Array 
+ * @returns {Promise<Array<Song>>} Returns a list of found songs 
 */
 player.searchVideo(member, searchString, message);
 ```
@@ -73,7 +58,7 @@ player.searchVideo(member, searchString, message);
 /**
  * @param {Array} tracksArray Tracks Array
  * @param {Discord.Message} message Discord Message
- * @returns {Promise<Number>} Number
+ * @returns {Promise<Number>} Returns the position of the song from the list
 */
 player.getSongIndex(tracksArray, message);
 ```
@@ -86,7 +71,7 @@ player.getSongIndex(tracksArray, message);
  * @param {Array} tracksArray Songs Array 
  * @param {Discord.TextChannel} textChannel Discord Text Channel 
  * @param {Discord.VoiceChannel} voiceChannel Discord Voice Channel 
- * @returns {Promise<Event>} Module Event
+ * @returns {Promise<Event>} Returns the event of the module
 */
 player.addSong(index, guild, tracksArray, textChannel, voiceChannel);
 ```
@@ -95,21 +80,7 @@ player.addSong(index, guild, tracksArray, textChannel, voiceChannel);
 ```js
 /**
  * @param {Guild} guild Discord Guild
- * @returns {Promise<{ status: true, song: ({
-                    searchType: String,
-                    title: String,
-                    url: String,
-                    thumbnail: String,
-                    author: String,
-                    textChannel: TextChannel,
-                    voiceChannel: VoiceChannel,
-                    requestedBy: GuildMember,
-                    duration: {
-                        hours: Number,
-                        minutes: Number,
-                        seconds: Number
-                    }
-                })}>} Object 
+ * @returns {Promise<{ status: Boolean, song: Song }>} Returns an object with a skip status and a song object 
 */
 player.skipSong(guild);
 ```
@@ -118,7 +89,7 @@ player.skipSong(guild);
 ```js
 /**
  * @param {Discord.Guild} guild Discord Guild
- * @returns {Promise<Array>} Array
+ * @returns {Promise<Array<Song>>} Returns an array of songs being played on the server
 */
 player.getQueue(guild);
 ```
@@ -127,21 +98,7 @@ player.getQueue(guild);
 ```js
 /**
  * @param {Guild} guild Discord Guild
- * @returns {Promise<{ status: Boolean, song: ({
-                    searchType: String,
-                    title: String,
-                    url: String,
-                    thumbnail: String,
-                    author: String,
-                    textChannel: TextChannel,
-                    voiceChannel: VoiceChannel,
-                    requestedBy: GuildMember,
-                    duration: {
-                        hours: Number,
-                        minutes: Number,
-                        seconds: Number
-                    }
-                }) }>} Object
+ * @returns {Promise<{ status: Boolean, song: Song }>} Returns the song repeat status and object
 */
 player.setLoopSong(guild);
 ```
@@ -150,21 +107,7 @@ player.setLoopSong(guild);
 ```js
 /**
  * @param {Guild} guild Discord Guild
- * @returns {Promise<{ status: Boolean, song: ({
-                    searchType: String,
-                    title: String,
-                    url: String,
-                    thumbnail: String,
-                    author: String,
-                    textChannel: TextChannel,
-                    voiceChannel: VoiceChannel,
-                    requestedBy: GuildMember,
-                    duration: {
-                        hours: Number,
-                        minutes: Number,
-                        seconds: Number
-                    }
-                }) }> Object
+ * @returns {Promise<{ status: Boolean, songs: Array<Song> }>} Returns the repeat status of the queue and its object
 */
 player.setLoopQueue(guild);
 ```
@@ -173,7 +116,7 @@ player.setLoopQueue(guild);
 ```js
 /**
  * @param {Discord.Guild} guild Discord Guild 
- * @returns {Promise<boolean>} Boolean
+ * @returns {Promise<Boolean>} Returns true on success
 */
 player.stopPlaying(guild);
 ```
@@ -182,7 +125,7 @@ player.stopPlaying(guild);
 ```js
 /**
  * @param {Discord.Guild} guild Discord Guild
- * @returns {Promise<boolean>} Boolean
+ * @returns {Promise<Boolean>} Returns `true` on success
 */
 player.pausePlaying(guild);
 ```
@@ -191,7 +134,7 @@ player.pausePlaying(guild);
 ```js
 /**
  * @param {Discord.Guild} guild Discord Guild
- * @returns {Promise<boolean>} Boolean
+ * @returns {Promise<Boolean>} Returns `true` on success
 */
 player.resumePlaying(guild);
 ```
@@ -201,7 +144,7 @@ player.resumePlaying(guild);
 /**
  * @param {Guild} guild 
  * @param {Number} volumeValue 
- * @returns {Promise<{status: true, volume: Number}>} Object
+ * @returns {Promise<{status: Boolean, volume: Number}>} Returns the volume setting status and value
 */
 player.setVolume(guild, volumeValue);
 ```
@@ -211,7 +154,7 @@ player.setVolume(guild, volumeValue);
 /**
  * @param {Guild} guild Discord Guild
  * @param {'3d' | 'bassboost' | 'echo' | 'flanger' | 'gate' |'haas' | 'karaoke' | 'nightcore' | 'reverse' | 'vaporwave' | 'mcompand' |'phaser' | 'tremolo' | 'surround' | 'earwax' | 'clear'} filter Filter Name
- * @returns {Promise<{ status: true, filter: '3d' | 'bassboost' | 'echo' | 'flanger' | 'gate' |'haas' | 'karaoke' | 'nightcore' | 'reverse' | 'vaporwave' | 'mcompand' |'phaser' | 'tremolo' | 'surround' | 'earwax' | 'clear', queue: data}>}
+ * @returns {Promise<{ status: Boolean, filter: String, queue: Array<Song>}>} Returns installation status, filter name and server queue array.
 */
 player.setFilter(guild, filter)
 ```
@@ -221,24 +164,7 @@ player.setFilter(guild, filter)
 /**
  * Method for getting information about the current song
  * @param {Guild} guild Discord Guild
- * @returns {Promise<{
-                    guildMap: object,
-                    songInfo: {
-                        searchType: String,
-                        title: String,
-                        url: String,
-                        thumbnail: String,
-                        author: String,
-                        textChannel: TextChannel,
-                        voiceChannel: VoiceChannel,
-                        requestedBy: GuildMember,
-                        duration: {
-                            hours: Number,
-                            minutes: Number,
-                            seconds: Number
-                        }
-                    }
-                }>} Object
+ * @returns {Promise<{ guildMap: GuildMap, songInfo: Song }>} Returns an object with information about the current song and server queue
 */
 player.getCurrentSongInfo(guild);
 ```
@@ -247,15 +173,16 @@ player.getCurrentSongInfo(guild);
 ```js
 /**
  * @param {GuildMember} member Discord Guild Member 
- * @returns {Promise<{status: true, voiceChannel: voiceChannel}>} Object 
+ * @returns {Promise<{ status: Boolean, voiceChannel: VoiceChannel }>} Returns the status and object of the voice channel
 */
 player.joinVoiceChannel(member);
 ```
 
 * `leaveVoiceChannel()` - Method for left your bot the voice channel.
 ```js
+/**
  * @param {GuildMember} member Discord Guild Member 
- * @returns {Promise<{status: true, voiceChannel: voiceChannel}>} Object
+ * @returns {Promise<{ status: true, voiceChannel: VoiceChannel }>} Returns the status and object of the voice channel
 */
 player.leaveVoiceChannel(member);
 ```
@@ -263,8 +190,8 @@ player.leaveVoiceChannel(member);
 * `createProgressBar()` - Method for creating progress bar.
 ```js
 /**
- * @param {Discord.Guild} guild Discord Guild
- * @returns {Promise<string>} String
+ * @param {Guild} guild Discord Guild
+ * @returns {Promise<{ bar: string, percents: string }>} Returns an object with the progress bar data
 */
 player.createProgressBar(guild);
 ```
@@ -273,7 +200,7 @@ player.createProgressBar(guild);
 ```js
 /**
  * @param {Array} numbersArray Numbers Array
- * @returns {Array} Array
+ * @returns {Array<String>} Returns an array with formatted numbers
 */
 player.formatNumbers(numbersArray);
 ```
@@ -319,8 +246,9 @@ player.on('queueEnded', data => {
 
 * `playerError` - If there is any error in the module, then you can easily detect and fix it. 
 ```js
-player.on('playerError', err => {
-    console.log(err);
+player.on('playerError', async data => {
+    if(!data.textChannel) return console.log(data.error);
+    return await data.textChannel.send(data.error.message);
 });
 ```
 
@@ -340,6 +268,12 @@ player.on('playerError', err => {
   * Added filter system. Method `setFilter()`
   * Changing the returned data by some methods and events
   * Added the `getGuildMap()` method to get the server queue object
+* ***Version 1.0.3***
+  * Code optimization
+  * Fix caught some bugs
+  * Fixed minor bugs
+  * Rewrite README.md
+  * Fixed events
 
 # Useful Links
 

@@ -1,43 +1,15 @@
 {
-  "_from": "discord-player-music",
-  "_id": "discord-player-music@1.0.2",
-  "_inBundle": false,
-  "_integrity": "sha512-v9QgaKAUwFFLj427CGx2Fs2P/MhCGFyJlI2eWtn2HE9QQmbdqB2WPkuT9uHqActn8EASKe1qPMHWxBI6FtTbUA==",
-  "_location": "/discord-player-music",
-  "_phantomChildren": {},
-  "_requested": {
-    "type": "tag",
-    "registry": true,
-    "raw": "discord-player-music",
-    "name": "discord-player-music",
-    "escapedName": "discord-player-music",
-    "rawSpec": "",
-    "saveSpec": null,
-    "fetchSpec": "latest"
+  "name": "discord-player-music",
+  "version": "1.0.4",
+  "description": "Easy module for playing music in your discord.js bot!",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "_requiredBy": [
-    "#USER",
-    "/"
-  ],
-  "_resolved": "https://registry.npmjs.org/discord-player-music/-/discord-player-music-1.0.2.tgz",
-  "_shasum": "87508da6d34543c425f4063a4095ff9b76f49da9",
-  "_spec": "discord-player-music",
-  "_where": "F:\\npm_modules\\music",
-  "author": {
-    "name": "xyligan & ShadowPlay"
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/xyligan-gp/discord-player-music.git"
   },
-  "bugs": {
-    "url": "https://github.com/xyligan-gp/discord-player-music/issues"
-  },
-  "bundleDependencies": false,
-  "dependencies": {
-    "discord.js": "12.5.3",
-    "yt-search": "^2.8.0",
-    "ytdl-core": "4.5.0"
-  },
-  "deprecated": false,
-  "description": "Easy module for playing music in your Discord bot!",
-  "homepage": "https://github.com/xyligan-gp/discord-player-music#readme",
   "keywords": [
     "discord.js",
     "discord-player-music",
@@ -48,15 +20,11 @@
     "bot",
     "music"
   ],
+  "author": "xyligan & ShadowPlay",
   "license": "MIT",
-  "main": "index.js",
-  "name": "discord-player-music",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/xyligan-gp/discord-player-music.git"
+  "bugs": {
+    "url": "https://github.com/xyligan-gp/discord-player-music/issues"
   },
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "version": "1.0.2"
+  "homepage": "https://github.com/xyligan-gp/discord-player-music#readme",
+  "types": "./typings/Player.d.ts"
 }

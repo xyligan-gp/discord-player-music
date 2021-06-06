@@ -2,16 +2,16 @@ module.exports = {
     clientNotRequired:      `You have not specified a bot client!`,
     clientInVoiceChannel:   `The client is already in the VoiceChannel!`,
     clientNotInVoiceChannel:`The client is not already in the VoiceChannel!`,
-    permissionsNotFound:    `Your client missing permissions CONNECT | SPEAK for connection to VoiceChannel!`,
+    permissionsNotFound:    `Your client missing permissions {perms} for connection to VoiceChannel!`,
     voiceChannelNotFound:   `VoiceChannel with the user not found!`,
     queueNotFound:          `Server queue not found!`,
 
     searchVideo: {
-        userRequestNotFound:  `String request not found!`
+        userRequestNotFound:  `Search request not found!`
     },
 
     getSongIndex: {
-        mixMaxValue:        `The specifie value is not valid! Min value: 1, Max value: 10`,
+        minMaxValue:        `The specifie value is not valid! Min value: 1, Max value: 10`,
         invalidTypeValue:   `The specifie value is not valid!`
     },
 
@@ -20,7 +20,8 @@ module.exports = {
         invalidTypeValue:   `The specified value is not a valid!`
     },
     setFilter: {
-        invalidFilterType: 'Invalid filter type.',
-        invalidFilterName: 'Invalid filter name.'
+        filterNotFound:     `Filter name not received!`,
+        invalidFilterType:  `Invalid filter type!`,
+        invalidFilterName:  `Invalid filter name!`
     }
 }
