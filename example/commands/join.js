@@ -1,11 +1,11 @@
 const { Client, Message } = require('discord.js');
-const MusicPlayer = new (require('discord-player-music'))(new Client());
+const MusicPlayer = require('discord-player-music');
 
 /**
- * @param {Client} bot 
- * @param {Message} message 
- * @param {string[]} args 
- * @param {MusicPlayer} player 
+ * @param {Client} bot Discord Client
+ * @param {Message} message Discord Message
+ * @param {string[]} args Command Arguments
+ * @param {MusicPlayer} player Player Class
 */
 module.exports.run = async (bot, message, args, player) => {
     player.joinVoiceChannel(message.member)

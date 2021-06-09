@@ -1,15 +1,15 @@
 const { Client, Message, MessageEmbed } = require('discord.js');
-const MusicPlayer = new (require('discord-player-music'))(new Client());
+const MusicPlayer = require('discord-player-music');
 
 /**
- * @param {Client} bot 
- * @param {Message} message 
- * @param {string[]} args 
- * @param {MusicPlayer} player 
+ * @param {Client} bot Discord Client
+ * @param {Message} message Discord Message
+ * @param {string[]} args Command Arguments
+ * @param {MusicPlayer} player Player Class
 */
 module.exports.run = async (bot, message, args, player) => {
     player.createProgressBar(message.guild)
-    .then(data => {
+    .then(progress => {
         player.getCurrentSongInfo(message.guild)
         .then(song => {
             let nowPlaying = new MessageEmbed()
@@ -17,7 +17,7 @@ module.exports.run = async (bot, message, args, player) => {
             .setColor('RANDOM')
             .setTitle(':musical_note: | Info about current song!')
             .setThumbnail(song.songInfo.thumbnail)
-            .setDescription(`Song Name: **${song.songInfo.title}**\nSong URL: **${song.songInfo.url}**\nSong Duration: **${song.songInfo.duration.hours}:${song.songInfo.duration.minutes}:${song.songInfo.duration.seconds}**\nSong Requested: <@${song.songInfo.requestedBy.id}>\n\n${data.bar} [${data.percents}]`)
+            .setDescription(`Song Name: **${song.songInfo.title}**\nSong URL: **${song.songInfo.url}**\nSong Duration: **${song.songInfo.duration.hours}:${song.songInfo.duration.minutes}:${song.songInfo.duration.seconds}**\nSong Requested: <@${song.songInfo.requestedBy.id}>\n\n${progress.bar} [${progress.percents}]`)
 
             return message.channel.send(nowPlaying);
         })

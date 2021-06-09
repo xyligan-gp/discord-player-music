@@ -1,8 +1,8 @@
 const { Client, Message } = require('discord.js');
-const MusicPlayer = new (require('discord-player-music'))(new Client());
+const MusicPlayer = require('discord-player-music');
 
 /**
- * @param {Client} bot Discord Client
+ * @param {Client} bot Discord CLient
  * @param {Message} message Discord Message
  * @param {string[]} args Command Arguments
  * @param {MusicPlayer} player Player Class
@@ -11,7 +11,7 @@ module.exports.run = async (bot, message, args, player) => {
     if (!message.member.voice.channel) return message.reply('join in voice channel, please!');
 
     let filter = args.join(' ');
-    if (!filter) return message.reply('send me filter name, please!');
+    if (!filter) return message.reply(`select filter: ${(await player.getFilters()).map(filter => `**${filter.name}**`).join(', ')}`);
 
     player.setFilter(message.guild, filter)
     .then(data => {

@@ -2,8 +2,8 @@ const { Client, Collection } = require('discord.js');
 const { readdir } = require('fs');
 
 /**
- * @param {Client} bot 
- * @param {Collection} commands 
+ * @param {Client} bot Discord CLient
+ * @param {Collection} commands Client Commands
 */
 module.exports.on = async (bot, commands) => {
     bot.on('ready', async () => {

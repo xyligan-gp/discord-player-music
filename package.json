@@ -1,6 +1,6 @@
 {
   "name": "discord-player-music",
-  "version": "1.0.4",
+  "version": "1.0.6",
   "description": "Easy module for playing music in your discord.js bot!",
   "main": "index.js",
   "scripts": {
@@ -10,15 +10,19 @@
     "type": "git",
     "url": "git+https://github.com/xyligan-gp/discord-player-music.git"
   },
+  "dependencies": {
+    "discord.js": "^12.5.3",
+    "yt-search": "^2.8.0",
+    "ytdl-core": "^4.8.2"
+  },
   "keywords": [
     "discord.js",
     "discord-player-music",
+    "discord-player",
     "ytdl-core",
     "yt-search",
-    "discord-bot",
-    "discord",
-    "bot",
-    "music"
+    "music",
+    "discord-bot"
   ],
   "author": "xyligan & ShadowPlay",
   "license": "MIT",

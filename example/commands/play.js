@@ -1,11 +1,11 @@
 const { Client, Message } = require('discord.js');
-const MusicPlayer = new (require('discord-player-music'))(new Client());
+const MusicPlayer = require('discord-player-music');
 
 /**
- * @param {Client} bot 
- * @param {Message} message 
- * @param {string[]} args 
- * @param {MusicPlayer} player 
+ * @param {Client} bot Discord Client
+ * @param {Message} message Discord Message
+ * @param {string[]} args Command Arguments
+ * @param {MusicPlayer} player Player Class
 */
 module.exports.run = async (bot, message, args, player) => {
     if (!message.member.voice.channel) return message.reply('join in voice channel, please!');
@@ -17,7 +17,7 @@ module.exports.run = async (bot, message, args, player) => {
     .then(data => {
         if (!data[0].index) return;
 
-        return message.channel.send(data.map(video => `**[${video.index}]** - ${video.title}`).join('\n'));
+        return message.channel.send(data.map(song => `**[${song.index}]** - __${song.title}__ **__[${song.duration.hours}:${song.duration.minutes}:${song.duration.seconds}]__**`).join('\n'));
     })
     .catch(err => {
         return message.reply(err.message);

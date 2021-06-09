@@ -1,5 +1,5 @@
 const { Client, Message } = require('discord.js');
-const MusicPlayer = new (require('discord-player-music'))(new Client());
+const MusicPlayer = require('discord-player-music');
 
 /**
  * @param {Client} bot Discord Client
@@ -12,9 +12,7 @@ module.exports.run = async (bot, message, args, player) => {
 
     player.skipSong(message.guild)
     .then(data => {
-        if(!data.song) return message.reply(`song skipped successfully!`);
-
-        return message.reply(`song skipped successfully! Now playing: ${data.song.title}`);
+        return message.reply(`song successfully skiped! Playing: **${data.song.title}**`);
     })
     .catch(err => {
         return message.reply(err.message);

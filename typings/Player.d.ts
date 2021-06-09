@@ -207,11 +207,11 @@ declare module 'discord-player-music' {
         /**
          * Class Constructor
          */
-        constructor(message: string | Error) { }
+        constructor(message: string | Error);
     }
 
     namespace MusicPlayer {
-        declare const version: '1.0.3'
+        declare const version: '1.0.6'
     }
     export = MusicPlayer;
 }
@@ -224,6 +224,11 @@ interface PlayerError {
      * Discord TextChannel
      */
     textChannel: TextChannel;
+
+    /**
+     * Discord Message
+     */
+    message: Message;
 
     /**
      * Modulle Method

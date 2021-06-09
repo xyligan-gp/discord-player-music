@@ -1,9 +1,9 @@
 # Discord Player Music
 
-[![Загрузок](https://img.shields.io/npm/dt/discord-player-music?style=for-the-badge)](https://www.npmjs.com/package/discord-player-music)
-[![Стабильная версия](https://img.shields.io/npm/v/discord-player-music?style=for-the-badge)](https://www.npmjs.com/package/discord-player-music)
+[![Downloads](https://img.shields.io/npm/dt/discord-player-music?style=for-the-badge)](https://www.npmjs.com/package/discord-player-music)
+[![Stable Version](https://img.shields.io/npm/v/discord-player-music?style=for-the-badge)](https://www.npmjs.com/package/discord-player-music)
 
-**Discord Player Music** - Easy module for playing music in your [discord.js](https://discord.js.org/) bot!
+**Discord Player Music** - Easy module for playing music in your [discord.js](https://npmjs.com/package/discord.js) bot!
 
 ## Install
 
@@ -35,7 +35,7 @@ client.login('token'); //https://discord.com/developers/
 * `play()` - Method for videos playback.
 ```js
 /**
- * @param {Discord.Guild} guild Discord Guild 
+ * @param {Guild} guild Discord Guild 
  * @param {Object} song Song Object 
  * @returns {Promise<Event>} Returns the event of the module
 */
@@ -57,7 +57,7 @@ player.searchVideo(member, searchString, message);
 ```js
 /**
  * @param {Array} tracksArray Tracks Array
- * @param {Discord.Message} message Discord Message
+ * @param {Message} message Discord Message
  * @returns {Promise<Number>} Returns the position of the song from the list
 */
 player.getSongIndex(tracksArray, message);
@@ -67,10 +67,10 @@ player.getSongIndex(tracksArray, message);
 ```js
 /**
  * @param {Number} index Song Index
- * @param {Discord.Guild} guild Discord Guild
+ * @param {Guild} guild Discord Guild
  * @param {Array} tracksArray Songs Array 
- * @param {Discord.TextChannel} textChannel Discord Text Channel 
- * @param {Discord.VoiceChannel} voiceChannel Discord Voice Channel 
+ * @param {TextChannel} textChannel Discord Text Channel 
+ * @param {VoiceChannel} voiceChannel Discord Voice Channel 
  * @returns {Promise<Event>} Returns the event of the module
 */
 player.addSong(index, guild, tracksArray, textChannel, voiceChannel);
@@ -88,7 +88,7 @@ player.skipSong(guild);
 * `getQueue()` - Method for getting a queue of server songs.
 ```js
 /**
- * @param {Discord.Guild} guild Discord Guild
+ * @param {Guild} guild Discord Guild
  * @returns {Promise<Array<Song>>} Returns an array of songs being played on the server
 */
 player.getQueue(guild);
@@ -115,7 +115,7 @@ player.setLoopQueue(guild);
 * `stopPlaying()` - Method for ending playing a queue of songs.
 ```js
 /**
- * @param {Discord.Guild} guild Discord Guild 
+ * @param {Guild} guild Discord Guild 
  * @returns {Promise<Boolean>} Returns true on success
 */
 player.stopPlaying(guild);
@@ -124,7 +124,7 @@ player.stopPlaying(guild);
 * `pausePlaying()` - Method to pause song playback.
 ```js
 /**
- * @param {Discord.Guild} guild Discord Guild
+ * @param {Guild} guild Discord Guild
  * @returns {Promise<Boolean>} Returns `true` on success
 */
 player.pausePlaying(guild);
@@ -133,7 +133,7 @@ player.pausePlaying(guild);
 * `resumePlaying()` - Method to restore playing songs.
 ```js
 /**
- * @param {Discord.Guild} guild Discord Guild
+ * @param {Guild} guild Discord Guild
  * @returns {Promise<Boolean>} Returns `true` on success
 */
 player.resumePlaying(guild);
@@ -194,6 +194,14 @@ player.leaveVoiceChannel(member);
  * @returns {Promise<{ bar: string, percents: string }>} Returns an object with the progress bar data
 */
 player.createProgressBar(guild);
+```
+
+* `getFilters()` - Method for getting all filters of a module.
+```js
+/**
+ * @returns {Promise<Array<Filters>>} Returns an array of all filters in the module.
+*/
+player.getFilters()
 ```
 
 * `formatNumbers()` - Method for formatting numbers.
@@ -274,6 +282,14 @@ player.on('playerError', async data => {
   * Fixed minor bugs
   * Rewrite README.md
   * Fixed events
+* ***Versions 1.0.4 - 1.0.5***
+  * Update versions all dependencies
+  * Fix README.md
+* ***Version 1.0.6***
+  * Fix module typings
+  * Fix minor bugs
+  * Added the `getFilters()` method to get arrays with player filters
+  * Fix README.md
 
 # Useful Links
 

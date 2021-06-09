@@ -141,9 +141,9 @@ module.exports = class MusicPlayer extends EventEmitter {
                             requestedBy: message.author,
 
                             duration: {
-                                hours: Math.floor(videoResult.videos[i].seconds / 3600),
-                                minutes: Math.floor(videoResult.videos[i].seconds / 60 % 60),
-                                seconds: Math.floor(videoResult.videos[i].seconds % 60)
+                                hours: this.formatNumbers([Math.floor(videoResult.videos[i].seconds / 3600)]),
+                                minutes: this.formatNumbers([Math.floor(videoResult.videos[i].seconds / 60 % 60)]),
+                                seconds: this.formatNumbers([Math.floor(videoResult.videos[i].seconds % 60)])
                             }
                         })
                     }
@@ -206,14 +206,6 @@ module.exports = class MusicPlayer extends EventEmitter {
                 let connection = await voiceChannel.join()
                 let serverQueue = await this.queue.get(guild.id);
                 let songObject = tracksArray[index - 1];
-
-                let duration = this.formatNumbers([songObject.duration.hours, songObject.duration.minutes, songObject.duration.seconds]);
-
-                songObject.duration = {
-                    hours: duration[0],
-                    minutes: duration[1],
-                    seconds: duration[2]
-                }
 
                 if (!serverQueue) {
                     const queueConstruct = {
@@ -605,7 +597,7 @@ module.exports = class MusicPlayer extends EventEmitter {
     */
     getFilters() {
         return new Promise(async (resolve, reject) => {
-            return resolve([Filters]);
+            return resolve(Filters);
         })
     }
 
