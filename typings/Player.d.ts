@@ -171,6 +171,13 @@ declare module 'discord-player-music' {
         getFilters(): Promise<Array<{ name: string, value: string }>>;
 
         /**
+         * Method for getting the lyrics of the current song
+         * @param {Guild} guild Discord Guild
+         * @returns {Promise<{ song: string, lyrics: string }>} Returns an object with the name of the song and lyrics to it
+         */
+        getLyrics(guild: Guild): Promise<{ song: string, lyrics: string }>;
+
+        /**
          * Method for formatting numbers.
          * @param {Array} numbersArray Numbers Array
          * @returns {Array<Number>} Returns an array with formatted numbers.
@@ -211,8 +218,9 @@ declare module 'discord-player-music' {
     }
 
     namespace MusicPlayer {
-        declare const version: '1.0.7'
+        declare const version: '1.0.8'
     }
+
     export = MusicPlayer;
 }
 

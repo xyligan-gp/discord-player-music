@@ -19,9 +19,14 @@ module.exports = {
         minMaxValue:        `The specified value is not a valid! Min value: 0.1`,
         invalidTypeValue:   `The specified value is not a valid!`
     },
+    
     setFilter: {
         filterNotFound:     `Filter name not received!`,
         invalidFilterType:  `Invalid filter type!`,
         invalidFilterName:  `Invalid filter name!`
+    },
+
+    getLyrics: {
+        lyricsNotFound: `Lyrics not found for {song}!`
     }
 }

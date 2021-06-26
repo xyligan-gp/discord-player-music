@@ -204,6 +204,15 @@ player.createProgressBar(guild);
 player.getFilters()
 ```
 
+* `getLyrics()` - Method for getting the lyrics of the current song.
+```js
+/**
+ * @param {Guild} guild Discord Guild
+ * @returns {Promisese<{ song: string, lyrics: string }>} Returns an object with the name of the song and lyrics to it
+*/
+player.getLyrics(guild);
+```
+
 * `formatNumbers()` - Method for formatting numbers.
 ```js
 /**
@@ -292,6 +301,9 @@ player.on('playerError', async data => {
   * Fix README.md
 * ***Version 1.0.7***
   * Update versions all dependencies
+* ***Version 1.0.8***
+  * Fix method `searchVideo()`
+  * Added the `getLyrics()` method to get lyrics for current song
 
 # Useful Links
 

@@ -1,4 +1,4 @@
-const { EventEmitter } = require('events'), { Client, Guild, GuildMember, TextChannel, VoiceChannel, Message } = require('discord.js'), ytdl = require('./modules/dpm-ytdl.js'), ytSearch = require('yt-search'), { Readable } = require('stream'),
+const { EventEmitter } = require('events'), { Client, Guild, GuildMember, TextChannel, VoiceChannel, Message } = require('discord.js'), ytdl = require('./modules/dpm-ytdl.js'), ytSearch = require('yt-search'), { Readable } = require('stream'), searchLyrics = require('lyrics-finder'),
 MusicPlayerError = require('discord-player-music/src/MusicPlayerError.js'), PlayerErrors = require('discord-player-music/src/PlayerErrors.js'), { Song, GuildMap, Filters } = require('discord-player-music/structures/Player.js');
 
 module.exports = class MusicPlayer extends EventEmitter {
@@ -115,9 +115,9 @@ module.exports = class MusicPlayer extends EventEmitter {
                         requestedBy: message.author,
 
                         duration: {
-                            hours: Math.floor(songInfo.videoDetails.lengthSeconds / 3600),
-                            minutes: Math.floor(songInfo.videoDetails.lengthSeconds / 60 % 60),
-                            seconds: Math.floor(songInfo.videoDetails.lengthSeconds % 60)
+                            hours: this.formatNumbers([Math.floor(songInfo.videoDetails.lengthSeconds / 3600)]),
+                            minutes: this.formatNumbers([Math.floor(songInfo.videoDetails.lengthSeconds / 60 % 60)]),
+                            seconds: this.formatNumbers([Math.floor(songInfo.videoDetails.lengthSeconds % 60)])
                         }
                     })
 
@@ -598,6 +598,27 @@ module.exports = class MusicPlayer extends EventEmitter {
     getFilters() {
         return new Promise(async (resolve, reject) => {
             return resolve(Filters);
+        })
+    }
+
+    /**
+     * Method for getting the lyrics of the current song
+     * @param {Guild} guild Discord Guild
+     * @returns {Promisese<{ song: string, lyrics: string }>} Returns an object with the name of the song and lyrics to it
+     */
+    getLyrics(guild) {
+        return new Promise(async (resolve, reject) => {
+            try{
+                let serverQueue = await this.queue.get(guild.id);
+                if (!serverQueue) return reject(new MusicPlayerError(PlayerErrors.queueNotFound)); 
+
+                const lyrics = await searchLyrics(serverQueue.songs[0].title, '');
+                if(!lyrics) return reject(new MusicPlayerError(PlayerErrors.getLyrics.lyricsNotFound.replace('{song}', serverQueue.songs[0].title)));
+
+                return resolve({ song: serverQueue.songs[0].title, lyrics: lyrics });
+            }catch(error){
+                return reject(error);
+            }
         })
     }
 
