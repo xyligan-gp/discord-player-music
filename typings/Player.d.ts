@@ -211,7 +211,7 @@ declare module 'discord-player-music' {
     }
 
     namespace MusicPlayer {
-        declare const version: '1.0.6'
+        declare const version: '1.0.7'
     }
     export = MusicPlayer;
 }

@@ -290,6 +290,8 @@ player.on('playerError', async data => {
   * Fix minor bugs
   * Added the `getFilters()` method to get arrays with player filters
   * Fix README.md
+* ***Version 1.0.7***
+  * Update versions all dependencies
 
 # Useful Links
 
