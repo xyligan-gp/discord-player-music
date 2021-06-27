@@ -208,9 +208,18 @@ player.getFilters()
 ```js
 /**
  * @param {Guild} guild Discord Guild
- * @returns {Promisese<{ song: string, lyrics: string }>} Returns an object with the name of the song and lyrics to it
+ * @returns {Promise<{ song: string, lyrics: string }>} Returns an object with the name of the song and lyrics to it
 */
 player.getLyrics(guild);
+```
+
+* `shuffle()` - Method for shuffling songs in queue.
+```js
+/**
+ * @param {Guild} guild Discord Guild
+ * @returns {Promise<GuildMap>} Returns an object with server queue parameters
+*/
+player.shuffle(guild);
 ```
 
 * `formatNumbers()` - Method for formatting numbers.
@@ -304,6 +313,9 @@ player.on('playerError', async data => {
 * ***Version 1.0.8***
   * Fix method `searchVideo()`
   * Added the `getLyrics()` method to get lyrics for current song
+* ***Version 1.1.0***
+  * Fix filter system
+  * Added the `shuffle()` method for shuffling songs in queue
 
 # Useful Links
 

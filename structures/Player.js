@@ -136,6 +136,6 @@ module.exports = {
         { name: 'tremolo', value: 'tremolo' },
         { name: 'surround', value: 'surround' },
         { name: 'earwax', value: 'earwax' },
-        { name: 'clear', value: '-af' }
+        { name: 'clear', value: null }
     ]
 }
