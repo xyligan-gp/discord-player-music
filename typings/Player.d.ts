@@ -185,6 +185,14 @@ declare module 'discord-player-music' {
         shuffle(guild: Guild): Promise<GuildMap>;
 
         /**
+         * Method for removing songs from the queue by ID/title
+         * @param {Guild} guild Discord Guild
+         * @param {string | number} song_Name_ID Song Index or Name in queue
+         * @returns {Promise<{ song: object, songs: number }>} Returns removed song info and song count in queue
+         */
+        removeSong(guild: Guild, song_Name_ID: string | number): Promise<{ song: object, songs: number }>;
+
+        /**
          * Method for formatting numbers
          * @param {Array} numbersArray Numbers Array
          * @returns {Array<Number>} Returns an array with formatted numbers
@@ -225,7 +233,7 @@ declare module 'discord-player-music' {
     }
 
     namespace MusicPlayer {
-        declare const version: '1.1.0'
+        const version: '1.1.1'
     }
 
     export = MusicPlayer;

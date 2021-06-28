@@ -28,6 +28,26 @@ module.exports = class MusicPlayer extends EventEmitter {
         this.ready = false;
 
         this.initPlayer();
+
+        this.on('playerError', async data => {
+            if(!data.textChannel) return;
+
+            if(data.error.message.includes('Status code: 403')) {
+                this.getGuildMap(data.textChannel.guild)
+                
+                .then(guildMap => {
+                    this.play(data.textChannel.guild, guildMap.songs[0]);
+                })
+                .catch(err => {
+                    return;
+                })
+            }else{
+                const serverQueue = await this.queue.get(dara.textChannel.guild.id);
+
+                serverQueue.voiceChannel.leave();
+                this.queue.delete(data.textChannel.guild.id);
+            }
+        })
     }
 
     /**
@@ -45,40 +65,40 @@ module.exports = class MusicPlayer extends EventEmitter {
                 return this.queue.delete(guild.id);
             }
 
-            let stream = await this.createStream(guild);
+            try {
+                let stream = await this.createStream(guild);
 
-            const dispatcher = serverQueue.connection
-                .play(stream, { type: 'opus' })
-                .on("finish", () => {
-                    if (serverQueue.songs.length < 1) return this.emit('queueEnded', serverQueue);
-                    if (serverQueue.loop) {
-                        this.play(guild, serverQueue.songs[0]);
-                    } else if (serverQueue.queueLoop) {
-                        let lastsong = serverQueue.songs.shift();
+                const dispatcher = serverQueue.connection
+                    .play(stream, { type: 'opus' })
+                    .on("finish", () => {
+                        if (serverQueue.songs.length < 1) return this.emit('queueEnded', serverQueue);
+                        if (serverQueue.loop) {
+                            this.play(guild, serverQueue.songs[0]);
+                        } else if (serverQueue.queueLoop) {
+                            let lastsong = serverQueue.songs.shift();
 
-                        serverQueue.songs.push(lastsong);
-                        this.play(guild, serverQueue.songs[0]);
-                    } else {
-                        serverQueue.songs.shift();
-                        this.play(guild, serverQueue.songs[0]);
-
-                        if (serverQueue.songs.length < 1) {
-                            serverQueue.voiceChannel.leave();
-                            this.queue.delete(guild.id);
-
-                            return this.emit('queueEnded', serverQueue);
+                            serverQueue.songs.push(lastsong);
+                            this.play(guild, serverQueue.songs[0]);
                         } else {
+                            serverQueue.songs.shift();
+                            this.play(guild, serverQueue.songs[0]);
+
+                            if (serverQueue.songs.length < 1) {
+                                serverQueue.voiceChannel.leave();
+                                this.queue.delete(guild.id);
+
+                                return this.emit('queueEnded', serverQueue);
+                            }
                         }
-                    }
-                })
-                .on("error", error => {
-                    console.log(error.message);
-                    serverQueue.voiceChannel.leave();
-                    this.queue.delete(guild.id);
-                    return this.emit('playerError', { textChannel: null, message: null, method: 'play', error: error });
-                });
-            dispatcher.setVolumeLogarithmic(serverQueue.volume / 5);
-            this.emit('playingSong', this.queue.get(guild.id));
+                    })
+                    .on("error", error => {
+                        return this.emit('playerError', { textChannel: song.textChannel, message: null, method: 'play', error: error });
+                    });
+                dispatcher.setVolumeLogarithmic(serverQueue.volume / 5);
+                this.emit('playingSong', this.queue.get(guild.id));
+            }catch(error){
+                return this.emit('playerError', { textChannel: song.textChannel, message: null, method: 'play', error: error });
+            }
         })
     }
     /**
@@ -115,9 +135,9 @@ module.exports = class MusicPlayer extends EventEmitter {
                         requestedBy: message.author,
 
                         duration: {
-                            hours: this.formatNumbers([Math.floor(songInfo.videoDetails.lengthSeconds / 3600)]),
-                            minutes: this.formatNumbers([Math.floor(songInfo.videoDetails.lengthSeconds / 60 % 60)]),
-                            seconds: this.formatNumbers([Math.floor(songInfo.videoDetails.lengthSeconds % 60)])
+                            hours: this.formatNumbers([Math.floor(songInfo.videoDetails.lengthSeconds / 3600)]).join(''),
+                            minutes: this.formatNumbers([Math.floor(songInfo.videoDetails.lengthSeconds / 60 % 60)]).join(''),
+                            seconds: this.formatNumbers([Math.floor(songInfo.videoDetails.lengthSeconds % 60)]).join('')
                         }
                     })
 
@@ -141,9 +161,9 @@ module.exports = class MusicPlayer extends EventEmitter {
                             requestedBy: message.author,
 
                             duration: {
-                                hours: this.formatNumbers([Math.floor(videoResult.videos[i].seconds / 3600)]),
-                                minutes: this.formatNumbers([Math.floor(videoResult.videos[i].seconds / 60 % 60)]),
-                                seconds: this.formatNumbers([Math.floor(videoResult.videos[i].seconds % 60)])
+                                hours: this.formatNumbers([Math.floor(videoResult.videos[i].seconds / 3600)]).join(''),
+                                minutes: this.formatNumbers([Math.floor(videoResult.videos[i].seconds / 60 % 60)]).join(''),
+                                seconds: this.formatNumbers([Math.floor(videoResult.videos[i].seconds % 60)]).join('')
                             }
                         })
                     }
@@ -630,7 +650,7 @@ module.exports = class MusicPlayer extends EventEmitter {
     shuffle(guild) {
         return new Promise(async (resolve, reject) => {
             let serverQueue = await this.queue.get(guild.id);
-            if (!serverQueue) return reject(new MusicPlayerError(PlayerErrors.queueNotFound)); 
+            if (!serverQueue) return reject(new MusicPlayerError(PlayerErrors.queueNotFound));
 
             const currentSong = serverQueue.songs.shift();
 
@@ -642,6 +662,37 @@ module.exports = class MusicPlayer extends EventEmitter {
             serverQueue.songs.unshift(currentSong);
 
             return resolve(serverQueue);
+        })
+    }
+
+    /**
+     * Method for removing songs from the queue by ID/title
+     * @param {Guild} guild Discord Guild
+     * @param {string | number} song_Name_ID Song Index or Name in queue
+     * @returns {Promise<{ song: object, songs: number }>} Return removed song info and song count in queue
+    */
+    removeSong(guild, song_Name_ID) {
+        return new Promise(async (resolve, reject) => {
+            let serverQueue = await this.queue.get(guild.id);
+            if (!serverQueue) return reject(new MusicPlayerError(PlayerErrors.queueNotFound));
+
+            if(!isNaN(song_Name_ID)) {
+                const songIndex = Math.floor(song_Name_ID - 1);
+                const song = serverQueue.songs[songIndex];
+                
+                if(!song) return reject(new MusicPlayerError(PlayerErrors.removeSong.songNotFound.replace('{value}', song_Name_ID)));
+                serverQueue.songs = serverQueue.songs.filter(track => track != song);
+
+                return resolve({ song: song, songs: serverQueue.songs.length });
+            }else{
+                const songName = song_Name_ID;
+                const song = serverQueue.songs.find(track => track.title === songName);
+                
+                if(!song) return reject(new MusicPlayerError(PlayerErrors.removeSong.songNotFound.replace('{value}', song_Name_ID)));
+                serverQueue.songs = serverQueue.songs.filter(track => track != song);
+
+                return resolve({ song: song, songs: serverQueue.songs.length });
+            }
         })
     }
 

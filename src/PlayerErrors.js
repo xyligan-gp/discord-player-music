@@ -28,5 +28,9 @@ module.exports = {
 
     getLyrics: {
         lyricsNotFound: `Lyrics not found for {song}!`
+    },
+
+    removeSong: {
+        songNotFound: `Song with ID/title {value} not found!`
     }
 }

@@ -5,276 +5,149 @@
 
 **Discord Player Music** - Easy module for playing music in your [discord.js](https://npmjs.com/package/discord.js) bot!
 
-## Install
+## Installation
 
 **Please note: Node.js 14.0.0 or newer is required.<br>
 All types in brackets mean the type of what the method or event returns.**
 
-```js
-npm install discord-player-music@latest
+Install [discord-player-music](https://www.npmjs.com/package/discord-player-music)
+```JS
+$ npm install discord-player-music
 ```
 
-## Starting
+Install [ffmpeg-static](https://www.npmjs.com/package/ffmpeg-static)
+```JS
+$ npm install ffmpeg-static
+```
 
-```js
-const { Client } = require('discord.js');
+Install [@discordjs/opus](https://www.npmjs.com/package/@discordjs/opus)
+```JS
+$ npm install @discordjs/opus
+```
 
-const client = new Client();
+## Features
+
+* Simple & easy to use 👍
+* Beginner friendly 😄
+* Audio filters 🎸
+* Lyrics 📃
+* Play in multiple servers at the same time ⏰
+
+## [Documentation](https://dpm-docs.tk)
+
+## Getting Started
+
+```JS
+const Discord = require('discord.js');
+
+const client = new Discord.Client();
 const MusicPlayer = require('discord-player-music');
 const player = new MusicPlayer(client);
 
 client.on('ready', () => {
-    console.log('Bot started!');
+  console.log('Bot started!');
 })
 
-client.login('token'); //https://discord.com/developers/
-```
-
-# Module Methods
-
-* `play()` - Method for videos playback.
-```js
-/**
- * @param {Guild} guild Discord Guild 
- * @param {Object} song Song Object 
- * @returns {Promise<Event>} Returns the event of the module
-*/
-player.play(guild, song);
-```
-
-* `searchVideo()` - Method for searching videos by user request.
-```js
-/**
- * @param {GuildMember} member Discord Guild Member
- * @param {String} searchString Search String
- * @param {Message} message Discord Message
- * @returns {Promise<Array<Song>>} Returns a list of found songs 
-*/
-player.searchVideo(member, searchString, message);
-```
-
-* `getSongIndex()` - Method for getting song index.
-```js
-/**
- * @param {Array} tracksArray Tracks Array
- * @param {Message} message Discord Message
- * @returns {Promise<Number>} Returns the position of the song from the list
-*/
-player.getSongIndex(tracksArray, message);
-```
-
-* `addSong()` - Method for adding a song to the server queue.
-```js
-/**
- * @param {Number} index Song Index
- * @param {Guild} guild Discord Guild
- * @param {Array} tracksArray Songs Array 
- * @param {TextChannel} textChannel Discord Text Channel 
- * @param {VoiceChannel} voiceChannel Discord Voice Channel 
- * @returns {Promise<Event>} Returns the event of the module
-*/
-player.addSong(index, guild, tracksArray, textChannel, voiceChannel);
-```
-
-* `skipSong()` - Method for skipping songs in the queue.
-```js
-/**
- * @param {Guild} guild Discord Guild
- * @returns {Promise<{ status: Boolean, song: Song }>} Returns an object with a skip status and a song object 
-*/
-player.skipSong(guild);
-```
-
-* `getQueue()` - Method for getting a queue of server songs.
-```js
-/**
- * @param {Guild} guild Discord Guild
- * @returns {Promise<Array<Song>>} Returns an array of songs being played on the server
-*/
-player.getQueue(guild);
-```
-
-* `setLoopSong()` - Method for setting the current song to repet from the server queue.
-```js
-/**
- * @param {Guild} guild Discord Guild
- * @returns {Promise<{ status: Boolean, song: Song }>} Returns the song repeat status and object
-*/
-player.setLoopSong(guild);
-```
-
-* `setLoopQueue()` - Method for setting to repeat server queue songs.
-```js
-/**
- * @param {Guild} guild Discord Guild
- * @returns {Promise<{ status: Boolean, songs: Array<Song> }>} Returns the repeat status of the queue and its object
-*/
-player.setLoopQueue(guild);
-```
-
-* `stopPlaying()` - Method for ending playing a queue of songs.
-```js
-/**
- * @param {Guild} guild Discord Guild 
- * @returns {Promise<Boolean>} Returns true on success
-*/
-player.stopPlaying(guild);
-```
-
-* `pausePlaying()` - Method to pause song playback.
-```js
-/**
- * @param {Guild} guild Discord Guild
- * @returns {Promise<Boolean>} Returns `true` on success
-*/
-player.pausePlaying(guild);
-```
-
-* `resumePlaying()` - Method to restore playing songs.
-```js
-/**
- * @param {Guild} guild Discord Guild
- * @returns {Promise<Boolean>} Returns `true` on success
-*/
-player.resumePlaying(guild);
-```
-
-* `setVolume()` - Method for changing the playback volume of songs.
-```js
-/**
- * @param {Guild} guild 
- * @param {Number} volumeValue 
- * @returns {Promise<{status: Boolean, volume: Number}>} Returns the volume setting status and value
-*/
-player.setVolume(guild, volumeValue);
-```
-
-* `setFilter()` - Sets the filter for server queue songs.
-```js
-/**
- * @param {Guild} guild Discord Guild
- * @param {'3d' | 'bassboost' | 'echo' | 'flanger' | 'gate' |'haas' | 'karaoke' | 'nightcore' | 'reverse' | 'vaporwave' | 'mcompand' |'phaser' | 'tremolo' | 'surround' | 'earwax' | 'clear'} filter Filter Name
- * @returns {Promise<{ status: Boolean, filter: String, queue: Array<Song>}>} Returns installation status, filter name and server queue array.
-*/
-player.setFilter(guild, filter)
-```
-
-* `getCurrentSongInfo()` - Method for getting information about the current song.
-```js
-/**
- * Method for getting information about the current song
- * @param {Guild} guild Discord Guild
- * @returns {Promise<{ guildMap: GuildMap, songInfo: Song }>} Returns an object with information about the current song and server queue
-*/
-player.getCurrentSongInfo(guild);
-```
-
-* `joinVoiceChannel()` - Method for joining your bot in voice channel.
-```js
-/**
- * @param {GuildMember} member Discord Guild Member 
- * @returns {Promise<{ status: Boolean, voiceChannel: VoiceChannel }>} Returns the status and object of the voice channel
-*/
-player.joinVoiceChannel(member);
-```
-
-* `leaveVoiceChannel()` - Method for left your bot the voice channel.
-```js
-/**
- * @param {GuildMember} member Discord Guild Member 
- * @returns {Promise<{ status: true, voiceChannel: VoiceChannel }>} Returns the status and object of the voice channel
-*/
-player.leaveVoiceChannel(member);
-```
-
-* `createProgressBar()` - Method for creating progress bar.
-```js
-/**
- * @param {Guild} guild Discord Guild
- * @returns {Promise<{ bar: string, percents: string }>} Returns an object with the progress bar data
-*/
-player.createProgressBar(guild);
-```
-
-* `getFilters()` - Method for getting all filters of a module.
-```js
-/**
- * @returns {Promise<Array<Filters>>} Returns an array of all filters in the module.
-*/
-player.getFilters()
-```
-
-* `getLyrics()` - Method for getting the lyrics of the current song.
-```js
-/**
- * @param {Guild} guild Discord Guild
- * @returns {Promise<{ song: string, lyrics: string }>} Returns an object with the name of the song and lyrics to it
-*/
-player.getLyrics(guild);
-```
-
-* `shuffle()` - Method for shuffling songs in queue.
-```js
-/**
- * @param {Guild} guild Discord Guild
- * @returns {Promise<GuildMap>} Returns an object with server queue parameters
-*/
-player.shuffle(guild);
-```
-
-* `formatNumbers()` - Method for formatting numbers.
-```js
-/**
- * @param {Array} numbersArray Numbers Array
- * @returns {Array<String>} Returns an array with formatted numbers
-*/
-player.formatNumbers(numbersArray);
+client.login('YOUR_BOT_TOKEN_HERE'); //https://discord.com/developers/
 ```
 
 # Module Events
 
 * `playingSong` - Returns a song object that you can use. 
-```js
+```JS
 player.on('playingSong', data => {
-    let song = data.songs[0];
+  const song = data.songs[0];
 
-    let nowPlaying = new MessageEmbed()
+  const nowPlaying = new Discord.MessageEmbed()
 
-    .setColor('RANDOM')
-    .setTitle(':musical_note: | Song is playing!')
-    .setThumbnail(song.thumbnail)
-    .setDescription(`Song Name: **${song.title}**\nSong URL: **${song.url}**\nSong Duration: **${song.duration.hours}:${song.duration.minutes}:${song.duration.seconds}**\nSong Requested: <@${song.requestedBy.id}>`)
+  .setColor('RANDOM')
+  .setTitle(':musical_note: | Song is playing!')
+  .setThumbnail(song.thumbnail)
+  .setDescription(`Song Name: **${song.title}**\nSong URL: **${song.url}**\nSong Duration: **${song.duration.hours}:${song.duration.minutes}:${song.duration.seconds}**\nSong Requested: <@${song.requestedBy.id}>`)
+  .setFooter(`Requested: ${song.requestedBy}`, song.requestedBy.displayAvatarURL({ dynamic: true }));
 
-    data.textChannel.send(nowPlaying);
+  return data.textChannel.send(nowPlaying);
 });
 ```
 
 * `songAdded` - Returns an object of the added song that you can use. 
-```js
+```JS
 player.on('songAdded', song => {
-    let nowPlaying = new MessageEmbed()
+  const nowPlaying = new Discord.MessageEmbed()
 
-    .setColor('RANDOM')
-    .setTitle(':musical_note: | A song has been added to the queue!')
-    .setThumbnail(song.thumbnail)
-    .setDescription(`Song Name: **${song.title}**\nSong URL: **${song.url}**\nSong Duration: **${song.duration.hours}:${song.duration.minutes}:${song.duration.seconds}**\nSong Requested: <@${song.requestedBy.id}>`)
+  .setColor('RANDOM')
+  .setTitle(':musical_note: | A song has been added to the queue!')
+  .setThumbnail(song.thumbnail)
+  .setDescription(`Song Name: **${song.title}**\nSong URL: **${song.url}**\nSong Duration: **${song.duration.hours}:${song.duration.minutes}:${song.duration.seconds}**\nSong Requested: <@${song.requestedBy.id}>`)
+  .setFooter(`Requested: ${song.requestedBy}`, song.requestedBy.displayAvatarURL({ dynamic: true }));
 
-    song.textChannel.send(nowPlaying);
+  return song.textChannel.send(nowPlaying);
 });
 ```
 
 * `queueEnded` - Returns an object that you can use. 
-```js
+```JS
 player.on('queueEnded', data => {
-    data.textChannel.send(new MessageEmbed().setColor('RANDOM').setDescription(`Server queue ended!`));
+  return data.textChannel.send(new Discord.MessageEmbed().setColor('RANDOM').setDescription(`Server queue ended!`));
 });
 ```
 
 * `playerError` - If there is any error in the module, then you can easily detect and fix it. 
-```js
-player.on('playerError', async data => {
-    if(!data.textChannel) return console.log(data.error);
-    return await data.textChannel.send(data.error.message);
+```JS
+player.on('playerError', data => {
+  if(!data.textChannel) return console.log(data.error);
+
+  return data.textChannel.send(data.error.message);
+});
+```
+
+## Bot Example
+
+```JS
+const Discord = require('discord.js');
+const Player = require('discord-player-music');
+const client = new Discord.Client();
+const prefix = '!';
+
+client.player = new Player(client);
+
+client.on('ready', () => {
+  console.log(`${client.user.tag} ready!`);
+});
+
+client.on('message', async message => {
+  if(!message.content.startsWith(prefix)) return;
+
+  const messageArray = message.content.split(' ');
+  const command = messageArray[0];
+  const args = messageArray.slice(1);
+
+  if(command === `${prefix}play`) {
+    const query = args.join(' ');
+    if(!query) return console.log('Missing Arguments!');
+
+    client.player.searchVideo(message.member, query, message).then(data => {
+      if(!data[0].index) return;
+
+      return message.channel.send(data.map(song => `[${song.index}] - **${song.title}**`));
+    })
+  }
+
+  if(command === `${prefix}queue`) {
+    client.player.getQueue(message.guild).then(data => {
+      return message.channel.send(data.map((song, index) => `\`[${index + 1}]\` **${song.title}** [${song.duration.hours}:${song.duration.minutes}:${song.duration.seconds}]`));
+    }).catch(error => {
+      return console.log(error);
+    })
+  }
+
+  if(command === `${prefix}stop`) {
+    client.player.stopPlaying(message.guild).then(status => {
+      return message.channel.send('Playing queue stopped!');
+    }).catch(error => {
+      return console.log(error);
+    })
+  }
 });
 ```
 
@@ -283,10 +156,10 @@ player.on('playerError', async data => {
   * Release module
 * ***Version 1.0.1***
   * Code optimization
-  * Fix methods `joinVoiceChannel` and `leaveVoiceChannel`
-  * Add method `formatNumbers`
+  * Fix methods `joinVoiceChannel()` and `leaveVoiceChannel()`
+  * Added the `formatNumbers()` method for formatting numbers
   * Fix bugs
-  * Fix README.md
+  * Fix `README.md`
 * ***Version 1.0.2***
   * Code optimization
   * Fixed bug with repeating song/queue
@@ -298,16 +171,16 @@ player.on('playerError', async data => {
   * Code optimization
   * Fix caught some bugs
   * Fixed minor bugs
-  * Rewrite README.md
+  * Rewrite `README.md`
   * Fixed events
 * ***Versions 1.0.4 - 1.0.5***
   * Update versions all dependencies
-  * Fix README.md
+  * Fix `README.md`
 * ***Version 1.0.6***
   * Fix module typings
   * Fix minor bugs
   * Added the `getFilters()` method to get arrays with player filters
-  * Fix README.md
+  * Fix `README.md`
 * ***Version 1.0.7***
   * Update versions all dependencies
 * ***Version 1.0.8***
@@ -316,9 +189,15 @@ player.on('playerError', async data => {
 * ***Version 1.1.0***
   * Fix filter system
   * Added the `shuffle()` method for shuffling songs in queue
+* ***Version 1.1.1***
+  * The `playerError` event has started to catch more errors about which users can be warned
+  * When receiving an error `Status code: 403`, the module will restart the stream (previously, the stream simply ended)
+  * Add the `removeSong()` method for removing songs from the queue
+  * Completely rewritten `README.md`
 
 # Useful Links
 
+* [Documentation](https://dpm-docs.tk)
 * [npm](https://www.npmjs.com/package/discord-player-music)
 * [GitHub](https://github.com/xyligan-gp/discord-player-music)
 * [Examples](https://github.com/xyligan-gp/discord-player-music/blob/main/example/)

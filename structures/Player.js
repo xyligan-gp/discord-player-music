@@ -124,6 +124,7 @@ module.exports = {
         { name: '3D', value: 'apulsator=hz=0.125' },
         { name: 'bassboost', value: 'bass=g=10,dynaudnorm=f=150:g=15' },
         { name: 'echo', value: 'aecho=0.8:0.9:1000:0.3' },
+        { name: 'fadein', value: 'afade=t=in:ss=0:d=10' },
         { name: 'flanger', value: 'flanger' },
         { name: 'gate', value: 'agate' },
         { name: 'haas', value: 'haas' },
