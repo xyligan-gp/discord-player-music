@@ -1,7 +1,7 @@
 const { EventEmitter } = require('events'), { Client, Guild, GuildMember, TextChannel, VoiceChannel, Message } = require('discord.js'), ytdl = require('./modules/dpm-ytdl.js'), ytSearch = require('yt-search'), { Readable } = require('stream'), searchLyrics = require('lyrics-finder'),
 MusicPlayerError = require('discord-player-music/src/MusicPlayerError.js'), PlayerErrors = require('discord-player-music/src/PlayerErrors.js'), { Song, GuildMap, Filters } = require('discord-player-music/structures/Player.js');
 
-module.exports = class MusicPlayer extends EventEmitter {
+class MusicPlayer extends EventEmitter {
 
     /**
      * MusicPlayer Constructor
@@ -12,19 +12,8 @@ module.exports = class MusicPlayer extends EventEmitter {
 
         if (!client) return new MusicPlayerError(PlayerErrors.clientNotRequired);
 
-        /**
-         * Discord Client
-        */
         this.client = client;
-
-        /**
-         * Player Queue Manager
-        */
         this.queue = new Map();
-
-        /**
-         * Module Manager Status
-        */
         this.ready = false;
 
         this.initPlayer();
@@ -757,3 +746,63 @@ module.exports = class MusicPlayer extends EventEmitter {
         this.author = require('../package.json').author;
     }
 }
+
+module.exports = MusicPlayer;
+
+/**
+ * 
+ * @event MusicPlayer#playingSong
+ * @param {Object} data Callback
+ * @param {TextChannel} data.textChannel Queue Text Channel
+ * @param {VoiceChannel} data.voiceChannel Queue Voice Channel
+ * @param {VoiceChannel} data.voiceChannel Queue Voice Channel
+ * @param {VoiceConnection} data.connection Queue Voice Connection
+ * @param {Array<Object>} data.songs Queue Songs
+ * @param {Number} data.volume Queue Songs Volume
+ * @param {Boolean} data.loop Queue Song Loop
+ * @param {Boolean} data.queueLoop Queue Song Queue Loop
+ * @param {Boolean} data.playing Queue Song Playing Status
+ * @param {String} data.filter Queue Songs Filter
+ */
+
+/**
+ * 
+ * @event MusicPlayer#songAdded
+ * @param {Object} song Callback
+ * @param {Number} song.index Song Position in Queue
+ * @param {String} song.searchType Search Type (URL or Name)
+ * @param {String} song.title Song Title
+ * @param {String} song.url Song URL
+ * @param {String} song.thumbnail Song Thumbnail
+ * @param {String} song.author Song Uploader
+ * @param {TextChannel} song.textChannel Text Channel
+ * @param {VoiceChannel} song.voiceChannel Voice Channel
+ * @param {User} song.requestedBy Requester of the Song
+ * @param {Object} song.duration Song Duration
+ */
+
+/**
+ * 
+ * @event MusicPlayer#queueEnded
+ * @param {Object} data Callback
+ * @param {TextChannel} data.textChannel Queue Text Channel
+ * @param {VoiceChannel} data.voiceChannel Queue Voice Channel
+ * @param {VoiceChannel} data.voiceChannel Queue Voice Channel
+ * @param {VoiceConnection} data.connection Queue Voice Connection
+ * @param {Array<Object>} data.songs Queue Songs
+ * @param {Number} data.volume Queue Songs Volume
+ * @param {Boolean} data.loop Queue Song Loop
+ * @param {Boolean} data.queueLoop Queue Song Queue Loop
+ * @param {Boolean} data.playing Queue Song Playing Status
+ * @param {String} data.filter Queue Songs Filter
+ */
+
+/**
+ * 
+ * @event MusicPlayer#playerError
+ * @param {Object} data Callback
+ * @param {TextChannel} data.textChannel Text Channel
+ * @param {Message} data.message Message
+ * @param {String} data.method Executed Method
+ * @param {Object} data.error Returned Error
+ */

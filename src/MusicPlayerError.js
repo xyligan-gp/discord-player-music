@@ -3,7 +3,7 @@
 //////////////// Creators: xyligan & ShadowPlay ////////////////
 ////////////////////////////////////////////////////////////////
 
-module.exports = class MusicPlayerError extends Error {
+class MusicPlayerError extends Error {
     /**
      * Module Error Handler
      * @param {String} message Error Message
@@ -16,3 +16,5 @@ module.exports = class MusicPlayerError extends Error {
         this.name = 'MusicPlayerError'
     }
 }
+
+module.exports = MusicPlayerError;
