@@ -8,6 +8,6 @@ module.exports = {
      * @param {import('discord-player-music').Song} song Event Data
      */
     run: async(client, song) => {
-        return data.textChannel.send(`New Song Added To Queue!\n\nSong Title: **${song.title}**\nSong URL: **${song.url}**\nSong Duration: **${song.duration.hours}:${song.duration.minutes}:${song.duration.seconds}**`);
+        return song.textChannel.send(`New Song Added To Queue!\n\nSong Title: **${song.title}**\nSong URL: **${song.url}**\nSong Duration: **${song.duration.hours}:${song.duration.minutes}:${song.duration.seconds}**`);
     }
 }
