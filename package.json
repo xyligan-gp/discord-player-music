@@ -1,6 +1,6 @@
 {
   "name": "discord-player-music",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "Easy module for playing music in your discord.js bot!",
   "main": "index.js",
   "scripts": {
@@ -30,6 +30,6 @@
   "bugs": {
     "url": "https://github.com/xyligan-gp/discord-player-music/issues"
   },
-  "homepage": "https://github.com/xyligan-gp/discord-player-music#readme",
+  "homepage": "https://dpm-docs.tk",
   "types": "./typings/Player.d.ts"
 }

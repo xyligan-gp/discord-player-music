@@ -1,6 +1,5 @@
 import { Client, Guild, GuildMember, Message, TextChannel, User, VoiceChannel, VoiceConnection } from 'discord.js';
 import { EventEmitter } from 'events';
-import { Readable } from 'stream';
 
 declare module 'discord-player-music' {
 
@@ -22,6 +21,16 @@ declare module 'discord-player-music' {
          * MusicPlayer Ready Status
          */
         public ready: boolean;
+
+        /**
+         * MusicPlayer Client
+         */
+        public client: Client;
+
+        /**
+         * MusicPlayer Utils
+         */
+        public utils: Utils;
 
         /**
          * MusicPlayer Constructor
@@ -193,20 +202,6 @@ declare module 'discord-player-music' {
         removeSong(guild: Guild, song_Name_ID: string | number): Promise<{ song: object, songs: number }>;
 
         /**
-         * Method for formatting numbers
-         * @param {Array} numbersArray Numbers Array
-         * @returns {Array<Number>} Returns an array with formatted numbers
-         */
-        formatNumbers(numbersArray: Array<Number>): Array<String>;
-
-        /**
-         * Starts the song stream
-         * @param {Guild} guild Discord Guild
-         * @returns {Promise<Readable>} Returns a new stream object
-         */
-        private createStream(guild: Guild): Promise<Readable>;
-
-        /**
          * Method for initialization module
          * @returns {void} Module Status
          */
@@ -232,8 +227,24 @@ declare module 'discord-player-music' {
         constructor(message: string | Error);
     }
 
+    class Utils {
+        /**
+         * Method for formatting numbers
+         * @param {Array<Number>} numbersArray Numbers Array
+         * @returns {Array<String>} Returns an array with formatted numbers
+         */
+        formatNumbers(numbersArray: Array<Number>): Array<String>;
+
+        /**
+         * Starts the song stream
+         * @param {Guild} guild Discord Guild
+         * @returns {void}
+         */
+        createStream(guild: Guild): void;
+    }
+
     namespace MusicPlayer {
-        const version: '1.1.1'
+        const version: '1.1.2'
     }
 
     export = MusicPlayer;

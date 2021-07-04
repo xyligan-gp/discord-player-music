@@ -151,50 +151,6 @@ client.on('message', async message => {
 });
 ```
 
-# Module Changelog
-* ***Version 1.0.0***
-  * Release module
-* ***Version 1.0.1***
-  * Code optimization
-  * Fix methods `joinVoiceChannel()` and `leaveVoiceChannel()`
-  * Added the `formatNumbers()` method for formatting numbers
-  * Fix bugs
-  * Fix `README.md`
-* ***Version 1.0.2***
-  * Code optimization
-  * Fixed bug with repeating song/queue
-  * Improving the quality of playing songs
-  * Added filter system. Method `setFilter()`
-  * Changing the returned data by some methods and events
-  * Added the `getGuildMap()` method to get the server queue object
-* ***Version 1.0.3***
-  * Code optimization
-  * Fix caught some bugs
-  * Fixed minor bugs
-  * Rewrite `README.md`
-  * Fixed events
-* ***Versions 1.0.4 - 1.0.5***
-  * Update versions all dependencies
-  * Fix `README.md`
-* ***Version 1.0.6***
-  * Fix module typings
-  * Fix minor bugs
-  * Added the `getFilters()` method to get arrays with player filters
-  * Fix `README.md`
-* ***Version 1.0.7***
-  * Update versions all dependencies
-* ***Version 1.0.8***
-  * Fix method `searchVideo()`
-  * Added the `getLyrics()` method to get lyrics for current song
-* ***Version 1.1.0***
-  * Fix filter system
-  * Added the `shuffle()` method for shuffling songs in queue
-* ***Version 1.1.1***
-  * The `playerError` event has started to catch more errors about which users can be warned
-  * When receiving an error `Status code: 403`, the module will restart the stream (previously, the stream simply ended)
-  * Add the `removeSong()` method for removing songs from the queue
-  * Completely rewritten `README.md`
-
 # Useful Links
 
 * [Documentation](https://dpm-docs.tk)

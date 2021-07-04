@@ -7,6 +7,7 @@ class MusicPlayerError extends Error {
     /**
      * Module Error Handler
      * @param {String} message Error Message
+     * @returns {MusicPlayerError} Player Error
     */
     constructor(message) {
         if (message instanceof Error == 'Error') {
