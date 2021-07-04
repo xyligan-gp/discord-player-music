@@ -1,5 +1,12 @@
-const { EventEmitter } = require('events'), { Client, Guild, GuildMember, TextChannel, VoiceChannel, Message } = require('discord.js'), ytdl = require('./modules/dpm-ytdl.js'), ytSearch = require('yt-search'), { Readable } = require('stream'), searchLyrics = require('lyrics-finder'),
-MusicPlayerError = require('discord-player-music/src/MusicPlayerError.js'), PlayerErrors = require('discord-player-music/src/PlayerErrors.js'), { Song, GuildMap, Filters } = require('discord-player-music/structures/Player.js');
+const { EventEmitter } = require('events');
+const { Client, Guild, GuildMember, TextChannel, VoiceChannel, Message } = require('discord.js');
+const ytSearch = require('yt-search');
+const searchLyrics = require('lyrics-finder');
+const ytdl = require('./modules/dpm-ytdl.js');
+const MusicPlayerError = require('discord-player-music/src/MusicPlayerError.js');
+const PlayerErrors = require('discord-player-music/src/PlayerErrors.js');
+const Utils = require('discord-player-music/src/Utils.js');
+const { Filters } = require('discord-player-music/structures/Player.js');
 
 class MusicPlayer extends EventEmitter {
 
@@ -13,8 +20,42 @@ class MusicPlayer extends EventEmitter {
         if (!client) return new MusicPlayerError(PlayerErrors.clientNotRequired);
 
         this.client = client;
+
+        /**
+         * MusicPlayer Queues Map
+         * @type {Map}
+         */
         this.queue = new Map();
+
+        /**
+         * MusicPlayer Ready Status
+         * @type {Boolean}
+         */
         this.ready = false;
+
+        /**
+         * MusicPlayer Documentation Link
+         * @type {String}
+         */
+        this.docs = 'https://dpm-docs.tk';
+
+        /**
+         * MusicPlayer Version
+         * @type {String}
+         */
+        this.version = require('../package.json').version;
+
+        /**
+         * MusicPlayer Author
+         * @type {String}
+         */
+        this.author = require('../package.json').author;
+
+        /**
+         * MusicPlayer Utils
+         * @type {Utils}
+         */
+        this.utils = new Utils(client, this.queue);
 
         this.initPlayer();
 
@@ -31,7 +72,8 @@ class MusicPlayer extends EventEmitter {
                     return;
                 })
             }else{
-                const serverQueue = await this.queue.get(dara.textChannel.guild.id);
+                const serverQueue = await this.queue.get(data.textChannel.guild.id);
+                if(!serverQueue) return;
 
                 serverQueue.voiceChannel.leave();
                 this.queue.delete(data.textChannel.guild.id);
@@ -42,8 +84,8 @@ class MusicPlayer extends EventEmitter {
     /**
      * Method for playing songs
      * @param {Guild} guild Discord Guild 
-     * @param {Song} song Song Object 
-     * @returns {Promise<Event>} Returns the event of the module
+     * @param {Object} song Song Object 
+     * @returns {void}
     */
     play(guild, song) {
         return new Promise(async (resolve, reject) => {
@@ -55,7 +97,7 @@ class MusicPlayer extends EventEmitter {
             }
 
             try {
-                let stream = await this.createStream(guild);
+                let stream = await this.utils.createStream(guild);
 
                 const dispatcher = serverQueue.connection
                     .play(stream, { type: 'opus' })
@@ -90,12 +132,13 @@ class MusicPlayer extends EventEmitter {
             }
         })
     }
+
     /**
      * Method to search for songs by user request
      * @param {GuildMember} member Discord GuildMember
      * @param {String} searchString Search String
      * @param {Message} message Discord Message
-     * @returns {Promise<Array<Song>>} Returns a list of found songs
+     * @returns {Promise<Array<Object>>} Returns a list of found songs
     */
     searchVideo(member, searchString, message) {
         return new Promise(async (resolve, reject) => {
@@ -124,9 +167,9 @@ class MusicPlayer extends EventEmitter {
                         requestedBy: message.author,
 
                         duration: {
-                            hours: this.formatNumbers([Math.floor(songInfo.videoDetails.lengthSeconds / 3600)]).join(''),
-                            minutes: this.formatNumbers([Math.floor(songInfo.videoDetails.lengthSeconds / 60 % 60)]).join(''),
-                            seconds: this.formatNumbers([Math.floor(songInfo.videoDetails.lengthSeconds % 60)]).join('')
+                            hours: this.utils.formatNumbers([Math.floor(songInfo.videoDetails.lengthSeconds / 3600)]).join(''),
+                            minutes: this.utils.formatNumbers([Math.floor(songInfo.videoDetails.lengthSeconds / 60 % 60)]).join(''),
+                            seconds: this.utils.formatNumbers([Math.floor(songInfo.videoDetails.lengthSeconds % 60)]).join('')
                         }
                     })
 
@@ -150,9 +193,9 @@ class MusicPlayer extends EventEmitter {
                             requestedBy: message.author,
 
                             duration: {
-                                hours: this.formatNumbers([Math.floor(videoResult.videos[i].seconds / 3600)]).join(''),
-                                minutes: this.formatNumbers([Math.floor(videoResult.videos[i].seconds / 60 % 60)]).join(''),
-                                seconds: this.formatNumbers([Math.floor(videoResult.videos[i].seconds % 60)]).join('')
+                                hours: this.utils.formatNumbers([Math.floor(videoResult.videos[i].seconds / 3600)]).join(''),
+                                minutes: this.utils.formatNumbers([Math.floor(videoResult.videos[i].seconds / 60 % 60)]).join(''),
+                                seconds: this.utils.formatNumbers([Math.floor(videoResult.videos[i].seconds % 60)]).join('')
                             }
                         })
                     }
@@ -168,7 +211,7 @@ class MusicPlayer extends EventEmitter {
 
     /**
      * Method for getting song index
-     * @param {Array} tracksArray Songs Array
+     * @param {Array<String>} tracksArray Songs Array
      * @param {Message} message Discord Message
      * @returns {Promise<Number>} Returns the position of the song from the list
     */
@@ -204,10 +247,10 @@ class MusicPlayer extends EventEmitter {
      * Method for adding a song to the server queue
      * @param {Number} index Song Index
      * @param {Guild} guild Discord Guild
-     * @param {Array} tracksArray Songs Array 
+     * @param {Array<String>} tracksArray Songs Array 
      * @param {TextChannel} textChannel Discord TextChannel 
      * @param {VoiceChannel} voiceChannel Discord VoiceChannel 
-     * @returns {Promise<Event>} Returns the event of the module
+     * @returns {void}
     */
     addSong(index, guild, tracksArray, textChannel, voiceChannel) {
         return new Promise(async (resolve, reject) => {
@@ -247,7 +290,7 @@ class MusicPlayer extends EventEmitter {
     /**
      * Method for skipping songs in the queue
      * @param {Guild} guild Discord Guild
-     * @returns {Promise<{ status: Boolean, song: Song }>} Returns an object with a skip status and a song object.
+     * @returns {Promise<{ status: Boolean, song: Object }>} Returns an object with a skip status and a song object.
     */
     skipSong(guild) {
         return new Promise(async (resolve, reject) => {
@@ -277,10 +320,11 @@ class MusicPlayer extends EventEmitter {
             }
         })
     }
+
     /**
      * Method for getting a queue of server songs
      * @param {Guild} guild Discord Guild
-     * @returns {Promise<Array<Song>>} Returns an array of songs being played on the server
+     * @returns {Promise<Array<Object>>} Returns an array of songs being played on the server
     */
     getQueue(guild) {
         return new Promise(async (resolve, reject) => {
@@ -298,7 +342,7 @@ class MusicPlayer extends EventEmitter {
     /**
      * Method for setting the current song to repet from the server queue
      * @param {Guild} guild Discord Guild
-     * @returns {Promise<{ status: Boolean, song: Song }>} Returns the song repeat status and object
+     * @returns {Promise<{ status: Boolean, song: Object }>} Returns the song repeat status and object
     */
     setLoopSong(guild) {
         return new Promise(async (resolve, reject) => {
@@ -319,9 +363,9 @@ class MusicPlayer extends EventEmitter {
     /**
      * Method for setting to repeat server queue songs
      * @param {Guild} guild Discord Guild
-     * @returns {Promise<{ status: Boolean, songs: Array<Song> }>} Returns the repeat status of the queue and its object
+     * @returns {Promise<{ status: Boolean, songs: Array<Object> }>} Returns the repeat status of the queue and its object
     */
-    setLoopQueue(guild) {
+     setLoopQueue(guild) {
         return new Promise(async (resolve, reject) => {
             try {
                 let serverQueue = await this.queue.get(guild.id);
@@ -433,7 +477,7 @@ class MusicPlayer extends EventEmitter {
     /**
      * Method for getting information about the current song
      * @param {Guild} guild Discord Guild
-     * @returns {Promise<{ guildMap: GuildMap, songInfo: Song }>} Returns an object with information about the current song and server queue
+     * @returns {Promise<{ guildMap: Object, songInfo: Object }>} Returns an object with information about the current song and server queue
     */
     getCurrentSongInfo(guild) {
         return new Promise(async (resolve, reject) => {
@@ -491,7 +535,7 @@ class MusicPlayer extends EventEmitter {
     /**
      * Method for left your bot the voice channel
      * @param {GuildMember} member Discord GuildMember 
-     * @returns {Promise<{ status: true, voiceChannel: VoiceChannel }>} Returns the status and object of the voice channel
+     * @returns {Promise<{ status: Boolean, voiceChannel: VoiceChannel }>} Returns the status and object of the voice channel
     */
     leaveVoiceChannel(member) {
         return new Promise(async (resolve, reject) => {
@@ -512,7 +556,7 @@ class MusicPlayer extends EventEmitter {
     /**
      * Method for creating progress bar
      * @param {Guild} guild Discord Guild
-     * @returns {Promise<{ bar: string, percents: string }>} Returns an object with the progress bar data
+     * @returns {Promise<{ bar: String, percents: String }>} Returns an object with the progress bar data
     */
     createProgressBar(guild) {
         return new Promise(async (resolve, reject) => {
@@ -561,8 +605,8 @@ class MusicPlayer extends EventEmitter {
     /**
      * Sets the filter for server queue songs
      * @param {Guild} guild Discord Guild
-     * @param {'3d' | 'bassboost' | 'echo' | 'flanger' | 'gate' |'haas' | 'karaoke' | 'nightcore' | 'reverse' | 'vaporwave' | 'mcompand' |'phaser' | 'tremolo' | 'surround' | 'earwax' | 'clear'} filter Filter Name
-     * @returns {Promise<{ status: Boolean, filter: String, queue: Array<Song>}>} Returns installation status, filter name and server queue array
+     * @param {String} filter Filter Name
+     * @returns {Promise<{ status: Boolean, filter: String, queue: Array<Object>}>} Returns installation status, filter name and server queue array
     */
     setFilter(guild, filter) {
         return new Promise(async (resolve, reject) => {
@@ -585,7 +629,7 @@ class MusicPlayer extends EventEmitter {
     /**
      * Method for getting guild map
      * @param {Guild} guild Discord Guild 
-     * @returns {Promise<GuildMap>} Returns an object with server queue parameters
+     * @returns {Promise<Object>} Returns an object with server queue parameters
     */
     getGuildMap(guild) {
         return new Promise(async (resolve, reject) => {
@@ -602,7 +646,7 @@ class MusicPlayer extends EventEmitter {
 
     /**
      * Method for getting all filters of a module
-     * @returns {Promise<Array<Filters>>} Returns an array of all filters in the module
+     * @returns {Promise<Array<Object>>} Returns an array of all filters in the module
     */
     getFilters() {
         return new Promise(async (resolve, reject) => {
@@ -613,7 +657,7 @@ class MusicPlayer extends EventEmitter {
     /**
      * Method for getting the lyrics of the current song
      * @param {Guild} guild Discord Guild
-     * @returns {Promise<{ song: string, lyrics: string }>} Returns an object with the name of the song and lyrics to it
+     * @returns {Promise<{ song: String, lyrics: String }>} Returns an object with the name of the song and lyrics to it
     */
     getLyrics(guild) {
         return new Promise(async (resolve, reject) => {
@@ -634,7 +678,7 @@ class MusicPlayer extends EventEmitter {
     /**
      * Method for shuffling songs in queue
      * @param {Guild} guild Discord Guild
-     * @returns {Promise<GuildMap>} Returns an object with server queue parameters
+     * @returns {Promise<Object>} Returns an object with server queue parameters
     */
     shuffle(guild) {
         return new Promise(async (resolve, reject) => {
@@ -657,8 +701,8 @@ class MusicPlayer extends EventEmitter {
     /**
      * Method for removing songs from the queue by ID/title
      * @param {Guild} guild Discord Guild
-     * @param {string | number} song_Name_ID Song Index or Name in queue
-     * @returns {Promise<{ song: object, songs: number }>} Return removed song info and song count in queue
+     * @param {String | Number} song_Name_ID Song Index or Name in queue
+     * @returns {Promise<{ song: Object, songs: Number }>} Return removed song info and song count in queue
     */
     removeSong(guild, song_Name_ID) {
         return new Promise(async (resolve, reject) => {
@@ -686,75 +730,20 @@ class MusicPlayer extends EventEmitter {
     }
 
     /**
-     * Method for formatting numbers
-     * @param {Array} numbersArray Numbers Array
-     * @returns {Array<String>} Returns an array with formatted numbers
-    */
-    formatNumbers(numbersArray) {
-        var numberArray = [];
-
-        for (let i = 0; i < numbersArray.length; i++) {
-            if (Number(numbersArray[i]) < 10) {
-                numberArray.push('0' + numbersArray[i]);
-            } else {
-                numberArray.push(String(numbersArray[i]));
-            }
-        }
-
-        return numberArray;
-    }
-
-    /**
-     * Starts the song stream
-     * @param {Guild} guild Discord Guild
-     * @returns {Promise<Readable>} Returns a new stream object
-     * @private
-    */
-    createStream(guild) {
-        return new Promise(async (resolve, reject) => {
-            try {
-                let serverQueue = await this.queue.get(guild.id);
-                if (!serverQueue) return reject(new MusicPlayerError(PlayerErrors.queueNotFound));
-
-                let songInfo = await ytdl.getInfo(serverQueue.songs[0].url);
-
-                let encoderArgs = serverQueue.filter ? ["-af", [serverQueue.filter]] : null;
-
-                let streamOptions = {
-                    opusEncoded: true,
-                    filter: 'audioonly',
-                    quality: 'highestaudio',
-                    highWaterMark: 1 << 25,
-                    encoderArgs,
-                    dlChunkSize: 0
-                };
-
-                return resolve(await ytdl(songInfo, streamOptions));
-            } catch (error) {
-                reject(error);
-            }
-        })
-    }
-
-    /**
      * Method for initialization module
+     * @returns {void}
      * @private
     */
     initPlayer() {
         this.ready = true;
-        this.version = require('../package.json').version;
-        this.author = require('../package.json').author;
     }
 }
 
-module.exports = MusicPlayer;
-
 /**
- * 
+ * Emits when the song starts playing
  * @event MusicPlayer#playingSong
  * @param {Object} data Callback
  * @param {TextChannel} data.textChannel Queue Text Channel
- * @param {VoiceChannel} data.voiceChannel Queue Voice Channel
  * @param {VoiceChannel} data.voiceChannel Queue Voice Channel
  * @param {VoiceConnection} data.connection Queue Voice Connection
  * @param {Array<Object>} data.songs Queue Songs
@@ -766,7 +755,7 @@ module.exports = MusicPlayer;
  */
 
 /**
- * 
+ * Emits when a song is added to the queue
  * @event MusicPlayer#songAdded
  * @param {Object} song Callback
  * @param {Number} song.index Song Position in Queue
@@ -782,11 +771,10 @@ module.exports = MusicPlayer;
  */
 
 /**
- * 
+ * Emits when the queue ends
  * @event MusicPlayer#queueEnded
  * @param {Object} data Callback
  * @param {TextChannel} data.textChannel Queue Text Channel
- * @param {VoiceChannel} data.voiceChannel Queue Voice Channel
  * @param {VoiceChannel} data.voiceChannel Queue Voice Channel
  * @param {VoiceConnection} data.connection Queue Voice Connection
  * @param {Array<Object>} data.songs Queue Songs
@@ -798,11 +786,13 @@ module.exports = MusicPlayer;
  */
 
 /**
- * 
+ * Emits when an error occurs
  * @event MusicPlayer#playerError
  * @param {Object} data Callback
  * @param {TextChannel} data.textChannel Text Channel
  * @param {Message} data.message Message
  * @param {String} data.method Executed Method
- * @param {Object} data.error Returned Error
+ * @param {Error} data.error Returned Error
  */
+
+module.exports = MusicPlayer;
