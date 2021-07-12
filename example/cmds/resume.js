@@ -15,6 +15,7 @@ module.exports = {
             return message.reply('queue playback resumed!');
         }).catch(error => {
             if(error.message === 'Server queue not found!') return message.reply('server queue not found!');
+            if(error.message === 'Song playback has not stopped!') return message.reply('song playback has not stopped!');
         })
     }
 }
