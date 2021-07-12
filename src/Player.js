@@ -1,5 +1,5 @@
 const { EventEmitter } = require('events');
-const { Client, Guild, GuildMember, TextChannel, VoiceChannel, Message } = require('discord.js');
+const { Client, Guild, GuildMember, TextChannel, VoiceChannel, User } = require('discord.js');
 const ytSearch = require('yt-search');
 const searchLyrics = require('lyrics-finder');
 const ytdl = require('./modules/dpm-ytdl.js');
@@ -11,7 +11,6 @@ const { Filters } = require('discord-player-music/structures/Player.js');
 class MusicPlayer extends EventEmitter {
 
     /**
-     * MusicPlayer Constructor
      * @param {Client} client Discord Client 
     */
     constructor(client) {
@@ -123,12 +122,12 @@ class MusicPlayer extends EventEmitter {
                         }
                     })
                     .on("error", error => {
-                        return this.emit('playerError', { textChannel: song.textChannel, message: null, method: 'play', error: error });
+                        return this.emit('playerError', { textChannel: song.textChannel, requested: song.requestedBy, method: 'play', error: error });
                     });
                 dispatcher.setVolumeLogarithmic(serverQueue.volume / 5);
                 this.emit('playingSong', this.queue.get(guild.id));
             }catch(error){
-                return this.emit('playerError', { textChannel: song.textChannel, message: null, method: 'play', error: error });
+                return this.emit('playerError', { textChannel: song.textChannel, requested: song.requestedBy, method: 'play', error: error });
             }
         })
     }
@@ -137,10 +136,10 @@ class MusicPlayer extends EventEmitter {
      * Method to search for songs by user request
      * @param {GuildMember} member Discord GuildMember
      * @param {String} searchString Search String
-     * @param {Message} message Discord Message
+     * @param {TextChannel} channel Discord Text Channel
      * @returns {Promise<Array<Object>>} Returns a list of found songs
     */
-    searchVideo(member, searchString, message) {
+    searchSong(member, searchString, channel) {
         return new Promise(async (resolve, reject) => {
             let song = {}
 
@@ -162,9 +161,9 @@ class MusicPlayer extends EventEmitter {
                         url: songInfo.videoDetails.video_url,
                         thumbnail: songInfo.videoDetails.thumbnails[0].url,
                         author: songInfo.videoDetails.author.name,
-                        textChannel: message.channel,
-                        voiceChannel: message.member.voice.channel,
-                        requestedBy: message.author,
+                        textChannel: channel,
+                        voiceChannel: member.voice.channel,
+                        requestedBy: member.user,
 
                         duration: {
                             hours: this.utils.formatNumbers([Math.floor(songInfo.videoDetails.lengthSeconds / 3600)]).join(''),
@@ -174,7 +173,7 @@ class MusicPlayer extends EventEmitter {
                     })
 
                     resolve([song]);
-                    return this.addSong(1, member.guild, [song], message.channel, voiceChannel);
+                    return this.addSong(1, member.guild, [song], channel, song.voiceChannel);
                 } else {
                     const videoResult = await ytSearch(searchString);
 
@@ -188,9 +187,9 @@ class MusicPlayer extends EventEmitter {
                             url: videoResult.videos[i].url,
                             thumbnail: videoResult.videos[i].thumbnail,
                             author: videoResult.videos[i].author.name,
-                            textChannel: message.channel,
-                            voiceChannel: message.member.voice.channel,
-                            requestedBy: message.author,
+                            textChannel: channel,
+                            voiceChannel: member.voice.channel,
+                            requestedBy: member.user,
 
                             duration: {
                                 hours: this.utils.formatNumbers([Math.floor(videoResult.videos[i].seconds / 3600)]).join(''),
@@ -201,40 +200,41 @@ class MusicPlayer extends EventEmitter {
                     }
 
                     resolve(tracksArray)
-                    await this.getSongIndex(tracksArray, message);
+                    await this.getSongIndex(tracksArray, member, channel);
                 }
-            } catch (error) {
-                this.emit('playerError', { textChannel: message.channel, message: message, method: 'searchVideo', error: error });
+            }catch(err){
+                this.emit('playerError', { textChannel: channel, requestedBy: member.user, method: 'searchVideo', error: error });
             }
         })
     }
 
     /**
      * Method for getting song index
-     * @param {Array<String>} tracksArray Songs Array
-     * @param {Message} message Discord Message
+     * @param {Array<Object>} tracksArray Songs Array
+     * @param {GuildMember} member Discord GuildMember
+     * @param {TextChannel} channel Discord Text Channel
      * @returns {Promise<Number>} Returns the position of the song from the list
     */
-    getSongIndex(tracksArray, message) {
+    getSongIndex(tracksArray, member, channel) {
         return new Promise(async (resolve, reject) => {
             try {
-                const filter = msg => msg.author.id === message.author.id;
-                let collector = message.channel.createMessageCollector(filter, { time: 30000 });
+                const filter = msg => msg.author.id === member.id;
+                let collector = channel.createMessageCollector(filter, { time: 30000 });
 
                 collector.on('collect', async msg => {
                     if (!isNaN(msg.content)) {
                         let number = Math.floor(msg.content);
                         if (number < 1 || number > 10) {
                             await collector.stop();
-                            return this.emit('playerError', { textChannel: message.channel, message: message, method: 'searchVideo', error: new MusicPlayerError(PlayerErrors.getSongIndex.invalidTypeValue) })
+                            return this.emit('playerError', { textChannel: channel, requestedBy: member.user, method: 'searchVideo', error: new MusicPlayerError(PlayerErrors.getSongIndex.invalidTypeValue) })
                         }
 
                         await collector.stop();
                         resolve(number);
-                        return this.addSong(number, message.guild, tracksArray, message.channel, message.member.voice.channel);
+                        return this.addSong(number, member.guild, tracksArray, channel, member.voice.channel);
                     } else {
                         await collector.stop();
-                        return this.emit('playerError', { textChannel: message.channel, message: message, method: 'searchVideo', error: new MusicPlayerError(PlayerErrors.getSongIndex.minMaxValue) })
+                        return this.emit('playerError', { textChannel: channel, requestedBy: member.user, method: 'searchVideo', error: new MusicPlayerError(PlayerErrors.getSongIndex.minMaxValue) })
                     }
                 })
             } catch (error) {
@@ -247,9 +247,9 @@ class MusicPlayer extends EventEmitter {
      * Method for adding a song to the server queue
      * @param {Number} index Song Index
      * @param {Guild} guild Discord Guild
-     * @param {Array<String>} tracksArray Songs Array 
-     * @param {TextChannel} textChannel Discord TextChannel 
-     * @param {VoiceChannel} voiceChannel Discord VoiceChannel 
+     * @param {Array<Object>} tracksArray Songs Array 
+     * @param {TextChannel} textChannel Discord Text Channel 
+     * @param {VoiceChannel} voiceChannel Discord Voice Channel 
      * @returns {void}
     */
     addSong(index, guild, tracksArray, textChannel, voiceChannel) {
@@ -365,7 +365,7 @@ class MusicPlayer extends EventEmitter {
      * @param {Guild} guild Discord Guild
      * @returns {Promise<{ status: Boolean, songs: Array<Object> }>} Returns the repeat status of the queue and its object
     */
-     setLoopQueue(guild) {
+    setLoopQueue(guild) {
         return new Promise(async (resolve, reject) => {
             try {
                 let serverQueue = await this.queue.get(guild.id);
@@ -414,6 +414,8 @@ class MusicPlayer extends EventEmitter {
                 let serverQueue = await this.queue.get(guild.id);
                 if (!serverQueue) return reject(new MusicPlayerError(PlayerErrors.queueNotFound));
 
+                if(!serverQueue.playing) return reject(new MusicPlayerError(PlayerErrors.pausePlaying.notResumed));
+
                 if (serverQueue && serverQueue.playing) {
                     serverQueue.playing = false;
                     serverQueue.connection.dispatcher.pause();
@@ -435,6 +437,8 @@ class MusicPlayer extends EventEmitter {
             try {
                 let serverQueue = await this.queue.get(guild.id);
                 if (!serverQueue) return reject(new MusicPlayerError(PlayerErrors.queueNotFound));
+
+                if(serverQueue.playing) return reject(new MusicPlayerError(PlayerErrors.resumePlaying.notPaused));
 
                 if (serverQueue && !serverQueue.playing) {
                     serverQueue.playing = true;
@@ -752,7 +756,7 @@ class MusicPlayer extends EventEmitter {
  * @param {Boolean} data.queueLoop Queue Song Queue Loop
  * @param {Boolean} data.playing Queue Song Playing Status
  * @param {String} data.filter Queue Songs Filter
- */
+*/
 
 /**
  * Emits when a song is added to the queue
@@ -768,7 +772,7 @@ class MusicPlayer extends EventEmitter {
  * @param {VoiceChannel} song.voiceChannel Voice Channel
  * @param {User} song.requestedBy Requester of the Song
  * @param {Object} song.duration Song Duration
- */
+*/
 
 /**
  * Emits when the queue ends
@@ -783,16 +787,16 @@ class MusicPlayer extends EventEmitter {
  * @param {Boolean} data.queueLoop Queue Song Queue Loop
  * @param {Boolean} data.playing Queue Song Playing Status
  * @param {String} data.filter Queue Songs Filter
- */
+*/
 
 /**
  * Emits when an error occurs
  * @event MusicPlayer#playerError
  * @param {Object} data Callback
  * @param {TextChannel} data.textChannel Text Channel
- * @param {Message} data.message Message
+ * @param {User} data.requestedBy Song Requested User
  * @param {String} data.method Executed Method
  * @param {Error} data.error Returned Error
- */
+*/
 
 module.exports = MusicPlayer;

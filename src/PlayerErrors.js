@@ -30,7 +30,16 @@ module.exports = {
         lyricsNotFound: `Lyrics not found for {song}!`
     },
 
+
+    pausePlaying: {
+        notResumed: `Song playback has already stopped!`
+    },
+
     removeSong: {
         songNotFound: `Song with ID/title {value} not found!`
+    },
+
+    resumePlaying: {
+        notPaused: `Song playback has not stopped!`
     }
 }

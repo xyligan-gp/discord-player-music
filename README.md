@@ -126,7 +126,7 @@ client.on('message', async message => {
     const query = args.join(' ');
     if(!query) return console.log('Missing Arguments!');
 
-    client.player.searchVideo(message.member, query, message).then(data => {
+    client.player.searchSong(message.member, query, message.channel).then(data => {
       if(!data[0].index) return;
 
       return message.channel.send(data.map(song => `[${song.index}] - **${song.title}**`));
