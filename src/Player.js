@@ -179,7 +179,7 @@ class DiscordPlayerMusic extends Emitter {
                 if(query.startsWith('https://')) {
                     const songInfo = await ytdl.getInfo(query);
 
-                    const song = [{
+                    let song = ({
                         index: null,
                         searchType: 'search#url',
                         title: songInfo.videoDetails.title,
@@ -195,7 +195,7 @@ class DiscordPlayerMusic extends Emitter {
                             minutes: this.utils.formatNumbers([Math.floor(songInfo.videoDetails.lengthSeconds / 60 % 60)]).join(''),
                             seconds: this.utils.formatNumbers([Math.floor(songInfo.videoDetails.lengthSeconds % 60)]).join('')
                         }
-                    }]
+                    })
                     
                     res(song);
 
@@ -205,7 +205,7 @@ class DiscordPlayerMusic extends Emitter {
 
                     var resultsArray = [];
 
-                    for(let i = 0; i < this.options.searchResultsLimit; i++) {
+                    for(let i = 0; i < 10; i++) {
                         resultsArray.push(
                             {
                                 index: i + 1,

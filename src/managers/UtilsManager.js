@@ -142,22 +142,20 @@ class UtilsManager {
     /**
      * Method for formatting numbers
      * @param {Array<Number>} numbersArray Numbers Array
-     * @returns {Array<String | Number>} Returns an array with formatted numbers
+     * @returns {Array<String>} Returns an array with formatted numbers
     */
     formatNumbers(numbersArray) {
-        return new Promise(async (res, rej) => {
-            var numberArray = [];
+        var numberArray = [];
 
-            for (let i = 0; i < numbersArray.length; i++) {
-                if (Number(numbersArray[i]) < 10) {
-                    numberArray.push('0' + numbersArray[i]);
-                } else {
-                    numberArray.push(String(numbersArray[i]));
-                }
+        for (let i = 0; i < numbersArray.length; i++) {
+            if (Number(numbersArray[i]) < 10) {
+                numberArray.push('0' + numbersArray[i]);
+            } else {
+                numberArray.push(String(numbersArray[i]));
             }
+        }
 
-            return res(numberArray);
-        })
+        return numberArray;
     }
 }
 

@@ -46,7 +46,7 @@ declare class UtilsManager {
      * @param numbersArray Numbers Array
      * @returns Returns an array with formatted numbers
     */
-    public formatNumbers(numbersArray: Array<Number>): Promise<string | number>;
+    public formatNumbers(numbersArray: Array<Number>): Array<string>;
 }
 
 export = UtilsManager;
