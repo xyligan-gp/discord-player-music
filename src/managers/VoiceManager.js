@@ -112,6 +112,7 @@ class VoiceManager {
 
 /**
  * @typedef DiscordPlayerMusicOptions
+ * @property {Number} searchResultsLimit Limit the number of results when searching for songs
  * @type {Object}
 */
 

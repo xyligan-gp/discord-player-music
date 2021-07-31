@@ -17,3 +17,12 @@ export interface Song {
         seconds: number | string;
     }
 }
+
+export interface StreamOptions {
+    opusEncoded: boolean;
+    filter: string;
+    quality: string;
+    highWaterMark: number;
+    encoderArgs: Array<string>;
+    dlChunkSize: number;
+}

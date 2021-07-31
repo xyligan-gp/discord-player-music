@@ -1,6 +1,12 @@
 module.exports = {
     default: {
-        requiredClient: `<Client> not found for Discord Player Music!`
+        requiredClient: `<Client> not found for Discord Player Music!`,
+        queueNotFound: `Server queue for '{guildID}' not found!`,
+        permissionsNotFound: `Client '{clientTag}' missing permissions {permissions}!`,
+
+        searchSong: {
+            queryNotFound: `Query not found for '{userID}'!`
+        }
     },
 
     voiceManager: {

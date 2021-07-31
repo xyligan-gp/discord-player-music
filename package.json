@@ -28,7 +28,7 @@
   "homepage": "https://github.com/xyligan-gp/discord-player-music#readme",
   "dependencies": {
     "@discordjs/voice": "^0.5.5",
-    "discord.js": "",
+    "discord.js": "^latest",
     "lyrics-finder": "^21.7.0",
     "yt-search": "^2.10.0",
     "ytdl-core": "^4.9.0"

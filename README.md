@@ -39,7 +39,7 @@ $ npm install xyligan-gp/discord-player-music#dev
 ## Module Managers
 - [✔] 'QueueManager' - <b>Manager that enables Queue System</b>
 - [❌] 'UtilsManager' - <b>Manager that enables module Utils.</b> [*Development process*]
-- [❌] 'VoiceManager' - <b>Manager that enables Voice System.</b> [*Development process*]
+- [☑] 'VoiceManager' - <b>Manager that enables Voice System.</b> [*Development process*]
 
 ## Quick Initialization Example
 
