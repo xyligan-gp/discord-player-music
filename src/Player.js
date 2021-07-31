@@ -177,29 +177,29 @@ class DiscordPlayerMusic extends Emitter {
 
             try {
                 if(query.startsWith('https://')) {
-                    const songInfo = (await ytdl.getInfo(query)).videoDetails;
+                    const songInfo = await ytdl.getInfo(query);
 
                     const song = [{
                         index: null,
                         searchType: 'search#url',
-                        title: songInfo.title,
-                        url: songInfo.video_url,
-                        thumbnail: songInfo.thumbnails[0].url,
-                        author: songInfo.author.name,
+                        title: songInfo.videoDetails.title,
+                        url: songInfo.videoDetails.video_url,
+                        thumbnail: songInfo.videoDetails.thumbnails[0].url,
+                        author: songInfo.videoDetails.author.name,
                         textChannel: channel,
                         voiceChannel: voiceChannel,
                         requestedBy: member.user,
 
                         duration: {
-                            hours: this.utils.formatNumbers([Math.floor(songInfo.lengthSeconds / 3600)]).join(''),
-                            minutes: this.utils.formatNumbers([Math.floor(songInfo.lengthSeconds / 60 % 60)]).join(''),
-                            seconds: this.utils.formatNumbers([Math.floor(songInfo.lengthSeconds % 60)]).join('')
+                            hours: this.utils.formatNumbers([Math.floor(songInfo.videoDetails.lengthSeconds / 3600)]).join(''),
+                            minutes: this.utils.formatNumbers([Math.floor(songInfo.videoDetails.lengthSeconds / 60 % 60)]).join(''),
+                            seconds: this.utils.formatNumbers([Math.floor(songInfo.videoDetails.lengthSeconds % 60)]).join('')
                         }
                     }]
                     
                     res(song);
 
-                    return this.addSong(1, member, song);
+                    this.addSong(1, member, song);
                 }else{
                     const searchResult = await search(query);
 
@@ -227,7 +227,7 @@ class DiscordPlayerMusic extends Emitter {
                         )
                     }
 
-                    resolve(resultsArray);
+                    res(resultsArray);
                 }
             }catch(err){
                 return this.emit('playerError', { textChannel: channel, requestedBy: member.user, method: 'searchSong', error: err });
