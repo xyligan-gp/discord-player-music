@@ -173,7 +173,7 @@ class DiscordPlayerMusic extends Emitter {
             if(!voiceChannel) return rej(new PlayerError(PlayerErrors.voiceManager.userVoiceNotFound.replace('{userID}', member.id)));
 
             const clientMember = member.guild.members.cache.get(this.client.user.id);
-            if(this.utils.checkPermissions(clientMember, ['CONNECT', 'SPEAK'])) return rej(new PlayerError(PlayerErrors.default.permissionsNotFound.replace('{clientTag}', this.client.user.tag).replace('{permissions}', 'CONNECT & SPEAK')));
+            if(!this.utils.checkPermissions(clientMember, ['CONNECT', 'SPEAK'])) return rej(new PlayerError(PlayerErrors.default.permissionsNotFound.replace('{clientTag}', this.client.user.tag).replace('{permissions}', 'CONNECT & SPEAK')));
 
             try {
                 if(query.startsWith('https://')) {
