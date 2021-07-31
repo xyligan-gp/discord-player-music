@@ -1,11 +1,6 @@
-////////////////////////////////////////////////////////////////
-///////////// THIS MODULE IS discord-player-music //////////////
-//////////////// Creators: xyligan & ShadowPlay ////////////////
-//////////////////////// Version: 1.1.3 ////////////////////////
-////////////////////////////////////////////////////////////////
-
-
-const ytdlCore = require('ytdl-core'), prism = require('prism-media'), evn = ['info', 'progress', 'abort', 'request', 'response', 'error', 'redirect', 'retry', 'reconnect'];
+const ytdlCore = require('ytdl-core');
+const prism = require('prism-media');
+const evn = ['info', 'progress', 'abort', 'request', 'response', 'error', 'redirect', 'retry', 'reconnect'];
 
 /**
  * Create an opus stream for your video with provided encoder args
