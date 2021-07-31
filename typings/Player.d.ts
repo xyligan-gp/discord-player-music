@@ -28,3 +28,5 @@ declare class DiscordPlayerMusic extends Emitter {
     */
     private init(): void;
 }
+
+export = DiscordPlayerMusic;
