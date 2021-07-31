@@ -51,8 +51,8 @@ class VoiceManager {
                 case '1': {
                     if(!member.voice.channel) return rej(new PlayerError(PlayerErrors.voiceManager.userVoiceNotFound.replace('{userID}', member.id)));
 
-                    const voiceUsersCollection = member.voice.channel.members;
-                    if(voiceUsersCollection.get(this.client.user.id)) return rej(new PlayerError(PlayerErrors.voiceManager.clientInVoice.replace('{clientTag}', this.client.user.tag).replace('{voiceName}', member.voice.channel.name)));
+                    const clientMember = member.guild.members.cache.get(this.client.user.id);
+                    if(clientMember.voice.channel) return rej(new PlayerError(PlayerErrors.voiceManager.clientInVoice.replace('{clientTag}', this.client.user.tag).replace('{voiceName}', member.voice.channel.name)));
 
                     member.voice.channel.join();
 
@@ -62,8 +62,8 @@ class VoiceManager {
                 case '2': {
                     if(!member.voice.channel) return rej(new PlayerError(PlayerErrors.voiceManager.userVoiceNotFound.replace('{userID}', member.id)));
 
-                    const voiceUsersCollection = member.voice.channel.members;
-                    if(voiceUsersCollection.find(member => member.id === this.client.user.id)) return rej(new PlayerError(PlayerErrors.voiceManager.clientInVoice.replace('{clientTag}', this.client.user.tag).replace('{voiceName}', member.voice.channel.name)));
+                    const clientMember = member.guild.members.cache.get(this.client.user.id);
+                    if(clientMember.voice.channel) return rej(new PlayerError(PlayerErrors.voiceManager.clientInVoice.replace('{clientTag}', this.client.user.tag).replace('{voiceName}', member.voice.channel.name)));
 
                     joinVoiceChannel({ guildId: member.guild.id, channelId: member.voice.channel.id, adapterCreator: member.guild.voiceAdapterCreator });
 
@@ -84,8 +84,8 @@ class VoiceManager {
                 case '1': {
                     if(!member.voice.channel) return rej(new PlayerError(PlayerErrors.voiceManager.userVoiceNotFound.replace('{userID}', member.id)));
 
-                    const voiceUsersCollection = member.voice.channel.members;
-                    if(!voiceUsersCollection.get(this.client.user.id)) return rej(new PlayerError(PlayerErrors.voiceManager.clientNotInVoice.replace('{clientTag}', this.client.user.tag).replace('{voiceName}', member.voice.channel.name)));
+                    const clientMember = member.guild.members.cache.get(this.client.user.id);
+                    if(!clientMember.voice.channel) return rej(new PlayerError(PlayerErrors.voiceManager.clientNotInVoice.replace('{clientTag}', this.client.user.tag).replace('{voiceName}', member.voice.channel.name)));
 
                     await member.voice.channel.leave();
 
@@ -95,8 +95,8 @@ class VoiceManager {
                 case '2': {
                     if(!member.voice.channel) return rej(new PlayerError(PlayerErrors.voiceManager.userVoiceNotFound.replace('{userID}', member.id)));
 
-                    const voiceUsersCollection = member.voice.channel.members;
-                    if(!voiceUsersCollection.find(member => member.id === this.client.user.id)) return rej(new PlayerError(PlayerErrors.voiceManager.clientNotInVoice.replace('{clientTag}', this.client.user.tag).replace('{voiceName}', member.voice.channel.name)));
+                    const clientMember = member.guild.members.cache.get(this.client.user.id);
+                    if(!clientMember.voice.channel) return rej(new PlayerError(PlayerErrors.voiceManager.clientNotInVoice.replace('{clientTag}', this.client.user.tag).replace('{voiceName}', member.voice.channel.name)));
 
                     const connection = getVoiceConnection(member.guild.id);
                     if(!connection) return rej(new PlayerError(PlayerErrors.voiceManager.connectionNotFound.replace('{guildID}', member.guild.id)));
