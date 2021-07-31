@@ -37,9 +37,9 @@ $ npm install xyligan-gp/discord-player-music#dev
 * 100% Promise-based ⚙️
 
 ## Module Managers
-- [✔] 'QueueManager' - <b>Manager that enables AntiRaid System</b>
-- [❌] 'UtilsManager' - <b>Manager that enables Blacklist System.</b> [*Development process*]
-- [❌] 'VoiceManager' - <b>Manager that enables Channel System.</b> [*Development process*]
+- [✔] 'QueueManager' - <b>Manager that enables Queue System</b>
+- [❌] 'UtilsManager' - <b>Manager that enables module Utils.</b> [*Development process*]
+- [❌] 'VoiceManager' - <b>Manager that enables Voice System.</b> [*Development process*]
 
 ## Quick Initialization Example
 
