@@ -32,5 +32,6 @@
     "lyrics-finder": "^21.7.0",
     "yt-search": "^2.10.0",
     "ytdl-core": "^4.9.0"
-  }
+  },
+  "types": "./typings/Player.d.ts"
 }
