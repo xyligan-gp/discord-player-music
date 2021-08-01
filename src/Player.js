@@ -31,12 +31,24 @@ class DiscordPlayerMusic extends Emitter {
          * @type {Boolean}
         */
         this.ready = false;
+
+        /**
+         * Player Queue Manager
+         * @type {Collection<String, QueueManager>}
+        */
+        this.queue = new Collection();
+
+        /**
+         * Player Utils Manager
+         * @type {UtilsManager}
+        */
+        this.utils = new UtilsManager(this.client, this.queue);
         
         /**
          * Player Options
          * @type {DiscordPlayerMusicOptions}
         */
-        this.options = options;
+        this.options = this.utils.checkOptions(options);
 
         /**
          * Player Documentation Link
@@ -59,25 +71,13 @@ class DiscordPlayerMusic extends Emitter {
          * Player mode of operation
          * @type {String}
         */
-        this.mode = version.includes('12') ? '1' : '2';
-
-        /**
-         * Player Queue Manager
-         * @type {Collection<String, QueueManager>}
-        */
-        this.queue = new Collection();
-
-        /**
-         * Player Utils Manager
-         * @type {UtilsManager}
-        */
-        this.utils = new UtilsManager(this.client, this.options, this.queue, this.mode);
+        this.mode = version.startsWith('12') ? '1' : '2';
 
         /**
          * Player Voice Manager
          * @type {VoiceManager}
         */
-        this.voice = new VoiceManager(this.client, this.options);
+        this.voice = new VoiceManager(this.client);
 
         /**
          * Player Managers
@@ -95,7 +95,7 @@ class DiscordPlayerMusic extends Emitter {
     /**
      * Method for playing songs on the server
      * @param {Guild} guild Discord Guild
-     * @param {Song} song Song Info
+     * @param {PlayerSong} song Song Info
      * @returns {Promise<void>}
     */
     play(guild, song) {
@@ -104,6 +104,7 @@ class DiscordPlayerMusic extends Emitter {
             
             switch(this.mode) {
                 case '1': {
+                    console.log(1);
                     if(!song) {
                         if(!queue.songs) return;
 
@@ -114,7 +115,8 @@ class DiscordPlayerMusic extends Emitter {
                     try {
                         const stream = await this.utils.createStream(guild);
 
-                        const dispatcher = queue.connection.play(stream, { type: 'opus' });
+                        const dispatcher = queue.connection;
+                        dispatcher.play(stream, { type: 'opus' });
                         
                         dispatcher.on('finish', () => {
                             if(queue.songs.length < 1) return this.emit('queueEnded', queue);
@@ -152,6 +154,7 @@ class DiscordPlayerMusic extends Emitter {
                 }
 
                 case '2': {
+                    console.log(2)
                     //to be continued
                 }
             }
@@ -163,7 +166,7 @@ class DiscordPlayerMusic extends Emitter {
      * @param {GuildMember} member Guild Member
      * @param {String} query Song Name or URL
      * @param {TextChannel} channel Guild Text Channel
-     * @returns {Array<Song>} Returns a list of found songs
+     * @returns {Array<PlayerSong>} Returns a list of found songs
     */
     searchSong(member, query, channel) {
         return new Promise(async (res, rej) => {
@@ -179,7 +182,7 @@ class DiscordPlayerMusic extends Emitter {
                 if(query.startsWith('https://')) {
                     const songInfo = await ytdl.getInfo(query);
 
-                    let song = ({
+                    let song = [{
                         index: null,
                         searchType: 'search#url',
                         title: songInfo.videoDetails.title,
@@ -195,7 +198,7 @@ class DiscordPlayerMusic extends Emitter {
                             minutes: this.utils.formatNumbers([Math.floor(songInfo.videoDetails.lengthSeconds / 60 % 60)]).join(''),
                             seconds: this.utils.formatNumbers([Math.floor(songInfo.videoDetails.lengthSeconds % 60)]).join('')
                         }
-                    })
+                    }]
                     
                     res(song);
 
@@ -205,7 +208,7 @@ class DiscordPlayerMusic extends Emitter {
 
                     var resultsArray = [];
 
-                    for(let i = 0; i < 10; i++) {
+                    for(let i = 0; i < this.options.searchResultsLimit; i++) {
                         resultsArray.push(
                             {
                                 index: i + 1,
@@ -239,7 +242,7 @@ class DiscordPlayerMusic extends Emitter {
      * Method for adding a song to the server queue
      * @param {Number} index Song Index
      * @param {GuildMember} member Discord Guild
-     * @param {Array<Song>} resultsArray Results List
+     * @param {Array<PlayerSong>} resultsArray Results List
      * @returns {Promise<void>} 
     */
     addSong(index, member, resultsArray) {
@@ -248,7 +251,7 @@ class DiscordPlayerMusic extends Emitter {
 
             switch(this.mode) {
                 case '1': {
-                    const connection = await resultsArray[0].voiceChannel.join();
+                    const connection = await resultsArray[index - 1].voiceChannel.join();
                     const song = resultsArray[index - 1];
 
                     if(!queue) {
@@ -322,11 +325,15 @@ class DiscordPlayerMusic extends Emitter {
 /**
  * @typedef DiscordPlayerMusicOptions
  * @property {Number} searchResultsLimit Limit the number of results when searching for songs
+ * @property {Boolean} searchCollector Custom collector status when searching for songs
+ * @property {Object} searchCollectorConfig Search Collector Configuration
+ * @property {'message' | 'reaction'} searchCollectorConfig.type Search Collector Type
+ * @property {Number} searchCollectorConfig.count Number of reactions/maximum song index (from options.searchResultsLimit)
  * @type {Object}
 */
 
 /**
- * @typedef Song
+ * @typedef PlayerSong
  * @property {Number | null} index Song Index
  * @property {String} searchType Song Search Type
  * @property {String} title Song Title

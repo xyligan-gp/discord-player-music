@@ -1,7 +1,7 @@
-const { TextChannel, VoiceChannel, User } = require("discord.js");
+const { Collection, TextChannel, VoiceChannel, User } = require("discord.js");
 const { VoiceConnection } = require('@discordjs/voice');
 
-class QueueManager {
+class QueueManager extends Collection {
     constructor() {
         /**
          * Guild Text Channel
@@ -23,7 +23,7 @@ class QueueManager {
 
         /**
          * Queue Songs
-         * @type {Array<Song>}
+         * @type {Array<PlayerSong>}
         */
         this.songs = [
             {
@@ -78,7 +78,7 @@ class QueueManager {
 }
 
 /**
- * @typedef Song
+ * @typedef PlayerSong
  * @property {Number | null} index Song Index
  * @property {String} searchType Song Search Type
  * @property {String} title Song Title

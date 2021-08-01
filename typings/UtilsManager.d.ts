@@ -6,12 +6,20 @@ import { StreamOptions } from './PlayerData';
 import QueueManager from './QueueManager';
 
 declare class UtilsManager {
-    constructor(client: Client, options: DiscordPlayerMusicOptions, queue: Collection<string, QueueManager>, mode: string);
+    constructor(client: Client, queue: Collection<string, QueueManager>);
 
     public client: Client;
-    public options: DiscordPlayerMusicOptions;
     public queue: Collection<string, QueueManager>;
     public mode: string;
+    public methods: Array<string>;
+    public size: number;
+
+    /**
+     * Method for validating Player options
+     * @param options Player Options
+     * @returns Returns valid Player options
+    */
+    public checkOptions(options: DiscordPlayerMusicOptions): DiscordPlayerMusicOptions;
 
     /**
      * Method for checking user permissions

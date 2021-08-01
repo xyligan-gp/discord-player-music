@@ -1,4 +1,4 @@
-const { Client, Collection, Guild, GuildMember, Message, Permissions } = require('discord.js');
+const { Client, Collection, Guild, GuildMember, Message, Permissions, version } = require('discord.js');
 const ytdl = require('../modules/dpm-ytdl.js');
 const PlayerError = require('../PlayerError.js');
 const PlayerErrors = require('../PlayerErrors.js');
@@ -8,11 +8,9 @@ const QueueManager = require('./QueueManager.js');
 class UtilsManager {
     /**
      * @param {Client} client Discord Client
-     * @param {DiscordPlayerMusicOptions} options Player Options
      * @param {Collection<String, QueueManager>} queue Queue Manager
-     * @param {String} mode Player mode of operation
     */
-    constructor(client, options, queue, mode) {
+    constructor(client, queue) {
         if(!client) return new PlayerError(PlayerErrors.default.requiredClient);
 
         /**
@@ -20,12 +18,6 @@ class UtilsManager {
          * @type {Client}
         */
         this.client = client;
-
-        /**
-         * Player Options
-         * @type {DiscordPlayerMusicOptions}
-        */
-        this.options = options;
 
         /**
          * Player Queue Manager
@@ -37,19 +29,60 @@ class UtilsManager {
          * Player mode of operation
          * @type {String}
         */
-        this.mode = mode;
+        this.mode = version.startsWith('12') ? '1' : '2';
 
         /**
          * Utils Manager Methods
          * @type {Array<String>}
         */
-        this.methods = ['checkPermissions', 'createCollector', 'createStream', 'generateStreamOptions', 'formatNumbers'];
+        this.methods = ['checkOptions', 'checkPermissions', 'createCollector', 'createStream', 'generateStreamOptions', 'formatNumbers'];
 
         /**
          * Utils Manager Methods Count
          * @type {Number}
         */
         this.size = this.methods.length;
+    }
+
+    /**
+     * Method for validating Player options
+     * @param {DiscordPlayerMusicOptions} options Player Options
+     * @returns {DiscordPlayerMusicOptions} Returns valid Player options
+    */
+    checkOptions(options) {
+        if(!options) {
+            options = {
+                searchResultsLimit: 10,
+                searchCollector: true,
+
+                searchCollectorConfig: {
+                    type: 'message',
+                    count: 10
+                }
+            }
+        }else{
+            if(!options.searchResultsLimit) options.searchResultsLimit = 10;
+            if(typeof options.searchResultsLimit != 'number') options.searchResultsLimit = 10;
+            if(options.searchResultsLimit < 1) options.searchResultsLimit = 10;
+
+            if(typeof options.searchCollector != 'boolean') options.searchCollector = true;
+
+            if(!options.searchCollectorConfig) options.searchCollectorConfig = {
+                type: 'message'
+            }
+            if(typeof options.searchCollectorConfig != 'object') options.searchCollectorConfig = {
+                type: 'message'
+            }
+
+            if(!options.searchCollectorConfig.type) options.searchCollectorConfig.type = 'message';
+            if(typeof options.searchCollectorConfig.type != 'string') options.searchCollectorConfig.type = 'message';
+
+            if(!options.searchCollectorConfig.count) options.searchCollectorConfig.count = 10;
+            if(typeof options.searchCollectorConfig.count != 'number') options.searchCollectorConfig.count = 10;
+            if(options.searchCollectorConfig.count < 1) options.searchCollectorConfig.count = 10;
+        }
+
+        return options;
     }
 
     /**
@@ -101,7 +134,7 @@ class UtilsManager {
         
                         const streamOptions = await this.generateStreamOptions(guild);
         
-                        return ytdl(songInfo, streamOptions);
+                        return res(ytdl(songInfo, streamOptions));
                     } catch (error) {
                         rej(error);
                     }
@@ -162,6 +195,10 @@ class UtilsManager {
 /**
  * @typedef DiscordPlayerMusicOptions
  * @property {Number} searchResultsLimit Limit the number of results when searching for songs
+ * @property {Boolean} searchCollector Custom collector status when searching for songs
+ * @property {Object} searchCollectorConfig Search Collector Configuration
+ * @property {'message' | 'reaction'} searchCollectorConfig.type Search Collector Type
+ * @property {Number} searchCollectorConfig.count Number of reactions/maximum song index (from options.searchResultsLimit)
  * @type {Object}
 */
 

@@ -1,12 +1,9 @@
 import { Client, GuildMember, VoiceChannel } from 'discord.js';
 
-import DiscordPlayerMusicOptions from './DiscordPlayerMusicOptions';
-
 declare class VoiceManager {
-    constructor(client: Client, options: DiscordPlayerMusicOptions);
+    constructor(client: Client);
 
     public client: Client;
-    public options: DiscordPlayerMusicOptions;
     public mode: string;
     public methods: Array<string>;
     public size: number;

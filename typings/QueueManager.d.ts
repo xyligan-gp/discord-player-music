@@ -1,9 +1,9 @@
-import { TextChannel, VoiceChannel } from 'discord.js';
+import { Collection, TextChannel, VoiceChannel } from 'discord.js';
 import { VoiceConnection } from '@discordjs/voice';
 
 import { Song } from './PlayerData';
 
-declare class QueueManager {
+declare class QueueManager extends Collection {
     constructor();
 
     textChannel: TextChannel;

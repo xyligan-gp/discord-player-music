@@ -6,9 +6,8 @@ const { getVoiceConnection, joinVoiceChannel } = require('@discordjs/voice');
 class VoiceManager {
     /**
      * @param {Client} client Discord Client
-     * @param {DiscordPlayerMusicOptions} options Player Options
     */
-    constructor(client, options) {
+    constructor(client) {
         /**
          * Discord Client
          * @type {Client}
@@ -16,16 +15,10 @@ class VoiceManager {
         this.client = client;
 
         /**
-         * Player Options
-         * @type {DiscordPlayerMusicOptions}
-        */
-        this.options = options;
-
-        /**
          * Player mode of operation
          * @type {String}
         */
-        this.mode = version.includes('12') ? '1' : '2';
+        this.mode = version.startsWith('12') ? '1' : '2';
 
         /**
          * Voice Manager Methods
@@ -109,11 +102,5 @@ class VoiceManager {
         })
     }
 }
-
-/**
- * @typedef DiscordPlayerMusicOptions
- * @property {Number} searchResultsLimit Limit the number of results when searching for songs
- * @type {Object}
-*/
 
 module.exports = VoiceManager;

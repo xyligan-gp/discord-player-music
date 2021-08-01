@@ -1,5 +1,10 @@
 interface DiscordPlayerMusicOptions {
-    //to be continued
+    searchResultsLimit: number;
+    searchCollector: boolean;
+    searchCollectorConfig: {
+        type: 'message' | 'reaction';
+        count: number;
+    }
 }
 
 export = DiscordPlayerMusicOptions;
