@@ -8,7 +8,7 @@ const PlayerErrors = require('./PlayerErrors.js');
 const QueueManager = require('./managers/QueueManager.js');
 const UtilsManager = require('./managers/UtilsManager.js');
 const VoiceManager = require('./managers/VoiceManager.js');
-const { getVoiceConnection } = require('@discordjs/voice');
+const { createAudioPlayer, createAudioResource, getVoiceConnection, VoiceConnectionStatus, entersState } = require('@discordjs/voice');
 
 class DiscordPlayerMusic extends Emitter {
     /**
@@ -90,6 +90,8 @@ class DiscordPlayerMusic extends Emitter {
          * @type {Number}
         */
         this.size = this.managers.length;
+
+        this.audio = createAudioPlayer({ behaviors: { noSubscriber: 'stop' } });
     }
 
     /**
@@ -104,7 +106,6 @@ class DiscordPlayerMusic extends Emitter {
             
             switch(this.mode) {
                 case '1': {
-                    console.log(1);
                     if(!song) {
                         if(!queue.songs) return;
 
@@ -115,8 +116,7 @@ class DiscordPlayerMusic extends Emitter {
                     try {
                         const stream = await this.utils.createStream(guild);
 
-                        const dispatcher = queue.connection;
-                        dispatcher.play(stream, { type: 'opus' });
+                        const dispatcher = queue.connection.play(stream, { type: 'opus' });
                         
                         dispatcher.on('finish', () => {
                             if(queue.songs.length < 1) return this.emit('queueEnded', queue);
@@ -154,8 +154,28 @@ class DiscordPlayerMusic extends Emitter {
                 }
 
                 case '2': {
-                    console.log(2)
-                    //to be continued
+                    if(!song) {
+                        if(!queue.songs) return;
+
+                        const connection = getVoiceConnection(guild.id);
+                        connection.destroy();
+
+                        return this.queue.delete(guild.id);
+                    }
+
+                    try {
+                        const connection = getVoiceConnection(guild.id);
+                        const resource = createAudioResource(ytdl(song.url));
+
+                        this.audio.play(resource);
+                        connection.subscribe(this.audio);
+
+                        this.audio.on('error', err => {
+                            return this.emit('playerError', { textChannel: song.textChannel, requested: song.requestedBy, method: 'play', error: err });
+                        })
+                    }catch(err){
+                        return this.emit('playerError', { textChannel: song.textChannel, requested: song.requestedBy, method: 'play', error: err });
+                    }
                 }
             }
         })
@@ -233,7 +253,7 @@ class DiscordPlayerMusic extends Emitter {
                     res(resultsArray);
                 }
             }catch(err){
-                return this.emit('playerError', { textChannel: channel, requestedBy: member.user, method: 'searchSong', error: err });
+                return this.emit('playerError', { textChannel: channel, requested: member.user, method: 'searchSong', error: err });
             }
         })
     }
@@ -312,6 +332,8 @@ class DiscordPlayerMusic extends Emitter {
             }
         })
     }
+
+
 
     /**
      * Method for initializing the module

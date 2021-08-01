@@ -25,6 +25,9 @@ Install [discord-player-music dev](https://github.com/xyligan-gp/discord-player-
 $ npm install xyligan-gp/discord-player-music#dev
 ```
 
+## Warning
+If you get the error `Cannot play audio as no valid encryption package is installed`, be sure to install 1 of the following libraries: `sodium`, `libsodium-wrappers` or `tweetnacl`!
+
 ## Features
 
 * Simple & easy to use 👍
@@ -39,7 +42,14 @@ $ npm install xyligan-gp/discord-player-music#dev
 ## Module Managers
 - [✔] 'QueueManager' - <b>Manager that enables Queue System</b>
 - [❌] 'UtilsManager' - <b>Manager that enables module Utils.</b> [*Development process*]
-- [☑] 'VoiceManager' - <b>Manager that enables Voice System.</b> [*Testing process*]
+- [☑] 'VoiceManager' - <b>Manager that enables Voice System.</b> [*BETA Testing process*]
+
+## Module Constructor Options
+- 'options.searchResultsLimit' - <b>Property responsible for the number of results received when searching for songs.</b>
+- 'options.searchCollector' - <b>Property responsible for the status of a custom module collector.</b>
+
+- 'options.searchCollectorConfig.type' - <b>Property responsible for the custom collector type of the module. Available types: `message` &` reaction`.</b>
+- 'options.searchCollectorConfig.count' - <b>Property responsible for the amount of all data for the module collector (taken from `options.searchResultsLimit`).</b>
 
 ## Quick Initialization Example
 

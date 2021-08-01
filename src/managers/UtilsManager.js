@@ -124,25 +124,16 @@ class UtilsManager {
     */
     createStream(guild) {
         return new Promise(async (res, rej) => {
-            switch(this.mode) {
-                case '1': {
-                    try {
-                        const queue = await this.queue.get(guild.id);
-                        if(!queue) return rej(new PlayerError(PlayerErrors.default.queueNotFound.replace('{guildID}', guild.id)));
+            try {
+                const queue = await this.queue.get(guild.id);
+                if(!queue) return rej(new PlayerError(PlayerErrors.default.queueNotFound.replace('{guildID}', guild.id)));
         
-                        const songInfo = await ytdl.getInfo(queue.songs[0].url);
+                const songInfo = await ytdl.getInfo(queue.songs[0].url);
+                const streamOptions = await this.generateStreamOptions(guild);
         
-                        const streamOptions = await this.generateStreamOptions(guild);
-        
-                        return res(ytdl(songInfo, streamOptions));
-                    } catch (error) {
-                        rej(error);
-                    }
-                }
-
-                case '2': {
-                    //to be continued
-                }
+                return res(ytdl(songInfo, streamOptions));
+            }catch(err){
+                return rej(err);
             }
         })
     }
@@ -150,14 +141,14 @@ class UtilsManager {
     /**
      * Method for generating options for stream
      * @param {Guild} guild Discord Guild
-     * @returns {Promise<{StreamOptions}>} Returns options for creating a stream
+     * @returns {Promise<StreamOptions>} Returns options for creating a stream
     */
     generateStreamOptions(guild) {
         return new Promise(async (res, rej) => {
             const queue = await this.queue.get(guild.id);
             if(!queue) return rej(new PlayerError(PlayerErrors.default.queueNotFound.replace('{guildID}', guild.id)));
 
-            const encoderArgs = queue.filter ? ['af', [queue.filter]] : null;
+            const encoderArgs = queue.filter ? queue.filter : null;
 
             const options = {
                 opusEncoded: true,
