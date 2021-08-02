@@ -1,4 +1,4 @@
-import { Client, Collection, GuildMember, TextChannel } from 'discord.js';
+import { Client, Collection, Guild, GuildMember, TextChannel } from 'discord.js';
 
 import Emitter from '../src/Emitter.js';
 
@@ -50,6 +50,13 @@ declare class DiscordPlayerMusic extends Emitter {
      * @param resultsArray Results List
     */
     public addSong(index: number, member: GuildMember, resultsArray: Array<PlayerSong>): Promise<void>;
+
+    /**
+     * Method to end playback of the server queue
+     * @param guild Discord Guild
+     * @returns Returns the status of the operation
+    */
+    public stop(guild: Guild): Promise<{ status: boolean }>;
 
     /**
      * Method for initializing the module

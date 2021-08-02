@@ -1,16 +1,12 @@
-const { Client, Collection, Guild, GuildMember, Message, Permissions, version } = require('discord.js');
-const ytdl = require('../modules/dpm-ytdl.js');
+const { Client, Collection, GuildMember, Message, Permissions, version } = require('discord.js');
 const PlayerError = require('../PlayerError.js');
 const PlayerErrors = require('../PlayerErrors.js');
-
-const QueueManager = require('./QueueManager.js');
 
 class UtilsManager {
     /**
      * @param {Client} client Discord Client
-     * @param {Collection<String, QueueManager>} queue Queue Manager
     */
-    constructor(client, queue) {
+    constructor(client) {
         if(!client) return new PlayerError(PlayerErrors.default.requiredClient);
 
         /**
@@ -18,12 +14,6 @@ class UtilsManager {
          * @type {Client}
         */
         this.client = client;
-
-        /**
-         * Player Queue Manager
-         * @type {Collection<String, QueueManager>}
-        */
-        this.queue = queue;
 
         /**
          * Player mode of operation
@@ -35,7 +25,7 @@ class UtilsManager {
          * Utils Manager Methods
          * @type {Array<String>}
         */
-        this.methods = ['checkOptions', 'checkPermissions', 'createCollector', 'createStream', 'generateStreamOptions', 'formatNumbers'];
+        this.methods = ['checkOptions', 'checkPermissions', 'createCollector', 'formatNumbers'];
 
         /**
          * Utils Manager Methods Count
@@ -118,52 +108,6 @@ class UtilsManager {
     }
 
     /**
-     * Method for creating a server stream
-     * @param {Guild} guild Discord Guild
-     * @returns {Promise<void>}
-    */
-    createStream(guild) {
-        return new Promise(async (res, rej) => {
-            try {
-                const queue = await this.queue.get(guild.id);
-                if(!queue) return rej(new PlayerError(PlayerErrors.default.queueNotFound.replace('{guildID}', guild.id)));
-        
-                const songInfo = await ytdl.getInfo(queue.songs[0].url);
-                const streamOptions = await this.generateStreamOptions(guild);
-        
-                return res(ytdl(songInfo, streamOptions));
-            }catch(err){
-                return rej(err);
-            }
-        })
-    }
-
-    /**
-     * Method for generating options for stream
-     * @param {Guild} guild Discord Guild
-     * @returns {Promise<StreamOptions>} Returns options for creating a stream
-    */
-    generateStreamOptions(guild) {
-        return new Promise(async (res, rej) => {
-            const queue = await this.queue.get(guild.id);
-            if(!queue) return rej(new PlayerError(PlayerErrors.default.queueNotFound.replace('{guildID}', guild.id)));
-
-            const encoderArgs = queue.filter ? queue.filter : null;
-
-            const options = {
-                opusEncoded: true,
-                filter: 'audioonly',
-                quality: 'highestaudio',
-                highWaterMark: 1 << 25,
-                encoderArgs,
-                dlChunkSize: 0
-            }
-
-            return res(options);
-        })
-    }
-
-    /**
      * Method for formatting numbers
      * @param {Array<Number>} numbersArray Numbers Array
      * @returns {Array<String>} Returns an array with formatted numbers
@@ -190,17 +134,6 @@ class UtilsManager {
  * @property {Object} searchCollectorConfig Search Collector Configuration
  * @property {'message' | 'reaction'} searchCollectorConfig.type Search Collector Type
  * @property {Number} searchCollectorConfig.count Number of reactions/maximum song index (from options.searchResultsLimit)
- * @type {Object}
-*/
-
-/**
- * @typedef StreamOptions
- * @property {Boolean} opusEncoded Stream Encoding
- * @property {String} filter Stream YTDL Filter
- * @property {String} quality Stream Quality
- * @property {Number} highWaterMark Stream HighWaterMark
- * @property {Array<String>} encoderArgs Stream FFMPEG Filters
- * @property {Number} dlChunkSize Stream Chunk Size
  * @type {Object}
 */
 

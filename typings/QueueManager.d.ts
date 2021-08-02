@@ -14,7 +14,7 @@ declare class QueueManager extends Collection {
     loop: boolean;
     queueLoop: boolean;
     playing: boolean;
-    filter: Array<string>;
+    filter: string;
 }
 
 export = QueueManager;

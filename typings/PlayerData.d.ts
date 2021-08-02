@@ -2,7 +2,7 @@ import { VoiceConnection } from '@discordjs/voice';
 import { TextChannel, User, VoiceChannel } from 'discord.js';
 
 export interface PlayerSong {
-    index?: number | null;
+    index: number | null;
     searchType: string;
     title: string;
     url: string;
@@ -17,15 +17,6 @@ export interface PlayerSong {
         minutes: number | string;
         seconds: number | string;
     }
-}
-
-export interface StreamOptions {
-    opusEncoded: boolean;
-    filter: string;
-    quality: string;
-    highWaterMark: number;
-    encoderArgs: Array<string>;
-    dlChunkSize: number;
 }
 
 export interface PlayerError {
@@ -44,5 +35,5 @@ export interface PlayerQueue {
     loop: boolean;
     queueLoop: boolean;
     playing: boolean;
-    filter?: Array<string> | null;
+    filter: string | null;
 }

@@ -30,8 +30,10 @@ If you get the error `Cannot play audio as no valid encryption package is instal
 
 ## Features
 
+* Support discord.js v13 💡
 * Simple & easy to use 👍
 * Beginner friendly 😄
+* Minimalistic option constructor 🔧
 * Audio filters 🎸
 * Lyrics 📃
 * Play in multiple servers at the same time ⏰

@@ -1,15 +1,11 @@
-import { Client, Collection, Guild, GuildMember, Message, Permissions } from 'discord.js';
+import { Client, GuildMember, Message, Permissions } from 'discord.js';
 
 import DiscordPlayerMusicOptions from './DiscordPlayerMusicOptions';
-import { StreamOptions } from './PlayerData';
-
-import QueueManager from './QueueManager';
 
 declare class UtilsManager {
-    constructor(client: Client, queue: Collection<string, QueueManager>);
+    constructor(client: Client);
 
     public client: Client;
-    public queue: Collection<string, QueueManager>;
     public mode: string;
     public methods: Array<string>;
     public size: number;
@@ -35,19 +31,6 @@ declare class UtilsManager {
      * @param type Collector Type
     */
     public createCollector(message: Message, type: 'message' | 'reaction'): Promise<null>;
-
-    /**
-     * Method for creating a server stream
-     * @param guild Discord Guild
-    */
-    public createStream(guild: Guild): Promise<void>;
-
-    /**
-     * Method for generating options for stream
-     * @param guild Discord Guild
-     * @returns Returns options for creating a stream
-    */
-    public generateStreamOptions(guild: Guild): Promise<StreamOptions>;
 
     /**
      * Method for formatting numbers

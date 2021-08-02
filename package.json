@@ -25,12 +25,12 @@
   "bugs": {
     "url": "https://github.com/xyligan-gp/discord-player-music/issues"
   },
-  "homepage": "https://github.com/xyligan-gp/discord-player-music#readme",
+  "homepage": "https://dpm-docs.tk",
   "dependencies": {
-    "@discordjs/voice": "^0.5.5",
     "@discordjs/opus": "^0.5.3",
+    "@discordjs/voice": "^0.5.5",
+    "discord.js": "^13.0.0-dev.t1627819382.bb56f17",
     "ffmpeg-static": "^4.4.0",
-    "discord.js": "",
     "lyrics-finder": "^21.7.0",
     "yt-search": "^2.10.0",
     "ytdl-core": "^4.9.0"
