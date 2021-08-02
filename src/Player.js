@@ -65,6 +65,7 @@ class DiscordPlayerMusic extends Emitter {
 
         /**
          * Player Developer
+         * @type {String}
         */
         this.author = require('../package.json').author;
 
