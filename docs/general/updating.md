@@ -11,7 +11,7 @@ In version 1.1.5-dev, `discord-player-music` was completely rewritten for the ma
 + options.defaultVolume
 ```
 
-### Moderator Methods Update
+### Player Methods Update
 #### VoiceManager
 
 ```diff
