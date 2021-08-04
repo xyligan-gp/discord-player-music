@@ -6,7 +6,7 @@ const { FFmpeg } = require('prism-media');
  * @param {Array<ytdl.videoFormat>} format YTDL Video Formats
  * @returns {Array<ytdl.videoFormat>} Returns all possible link formats
 */
-function filter(format) {
+function formatURL(format) {
     var results = [];
 
     format.forEach((data) => {
@@ -21,12 +21,12 @@ function filter(format) {
 /**
  * Creating a stream for playing songs based on FFmpeg
  * @param {String} url Song URL
- * @param {String} filters Filters Array
+ * @param {String} filter Filter Value
  * @returns {Promise<FFmpeg>} FFmpeg Stream
 */
-async function createStream(url, filters) {
+async function createStream(url, filter) {
     const inputURL = await ytdl.getInfo(url);
-    const songURL = filter(inputURL.formats)[0].url;
+    const songURL = formatURL(inputURL.formats)[0].url;
     
     const FFMPEG_OPUS_ARGUMENTS = [
         '-analyzeduration',
@@ -44,7 +44,7 @@ async function createStream(url, filters) {
     ];
 
     let FFmpegArgs = ['-reconnect', '1', '-reconnect_streamed', '1', '-reconnect_delay_max', '5', '-i', songURL, ...FFMPEG_OPUS_ARGUMENTS];
-    filters && filters != null ? FFmpegArgs = FFmpegArgs.concat(['-af', filters]) : FFmpegArgs = FFmpegArgs;
+    filter && filter != null ? FFmpegArgs = FFmpegArgs.concat(['-af', filter]) : FFmpegArgs = FFmpegArgs;
     
     const output = new FFmpeg({ args : FFmpegArgs });
 
