@@ -4,7 +4,11 @@
       path: welcome.md
     - name: FAQ
       path: faq.md
-    - name: Examples
-      path: examples.md
-    - name: ChangeLog
+    - name: Updating your code
+      path: updating.md
+    - name: Discord.js v13 Examples
+      path: ./examples/v13.md
+    - name: Discord.js v12 Examples
+      path: ./examples/v12.md
+    - name: Changelog
       path: changelog.md
