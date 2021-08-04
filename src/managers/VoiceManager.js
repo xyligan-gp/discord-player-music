@@ -1,7 +1,7 @@
 const { Client, GuildMember, version, VoiceChannel } = require('discord.js');
 const PlayerError = require('../PlayerError.js');
 const PlayerErrors = require('../PlayerErrors.js');
-const { getVoiceConnection, joinVoiceChannel } = require('@discordjs/voice');
+const { getVoiceConnection, joinVoiceChannel, VoiceConnectionStatus } = require('@discordjs/voice');
 
 class VoiceManager {
     /**
@@ -92,7 +92,7 @@ class VoiceManager {
                     if(!clientMember.voice.channel) return rej(new PlayerError(PlayerErrors.voiceManager.clientNotInVoice.replace('{clientTag}', this.client.user.tag).replace('{voiceName}', member.voice.channel.name)));
 
                     const connection = getVoiceConnection(member.guild.id);
-                    if(!connection) return rej(new PlayerError(PlayerErrors.voiceManager.connectionNotFound.replace('{guildID}', member.guild.id)));
+                    if(connection.state.status === VoiceConnectionStatus.Destroyed) return rej(new PlayerError(PlayerErrors.voiceManager.connectionNotFound.replace('{guildID}', member.guild.id)));
 
                     connection.destroy();
 

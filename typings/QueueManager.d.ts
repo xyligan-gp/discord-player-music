@@ -1,5 +1,5 @@
 import { Collection, TextChannel, VoiceChannel } from 'discord.js';
-import { VoiceConnection } from '@discordjs/voice';
+import { AudioPlayer, VoiceConnection } from '@discordjs/voice';
 
 import { Song } from './PlayerData';
 
@@ -9,10 +9,16 @@ declare class QueueManager extends Collection {
     textChannel: TextChannel;
     voiceChannel: VoiceChannel;
     connection: VoiceConnection;
+    dispatcher?: AudioPlayer;
     songs: Array<Song>;
     volume: number;
-    loop: boolean;
-    queueLoop: boolean;
+    
+    loop: {
+        song: boolean;
+        queue: boolean;
+    }
+
+    startStream: number;
     playing: boolean;
     filter: string;
 }

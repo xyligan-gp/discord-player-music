@@ -1,12 +1,16 @@
 module.exports = {
     default: {
+        oldNodeVersion: `Your Node.js version [{version}] is out of date! Please install Node.js version higher than 14.X`,
         requiredClient: `<Client> not found for Discord Player Music!`,
         queueNotFound: `Server queue for '{guildID}' not found!`,
         permissionsNotFound: `Client '{clientTag}' missing permissions {permissions}!`,
-
-        searchSong: {
-            queryNotFound: `Query not found for '{userID}'!`
-        }
+        filterNotFound: `Filter '{filter}' not found in Discord Player Music filter collection!`,
+        invalidValue: `The value '{value}' received an invalid data type/invalid value. Recommended type: '{type}'`,
+        lyricsNotFound: `No lyrics found for '{query}'!`,
+        songNotFound: `Song with index/name '{value}' not found!`,
+        queuePaused: `The queue for '{guildID}' has already been temporarily paused!`,
+        queueResumed: `The queue for '{guildID}' is already playing!`,
+        queryNotFound: `Query not found for '{userID}'!`
     },
 
     voiceManager: {

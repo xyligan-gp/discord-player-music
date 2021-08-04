@@ -22,7 +22,7 @@ All types in brackets mean the type of what the method or event returns.**
 
 Install [discord-player-music dev](https://github.com/xyligan-gp/discord-player-music/tree/dev)
 ```JS
-$ npm install xyligan-gp/discord-player-music#dev
+$ npm install discord-player-music@dev
 ```
 
 ## Warning
@@ -48,10 +48,8 @@ If you get the error `Cannot play audio as no valid encryption package is instal
 
 ## Module Constructor Options
 - 'options.searchResultsLimit' - <b>Property responsible for the number of results received when searching for songs.</b>
-- 'options.searchCollector' - <b>Property responsible for the status of a custom module collector.</b>
-
-- 'options.searchCollectorConfig.type' - <b>Property responsible for the custom collector type of the module. Available types: `message` &` reaction`.</b>
-- 'options.searchCollectorConfig.count' - <b>Property responsible for the amount of all data for the module collector (taken from `options.searchResultsLimit`).</b>
+- 'options.synchronLoop' - <b>Property responsible for synchronization status 'loop.song' & 'loop.queue'.</b>
+- 'options.defaultVolume' - <b>Property responsible for the default value of the playback volume.</b>
 
 ## Quick Initialization Example
 

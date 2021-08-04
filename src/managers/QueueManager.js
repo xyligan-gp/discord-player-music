@@ -1,5 +1,5 @@
 const { Collection, TextChannel, VoiceChannel, User } = require("discord.js");
-const { VoiceConnection } = require('@discordjs/voice');
+const { VoiceConnection, AudioPlayer } = require('@discordjs/voice');
 
 class QueueManager extends Collection {
     constructor() {
@@ -22,12 +22,18 @@ class QueueManager extends Collection {
         this.connection = VoiceConnection;
 
         /**
+         * Queue Dispatcher
+         * @type {AudioPlayer}
+        */
+        this.dispatcher = AudioPlayer;
+
+        /**
          * Queue Songs
          * @type {Array<PlayerSong>}
         */
         this.songs = [
             {
-                index: Number() || null,
+                index: Number(),
                 searchType: String(),
                 title: String(),
                 url: String(),
@@ -38,9 +44,9 @@ class QueueManager extends Collection {
                 requestedBy: User,
 
                 duration: {
-                    hours: String() || Number(),
-                    minutes: String() || Number(),
-                    seconds: String() || Number()
+                    hours: String(),
+                    minutes: String(),
+                    seconds: String()
                 }
             }
         ];
@@ -52,16 +58,16 @@ class QueueManager extends Collection {
         this.volume = Number();
 
         /**
-         * Current Song Loop Mode Status
-         * @type {Boolean}
+         * Loop Object
+         * @type {{ song: Boolean, queue: Boolean }}
         */
-        this.loop = Boolean();
+        this.loop = Object();
 
         /**
-         * Guild Queue Loop Mode Status
-         * @type {Boolean}
+         * Stream Start Time
+         * @type {Number}
         */
-        this.queueLoop = Boolean();
+        this.startStream = Number();
 
         /**
          * Guild Playing Status
@@ -71,15 +77,15 @@ class QueueManager extends Collection {
 
         /**
          * Queue Filters
-         * @type {Array<String>}
+         * @type {String}
         */
-        this.filter = Array(String());
+        this.filter = String();
     }
 }
 
 /**
  * @typedef PlayerSong
- * @property {Number | null} index Song Index
+ * @property {Number} index Song Index
  * @property {String} searchType Song Search Type
  * @property {String} title Song Title
  * @property {String} url Song URL
@@ -89,9 +95,9 @@ class QueueManager extends Collection {
  * @property {VoiceChannel} voiceChannel Guild Voice Channel
  * @property {User} requestedBy The user who installed the song
  * @property {Object} duration Song Duration
- * @property {Number | String} duration.hours Duration in hours
- * @property {Number | String} duration.minutes Duration in minutes
- * @property {Number | String} duration.seconds Duration in seconds
+ * @property {String} duration.hours Duration in hours
+ * @property {String} duration.minutes Duration in minutes
+ * @property {String} duration.seconds Duration in seconds
  * @type {Object}
 */
 

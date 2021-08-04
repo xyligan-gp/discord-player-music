@@ -1,7 +1,15 @@
 const { Client, Collection, Guild, GuildMember, TextChannel, version, VoiceChannel, User } = require('discord.js');
 const { createAudioPlayer, createAudioResource, getVoiceConnection, joinVoiceChannel,VoiceConnection, VoiceConnectionStatus, entersState, StreamType, AudioPlayerStatus, AudioPlayer } = require('@discordjs/voice');
 const search = require('yt-search');
+const searchLyrics = require('lyrics-finder');
 
+const ms = require('./modules/ms.js');
+const parse = ms => ({
+    days: Math.floor(ms / 86400000),
+    hours: Math.floor(ms / 3600000 % 24),
+    minutes: Math.floor(ms / 60000 % 60),
+    seconds: Math.floor(ms / 1000 % 60)
+});
 const ytdl = require('./modules/dpm-ytdl.js');
 const Emitter = require('./Emitter.js');
 const PlayerError = require('./PlayerError.js');
@@ -44,6 +52,8 @@ class DiscordPlayerMusic extends Emitter {
          * @type {UtilsManager}
         */
         this.utils = new UtilsManager(this.client, this.queue);
+
+        this.utils.checkNode();
         
         /**
          * Player Options
@@ -94,12 +104,68 @@ class DiscordPlayerMusic extends Emitter {
         this.size = this.managers.length;
 
         /**
-         * Discord Dispatcher
-         * @type {AudioPlayer}
+         * Player Filters
+         * @type {Array<PlayerFilter>}
         */
-        this.audio = createAudioPlayer();
+        this.filters = [
+            { name: '3D', value: 'apulsator=hz=0.125' },
+            { name: 'bassboost', value: 'bass=g=10,dynaudnorm=f=150:g=15' },
+            { name: 'echo', value: 'aecho=0.8:0.9:1000:0.3' },
+            { name: 'fadein', value: 'afade=t=in:ss=0:d=10' },
+            { name: 'flanger', value: 'flanger' },
+            { name: 'gate', value: 'agate' },
+            { name: 'haas', value: 'haas' },
+            { name: 'karaoke', value: 'stereotools=mlev=0.1' },
+            { name: 'nightcore', value: 'asetrate=48000*1.25,aresample=48000,bass=g=5' },
+            { name: 'reverse', value: 'areverse' },
+            { name: 'vaporwave', value: 'asetrate=48000*0.8,aresample=48000,atempo=1.1' },
+            { name: 'mcompand', value: 'mcompand' },
+            { name: 'phaser', value: 'aphaser' },
+            { name: 'tremolo', value: 'tremolo' },
+            { name: 'surround', value: 'surround' },
+            { name: 'slowed', value: 'asetrate=25000*1.25,aresample=50000,bass=g=2' },
+            { name: 'earwax', value: 'earwax' },
+            { name: 'underwater', value: 'aresample=1500' },
+            { name: 'clear', value: null },
+        ];
 
         this.init();
+
+        this.on('playerError', async data => {
+            if(!data.textChannel) return;
+
+            if(data.error.message.includes('Status code: 403')) {
+                this.getGuildMap(data.textChannel.guild)
+                
+                .then(guildMap => {
+                    this.play(data.textChannel.guild, guildMap.songs[0]);
+                })
+                .catch(err => {
+                    return;
+                })
+            }else{
+                const queue = this.queue.get(data.textChannel.guild.id);
+                if(!queue) return;
+
+                switch(this.mode) {
+                    case '1': {
+                        queue.voiceChannel.leave();
+                        return this.queue.delete(data.textChannel.guild.id);
+                    }
+
+                    case '2': {
+                        const connection = queue.connection;
+
+                        if(!connection) {
+                            return this.queue.delete(data.textChannel.guild.id);
+                        }else{
+                            connection.destroy();
+                            return this.queue.delete(data.textChannel.guild.id);
+                        }
+                    }
+                }
+            }
+        })
     }
 
     /**
@@ -114,6 +180,7 @@ class DiscordPlayerMusic extends Emitter {
     play(guild, song) {
         return new Promise(async (res, rej) => {
             const queue = this.queue.get(guild.id);
+            if(!queue) return rej(new PlayerError(PlayerErrors.default.queueNotFound.replace('{guildID}', guild.id)));
             
             switch(this.mode) {
                 case '1': {
@@ -131,9 +198,9 @@ class DiscordPlayerMusic extends Emitter {
                         dispatcher.on('finish', () => {
                             if(queue.songs.length < 1) return this.emit('queueEnded', queue);
 
-                            if(queue.loop) {
+                            if(queue.loop.song) {
                                 this.play(guild, queue.songs[0]);
-                            }else if(queue.queueLoop) {
+                            }else if(queue.loop.queue) {
                                 const lastSong = queue.songs.shift();
 
                                 queue.songs.push(lastSong);
@@ -164,61 +231,89 @@ class DiscordPlayerMusic extends Emitter {
                 }
 
                 case '2': {
+                    const connection = queue.connection;
+
                     if(!song) {
                         if(!queue.songs) return;
 
-                        const connection = getVoiceConnection(guild.id);
-                        connection.destroy();
+                        if(connection.state.status === VoiceConnectionStatus.Destroyed) {
+                            return this.queue.delete(guild.id);
+                        }else {
+                            connection.destroy();
+                            this.queue.delete(guild.id);
 
-                        return this.queue.delete(guild.id);
+                            return this.emit('queueEnded', queue);
+                        }
                     }
 
                     try {
-                        const connection = getVoiceConnection(guild.id);
                         const stream = await ytdl(song.url, queue.filter);
                         const resource = createAudioResource(stream, { inputType: StreamType.OggOpus, inlineVolume: true });
+                        const dispatcher = queue.dispatcher;
 
                         try {
                             await entersState(connection, VoiceConnectionStatus.Ready, 5_000);
 
-                            this.audio.play(resource);
+                            queue.dispatcher.play(resource);
 
-                            connection.subscribe(this.audio);
+                            connection.state.subscription?.player ? false : connection.subscribe(dispatcher);
                         } catch (error) {
-                            connection.destroy();
-                            this.emit('playerError', { textChannel: song.textChannel, requested: song.requestedBy, method: 'play', error: error });
+                            if(connection.state.status === VoiceConnectionStatus.Destroyed) {
+                                return this.emit('playerError', { textChannel: song.textChannel, requested: song.requestedBy, method: 'play', error: error });
+                            }else{
+                                connection.destroy();
+                                
+                                return this.emit('playerError', { textChannel: song.textChannel, requested: song.requestedBy, method: 'play', error: error });
+                            }
                         }
                         
-                        this.audio.on('stateChange', (oldState, newState) => {
-                            if(newState.status === AudioPlayerStatus.Idle && oldState.status != AudioPlayerStatus.Idle) {
-                                if(queue.songs.length < 1) return this.emit('queueEnded', queue);
+                        dispatcher.once(AudioPlayerStatus.Idle, () => {
+                            if(queue.songs.length < 1) {
+                                if(connection.state.status === VoiceConnectionStatus.Destroyed) {
+                                    this.queue.delete(guild.id);
 
-                                if(queue.loop) {
-                                    this.play(guild, queue.songs[0]);
-                                }else if(queue.queueLoop) {
-                                    const lastSong = queue.songs.shift();
-                                    
-                                    queue.songs.push(lastSong);
-                                    this.play(guild, queue.songs[0]);
+                                    return this.emit('queueEnded', queue);
                                 }else{
-                                    queue.songs.shift();
-                                    this.play(guild, queue.songs[0]);
+                                    connection.destroy();
+                                    this.queue.delete(guild.id);
+                
+                                    return this.emit('queueEnded', queue);
+                                }
+                            }
 
-                                    if(queue.songs.length < 1) {
+                            if(queue.loop.song) {
+                                this.play(guild, queue.songs[0]);
+                            }else if(queue.loop.queue) {
+                                const lastSong = queue.songs.shift();
+
+                                queue.songs.push(lastSong);
+                                this.play(guild, queue.songs[0]);
+                            }else{
+                                if(queue.songs.length < 1) {
+                                    if(connection.state.status === VoiceConnectionStatus.Destroyed) {
+                                        this.queue.delete(guild.id);
+            
+                                        return this.emit('queueEnded', queue);
+                                    }else{
                                         connection.destroy();
                                         this.queue.delete(guild.id);
-
+                
                                         return this.emit('queueEnded', queue);
                                     }
                                 }
+                                    
+                                queue.songs.shift();
+                                this.play(guild, queue.songs[0]);
                             }
                         })
 
-                        this.audio.on('error', error => {
+                        dispatcher.on('error', error => {
                             return this.emit('playerError', { textChannel: song.textChannel, requested: song.requestedBy, method: 'play', error: error });
                         })
-                    }catch(err){
-                        return this.emit('playerError', { textChannel: song.textChannel, requested: song.requestedBy, method: 'play', error: err });
+
+                        return this.emit('playingSong', queue);
+                    }catch(error){
+                        return this.emit('playerError', { textChannel: song.textChannel, requested: song.requestedBy, method: 'play', error: error });
                     }
                 }
             }
@@ -234,7 +329,7 @@ class DiscordPlayerMusic extends Emitter {
     */
     searchSong(member, query, channel) {
         return new Promise(async (res, rej) => {
-            if(!query) return rej(new PlayerError(PlayerErrors.default.searchSong.queryNotFound.replace('{userID}', member.id)));
+            if(!query) return rej(new PlayerError(PlayerErrors.default.queryNotFound.replace('{userID}', member.id)));
 
             const voiceChannel = member.voice.channel;
             if(!voiceChannel) return rej(new PlayerError(PlayerErrors.voiceManager.userVoiceNotFound.replace('{userID}', member.id)));
@@ -243,11 +338,11 @@ class DiscordPlayerMusic extends Emitter {
             if(!this.utils.checkPermissions(clientMember, ['CONNECT', 'SPEAK'])) return rej(new PlayerError(PlayerErrors.default.permissionsNotFound.replace('{clientTag}', this.client.user.tag).replace('{permissions}', 'CONNECT & SPEAK')));
 
             try {
-                if(query.startsWith('https://')) {
+                if(query.startsWith('https://') || query.startsWith('http://')) {
                     const songInfo = await ytdl.getInfo(query);
+                    const songDuration = this.utils.formatNumbers([Math.floor(songInfo.videoDetails.lengthSeconds / 3600), Math.floor(songInfo.videoDetails.lengthSeconds / 60 % 60), Math.floor(songInfo.videoDetails.lengthSeconds % 60)]);
 
                     let song = [{
-                        index: null,
                         searchType: 'search#url',
                         title: songInfo.videoDetails.title,
                         url: songInfo.videoDetails.video_url,
@@ -258,9 +353,9 @@ class DiscordPlayerMusic extends Emitter {
                         requestedBy: member.user,
 
                         duration: {
-                            hours: this.utils.formatNumbers([Math.floor(songInfo.videoDetails.lengthSeconds / 3600)]).join(''),
-                            minutes: this.utils.formatNumbers([Math.floor(songInfo.videoDetails.lengthSeconds / 60 % 60)]).join(''),
-                            seconds: this.utils.formatNumbers([Math.floor(songInfo.videoDetails.lengthSeconds % 60)]).join('')
+                            hours: songDuration[0],
+                            minutes: songDuration[1],
+                            seconds: songDuration[2]
                         }
                     }]
                     
@@ -273,6 +368,8 @@ class DiscordPlayerMusic extends Emitter {
                     var resultsArray = [];
 
                     for(let i = 0; i < this.options.searchResultsLimit; i++) {
+                        const songDuration = this.utils.formatNumbers([Math.floor(searchResult.videos[i].duration.seconds / 3600), Math.floor(searchResult.videos[i].duration.seconds / 60 % 60), Math.floor(searchResult.videos[i].duration.seconds % 60)]);
+
                         resultsArray.push(
                             {
                                 index: i + 1,
@@ -286,9 +383,9 @@ class DiscordPlayerMusic extends Emitter {
                                 requestedBy: member.user,
 
                                 duration: {
-                                    hours: this.utils.formatNumbers([Math.floor(searchResult.videos[i].duration.seconds / 3600)]).join(''),
-                                    minutes: this.utils.formatNumbers([Math.floor(searchResult.videos[i].duration.seconds / 60 % 60)]).join(''),
-                                    seconds: this.utils.formatNumbers([Math.floor(searchResult.videos[i].duration.seconds % 60)]).join('')
+                                    hours: songDuration[0],
+                                    minutes: songDuration[1],
+                                    seconds: songDuration[2]
                                 }
                             }
                         )
@@ -296,8 +393,8 @@ class DiscordPlayerMusic extends Emitter {
 
                     res(resultsArray);
                 }
-            }catch(err){
-                return this.emit('playerError', { textChannel: channel, requested: member.user, method: 'searchSong', error: err });
+            }catch(error){
+                return this.emit('playerError', { textChannel: channel, requested: member.user, method: 'searchSong', error: error });
             }
         })
     }
@@ -325,18 +422,21 @@ class DiscordPlayerMusic extends Emitter {
                             voiceChannel: song.voiceChannel,
                             connection: connection,
                             songs: [song],
-                            volume: 5,
-                            loop: false,
-                            queueLoop: false,
+                            volume: this.options.defaultVolume,
+
+                            loop: {
+                                song: false,
+                                queue: false
+                            },
+
+                            startStream: Date.now(),
                             playing: true,
                             filter: null
                         }
 
                         this.queue.set(member.guild.id, queueConstructor);
 
-                        await this.play(member.guild, song);
-
-                        return this.emit('playingSong', queue);
+                        return this.play(member.guild, song);
                     }else{
                         queue.songs.push(song);
 
@@ -345,29 +445,33 @@ class DiscordPlayerMusic extends Emitter {
                 }
 
                 case '2': {
-                    joinVoiceChannel({ guildId: member.guild.id, channelId: member.voice.channel.id, adapterCreator: member.guild.voiceAdapterCreator });
-
-                    const connection = getVoiceConnection(member.guild.id);
                     const song = resultsArray[index - 1];
+                    let connection = getVoiceConnection(member.guild.id);
+
+                    connection ? connection = connection : connection = joinVoiceChannel({ guildId: member.guild.id, channelId: member.voice.channel.id, adapterCreator: member.guild.voiceAdapterCreator });
 
                     if(!queue) {
                         const queueConstructor = {
                             textChannel: song.textChannel,
                             voiceChannel: song.voiceChannel,
                             connection: connection,
+                            dispatcher: connection.state.subscription?.player ? connection.state.subscription.player : createAudioPlayer(),
                             songs: [song],
-                            volume: 5,
-                            loop: false,
-                            queueLoop: false,
+                            volume: this.options.defaultVolume,
+                            
+                            loop: {
+                                song: false,
+                                queue: false
+                            },
+
+                            startStream: Date.now(),
                             playing: true,
                             filter: null
                         }
 
                         this.queue.set(member.guild.id, queueConstructor);
 
-                        await this.play(member.guild, song);
-
-                        return this.emit('playingSong', queue);
+                        return this.play(member.guild, song);
                     }else{
                         queue.songs.push(song);
 
@@ -375,6 +479,363 @@ class DiscordPlayerMusic extends Emitter {
                     }
                 }
             }
+        })
+    }
+
+    /**
+     * Method to pause song playback
+     * @param {Guild} guild Discord Guild
+     * @returns {Promise<{ status: Boolean }>} Returns the pause status of a queue
+    */
+    pause(guild) {
+        return new Promise(async (res, rej) => {
+            const queue = this.queue.get(guild.id);
+            if(!queue) return rej(new PlayerError(PlayerErrors.default.queueNotFound.replace('{guildID}', guild.id)));
+            if(!queue.playing) return rej(new PlayerError(PlayerErrors.default.queuePaused.replace('{guildID}', guild.id)));
+
+            switch(this.mode) {
+                case '1': {
+                    queue.playing = false;
+                    queue.connection.dispatcher.pause();
+                }
+
+                case '2': {
+                    queue.playing = false;
+                    queue.dispatcher.pause();
+                }
+            }
+
+            return res({ status: true });
+        })
+    }
+
+    /**
+     * Method for setting the current song to repet from the server queue
+     * @param {Guild} guild Discord Guild
+     * @returns {Promise<{ status: Boolean, song: PlayerSong }>} Returns the repeat status of a song and information about it
+    */
+    setLoopSong(guild) {
+        return new Promise(async (res, rej) => {
+            const queue = this.queue.get(guild.id);
+            if(!queue) return rej(new PlayerError(PlayerErrors.default.queueNotFound.replace('{guildID}', guild.id)));
+
+            if(this.options.synchronLoop) {
+                queue.loop.song = !queue.loop.song;
+                if(queue.loop.queue) queue.loop.queue = !queue.loop.queue;
+            }else if(!this.options.synchronLoop){
+                queue.loop.song = !queue.loop.song;
+            }
+
+            return res({ status: queue.loop.song, song: queue.songs[0] });
+        })
+    }
+
+    /**
+     * Method for skipping songs in the queue
+     * @param {Guild} guild Discord Guild
+     * @returns {Promise<{ status: Boolean, song: PlayerSong }>} Returns the status of the operation and information about the song
+    */
+    skip(guild) {
+        return new Promise(async (res, rej) => {
+            const queue = this.queue.get(guild.id);
+            if(!queue) return rej(new PlayerError(PlayerErrors.default.queueNotFound.replace('{guildID}', guild.id)));
+
+            switch(this.mode) {
+                case '1': {
+                    if(queue.songs.length < 2) {
+                        queue.songs = [];
+                        queue.voiceChannel.leave();
+                        this.queue.delete(guild.id);
+
+                        return res({ status: true, song: null });
+                    }else if(queue.loop.song) {
+                        const song = queue.songs.shift();
+                        queue.songs.push(song);
+                        queue.connection.dispatcher.end();
+                    }else{
+                        queue.connection.dispatcher.end();
+                    }
+
+                    return res({ status: true, song: queue.songs[1] || null });
+                }
+
+                case '2': {
+                    if(queue.songs.length < 2) {
+                        queue.songs = [];
+
+                        if(queue.connection.state.status === VoiceConnectionStatus.Destroyed) {
+                            this.queue.delete(guild.id);
+
+                            return res({ status: true, song: null });
+                        }else{
+                            queue.connection.destroy();
+                            this.queue.delete(guild.id);
+
+                            return res({ status: true, song: null });
+                        }
+                    }else if(queue.loop.song) {
+                        const song = queue.songs.shift();
+                        queue.songs.push(song);
+                        queue.dispatcher.stop();
+                    }else{
+                        queue.dispatcher.stop();
+                    }
+
+                    return res({ status: true, song: queue.songs[1] || null });
+                }
+            }
+        })
+    }
+
+    /**
+     * Method for adding filter to play songs
+     * @param {Guild} guild Discord Guild
+     * @param {String} filter Filter Name
+     * @returns {Promise<{ status: Boolean, filter: PlayerFilter, queue: Array<PlayerSong> }>} Returns the filter installation status and information about it
+    */
+    setFilter(guild, filter) {
+        return new Promise(async (res, rej) => {
+            const queue = this.queue.get(guild.id);
+            if(!queue) return rej(new PlayerError(PlayerErrors.default.queueNotFound.replace('{guildID}', guild.id)));
+
+            filter && filter.length != 0 ? filter = filter : filter = 'clear';
+
+            const getFilter = this.filters.find(filters => filters.name === filter);
+            if(!getFilter) return rej(new PlayerError(PlayerErrors.default.filterNotFound.replace('{filter}', filter)));
+
+            queue.filter = getFilter.value;
+            this.play(guild, queue.songs[0]);
+
+            return res({ status: true, filter: { name: getFilter.name, value: getFilter.value }, queue: queue.songs });
+        })
+    }
+
+    /**
+     * Method for shuffling songs in queue
+     * @param {Guild} guild Discord Guild
+     * @returns {Promise<Array<PlayerSong>>} Returns a shuffled server queue
+    */
+    shuffle(guild) {
+        return new Promise(async (res, rej) => {
+            const queue = this.queue.get(guild.id);
+            if(!queue) return rej(new PlayerError(PlayerErrors.default.queueNotFound.replace('{guildID}', guild.id)));
+
+            const currentSong = queue.songs.shift();
+
+            for(let i = queue.songs.length - 1; i > 0; i--) {
+                const index = Math.floor(Math.random() * (i + 1));
+                [queue.songs[i], queue.songs[index]] = [queue.songs[index], queue.songs[i]];
+            }
+
+            queue.songs.unshift(currentSong);
+
+            return res(queue.songs);
+        })
+    }
+
+    /**
+     * Method for getting guild map
+     * @param {Guild} guild Discord Guild
+     * @returns {Promise<PlayerQueue>} Returns an object with server queue parameters
+    */
+    getGuildMap(guild) {
+        return new Promise(async (res, rej) => {
+            const queue = this.queue.get(guild.id);
+            if(!queue) return rej(new PlayerError(PlayerErrors.default.queueNotFound.replace('{guildID}', guild.id)));
+
+            return res(queue);
+        })
+    }
+
+    /**
+     * Method for getting a queue of server songs
+     * @param {Guild} guild Discord Guild
+     * @returns {Promise<PlayerSong>} Returns an array of songs being played on the server
+    */
+    getQueue(guild) {
+        return new Promise(async (res, rej) => {
+            const queue = this.queue.get(guild.id);
+            if(!queue) return rej(new PlayerError(PlayerErrors.default.queueNotFound.replace('{guildID}', guild.id)));
+
+            return res(queue.songs);
+        })
+    }
+
+    /**
+     * Method for getting information about a song
+     * @param {Guild} guild Discord Guild
+     * @param {Number} index Song Index
+     * @returns {Promise<{ song: PlayerSong, dispatcherInfo: Object }>} Returns information about the requested song
+    */
+    getSongInfo(guild, index) {
+        return new Promise(async (res, rej) => {
+            var songInfo, filter ;
+
+            const queue = this.queue.get(guild.id);
+            if(!queue) return rej(new PlayerError(PlayerErrors.default.queueNotFound.replace('{guildID}', guild.id)));
+
+            index && typeof index != 'number' ? songInfo = queue.songs[0] : queue.songs[index - 1] ? songInfo = queue.songs[index - 1] : songInfo = queue.songs[0];
+
+            queue.filter === null ? filter = { name: 'clear', value: null } : filter = this.filters.find(filter => filter.value === queue.filter);
+            const streamTime = parse(Date.now() - queue.startStream);
+
+            return res({ song: songInfo, dispatcherInfo: { loop: queue.loop, filter: filter, playing: queue.playing, streamTime: streamTime } });
+        })
+    }
+
+    /**
+     * Method for finding lyrics for a song
+     * @param {Guild} guild Discord Guild
+     * @param {String} query Song Name
+     * @returns {Promise<{ song: String | PlayerSong, lyrics: String }>} Returns the lyrics of the requested song
+    */
+    getLyrics(guild, query) {
+        return new Promise(async (res, rej) => {
+            if(query) {
+                const lyrics = await searchLyrics(query, '');
+                if(!lyrics) return rej(new PlayerError(PlayerErrors.default.lyricsNotFound.replace('{query}', query)));
+
+                return res({ song: query, lyrics: lyrics });
+            }else{
+                const queue = this.queue.get(guild.id);
+                if(!queue) return rej(new PlayerError(PlayerErrors.default.queueNotFound.replace('{guildID}', guild.id)));
+
+                const lyrics = await searchLyrics(queue.songs[0].title, '');
+                if(!lyrics) return rej(new PlayerError(PlayerErrors.default.lyricsNotFound.replace('{query}', queue.songs[0].title)));
+
+                return res({ song: queue.songs[0], lyrics: lyrics });
+            }
+        })
+    }
+
+    /**
+     * Method for getting all filters of a module
+     * @returns {Array<PlayerFilter>} Returns the collection of module filters
+    */
+    getFilters() {
+        return new Promise(async (res, rej) => {
+            return res(this.filters);
+        })
+    }
+
+    /**
+     * Method for creating progress bar
+     * @param {Guild} guild Discord Guild
+     * @returns {Promise<{ bar: String, percents: String }>} Returns an object with the progress bar data
+    */
+    createProgressBar(guild) {
+        return new Promise(async (res, rej) => {
+            const queue = this.queue.get(guild.id);
+            if(!queue) return rej(new PlayerError(PlayerErrors.default.queueNotFound.replace('{guildID}', guild.id)));
+
+            switch(this.mode) {
+                case '1': {
+                    if(!queue.connection.dispatcher) return res({ bar: '🔘▬▬▬▬▬▬▬▬▬▬', percents: '0%' });
+
+                    const seconds = Math.floor((Number(queue.songs[0].duration.hours) * 3600) + (Number(queue.songs[0].duration.minutes) * 60) + Number(queue.songs[0].duration.seconds));
+                    const total = Math.floor(seconds * 1000);
+                    const current = Math.floor(queue.connection.dispatcher.streamTime || 0);
+
+                    const size = 11;
+                    const line = '▬';
+                    const slider = '🔘';
+
+                    if (!total) return res({ bar: '🔘▬▬▬▬▬▬▬▬▬▬', percents: '0%' });
+                    if (!current) return res({ bar: '🔘▬▬▬▬▬▬▬▬▬▬', percents: '0%' });
+                    if (isNaN(total)) return res({ bar: '🔘▬▬▬▬▬▬▬▬▬▬', percents: '0%' });
+                    if (isNaN(current)) return res({ bar: '🔘▬▬▬▬▬▬▬▬▬▬', percents: '0%' });
+                    if (isNaN(size)) return res({ bar: '🔘▬▬▬▬▬▬▬▬▬▬', percents: '0%' });
+
+                    if (current > total) {
+                        const bar = line.repeat(size + 2);
+                        const percentage = (current / total) * 100;
+
+                        return res({ bar: bar, percents: `${percentage}%` });
+                    } else {
+                        const percentage = current / total;
+                        const progress = Math.round((size * percentage));
+                        const emptyProgress = size - progress;
+                        const progressText = line.repeat(progress).replace(/.$/, slider);
+                        const emptyProgressText = line.repeat(emptyProgress);
+                        const bar = progressText + emptyProgressText;
+                        const calculated = Math.floor(percentage * 100);
+
+                        if (calculated < 5) {
+                            res({ bar: '🔘▬▬▬▬▬▬▬▬▬▬', percents: `${calculated}%` });
+                        } else {
+                            res({ bar: bar, percents: `${calculated}%` });
+                        }
+                    }
+                }
+
+                case '2': {
+                    if(!queue.dispatcher) return res({ bar: '🔘▬▬▬▬▬▬▬▬▬▬', percents: '0%' });
+
+                    const seconds = Math.floor((Number(queue.songs[0].duration.hours) * 3600) + (Number(queue.songs[0].duration.minutes) * 60) + Number(queue.songs[0].duration.seconds));
+                    const total = Math.floor(seconds * 1000);
+                    const current = Math.floor(queue.dispatcher.state.resource.playbackDuration || 0);
+
+                    const size = 11;
+                    const line = '▬';
+                    const slider = '🔘';
+
+                    if (!total) return res({ bar: '🔘▬▬▬▬▬▬▬▬▬▬', percents: '0%' });
+                    if (!current) return res({ bar: '🔘▬▬▬▬▬▬▬▬▬▬', percents: '0%' });
+                    if (isNaN(total)) return res({ bar: '🔘▬▬▬▬▬▬▬▬▬▬', percents: '0%' });
+                    if (isNaN(current)) return res({ bar: '🔘▬▬▬▬▬▬▬▬▬▬', percents: '0%' });
+                    if (isNaN(size)) return res({ bar: '🔘▬▬▬▬▬▬▬▬▬▬', percents: '0%' });
+
+                    if (current > total) {
+                        const bar = line.repeat(size + 2);
+                        const percentage = (current / total) * 100;
+
+                        return res({ bar: bar, percents: `${percentage}%` });
+                    } else {
+                        const percentage = current / total;
+                        const progress = Math.round((size * percentage));
+                        const emptyProgress = size - progress;
+                        const progressText = line.repeat(progress).replace(/.$/, slider);
+                        const emptyProgressText = line.repeat(emptyProgress);
+                        const bar = progressText + emptyProgressText;
+                        const calculated = Math.floor(percentage * 100);
+
+                        if (calculated < 5) {
+                            res({ bar: '🔘▬▬▬▬▬▬▬▬▬▬', percents: `${calculated}%` });
+                        } else {
+                            res({ bar: bar, percents: `${calculated}%` });
+                        }
+                    }
+                }
+            }
+        })
+    }
+
+    /**
+     * Method for changing the playback volume of songs
+     * @param {Guild} guild Discord Guild
+     * @param {Number} volume Playback Volume
+     * @returns {Promise<{ status: Boolean, volume: Number }>} Returns the volume setting status and value
+    */
+    setVolume(guild, volume) {
+        return new Promise(async (res, rej) => {
+            const queue = this.queue.get(guild.id);
+            if(!queue) return rej(new PlayerError(PlayerErrors.default.queueNotFound.replace('{guildID}', guild.id)));
+
+            if(isNaN(volume)) return rej(new PlayerError(PlayerErrors.default.invalidValue.replace('{value}', 'volume').replace('{type}', 'number')));
+
+            switch(this.mode) {
+                case '1': {
+                    queue.volume = Number(volume);
+                    queue.connection.dispatcher.setVolumeLogarithmic(Number(volume) / 5);
+                }
+
+                case '2': {
+                    queue.volume = Number(volume);
+                    queue.dispatcher.state.resource.volume.setVolume(Number(volume) / 5);
+                }
+            }
+
+            return res({ status: true, volume: volume });
         })
     }
 
@@ -398,13 +859,98 @@ class DiscordPlayerMusic extends Emitter {
                 }
 
                 case '2': {
-                    const connection = getVoiceConnection(guild.id);
-                    connection.destroy();
-                    queue.songs = [];
-                    this.queue.delete(guild.id);
+                    if(queue.connection.state.status === VoiceConnectionStatus.Destroyed) {
+                        queue.songs = [];
+                        this.queue.delete(guild.id);
 
-                    return res({ status: true });
+                        return res({ status: true });
+                    }else{
+                        queue.connection.destroy();
+                        queue.songs = [];
+                        this.queue.delete(guild.id);
+
+                        return res({ status: true });
+                    }
                 }
+            }
+        })
+    }
+
+    /**
+     * Method for setting to repeat server queue songs
+     * @param {Guild} guild Discord Guild
+     * @returns {Promise<{ status: Boolean, songs: Array<PlayerSong> }>} Returns the loop status of a queue and information about it
+    */
+    setLoopQueue(guild) {
+        return new Promise(async (res, rej) => {
+            const queue = this.queue.get(guild.id);
+            if(!queue) return rej(new PlayerError(PlayerErrors.default.queueNotFound.replace('{guildID}', guild.id)));
+
+            if(this.options.synchronLoop) {
+                queue.loop.queue = !queue.loop.queue;
+                if(queue.loop.song) queue.loop.song = !queue.loop.song;
+            }else if(!this.options.synchronLoop){
+                queue.loop.queue = !queue.loop.queue;
+            }
+
+            return res({ status: queue.loop.queue, songs: queue.songs });
+        })
+    }
+
+    /**
+     * Method to restore playing songs
+     * @param {Guild} guild Discord Guilds
+     * @returns {Promise<{ status: Boolean }>} Returns the playing status of a queue
+    */
+    resume(guild) {
+        return new Promise(async (res, rej) => {
+            const queue = this.queue.get(guild.id);
+            if(!queue) return rej(new PlayerError(PlayerErrors.default.queueNotFound.replace('{guildID}', guild.id)));
+            if(queue.playing) return rej(new PlayerError(PlayerErrors.default.queueResumed.replace('{guildID}', guild.id)));
+
+            switch(this.mode) {
+                case '1': {
+                    queue.playing = true;
+                    connection.dispatcher.resume();
+                }
+
+                case '2': {
+                    queue.playing = true;
+                    queue.dispatcher.unpause();
+                }
+            }
+
+            return res({ status: true });
+        })
+    }
+
+    /**
+     * Method for removing songs from the queue by Name or Index
+     * @param {Guild} guild Discord Guild
+     * @param {String | Number} value Song Name or Song Index
+     * @returns {Promise<{ status: Boolean, song: PlayerSong, queue: Array<PlayerSong> }>} Returns the song deletion status and information about it
+    */
+    removeSong(guild, value) {
+        return new Promise(async (res, rej) => {
+            const queue = this.queue.get(guild.id);
+            if(!queue) return rej(new PlayerError(PlayerErrors.default.queueNotFound.replace('{guildID}', guild.id)));
+
+            if(!isNaN(value)) {
+                const index = Math.floor(value - 1);
+                const song = queue.songs[index];
+
+                if(!song) return rej(new PlayerError(PlayerErrors.default.songNotFound.replace('{value}', value)));
+                queue.songs = queue.songs.filter(track => track != song);
+
+                return res({ status: true, song: song, queue: queue.songs });
+            }else{
+                const title = value;
+                const song = queue.songs.find(track => track.title === title);
+
+                if(!song) return rej(new PlayerError(PlayerErrors.default.songNotFound.replace('{value}', title)));
+                queue.songs = queue.songs.filter(track => track != song);
+
+                return res({ status: true, song: song, queue: queue.songs });
             }
         })
     }
@@ -413,27 +959,24 @@ class DiscordPlayerMusic extends Emitter {
      * Method for initializing the module
      * @fires DiscordPlayerMusic#ready
      * @returns {void}
+     * @private
     */
     init() {
         this.ready = true;
-
-        this.emit('ready', this.client);
     }
 }
 
 /**
  * @typedef DiscordPlayerMusicOptions
  * @property {Number} searchResultsLimit Limit the number of results when searching for songs
- * @property {Boolean} searchCollector Custom collector status when searching for songs
- * @property {Object} searchCollectorConfig Search Collector Configuration
- * @property {'message' | 'reaction'} searchCollectorConfig.type Search Collector Type
- * @property {Number} searchCollectorConfig.count Number of reactions/maximum song index (from options.searchResultsLimit)
+ * @property {Boolean} synchronLoop Song/Queue loop auto sync status
+ * @property {Number} defaultVolume Default value of playback volume
  * @type {Object}
 */
 
 /**
  * @typedef PlayerSong
- * @property {Number | null} index Song Index
+ * @property {Number} index Song Index
  * @property {String} searchType Song Search Type
  * @property {String} title Song Title
  * @property {String} url Song URL
@@ -443,16 +986,34 @@ class DiscordPlayerMusic extends Emitter {
  * @property {VoiceChannel} voiceChannel Guild Voice Channel
  * @property {User} requestedBy The user who installed the song
  * @property {Object} duration Song Duration
- * @property {Number | String} duration.hours Duration in hours
- * @property {Number | String} duration.minutes Duration in minutes
- * @property {Number | String} duration.seconds Duration in seconds
+ * @property {String} duration.hours Duration in hours
+ * @property {String} duration.minutes Duration in minutes
+ * @property {String} duration.seconds Duration in seconds
  * @type {Object}
 */
 
 /**
- * Emits when the module is ready for work
- * @event DiscordPlayerMusic#ready
- * @param {Client} callback Callback
+ * @typedef PlayerQueue
+ * @property {TextChannel} textChannel Queue Text Channel
+ * @property {VoiceChannel} voiceChannel Queue Voice Channel
+ * @property {VoiceConnection} connection Queue Voice Connection
+ * @property {AudioPlayer} dispatcher Queue Dispatcher
+ * @property {Array<PlayerSong>} songs Queue Songs
+ * @property {Number} volume Queue Songs Volume
+ * @property {Object} loop Loop Object
+ * @property {Boolean} loop.song Queue Song Loop
+ * @property {Boolean} loop.queue Queue Songs Loop
+ * @property {Number} startStream Stream Start Time
+ * @property {Boolean} playing Queue Song Playing Status
+ * @property {String} filter Queue Songs Filter
+ * @type {Object}
+*/
+
+/**
+ * @typedef PlayerFilter
+ * @property {String} name Filter Name
+ * @property {String} value Filter FFmpeg Value
+ * @type {Object}
 */
 
 /**
@@ -462,10 +1023,13 @@ class DiscordPlayerMusic extends Emitter {
  * @param {TextChannel} callback.textChannel Queue Text Channel
  * @param {VoiceChannel} callback.voiceChannel Queue Voice Channel
  * @param {VoiceConnection} callback.connection Queue Voice Connection
+ * @param {AudioPlayer} callback.dispatcher Queue Dispatcher
  * @param {Array<PlayerSong>} callback.songs Queue Songs
  * @param {Number} callback.volume Queue Songs Volume
- * @param {Boolean} callback.loop Queue Song Loop
- * @param {Boolean} callback.queueLoop Queue Song Queue Loop
+ * @param {Object} callback.loop Loop Object
+ * @param {Boolean} callback.loop.song Queue Song Loop
+ * @param {Boolean} callback.loop.queue Queue Songs Loop
+ * @param {Number} callback.startStream Stream Start Time
  * @param {Boolean} callback.playing Queue Song Playing Status
  * @param {String} callback.filter Queue Songs Filter
 */
@@ -474,7 +1038,7 @@ class DiscordPlayerMusic extends Emitter {
  * Emits when a song is added to the queue
  * @event DiscordPlayerMusic#songAdded
  * @param {Object} callback Callback
- * @param {Number} callback.index Song Position in Queue
+ * @param {Number} callback.index Song Position
  * @param {String} callback.searchType Search Type (URL or Name)
  * @param {String} callback.title Song Title
  * @param {String} callback.url Song URL
@@ -484,6 +1048,9 @@ class DiscordPlayerMusic extends Emitter {
  * @param {VoiceChannel} callback.voiceChannel Voice Channel
  * @param {User} callback.requestedBy Requester of the Song
  * @param {Object} callback.duration Song Duration
+ * @param {String} callback.duration.hours Duration in hours
+ * @param {String} callback.duration.minutes Duration in minutes
+ * @param {String} callback.duration.seconds Duration in seconds
 */
 
 /**
@@ -493,10 +1060,13 @@ class DiscordPlayerMusic extends Emitter {
  * @param {TextChannel} callback.textChannel Queue Text Channel
  * @param {VoiceChannel} callback.voiceChannel Queue Voice Channel
  * @param {VoiceConnection} callback.connection Queue Voice Connection
+ * @param {AudioPlayer} callback.dispatcher Queue Dispatcher
  * @param {Array<PlayerSong>} callback.songs Queue Songs
  * @param {Number} callback.volume Queue Songs Volume
- * @param {Boolean} callback.loop Queue Song Loop
- * @param {Boolean} callback.queueLoop Queue Song Queue Loop
+ * @param {Object} callback.loop Loop Object
+ * @param {Boolean} callback.loop.song Queue Song Loop
+ * @param {Boolean} callback.loop.queue Queue Songs Loop
+ * @param {Number} callback.startStream Stream Start Time
  * @param {Boolean} callback.playing Queue Song Playing Status
  * @param {String} callback.filter Queue Songs Filter
 */

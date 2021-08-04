@@ -1,7 +1,7 @@
 class DiscordPlayerMusicError extends Error {
     constructor(message: string | Error);
 
-    public name: 'DiscordPlayerMusicError';
+    public name: 'DiscordPlayerMusic Error';
 }
 
 export = DiscordPlayerMusicError;

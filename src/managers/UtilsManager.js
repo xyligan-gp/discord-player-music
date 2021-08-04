@@ -1,4 +1,4 @@
-const { Client, Collection, GuildMember, Message, Permissions, version } = require('discord.js');
+const { Client, GuildMember, Message, Permissions, version } = require('discord.js');
 const PlayerError = require('../PlayerError.js');
 const PlayerErrors = require('../PlayerErrors.js');
 
@@ -25,13 +25,32 @@ class UtilsManager {
          * Utils Manager Methods
          * @type {Array<String>}
         */
-        this.methods = ['checkOptions', 'checkPermissions', 'createCollector', 'formatNumbers'];
+        this.methods = ['checkNode', 'checkOptions', 'checkPermissions', 'createCollector', 'formatNumbers'];
 
         /**
          * Utils Manager Methods Count
          * @type {Number}
         */
         this.size = this.methods.length;
+    }
+
+    /**
+     * Method for checking the Node.js version installed on the server
+     * @returns {Promise<void>}
+     * @private
+    */
+    checkNode() {
+        return new Promise(async (res, rej) => {
+            if(!process.version.startsWith('v14')) {
+                rej(new PlayerError(PlayerErrors.default.oldNodeVersion.replace('{version}', process.version)));
+
+                setTimeout(() => {
+                    process.exit();
+                }, 10);
+            }else{
+                return;
+            }
+        })
     }
 
     /**
@@ -43,33 +62,19 @@ class UtilsManager {
         if(!options) {
             options = {
                 searchResultsLimit: 10,
-                searchCollector: true,
-
-                searchCollectorConfig: {
-                    type: 'message',
-                    count: 10
-                }
+                synchronLoop: true,
+                defaultVolume: 5
             }
         }else{
             if(!options.searchResultsLimit) options.searchResultsLimit = 10;
             if(typeof options.searchResultsLimit != 'number') options.searchResultsLimit = 10;
             if(options.searchResultsLimit < 1) options.searchResultsLimit = 10;
 
-            if(typeof options.searchCollector != 'boolean') options.searchCollector = true;
+            if(typeof options.synchronLoop != 'boolean') options.synchronLoop = true;
 
-            if(!options.searchCollectorConfig) options.searchCollectorConfig = {
-                type: 'message'
-            }
-            if(typeof options.searchCollectorConfig != 'object') options.searchCollectorConfig = {
-                type: 'message'
-            }
-
-            if(!options.searchCollectorConfig.type) options.searchCollectorConfig.type = 'message';
-            if(typeof options.searchCollectorConfig.type != 'string') options.searchCollectorConfig.type = 'message';
-
-            if(!options.searchCollectorConfig.count) options.searchCollectorConfig.count = 10;
-            if(typeof options.searchCollectorConfig.count != 'number') options.searchCollectorConfig.count = 10;
-            if(options.searchCollectorConfig.count < 1) options.searchCollectorConfig.count = 10;
+            if(!options.defaultVolume) options.defaultVolume = 5;
+            if(typeof options.defaultVolume != 'number') options.defaultVolume;
+            if(options.defaultVolume < 1) options.defaultVolume = 5;
         }
 
         return options;
@@ -130,10 +135,8 @@ class UtilsManager {
 /**
  * @typedef DiscordPlayerMusicOptions
  * @property {Number} searchResultsLimit Limit the number of results when searching for songs
- * @property {Boolean} searchCollector Custom collector status when searching for songs
- * @property {Object} searchCollectorConfig Search Collector Configuration
- * @property {'message' | 'reaction'} searchCollectorConfig.type Search Collector Type
- * @property {Number} searchCollectorConfig.count Number of reactions/maximum song index (from options.searchResultsLimit)
+ * @property {Boolean} synchronLoop Song/Queue loop auto sync status
+ * @property {Number} defaultVolume Default value of playback volume
  * @type {Object}
 */
 

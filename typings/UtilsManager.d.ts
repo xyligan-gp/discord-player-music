@@ -11,6 +11,11 @@ declare class UtilsManager {
     public size: number;
 
     /**
+     * Method for checking the Node.js version installed on the server
+    */
+    private checkNode(): Promise<void>;
+
+    /**
      * Method for validating Player options
      * @param options Player Options
      * @returns Returns valid Player options
@@ -30,7 +35,7 @@ declare class UtilsManager {
      * @param message Discord Message
      * @param type Collector Type
     */
-    public createCollector(message: Message, type: 'message' | 'reaction'): Promise<null>;
+    private createCollector(message: Message, type: 'message' | 'reaction'): Promise<null>;
 
     /**
      * Method for formatting numbers

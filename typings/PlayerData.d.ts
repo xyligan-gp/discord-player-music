@@ -1,8 +1,8 @@
-import { VoiceConnection } from '@discordjs/voice';
+import { AudioPlayer, VoiceConnection } from '@discordjs/voice';
 import { TextChannel, User, VoiceChannel } from 'discord.js';
 
 export interface PlayerSong {
-    index: number | null;
+    index?: number;
     searchType: string;
     title: string;
     url: string;
@@ -13,9 +13,9 @@ export interface PlayerSong {
     requestedBy: User;
 
     duration: {
-        hours: number | string;
-        minutes: number | string;
-        seconds: number | string;
+        hours: string;
+        minutes: string;
+        seconds: string;
     }
 }
 
@@ -30,10 +30,21 @@ export interface PlayerQueue {
     textChannel: TextChannel;
     voiceChannel: VoiceChannel;
     connection: VoiceConnection;
+    dispatcher?: AudioPlayer;
     songs: Array<Song>;
     volume: number;
-    loop: boolean;
-    queueLoop: boolean;
+
+    loop: {
+        song: boolean;
+        queue: boolean;
+    }
+    
+    startStream: number;
     playing: boolean;
     filter: string | null;
+}
+
+export interface PlayerFilter {
+    name: string;
+    value: string;
 }
