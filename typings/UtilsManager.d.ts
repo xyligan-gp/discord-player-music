@@ -1,4 +1,4 @@
-import { Client, GuildMember, Message, Permissions } from 'discord.js';
+import { Client, GuildMember, Permissions } from 'discord.js';
 
 import DiscordPlayerMusicOptions from './DiscordPlayerMusicOptions';
 
@@ -13,7 +13,7 @@ declare class UtilsManager {
     /**
      * Method for checking the Node.js version installed on the server
     */
-    private checkNode(): Promise<void>;
+    public checkNode(): Promise<void>;
 
     /**
      * Method for validating Player options
@@ -29,13 +29,6 @@ declare class UtilsManager {
      * @returns Returns the status of the user permissions
     */
     public checkPermissions(member: GuildMember, permissions: Array<Permissions>): Promise<boolean>;
-
-    /**
-     * Method for creating custom collectors
-     * @param message Discord Message
-     * @param type Collector Type
-    */
-    private createCollector(message: Message, type: 'message' | 'reaction'): Promise<null>;
 
     /**
      * Method for formatting numbers

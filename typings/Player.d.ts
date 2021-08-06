@@ -6,6 +6,7 @@ import DiscordPlayerMusicOptions from './DiscordPlayerMusicOptions';
 import { PlayerFilter, PlayerSong, PlayerQueue } from './PlayerData';
 import PlayerEvents from './PlayerEvents';
 
+import CollectorsManager from './CollectorsManager';
 import QueueManager from './QueueManager';
 import UtilsManager from './UtilsManager';
 import VoiceManager from './VoiceManager';
@@ -24,6 +25,7 @@ declare class DiscordPlayerMusic extends Emitter {
     public size: number;
     public filters: Array<PlayerFilter>;
 
+    public collectors: CollectorsManager;
     public queue: Collection<string, QueueManager>;
     public utils: UtilsManager;
     public voice: VoiceManager;

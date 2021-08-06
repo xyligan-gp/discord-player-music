@@ -1,6 +1,7 @@
-const { Client, GuildMember, Message, Permissions, version } = require('discord.js');
+const { Client, GuildMember, Permissions, version } = require('discord.js');
 const PlayerError = require('../PlayerError.js');
 const PlayerErrors = require('../PlayerErrors.js');
+const ms = require('../modules/ms.js');
 
 class UtilsManager {
     /**
@@ -25,7 +26,7 @@ class UtilsManager {
          * Utils Manager Methods
          * @type {Array<String>}
         */
-        this.methods = ['checkNode', 'checkOptions', 'checkPermissions', 'createCollector', 'formatNumbers'];
+        this.methods = ['checkNode', 'checkOptions', 'checkPermissions', 'formatNumbers'];
 
         /**
          * Utils Manager Methods Count
@@ -63,7 +64,13 @@ class UtilsManager {
             options = {
                 searchResultsLimit: 10,
                 synchronLoop: true,
-                defaultVolume: 5
+                defaultVolume: 5,
+
+                collectorsConfig: {
+                    autoAddingSongs: true,
+                    maxAttempts: 1,
+                    time: '1m'
+                }
             }
         }else{
             if(!options.searchResultsLimit) options.searchResultsLimit = 10;
@@ -75,6 +82,24 @@ class UtilsManager {
             if(!options.defaultVolume) options.defaultVolume = 5;
             if(typeof options.defaultVolume != 'number') options.defaultVolume;
             if(options.defaultVolume < 1) options.defaultVolume = 5;
+
+            if(!options.collectorsConfig) {
+                options.collectorsConfig = {
+                    autoAddingSongs: true,
+                    maxAttempts: 1,
+                    time: '1s'
+                }
+            }else{
+                if(typeof options.collectorsConfig.autoAddingSongs != 'boolean') options.collectorsConfig.autoAddingSongs = true;
+                
+                if(!options.collectorsConfig.maxAttempts) options.collectorsConfig.maxAttempts = 1;
+                if(typeof options.collectorsConfig.maxAttempts != 'number') options.collectorsConfig.maxAttempts = 1;
+                if(options.collectorsConfig.maxAttempts < 1) options.collectorsConfig.maxAttempts = 1;
+
+                if(!options.collectorsConfig.time) options.collectorsConfig.time = '1m';
+                if(typeof options.collectorsConfig.time != 'string') options.collectorsConfig.time = '1m';
+                if(!ms(options.collectorsConfig.time)) options.collectorsConfig.time = '1m';
+            }
         }
 
         return options;
@@ -89,26 +114,6 @@ class UtilsManager {
     checkPermissions(member, permissions) {
         return new Promise(async (res, rej) => {
             return res(member.permissions.has(permissions));
-        })
-    }
-
-    /**
-     * Method for creating custom collectors
-     * @param {Message} message Discord Message
-     * @param {'message' | 'reaction'} type Collector Type
-     * @returns {Promise<null>} 
-    */
-    createCollector(message, type) {
-        return new Promise(async (res, rej) => {
-            switch(type) {
-                case 'message': {
-                    return res(null);
-                }
-
-                case 'reaction': {
-                    return res(null);
-                }
-            }
         })
     }
 
@@ -137,6 +142,10 @@ class UtilsManager {
  * @property {Number} searchResultsLimit Limit the number of results when searching for songs
  * @property {Boolean} synchronLoop Song/Queue loop auto sync status
  * @property {Number} defaultVolume Default value of playback volume
+ * @property {Object} collectorsConfig CollectorsManager Configuration
+ * @property {Boolean} collectorsConfig.autoAddingSongs Status of automatically adding songs to the queue from the collector
+ * @property {Number} collectorsConfig.maxAttempts Maximum number of attempts to collect valid values
+ * @property {String} collectorsConfig.time Time during which the collector will collect values
  * @type {Object}
 */
 

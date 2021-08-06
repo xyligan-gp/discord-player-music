@@ -1,6 +1,6 @@
 {
   "name": "discord-player-music",
-  "version": "1.1.5-dev-build040821.1630",
+  "version": "1.1.5-dev-build060821.2005",
   "description": "Easy module for playing music in your Discord bot! ",
   "main": "index.js",
   "scripts": {
@@ -27,10 +27,8 @@
   },
   "homepage": "https://dpm-docs.tk",
   "dependencies": {
-    "discord.js": "13.0.0-dev.t1628035429.00d5cee",
-    "ytdl-core": "^4.9.0"
-  },
-  "devDependencies": {
+    "discord.js": "13.0.0",
+    "ytdl-core": "^4.9.1",
     "@discordjs/opus": "^0.5.3",
     "@discordjs/voice": "^0.5.5",
     "ffmpeg-static": "^4.4.0",

@@ -15,6 +15,7 @@ const Emitter = require('./Emitter.js');
 const PlayerError = require('./PlayerError.js');
 const PlayerErrors = require('./PlayerErrors.js');
 
+const CollectorsManager = require('./managers/CollectorsManager.js');
 const QueueManager = require('./managers/QueueManager.js');
 const UtilsManager = require('./managers/UtilsManager.js');
 const VoiceManager = require('./managers/VoiceManager.js');
@@ -90,6 +91,12 @@ class DiscordPlayerMusic extends Emitter {
          * @type {VoiceManager}
         */
         this.voice = new VoiceManager(this.client);
+
+        /**
+         * Player Collectors Manager
+         * @type {CollectorsManager}
+        */
+        this.collectors = new CollectorsManager(this);
 
         /**
          * Player Managers
@@ -440,7 +447,7 @@ class DiscordPlayerMusic extends Emitter {
                     }else{
                         queue.songs.push(song);
 
-                        this.emit('songAdded', song);
+                        return this.emit('songAdded', song);
                     }
                 }
 
@@ -475,7 +482,7 @@ class DiscordPlayerMusic extends Emitter {
                     }else{
                         queue.songs.push(song);
 
-                        this.emit('songAdded', song);
+                        return this.emit('songAdded', song);
                     }
                 }
             }
@@ -497,15 +504,17 @@ class DiscordPlayerMusic extends Emitter {
                 case '1': {
                     queue.playing = false;
                     queue.connection.dispatcher.pause();
+
+                    return res({ status: true });
                 }
 
                 case '2': {
                     queue.playing = false;
                     queue.dispatcher.pause();
+
+                    return res({ status: true });
                 }
             }
-
-            return res({ status: true });
         })
     }
 
@@ -911,16 +920,18 @@ class DiscordPlayerMusic extends Emitter {
             switch(this.mode) {
                 case '1': {
                     queue.playing = true;
-                    connection.dispatcher.resume();
+                    queue.connection.dispatcher.resume();
+
+                    return res({ status: true });
                 }
 
                 case '2': {
                     queue.playing = true;
                     queue.dispatcher.unpause();
+
+                    return res({ status: true });
                 }
             }
-
-            return res({ status: true });
         })
     }
 
@@ -971,6 +982,10 @@ class DiscordPlayerMusic extends Emitter {
  * @property {Number} searchResultsLimit Limit the number of results when searching for songs
  * @property {Boolean} synchronLoop Song/Queue loop auto sync status
  * @property {Number} defaultVolume Default value of playback volume
+ * @property {Object} collectorsConfig CollectorsManager Configuration
+ * @property {Boolean} collectorsConfig.autoAddingSongs Status of automatically adding songs to the queue from the collector
+ * @property {Number} collectorsConfig.maxAttempts Maximum number of attempts to collect valid values
+ * @property {String} collectorsConfig.time Time during which the collector will collect values
  * @type {Object}
 */
 

@@ -13,6 +13,13 @@ module.exports = {
         queryNotFound: `Query not found for '{userID}'!`
     },
 
+    collectorsManager: {
+        largeValue: `Value '{value}' got too large. Maximum available value: '{maxValue}'`,
+        smallValue: `Value '{value}' got a small value. Minimum available value: '{minValue}'`,
+
+        useMessageCollector: `Collector of type '{type}' received more results than the limit in '{value}'. Use a collector of type '{collector}'.`
+    },
+
     voiceManager: {
         userVoiceNotFound: `User '{userID}' not found in voice channel!`,
         connectionNotFound: `Connection on server '{guildID}' not found!`,
