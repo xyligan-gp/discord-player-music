@@ -1,5 +1,5 @@
-const { Collection, TextChannel, VoiceChannel, User } = require("discord.js");
-const { VoiceConnection, AudioPlayer } = require('@discordjs/voice');
+const { Collection, TextChannel, VoiceChannel, User } = require('discord.js');
+const { AudioPlayer, VoiceConnection } = require('@discordjs/voice');
 
 class QueueManager extends Collection {
     constructor() {

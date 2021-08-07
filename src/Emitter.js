@@ -2,7 +2,7 @@ const { EventEmitter } = require('events');
 const event = new EventEmitter();
 
 /**
- * Moderator EventEmitter
+ * Player EventEmitter
  * @private
 */
 class Emitter {
@@ -15,6 +15,7 @@ class Emitter {
     on(eventName, fn) {
         event.on(eventName, fn)
     }
+    
     /**
      * Method to listen for an event only once
      * @param {String} eventName Event Name

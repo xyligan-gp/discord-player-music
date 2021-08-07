@@ -13,16 +13,16 @@
 
 ## Welcome
 <b>Welcome! This 'discord-player-music' module!</b><br>
-<b>This is easy module for playing music in your Discord bot.</b>
+<b>Discord Player Music is a powerful Node.js music module for your Discord.js bot that based on Promises and has a lot of features.</b>
 
 ## Installation
 
 **Please note: Node.js 14.0.0 or newer is required.<br>
 All types in brackets mean the type of what the method or event returns.**
 
-Install [discord-player-music dev](https://github.com/xyligan-gp/discord-player-music/tree/dev)
+Install [discord-player-music](https://github.com/xyligan-gp/discord-player-music/tree/dev)
 ```JS
-$ npm install discord-player-music@dev
+$ npm install discord-player-music
 ```
 
 ## Warning
@@ -42,14 +42,19 @@ If you get the error `Cannot play audio as no valid encryption package is instal
 * 100% Promise-based ⚙️
 
 ## Module Managers
+- [✔] 'CollectorsManager' - <b>Manager that enables module Collectors.</b>
 - [✔] 'QueueManager' - <b>Manager that enables Queue System</b>
-- [❌] 'UtilsManager' - <b>Manager that enables module Utils.</b> [*Development process*]
-- [☑] 'VoiceManager' - <b>Manager that enables Voice System.</b> [*BETA Testing process*]
+- [✔] 'UtilsManager' - <b>Manager that enables module Utils.</b>
+- [✔] 'VoiceManager' - <b>Manager that enables Voice System.</b>
 
 ## Module Constructor Options
 - 'options.searchResultsLimit' - <b>Property responsible for the number of results received when searching for songs.</b>
 - 'options.synchronLoop' - <b>Property responsible for synchronization status 'loop.song' & 'loop.queue'.</b>
 - 'options.defaultVolume' - <b>Property responsible for the default value of the playback volume.</b>
+
+- 'options.collectorsConfig.autoAddingSongs' - <b>Property responsible for the automatic addition of songs in queue.</b>
+- 'options.collectorsConfig.maxAttempts' - <b>Property responsible for the maximum number of attempts to get a valid value.</b>
+- 'options.collectorsConfig.time' - <b>Property responsible for the amount of time that the collector will collect values.</b>
 
 ## Quick Initialization Example
 

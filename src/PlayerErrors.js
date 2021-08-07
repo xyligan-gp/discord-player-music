@@ -10,7 +10,8 @@ module.exports = {
         songNotFound: `Song with index/name '{value}' not found!`,
         queuePaused: `The queue for '{guildID}' has already been temporarily paused!`,
         queueResumed: `The queue for '{guildID}' is already playing!`,
-        queryNotFound: `Query not found for '{userID}'!`
+        queryNotFound: `Query not found for '{userID}'!`,
+        resultsNotFound: `No results found for '{query}'!`,
     },
 
     collectorsManager: {

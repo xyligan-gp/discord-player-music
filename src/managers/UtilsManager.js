@@ -1,8 +1,13 @@
 const { Client, GuildMember, Permissions, version } = require('discord.js');
+
 const PlayerError = require('../PlayerError.js');
 const PlayerErrors = require('../PlayerErrors.js');
+
 const ms = require('../modules/ms.js');
 
+/**
+ * Manager responsible for the additional functionality of the module
+*/
 class UtilsManager {
     /**
      * @param {Client} client Discord Client
@@ -42,7 +47,8 @@ class UtilsManager {
     */
     checkNode() {
         return new Promise(async (res, rej) => {
-            if(!process.version.startsWith('v14')) {
+            const node = Number(process.version.split('.')[0]);
+            if(node < 14) {
                 rej(new PlayerError(PlayerErrors.default.oldNodeVersion.replace('{version}', process.version)));
 
                 setTimeout(() => {
@@ -69,7 +75,7 @@ class UtilsManager {
                 collectorsConfig: {
                     autoAddingSongs: true,
                     maxAttempts: 1,
-                    time: '1m'
+                    time: '30s'
                 }
             }
         }else{
@@ -87,7 +93,7 @@ class UtilsManager {
                 options.collectorsConfig = {
                     autoAddingSongs: true,
                     maxAttempts: 1,
-                    time: '1s'
+                    time: '30s'
                 }
             }else{
                 if(typeof options.collectorsConfig.autoAddingSongs != 'boolean') options.collectorsConfig.autoAddingSongs = true;
@@ -96,9 +102,9 @@ class UtilsManager {
                 if(typeof options.collectorsConfig.maxAttempts != 'number') options.collectorsConfig.maxAttempts = 1;
                 if(options.collectorsConfig.maxAttempts < 1) options.collectorsConfig.maxAttempts = 1;
 
-                if(!options.collectorsConfig.time) options.collectorsConfig.time = '1m';
-                if(typeof options.collectorsConfig.time != 'string') options.collectorsConfig.time = '1m';
-                if(!ms(options.collectorsConfig.time)) options.collectorsConfig.time = '1m';
+                if(!options.collectorsConfig.time) options.collectorsConfig.time = '30s';
+                if(typeof options.collectorsConfig.time != 'string') options.collectorsConfig.time = '30s';
+                if(!ms(options.collectorsConfig.time)) options.collectorsConfig.time = '30s';
             }
         }
 
@@ -139,13 +145,13 @@ class UtilsManager {
 
 /**
  * @typedef DiscordPlayerMusicOptions
- * @property {Number} searchResultsLimit Limit the number of results when searching for songs
- * @property {Boolean} synchronLoop Song/Queue loop auto sync status
- * @property {Number} defaultVolume Default value of playback volume
- * @property {Object} collectorsConfig CollectorsManager Configuration
- * @property {Boolean} collectorsConfig.autoAddingSongs Status of automatically adding songs to the queue from the collector
- * @property {Number} collectorsConfig.maxAttempts Maximum number of attempts to collect valid values
- * @property {String} collectorsConfig.time Time during which the collector will collect values
+ * @property {Number} [searchResultsLimit=10] Limit the number of results when searching for songs
+ * @property {Boolean} [synchronLoop=true] Song/Queue loop auto sync status
+ * @property {Number} [defaultVolume=5] Default value of playback volume
+ * @property {Object} [collectorsConfig] CollectorsManager Configuration
+ * @property {Boolean} [collectorsConfig.autoAddingSongs=true] Status of automatically adding songs to the queue from the collector
+ * @property {Number} [collectorsConfig.maxAttempts=1] Maximum number of attempts to collect valid values
+ * @property {String} [collectorsConfig.time=1m] Time during which the collector will collect values
  * @type {Object}
 */
 

@@ -1,7 +1,7 @@
 This documentation page is a short list of changes to your code that will have to be done when switching to a specific version of discord-player-music.
 
-# 1.1.5-dev
-In version 1.1.5-dev, `discord-player-music` was completely rewritten for the manager system. The full changelog can be seen here.
+# 1.1.5
+In version 1.1.5, `discord-player-music` was completely rewritten for the manager system. The full changelog can be seen here.
 
 ### Player Constructor
 
@@ -9,9 +9,19 @@ In version 1.1.5-dev, `discord-player-music` was completely rewritten for the ma
 + options.searchResultsLimit
 + options.synchronLoop
 + options.defaultVolume
+
++ options.collectorsConfig.autoAddingSongs
++ options.collectorsConfig.maxAttempts
++ options.collectorsConfig.time
 ```
 
 ### Player Methods Update
+#### CollectorsManager
+
+```diff
++ player.collectors.message(msg, resultsArray);
+```
+
 #### VoiceManager
 
 ```diff
@@ -25,6 +35,7 @@ In version 1.1.5-dev, `discord-player-music` was completely rewritten for the ma
 #### UtilsManager
 
 ```diff
+- player.createStream(guild);
 + player.utils.checkNode();
 + player.utils.checkOptions(options);
 + player.utils.checkPermissions(member, permissions);

@@ -52,7 +52,7 @@
   * Completely rewritten TypeScript code
   * The `getSongIndex()` and `addSong()` methods have been changed
   * The `playerError` event have been changed
-* ***Version 1.1.5-dev***
+* ***Version 1.1.5***
   * The module structure has been completely rewritten on managers
   * Completely rewritten `README.md`
   * Rewritten TypeScript code

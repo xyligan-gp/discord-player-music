@@ -1,13 +1,19 @@
 const { Client, GuildMember, version, VoiceChannel } = require('discord.js');
-const PlayerError = require('../PlayerError.js');
-const PlayerErrors = require('../PlayerErrors.js');
 const { getVoiceConnection, joinVoiceChannel, VoiceConnectionStatus } = require('@discordjs/voice');
 
+const PlayerError = require('../PlayerError.js');
+const PlayerErrors = require('../PlayerErrors.js');
+
+/**
+ * Manager responsible for the operation of the voice part of the module
+*/
 class VoiceManager {
     /**
      * @param {Client} client Discord Client
     */
     constructor(client) {
+        if(!client) return new PlayerError(PlayerErrors.default.requiredClient);
+
         /**
          * Discord Client
          * @type {Client}

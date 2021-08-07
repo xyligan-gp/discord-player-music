@@ -1,10 +1,14 @@
-const { Message, GuildMember } = require('discord.js');
+const { Message } = require('discord.js');
 
 const DiscordPlayerMusic = require('../Player.js');
 const PlayerError = require('../PlayerError.js');
 const PlayerErrors = require('../PlayerErrors.js');
+
 const ms = require('../modules/ms.js');
 
+/**
+ * Manager responsible for the work of custom collectors of the module
+*/
 class CollectorsManager {
     /**
      * @param {DiscordPlayerMusic} player Discord Player Music
@@ -16,7 +20,7 @@ class CollectorsManager {
          * Collectors Manager Methods
          * @type {Array<String>}
         */
-        this.methods = ['message', 'reaction'];
+        this.methods = ['message'];
 
         /**
          * Collectors Manager Methods Count
@@ -39,7 +43,6 @@ class CollectorsManager {
                     const songIndexCollector = msg.channel.createMessageCollector(collectorFilter, { max: this.player.options.collectorsConfig.maxAttempts, time: ms(this.player.options.collectorsConfig.time) });
 
                     songIndexCollector.on('collect', msg => {
-                        console.log(msg.content)
                         const indexValue = msg.content;
                         const resultsCount = resultsArray.length;
 
@@ -73,8 +76,13 @@ class CollectorsManager {
                                     return res({ index: index, song: song, results: resultsArray });
                                 }
                             }
+                        }else{
+                            if(this.player.options.collectorsConfig.maxAttempts < 2) rej(new PlayerError(PlayerErrors.default.invalidValue.replace('{value}', '<Message>.content').replace('{type}', 'number')));
+                            else rej(new PlayerError(PlayerErrors.default.invalidValue.replace('{value}', '<Message>.content').replace('{type}', 'number')));
                         }
                     })
+
+                    break;
                 }
 
                 case '2': {
@@ -120,6 +128,8 @@ class CollectorsManager {
                             else rej(new PlayerError(PlayerErrors.default.invalidValue.replace('{value}', '<Message>.content').replace('{type}', 'number')));
                         }
                     })
+
+                    break;
                 }
             }
         })
@@ -128,13 +138,13 @@ class CollectorsManager {
 
 /**
  * @typedef DiscordPlayerMusicOptions
- * @property {Number} searchResultsLimit Limit the number of results when searching for songs
- * @property {Boolean} synchronLoop Song/Queue loop auto sync status
- * @property {Number} defaultVolume Default value of playback volume
- * @property {Object} collectorsConfig CollectorsManager Configuration
- * @property {Boolean} collectorsConfig.autoAddingSongs Status of automatically adding songs to the queue from the collector
- * @property {Number} collectorsConfig.maxAttempts Maximum number of attempts to collect valid values
- * @property {String} collectorsConfig.time Time during which the collector will collect values
+ * @property {Number} [searchResultsLimit=10] Limit the number of results when searching for songs
+ * @property {Boolean} [synchronLoop=true] Song/Queue loop auto sync status
+ * @property {Number} [defaultVolume=5] Default value of playback volume
+ * @property {Object} [collectorsConfig] CollectorsManager Configuration
+ * @property {Boolean} [collectorsConfig.autoAddingSongs=true] Status of automatically adding songs to the queue from the collector
+ * @property {Number} [collectorsConfig.maxAttempts=1] Maximum number of attempts to collect valid values
+ * @property {String} [collectorsConfig.time=1m] Time during which the collector will collect values
  * @type {Object}
 */
 

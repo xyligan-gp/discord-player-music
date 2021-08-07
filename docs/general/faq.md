@@ -4,11 +4,9 @@ These questions are some of the most frequently asked.
 
 ## How do I get voice working?
 ### Discord.js v12
-* Install `ffmpeg-static` | Command: `npm install ffmpeg-static`
 * Install `@discordjs/opus` | Command: `npm install @discordjs/opus`
 
 ### Discord.js v13
-* Install `ffmpeg-static` | Command: `npm install ffmpeg-static`
 * Install `@discordjs/opus` | Command: `npm install @discordjs/opus`
 * Install `@discordjs/voice` | Command: `npm install @discordjs/voice`
 

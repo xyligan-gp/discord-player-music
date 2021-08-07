@@ -1,5 +1,5 @@
 const { Client, Collection, Guild, GuildMember, TextChannel, version, VoiceChannel, User } = require('discord.js');
-const { createAudioPlayer, createAudioResource, getVoiceConnection, joinVoiceChannel,VoiceConnection, VoiceConnectionStatus, entersState, StreamType, AudioPlayerStatus, AudioPlayer } = require('@discordjs/voice');
+const { AudioPlayer, AudioPlayerStatus, createAudioPlayer, createAudioResource, entersState, getVoiceConnection, joinVoiceChannel, StreamType, VoiceConnection, VoiceConnectionStatus } = require('@discordjs/voice');
 const search = require('yt-search');
 const searchLyrics = require('lyrics-finder');
 
@@ -11,6 +11,7 @@ const parse = ms => ({
     seconds: Math.floor(ms / 1000 % 60)
 });
 const ytdl = require('./modules/dpm-ytdl.js');
+
 const Emitter = require('./Emitter.js');
 const PlayerError = require('./PlayerError.js');
 const PlayerErrors = require('./PlayerErrors.js');
@@ -20,6 +21,10 @@ const QueueManager = require('./managers/QueueManager.js');
 const UtilsManager = require('./managers/UtilsManager.js');
 const VoiceManager = require('./managers/VoiceManager.js');
 
+/**
+ * The class responsible for the main part of the module
+ * @extends {Emitter}
+*/
 class DiscordPlayerMusic extends Emitter {
     /**
      * @param {Client} client Discord CLient
@@ -371,6 +376,7 @@ class DiscordPlayerMusic extends Emitter {
                     this.addSong(1, member, song);
                 }else{
                     const searchResult = await search(query);
+                    if(!searchResult) return rej(new PlayerError(PlayerErrors.default.resultsNotFound.replace('{query}', query)));
 
                     var resultsArray = [];
 
@@ -599,7 +605,7 @@ class DiscordPlayerMusic extends Emitter {
     /**
      * Method for adding filter to play songs
      * @param {Guild} guild Discord Guild
-     * @param {String} filter Filter Name
+     * @param {String} [filter=clear] Filter Name
      * @returns {Promise<{ status: Boolean, filter: PlayerFilter, queue: Array<PlayerSong> }>} Returns the filter installation status and information about it
     */
     setFilter(guild, filter) {
@@ -659,7 +665,7 @@ class DiscordPlayerMusic extends Emitter {
     /**
      * Method for getting a queue of server songs
      * @param {Guild} guild Discord Guild
-     * @returns {Promise<PlayerSong>} Returns an array of songs being played on the server
+     * @returns {Promise<Array<PlayerSong>>} Returns an array of songs being played on the server
     */
     getQueue(guild) {
         return new Promise(async (res, rej) => {
@@ -673,12 +679,12 @@ class DiscordPlayerMusic extends Emitter {
     /**
      * Method for getting information about a song
      * @param {Guild} guild Discord Guild
-     * @param {Number} index Song Index
+     * @param {Number} [index=1] Song Index
      * @returns {Promise<{ song: PlayerSong, dispatcherInfo: Object }>} Returns information about the requested song
     */
     getSongInfo(guild, index) {
         return new Promise(async (res, rej) => {
-            var songInfo, filter ;
+            var songInfo, filter;
 
             const queue = this.queue.get(guild.id);
             if(!queue) return rej(new PlayerError(PlayerErrors.default.queueNotFound.replace('{guildID}', guild.id)));
@@ -695,7 +701,7 @@ class DiscordPlayerMusic extends Emitter {
     /**
      * Method for finding lyrics for a song
      * @param {Guild} guild Discord Guild
-     * @param {String} query Song Name
+     * @param {String} [query=string] Song Name
      * @returns {Promise<{ song: String | PlayerSong, lyrics: String }>} Returns the lyrics of the requested song
     */
     getLyrics(guild, query) {
@@ -836,15 +842,17 @@ class DiscordPlayerMusic extends Emitter {
                 case '1': {
                     queue.volume = Number(volume);
                     queue.connection.dispatcher.setVolumeLogarithmic(Number(volume) / 5);
+
+                    return res({ status: true, volume: volume });
                 }
 
                 case '2': {
                     queue.volume = Number(volume);
                     queue.dispatcher.state.resource.volume.setVolume(Number(volume) / 5);
+
+                    return res({ status: true, volume: volume });
                 }
             }
-
-            return res({ status: true, volume: volume });
         })
     }
 
@@ -968,7 +976,6 @@ class DiscordPlayerMusic extends Emitter {
 
     /**
      * Method for initializing the module
-     * @fires DiscordPlayerMusic#ready
      * @returns {void}
      * @private
     */
@@ -979,19 +986,19 @@ class DiscordPlayerMusic extends Emitter {
 
 /**
  * @typedef DiscordPlayerMusicOptions
- * @property {Number} searchResultsLimit Limit the number of results when searching for songs
- * @property {Boolean} synchronLoop Song/Queue loop auto sync status
- * @property {Number} defaultVolume Default value of playback volume
- * @property {Object} collectorsConfig CollectorsManager Configuration
- * @property {Boolean} collectorsConfig.autoAddingSongs Status of automatically adding songs to the queue from the collector
- * @property {Number} collectorsConfig.maxAttempts Maximum number of attempts to collect valid values
- * @property {String} collectorsConfig.time Time during which the collector will collect values
+ * @property {Number} [searchResultsLimit=10] Limit the number of results when searching for songs
+ * @property {Boolean} [synchronLoop=true] Song/Queue loop auto sync status
+ * @property {Number} [defaultVolume=5] Default value of playback volume
+ * @property {Object} [collectorsConfig] CollectorsManager Configuration
+ * @property {Boolean} [collectorsConfig.autoAddingSongs=true] Status of automatically adding songs to the queue from the collector
+ * @property {Number} [collectorsConfig.maxAttempts=1] Maximum number of attempts to collect valid values
+ * @property {String} [collectorsConfig.time=1m] Time during which the collector will collect values
  * @type {Object}
 */
 
 /**
  * @typedef PlayerSong
- * @property {Number} index Song Index
+ * @property {Number} [index] Song Index
  * @property {String} searchType Song Search Type
  * @property {String} title Song Title
  * @property {String} url Song URL
@@ -1012,7 +1019,7 @@ class DiscordPlayerMusic extends Emitter {
  * @property {TextChannel} textChannel Queue Text Channel
  * @property {VoiceChannel} voiceChannel Queue Voice Channel
  * @property {VoiceConnection} connection Queue Voice Connection
- * @property {AudioPlayer} dispatcher Queue Dispatcher
+ * @property {AudioPlayer} [dispatcher] Queue Dispatcher
  * @property {Array<PlayerSong>} songs Queue Songs
  * @property {Number} volume Queue Songs Volume
  * @property {Object} loop Loop Object
@@ -1091,7 +1098,7 @@ class DiscordPlayerMusic extends Emitter {
  * @event DiscordPlayerMusic#playerError
  * @param {Object} callback Callback
  * @param {TextChannel} callback.textChannel Text Channel
- * @param {User} callback.requestedBy Song Requested User
+ * @param {User} callback.requested Song Requested User
  * @param {String} callback.method Executed Method
  * @param {Error} callback.error Returned Error
 */
