@@ -323,6 +323,8 @@ class DiscordPlayerMusic extends Emitter {
                             return this.emit('playerError', { textChannel: song.textChannel, requested: song.requestedBy, method: 'play', error: error });
                         })
 
+                        dispatcher.state.resource.volume.setVolume(queue.volume / this.options.defaultVolume);
+
                         return this.emit('playingSong', queue);
                     }catch(error){
                         return this.emit('playerError', { textChannel: song.textChannel, requested: song.requestedBy, method: 'play', error: error });
@@ -841,14 +843,14 @@ class DiscordPlayerMusic extends Emitter {
             switch(this.mode) {
                 case '1': {
                     queue.volume = Number(volume);
-                    queue.connection.dispatcher.setVolumeLogarithmic(Number(volume) / 5);
+                    queue.connection.dispatcher.setVolumeLogarithmic(Number(volume) / this.options.defaultVolume);
 
                     return res({ status: true, volume: volume });
                 }
 
                 case '2': {
                     queue.volume = Number(volume);
-                    queue.dispatcher.state.resource.volume.setVolume(Number(volume) / 5);
+                    queue.dispatcher.state.resource.volume.setVolume(Number(volume) / this.options.defaultVolume);
 
                     return res({ status: true, volume: volume });
                 }
