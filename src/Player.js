@@ -107,7 +107,7 @@ class DiscordPlayerMusic extends Emitter {
          * Player Managers
          * @type {Array<String>}
         */
-        this.managers = ['QueueManager', 'UtilsManager', 'VoiceManager'];
+        this.managers = ['CollectorsManager', 'QueueManager', 'UtilsManager', 'VoiceManager'];
 
         /**
          * Player Managers Count

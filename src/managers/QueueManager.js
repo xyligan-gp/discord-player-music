@@ -1,85 +1,71 @@
 const { Collection, TextChannel, VoiceChannel, User } = require('discord.js');
 const { AudioPlayer, VoiceConnection } = require('@discordjs/voice');
 
+/**
+ * Manager responsible for the module queue
+ * @extends {Collection}
+*/
 class QueueManager extends Collection {
     constructor() {
         /**
          * Guild Text Channel
          * @type {TextChannel}
         */
-        this.textChannel = TextChannel;
+        this.textChannel = null;
 
         /**
          * Guild Voice Channel
          * @type {VoiceChannel}
         */
-        this.voiceChannel = VoiceChannel;
+        this.voiceChannel = null;
         
         /**
          * Guild Voice Connection
          * @type {VoiceConnection}
         */
-        this.connection = VoiceConnection;
+        this.connection = null;
 
         /**
          * Queue Dispatcher
          * @type {AudioPlayer}
         */
-        this.dispatcher = AudioPlayer;
+        this.dispatcher = null;
 
         /**
          * Queue Songs
          * @type {Array<PlayerSong>}
         */
-        this.songs = [
-            {
-                index: Number(),
-                searchType: String(),
-                title: String(),
-                url: String(),
-                thumbnail: String(),
-                author: String(),
-                textChannel: TextChannel,
-                voiceChannel: VoiceChannel,
-                requestedBy: User,
-
-                duration: {
-                    hours: String(),
-                    minutes: String(),
-                    seconds: String()
-                }
-            }
-        ];
+        this.songs = [];
 
         /**
          * Voice Connection Volume
          * @type {Number}
         */
-        this.volume = Number();
+        this.volume = 5;
 
         /**
          * Loop Object
          * @type {{ song: Boolean, queue: Boolean }}
         */
-        this.loop = Object();
+        this.loop = null;
 
         /**
          * Stream Start Time
          * @type {Number}
         */
-        this.startStream = Number();
+        this.startStream = null;
 
         /**
          * Guild Playing Status
          * @type {Boolean}
         */
-        this.playing = Boolean();
+        this.playing = true;
 
         /**
          * Queue Filters
          * @type {String}
         */
-        this.filter = String();
+        this.filter = null;
     }
 }
 
