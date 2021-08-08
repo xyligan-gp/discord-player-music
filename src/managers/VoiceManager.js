@@ -1,8 +1,10 @@
-const { Client, GuildMember, version, VoiceChannel } = require('discord.js');
+const { Client, GuildMember, VoiceChannel } = require('discord.js');
 const { getVoiceConnection, joinVoiceChannel, VoiceConnectionStatus } = require('@discordjs/voice');
 
 const PlayerError = require('../PlayerError.js');
 const PlayerErrors = require('../PlayerErrors.js');
+
+const UtilsManager = require('./UtilsManager.js');
 
 /**
  * Manager responsible for the operation of the voice part of the module
@@ -21,10 +23,16 @@ class VoiceManager {
         this.client = client;
 
         /**
+         * Player Utils Manager
+         * @type {UtilsManager}
+        */
+        this.utils = new UtilsManager();
+
+        /**
          * Player mode of operation
          * @type {String}
         */
-        this.mode = version.startsWith('12') ? '1' : '2';
+        this.mode = this.utils.getPlayerMode();
 
         /**
          * Voice Manager Methods

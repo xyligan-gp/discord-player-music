@@ -31,7 +31,7 @@ export interface PlayerQueue {
     voiceChannel: VoiceChannel;
     connection: VoiceConnection;
     dispatcher?: AudioPlayer;
-    songs: Array<Song>;
+    songs: Array<PlayerSong>;
     volume: number;
 
     loop: {

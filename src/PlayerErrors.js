@@ -1,6 +1,7 @@
 module.exports = {
     default: {
         oldNodeVersion: `Your Node.js version [{version}] is out of date! Please install Node.js version higher than 14.X`,
+        oldLibraryVersion: `Your discord.js version [{version}] is out of date! Please install discord.js higher 12.X`,
         requiredClient: `<Client> not found for Discord Player Music!`,
         queueNotFound: `Server queue for '{guildID}' not found!`,
         permissionsNotFound: `Client '{clientTag}' missing permissions {permissions}!`,

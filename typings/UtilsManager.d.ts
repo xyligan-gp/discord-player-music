@@ -1,12 +1,10 @@
-import { Client, GuildMember, Permissions } from 'discord.js';
+import { GuildMember, Permissions } from 'discord.js';
 
 import DiscordPlayerMusicOptions from './DiscordPlayerMusicOptions';
 
 declare class UtilsManager {
-    constructor(client: Client);
+    constructor();
 
-    public client: Client;
-    public mode: string;
     public methods: Array<string>;
     public size: number;
 
@@ -36,6 +34,12 @@ declare class UtilsManager {
      * @returns Returns an array with formatted numbers
     */
     public formatNumbers(numbersArray: Array<Number>): Array<string>;
+
+    /**
+     * Method for determining the mode of operation of the module
+     * @returns Player Mode
+    */
+    public getPlayerMode(): string;
 }
 
 export = UtilsManager;

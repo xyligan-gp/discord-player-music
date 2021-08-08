@@ -38,7 +38,7 @@ class CollectorsManager {
     message(msg, resultsArray) {
         return new Promise(async (res, rej) => {
             switch(this.player.mode) {
-                case '1': {
+                case 'v12': {
                     const collectorFilter = message => message.author.id === msg.author.id;
                     const songIndexCollector = msg.channel.createMessageCollector(collectorFilter, { max: this.player.options.collectorsConfig.maxAttempts, time: ms(this.player.options.collectorsConfig.time) });
 
@@ -85,7 +85,7 @@ class CollectorsManager {
                     break;
                 }
 
-                case '2': {
+                case 'v13': {
                     const collectorFilter = message => message.author.id === msg.author.id;
                     const songIndexCollector = msg.channel.createMessageCollector({ filter: collectorFilter, maxProcessed: this.player.options.collectorsConfig.maxAttempts + 1, time: ms(this.player.options.collectorsConfig.time) });
 

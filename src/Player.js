@@ -1,4 +1,4 @@
-const { Client, Collection, Guild, GuildMember, TextChannel, version, VoiceChannel, User } = require('discord.js');
+const { Client, Collection, Guild, GuildMember, TextChannel, VoiceChannel, User } = require('discord.js');
 const { AudioPlayer, AudioPlayerStatus, createAudioPlayer, createAudioResource, entersState, getVoiceConnection, joinVoiceChannel, StreamType, VoiceConnection, VoiceConnectionStatus } = require('@discordjs/voice');
 const search = require('yt-search');
 const searchLyrics = require('lyrics-finder');
@@ -36,6 +36,26 @@ class DiscordPlayerMusic extends Emitter {
         if(!client) return new PlayerError(PlayerErrors.default.requiredClient);
 
         /**
+         * Player Utils Manager
+         * @type {UtilsManager}
+        */
+        this.utils = new UtilsManager();
+
+        this.utils.checkNode();
+
+        /**
+         * Player Options
+         * @type {DiscordPlayerMusicOptions}
+        */
+        this.options = this.utils.checkOptions(options);
+
+        /**
+         * Player mode of operation
+         * @type {String}
+        */
+        this.mode = this.utils.getPlayerMode();
+
+        /**
          * Discord Client
          * @type {Client}
         */
@@ -54,20 +74,6 @@ class DiscordPlayerMusic extends Emitter {
         this.queue = new Collection();
 
         /**
-         * Player Utils Manager
-         * @type {UtilsManager}
-        */
-        this.utils = new UtilsManager(this.client, this.queue);
-
-        this.utils.checkNode();
-        
-        /**
-         * Player Options
-         * @type {DiscordPlayerMusicOptions}
-        */
-        this.options = this.utils.checkOptions(options);
-
-        /**
          * Player Documentation Link
          * @type {String}
         */
@@ -84,12 +90,6 @@ class DiscordPlayerMusic extends Emitter {
          * @type {String}
         */
         this.author = require('../package.json').author;
-
-        /**
-         * Player mode of operation
-         * @type {String}
-        */
-        this.mode = version.startsWith('12') ? '1' : '2';
 
         /**
          * Player Voice Manager
@@ -137,38 +137,47 @@ class DiscordPlayerMusic extends Emitter {
             { name: 'surround', value: 'surround' },
             { name: 'slowed', value: 'asetrate=25000*1.25,aresample=50000,bass=g=2' },
             { name: 'earwax', value: 'earwax' },
-            { name: 'underwater', value: 'aresample=1500' },
+            { name: 'underwater', value: 'aresample=5000' },
             { name: 'clear', value: null },
         ];
 
         this.init();
 
-        this.on('playerError', async data => {
+        this.on('playerError', data => {
             if(!data.textChannel) return;
 
             if(data.error.message.includes('Status code: 403')) {
                 this.getGuildMap(data.textChannel.guild)
                 
-                .then(guildMap => {
-                    this.play(data.textChannel.guild, guildMap.songs[0]);
-                })
-                .catch(err => {
-                    return;
-                })
+                .then(async queue => {
+                    switch(this.mode) {
+                        case 'v12': {
+                            return this.play(queue.textChannel.guild, queue.songs[0]);
+                        }
+
+                        case 'v13': {
+                            const stream = await ytdl(queue.songs[0].url, queue.filter);
+                            const resource = createAudioResource(stream, { inputType: StreamType.OggOpus, inlineVolume: true });
+
+                            queue.dispatcher.play(resource);
+                            return this.emit('playingSong', queue);
+                        }
+                    }
+                }).catch(error => { return })
             }else{
                 const queue = this.queue.get(data.textChannel.guild.id);
                 if(!queue) return;
 
                 switch(this.mode) {
-                    case '1': {
+                    case 'v12': {
                         queue.voiceChannel.leave();
                         return this.queue.delete(data.textChannel.guild.id);
                     }
 
-                    case '2': {
+                    case 'v13': {
                         const connection = queue.connection;
 
-                        if(!connection) {
+                        if(connection.state.status === VoiceConnectionStatus.Destroyed) {
                             return this.queue.delete(data.textChannel.guild.id);
                         }else{
                             connection.destroy();
@@ -195,7 +204,7 @@ class DiscordPlayerMusic extends Emitter {
             if(!queue) return rej(new PlayerError(PlayerErrors.default.queueNotFound.replace('{guildID}', guild.id)));
             
             switch(this.mode) {
-                case '1': {
+                case 'v12': {
                     if(!song) {
                         if(!queue.songs) return;
 
@@ -242,7 +251,7 @@ class DiscordPlayerMusic extends Emitter {
                     }
                 }
 
-                case '2': {
+                case 'v13': {
                     const connection = queue.connection;
 
                     if(!song) {
@@ -266,6 +275,7 @@ class DiscordPlayerMusic extends Emitter {
                         try {
                             await entersState(connection, VoiceConnectionStatus.Ready, 5_000);
 
+                            queue.dispatcher.setMaxListeners(Infinity);
                             queue.dispatcher.play(resource);
 
                             connection.state.subscription?.player ? false : connection.subscribe(dispatcher);
@@ -294,12 +304,12 @@ class DiscordPlayerMusic extends Emitter {
                             }
 
                             if(queue.loop.song) {
-                                this.play(guild, queue.songs[0]);
+                                return this.play(guild, queue.songs[0]);
                             }else if(queue.loop.queue) {
                                 const lastSong = queue.songs.shift();
 
                                 queue.songs.push(lastSong);
-                                this.play(guild, queue.songs[0]);
+                                return this.play(guild, queue.songs[0]);
                             }else{
                                 if(queue.songs.length < 1) {
                                     if(connection.state.status === VoiceConnectionStatus.Destroyed) {
@@ -315,7 +325,7 @@ class DiscordPlayerMusic extends Emitter {
                                 }
                                     
                                 queue.songs.shift();
-                                this.play(guild, queue.songs[0]);
+                                return this.play(guild, queue.songs[0]);
                             }
                         })
 
@@ -427,7 +437,7 @@ class DiscordPlayerMusic extends Emitter {
             const queue = this.queue.get(member.guild.id);
 
             switch(this.mode) {
-                case '1': {
+                case 'v12': {
                     const connection = await resultsArray[index - 1].voiceChannel.join();
                     const song = resultsArray[index - 1];
 
@@ -459,7 +469,7 @@ class DiscordPlayerMusic extends Emitter {
                     }
                 }
 
-                case '2': {
+                case 'v13': {
                     const song = resultsArray[index - 1];
                     let connection = getVoiceConnection(member.guild.id);
 
@@ -509,14 +519,14 @@ class DiscordPlayerMusic extends Emitter {
             if(!queue.playing) return rej(new PlayerError(PlayerErrors.default.queuePaused.replace('{guildID}', guild.id)));
 
             switch(this.mode) {
-                case '1': {
+                case 'v12': {
                     queue.playing = false;
                     queue.connection.dispatcher.pause();
 
                     return res({ status: true });
                 }
 
-                case '2': {
+                case 'v13': {
                     queue.playing = false;
                     queue.dispatcher.pause();
 
@@ -558,7 +568,7 @@ class DiscordPlayerMusic extends Emitter {
             if(!queue) return rej(new PlayerError(PlayerErrors.default.queueNotFound.replace('{guildID}', guild.id)));
 
             switch(this.mode) {
-                case '1': {
+                case 'v12': {
                     if(queue.songs.length < 2) {
                         queue.songs = [];
                         queue.voiceChannel.leave();
@@ -576,7 +586,7 @@ class DiscordPlayerMusic extends Emitter {
                     return res({ status: true, song: queue.songs[1] || null });
                 }
 
-                case '2': {
+                case 'v13': {
                     if(queue.songs.length < 2) {
                         queue.songs = [];
 
@@ -621,7 +631,10 @@ class DiscordPlayerMusic extends Emitter {
             if(!getFilter) return rej(new PlayerError(PlayerErrors.default.filterNotFound.replace('{filter}', filter)));
 
             queue.filter = getFilter.value;
-            this.play(guild, queue.songs[0]);
+            const stream = await ytdl(queue.songs[0].url, queue.filter);
+            const resource = createAudioResource(stream, { inputType: StreamType.OggOpus, inlineVolume: true });
+
+            queue.dispatcher.play(resource);
 
             return res({ status: true, filter: { name: getFilter.name, value: getFilter.value }, queue: queue.songs });
         })
@@ -746,7 +759,7 @@ class DiscordPlayerMusic extends Emitter {
             if(!queue) return rej(new PlayerError(PlayerErrors.default.queueNotFound.replace('{guildID}', guild.id)));
 
             switch(this.mode) {
-                case '1': {
+                case 'v12': {
                     if(!queue.connection.dispatcher) return res({ bar: '🔘▬▬▬▬▬▬▬▬▬▬', percents: '0%' });
 
                     const seconds = Math.floor((Number(queue.songs[0].duration.hours) * 3600) + (Number(queue.songs[0].duration.minutes) * 60) + Number(queue.songs[0].duration.seconds));
@@ -785,7 +798,7 @@ class DiscordPlayerMusic extends Emitter {
                     }
                 }
 
-                case '2': {
+                case 'v13': {
                     if(!queue.dispatcher) return res({ bar: '🔘▬▬▬▬▬▬▬▬▬▬', percents: '0%' });
 
                     const seconds = Math.floor((Number(queue.songs[0].duration.hours) * 3600) + (Number(queue.songs[0].duration.minutes) * 60) + Number(queue.songs[0].duration.seconds));
@@ -841,14 +854,14 @@ class DiscordPlayerMusic extends Emitter {
             if(isNaN(volume)) return rej(new PlayerError(PlayerErrors.default.invalidValue.replace('{value}', 'volume').replace('{type}', 'number')));
 
             switch(this.mode) {
-                case '1': {
+                case 'v12': {
                     queue.volume = Number(volume);
                     queue.connection.dispatcher.setVolumeLogarithmic(Number(volume) / this.options.defaultVolume);
 
                     return res({ status: true, volume: volume });
                 }
 
-                case '2': {
+                case 'v13': {
                     queue.volume = Number(volume);
                     queue.dispatcher.state.resource.volume.setVolume(Number(volume) / this.options.defaultVolume);
 
@@ -869,7 +882,7 @@ class DiscordPlayerMusic extends Emitter {
             if(!queue) return rej(new PlayerError(PlayerErrors.default.queueNotFound.replace('{guildID}', guild.id)));
 
             switch(this.mode) {
-                case '1': {
+                case 'v12': {
                     queue.songs = [];
                     queue.voiceChannel.leave();
                     this.queue.delete(guild.id);
@@ -877,7 +890,7 @@ class DiscordPlayerMusic extends Emitter {
                     return res({ status: true });
                 }
 
-                case '2': {
+                case 'v13': {
                     if(queue.connection.state.status === VoiceConnectionStatus.Destroyed) {
                         queue.songs = [];
                         this.queue.delete(guild.id);
@@ -928,14 +941,14 @@ class DiscordPlayerMusic extends Emitter {
             if(queue.playing) return rej(new PlayerError(PlayerErrors.default.queueResumed.replace('{guildID}', guild.id)));
 
             switch(this.mode) {
-                case '1': {
+                case 'v12': {
                     queue.playing = true;
                     queue.connection.dispatcher.resume();
 
                     return res({ status: true });
                 }
 
-                case '2': {
+                case 'v13': {
                     queue.playing = true;
                     queue.dispatcher.unpause();
 

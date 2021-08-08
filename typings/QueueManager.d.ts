@@ -1,7 +1,7 @@
 import { Collection, TextChannel, VoiceChannel } from 'discord.js';
 import { AudioPlayer, VoiceConnection } from '@discordjs/voice';
 
-import { Song } from './PlayerData';
+import { PlayerSong } from './PlayerData';
 
 declare class QueueManager extends Collection {
     constructor();
@@ -10,7 +10,7 @@ declare class QueueManager extends Collection {
     voiceChannel: VoiceChannel;
     connection: VoiceConnection;
     dispatcher?: AudioPlayer;
-    songs: Array<Song>;
+    songs: Array<PlayerSong>;
     volume: number;
     
     loop: {

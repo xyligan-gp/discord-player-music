@@ -1,3 +1,7 @@
+/**
+ * Player Error Handler
+ * @extends {Error}
+*/
 class DiscordPlayerMusicError extends Error {
     /**
      * @param {String} message Error Message
@@ -9,7 +13,7 @@ class DiscordPlayerMusicError extends Error {
 
         if (typeof message == 'string') super(message);
 
-        this.name = 'DiscordPlayerMusicError';
+        this.name = 'DiscordPlayerMusic Error';
     }
 }
 

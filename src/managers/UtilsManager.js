@@ -1,4 +1,4 @@
-const { Client, GuildMember, Permissions, version } = require('discord.js');
+const { GuildMember, Permissions, version } = require('discord.js');
 
 const PlayerError = require('../PlayerError.js');
 const PlayerErrors = require('../PlayerErrors.js');
@@ -9,29 +9,12 @@ const ms = require('../modules/ms.js');
  * Manager responsible for the additional functionality of the module
 */
 class UtilsManager {
-    /**
-     * @param {Client} client Discord Client
-    */
-    constructor(client) {
-        if(!client) return new PlayerError(PlayerErrors.default.requiredClient);
-
-        /**
-         * Discord Client
-         * @type {Client}
-        */
-        this.client = client;
-
-        /**
-         * Player mode of operation
-         * @type {String}
-        */
-        this.mode = version.startsWith('12') ? '1' : '2';
-
+    constructor() {
         /**
          * Utils Manager Methods
          * @type {Array<String>}
         */
-        this.methods = ['checkNode', 'checkOptions', 'checkPermissions', 'formatNumbers'];
+        this.methods = ['checkNode', 'checkOptions', 'checkPermissions', 'formatNumbers', 'getPlayerMode'];
 
         /**
          * Utils Manager Methods Count
@@ -140,6 +123,28 @@ class UtilsManager {
         }
 
         return numberArray;
+    }
+
+    /**
+     * Method for determining the mode of operation of the module
+     * @returns {String} Player Mode
+    */
+    getPlayerMode() {
+        const libraryVersion = Number(version.split('.')[0]);
+        
+        if(libraryVersion < 12) {
+            setTimeout(() => {
+                process.exit();
+            }, 1000);
+
+            throw new PlayerError(PlayerErrors.default.oldLibraryVersion.replace('{version}', version));
+        }else if(libraryVersion === 12) {
+            return 'v12';
+        }else if(libraryVersion === 13) {
+            return 'v13';
+        }else{
+            return 'v' + libraryVersion;
+        }
     }
 }
 
