@@ -59,3 +59,5 @@
   * Correction of bugs and errors
   * Adding support for `discord.js v13`
   * and many other changes...
+* ***Version 1.1.6***
+  * Fix Voice Manager
