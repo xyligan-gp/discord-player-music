@@ -2,7 +2,7 @@
  "meta": {
   "generator": "0.11.1",
   "format": 22,
-  "date": 1658866103151
+  "date": 1658866794579
  },
  "custom": {
   "general": {
@@ -2883,7 +2883,7 @@
        "type": [
         [
          [
-          "LoopType"
+          "Loop"
          ]
         ]
        ]
@@ -5123,6 +5123,206 @@
    "meta": {
     "line": 844,
     "file": "Player.ts",
+    "path": "src"
+   }
+  },
+  {
+   "name": "Loop",
+   "type": [
+    [
+     [
+      "Object"
+     ]
+    ]
+   ],
+   "props": [
+    {
+     "name": "QUEUE",
+     "description": "Loop all tracks in queue",
+     "type": [
+      [
+       [
+        "String"
+       ]
+      ]
+     ]
+    },
+    {
+     "name": "TRACK",
+     "description": "Loop only current track",
+     "type": [
+      [
+       [
+        "String"
+       ]
+      ]
+     ]
+    }
+   ],
+   "meta": {
+    "line": 1,
+    "file": "PlayerEnums.ts",
+    "path": "src"
+   }
+  },
+  {
+   "name": "Events",
+   "type": [
+    [
+     [
+      "Object"
+     ]
+    ]
+   ],
+   "props": [
+    {
+     "name": "READY",
+     "description": "Player ready event",
+     "type": [
+      [
+       [
+        "String"
+       ]
+      ]
+     ]
+    },
+    {
+     "name": "ERROR",
+     "description": "Player error event",
+     "type": [
+      [
+       [
+        "String"
+       ]
+      ]
+     ]
+    },
+    {
+     "name": "TRACK_ADD",
+     "description": "Player 'addedTrack' event",
+     "type": [
+      [
+       [
+        "String"
+       ]
+      ]
+     ]
+    },
+    {
+     "name": "TRACK_PLAYING",
+     "description": "Player 'playingTrack' event",
+     "type": [
+      [
+       [
+        "String"
+       ]
+      ]
+     ]
+    },
+    {
+     "name": "QUEUE_STARTED",
+     "description": "Player 'queueStarted' event",
+     "type": [
+      [
+       [
+        "String"
+       ]
+      ]
+     ]
+    },
+    {
+     "name": "QUEUE_ENDED",
+     "description": "Player 'queueEnded' event",
+     "type": [
+      [
+       [
+        "String"
+       ]
+      ]
+     ]
+    }
+   ],
+   "meta": {
+    "line": 14,
+    "file": "PlayerEnums.ts",
+    "path": "src"
+   }
+  },
+  {
+   "name": "Collector",
+   "type": [
+    [
+     [
+      "Object"
+     ]
+    ]
+   ],
+   "props": [
+    {
+     "name": "MESSAGE",
+     "description": "Message collector",
+     "type": [
+      [
+       [
+        "String"
+       ]
+      ]
+     ]
+    },
+    {
+     "name": "REACTION",
+     "description": "Reactions collector",
+     "type": [
+      [
+       [
+        "String"
+       ]
+      ]
+     ]
+    }
+   ],
+   "meta": {
+    "line": 35,
+    "file": "PlayerEnums.ts",
+    "path": "src"
+   }
+  },
+  {
+   "name": "Search",
+   "type": [
+    [
+     [
+      "Object"
+     ]
+    ]
+   ],
+   "props": [
+    {
+     "name": "URL",
+     "description": "Search url value",
+     "type": [
+      [
+       [
+        "String"
+       ]
+      ]
+     ]
+    },
+    {
+     "name": "TITLE",
+     "description": "Search title value",
+     "type": [
+      [
+       [
+        "String"
+       ]
+      ]
+     ]
+    }
+   ],
+   "meta": {
+    "line": 48,
+    "file": "PlayerEnums.ts",
     "path": "src"
    }
   }
