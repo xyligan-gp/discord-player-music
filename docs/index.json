@@ -2,7 +2,7 @@
  "meta": {
   "generator": "0.11.1",
   "format": 22,
-  "date": 1658865381607
+  "date": 1658866103151
  },
  "custom": {
   "general": {
@@ -183,7 +183,7 @@
      "type": [
       [
        [
-        "JSON"
+        "Object"
        ]
       ]
      ],
@@ -1934,7 +1934,7 @@
      "name": "add",
      "description": "Allows you to add your custom filter to the storage module",
      "examples": [
-      "const addFilterData = await client.player.filters.add('nightcore', 'asetrate=48000*1.25,aresample=48000,bass=g=5');\r\rif(addFilterData?.status) return message.channel.send({ content: 'Filter nightcore installed!' });"
+      "const addFilterData = await client.player.filters.add('nightcore', 'asetrate=48000*1.25,aresample=48000,bass=g=5');\rif(addFilterData?.status) return message.channel.send({ content: 'Filter nightcore installed!' });"
      ],
      "params": [
       {
@@ -2020,7 +2020,7 @@
       "description": "Key filter search result"
      },
      "meta": {
-      "line": 74,
+      "line": 73,
       "file": "FiltersManager.ts",
       "path": "src/managers"
      }
@@ -2064,7 +2064,7 @@
       "description": "Filter object (name & value) or object with an error"
      },
      "meta": {
-      "line": 93,
+      "line": 92,
       "file": "FiltersManager.ts",
       "path": "src/managers"
      }
@@ -2099,7 +2099,7 @@
       "description": "Filters collection"
      },
      "meta": {
-      "line": 115,
+      "line": 114,
       "file": "FiltersManager.ts",
       "path": "src/managers"
      }
@@ -2143,7 +2143,7 @@
       "description": "Filter removal status or error object"
      },
      "meta": {
-      "line": 130,
+      "line": 129,
       "file": "FiltersManager.ts",
       "path": "src/managers"
      }
@@ -2153,7 +2153,7 @@
      "description": "Method for initializing module filters storage",
      "access": "private",
      "meta": {
-      "line": 151,
+      "line": 150,
       "file": "FiltersManager.ts",
       "path": "src/managers"
      }
