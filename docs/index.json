@@ -2,7 +2,7 @@
  "meta": {
   "generator": "0.11.1",
   "format": 22,
-  "date": 1658763482201
+  "date": 1658823135354
  },
  "custom": {
   "general": {
@@ -446,7 +446,7 @@
          "<"
         ],
         [
-         "PlayerLyricsData",
+         "LyricsData",
          "|"
         ],
         [
@@ -759,7 +759,7 @@
       }
      ],
      "meta": {
-      "line": 533,
+      "line": 541,
       "file": "Player.ts",
       "path": "src"
      }
@@ -838,7 +838,7 @@
       }
      ],
      "meta": {
-      "line": 541,
+      "line": 549,
       "file": "Player.ts",
       "path": "src"
      }
@@ -1036,7 +1036,7 @@
       }
      ],
      "meta": {
-      "line": 554,
+      "line": 562,
       "file": "Player.ts",
       "path": "src"
      }
@@ -1234,7 +1234,7 @@
       }
      ],
      "meta": {
-      "line": 578,
+      "line": 586,
       "file": "Player.ts",
       "path": "src"
      }
@@ -1385,14 +1385,14 @@
        "type": [
         [
          [
-          "String"
+          "PlayerFilter"
          ]
         ]
        ]
       }
      ],
      "meta": {
-      "line": 602,
+      "line": 610,
       "file": "Player.ts",
       "path": "src"
      }
@@ -1543,14 +1543,14 @@
        "type": [
         [
          [
-          "String"
+          "PlayerFilter"
          ]
         ]
        ]
       }
      ],
      "meta": {
-      "line": 622,
+      "line": 630,
       "file": "Player.ts",
       "path": "src"
      }
@@ -3708,7 +3708,7 @@
      "name": "path",
      "description": "Default path to module database file",
      "optional": true,
-     "default": "'./dpm.playlists.json'",
+     "default": "./dpm.playlists.json",
      "type": [
       [
        [
@@ -3721,7 +3721,7 @@
      "name": "checkInterval",
      "description": "Default interval for checking and updating the module database",
      "optional": true,
-     "default": "'5s'",
+     "default": "5s",
      "type": [
       [
        [
@@ -3759,7 +3759,7 @@
      "name": "line",
      "description": "Progress bar line",
      "optional": true,
-     "default": "'▬'",
+     "default": "▬",
      "type": [
       [
        [
@@ -3772,7 +3772,341 @@
      "name": "slider",
      "description": "Progress bar slider",
      "optional": true,
-     "default": "'🔘'",
+     "default": "🔘",
+     "type": [
+      [
+       [
+        "String"
+       ]
+      ]
+     ]
+    },
+    {
+     "name": "collectorsConfig",
+     "description": "Collectors configuration object",
+     "optional": true,
+     "type": [
+      [
+       [
+        "Object"
+       ]
+      ]
+     ]
+    },
+    {
+     "name": "collectorsConfig.message",
+     "description": "Message collector configuration object",
+     "optional": true,
+     "type": [
+      [
+       [
+        "Object"
+       ]
+      ]
+     ]
+    },
+    {
+     "name": "collectorsConfig.message.time",
+     "description": "Message collector run time",
+     "optional": true,
+     "type": [
+      [
+       [
+        "String"
+       ]
+      ]
+     ]
+    },
+    {
+     "name": "collectorsConfig.message.attempts",
+     "description": "Maximum number of attempts to select a track",
+     "optional": true,
+     "type": [
+      [
+       [
+        "Number"
+       ]
+      ]
+     ]
+    },
+    {
+     "name": "collectorsConfig.reaction",
+     "description": "Reaction collector configuration object",
+     "optional": true,
+     "type": [
+      [
+       [
+        "Object"
+       ]
+      ]
+     ]
+    },
+    {
+     "name": "collectorsConfig.reaction.time",
+     "description": "Reaction collector ran time",
+     "optional": true,
+     "type": [
+      [
+       [
+        "String"
+       ]
+      ]
+     ]
+    },
+    {
+     "name": "collectorsConfig.reaction.attempts",
+     "description": "Maximum number of attempts to select a track",
+     "optional": true,
+     "type": [
+      [
+       [
+        "Number"
+       ]
+      ]
+     ]
+    },
+    {
+     "name": "collectorsConfig.reaction.reactions",
+     "description": "Array react for collector",
+     "optional": true,
+     "type": [
+      [
+       [
+        "Array",
+        "<"
+       ],
+       [
+        "String",
+        ">"
+       ]
+      ]
+     ]
+    }
+   ],
+   "meta": {
+    "line": 513,
+    "file": "Player.ts",
+    "path": "src"
+   }
+  },
+  {
+   "name": "DefaultData",
+   "type": [
+    [
+     [
+      "Object"
+     ]
+    ]
+   ],
+   "props": [
+    {
+     "name": "status",
+     "description": "Operation progress status",
+     "type": [
+      [
+       [
+        "Boolean"
+       ]
+      ]
+     ]
+    }
+   ],
+   "meta": {
+    "line": 654,
+    "file": "Player.ts",
+    "path": "src"
+   }
+  },
+  {
+   "name": "PlayerTrack",
+   "type": [
+    [
+     [
+      "Object"
+     ]
+    ]
+   ],
+   "props": [
+    {
+     "name": "index",
+     "description": "Track index",
+     "optional": true,
+     "type": [
+      [
+       [
+        "Number"
+       ]
+      ]
+     ]
+    },
+    {
+     "name": "searchType",
+     "description": "Search type",
+     "type": [
+      [
+       [
+        "String"
+       ]
+      ]
+     ]
+    },
+    {
+     "name": "title",
+     "description": "Track title",
+     "type": [
+      [
+       [
+        "String"
+       ]
+      ]
+     ]
+    },
+    {
+     "name": "url",
+     "description": "Track URL",
+     "type": [
+      [
+       [
+        "String"
+       ]
+      ]
+     ]
+    },
+    {
+     "name": "thumbnail",
+     "description": "Track thumbnail",
+     "type": [
+      [
+       [
+        "String"
+       ]
+      ]
+     ]
+    },
+    {
+     "name": "author",
+     "description": "Track author object",
+     "type": [
+      [
+       [
+        "Object"
+       ]
+      ]
+     ]
+    },
+    {
+     "name": "author.name",
+     "description": "Track author name",
+     "type": [
+      [
+       [
+        "String"
+       ]
+      ]
+     ]
+    },
+    {
+     "name": "author.url",
+     "description": "Track author channel URL",
+     "type": [
+      [
+       [
+        "String"
+       ]
+      ]
+     ]
+    },
+    {
+     "name": "channel",
+     "description": "Track active channels",
+     "type": [
+      [
+       [
+        "Object"
+       ]
+      ]
+     ]
+    },
+    {
+     "name": "channel.text",
+     "description": "Discord Guild Text Channel",
+     "type": [
+      [
+       [
+        "TextChannel"
+       ]
+      ]
+     ]
+    },
+    {
+     "name": "channel.voice",
+     "description": "Discord Guild Voice Channel",
+     "type": [
+      [
+       [
+        "VoiceChannel"
+       ]
+      ]
+     ]
+    },
+    {
+     "name": "guild",
+     "description": "Discord Guild",
+     "type": [
+      [
+       [
+        "Guild"
+       ]
+      ]
+     ]
+    },
+    {
+     "name": "requested",
+     "description": "Requested track user object",
+     "type": [
+      [
+       [
+        "User"
+       ]
+      ]
+     ]
+    },
+    {
+     "name": "duration",
+     "description": "Track duration",
+     "type": [
+      [
+       [
+        "Object"
+       ]
+      ]
+     ]
+    },
+    {
+     "name": "duration.hours",
+     "description": "Track duration in hours",
+     "type": [
+      [
+       [
+        "String"
+       ]
+      ]
+     ]
+    },
+    {
+     "name": "duration.minutes",
+     "description": "Track duration in minutes",
+     "type": [
+      [
+       [
+        "String"
+       ]
+      ]
+     ]
+    },
+    {
+     "name": "duration.seconds",
+     "description": "Track duration in seconds",
      "type": [
       [
        [
@@ -3783,7 +4117,479 @@
     }
    ],
    "meta": {
-    "line": 513,
+    "line": 662,
+    "file": "Player.ts",
+    "path": "src"
+   }
+  },
+  {
+   "name": "PlayerQueue",
+   "type": [
+    [
+     [
+      "Object"
+     ]
+    ]
+   ],
+   "props": [
+    {
+     "name": "channel",
+     "description": "Queue active channels",
+     "type": [
+      [
+       [
+        "Object"
+       ]
+      ]
+     ]
+    },
+    {
+     "name": "channel.text",
+     "description": "Discord Guild Text Channel",
+     "type": [
+      [
+       [
+        "TextChannel"
+       ]
+      ]
+     ]
+    },
+    {
+     "name": "channel.voice",
+     "description": "Discord Guild Voice Channel",
+     "type": [
+      [
+       [
+        "VoiceChannel"
+       ]
+      ]
+     ]
+    },
+    {
+     "name": "dispatcher",
+     "description": "Guild Audio Dispatcher",
+     "type": [
+      [
+       [
+        "AudioPlayer"
+       ]
+      ]
+     ]
+    },
+    {
+     "name": "tracks",
+     "description": "Guild Tracks Array",
+     "type": [
+      [
+       [
+        "Array",
+        "<"
+       ],
+       [
+        "PlayerTrack",
+        ">"
+       ]
+      ]
+     ]
+    },
+    {
+     "name": "connection",
+     "description": "Discord Guild Client Voice Connection",
+     "type": [
+      [
+       [
+        "VoiceConnection"
+       ]
+      ]
+     ]
+    },
+    {
+     "name": "loop",
+     "description": "Loop object",
+     "type": [
+      [
+       [
+        "Object"
+       ]
+      ]
+     ]
+    },
+    {
+     "name": "loop.track",
+     "description": "Loop current track status",
+     "type": [
+      [
+       [
+        "Boolean"
+       ]
+      ]
+     ]
+    },
+    {
+     "name": "loop.queue",
+     "description": "Loop guild queue status",
+     "type": [
+      [
+       [
+        "Boolean"
+       ]
+      ]
+     ]
+    },
+    {
+     "name": "volume",
+     "description": "Guild queue playback volume",
+     "type": [
+      [
+       [
+        "Number"
+       ]
+      ]
+     ]
+    },
+    {
+     "name": "startStream",
+     "description": "Timestamp start playing server queue",
+     "type": [
+      [
+       [
+        "Number"
+       ]
+      ]
+     ]
+    },
+    {
+     "name": "playing",
+     "description": "Queue playback status",
+     "type": [
+      [
+       [
+        "Boolean"
+       ]
+      ]
+     ]
+    },
+    {
+     "name": "filter",
+     "description": "Queue playback filter",
+     "type": [
+      [
+       [
+        "PlayerFilter"
+       ]
+      ]
+     ]
+    }
+   ],
+   "meta": {
+    "line": 686,
+    "file": "Player.ts",
+    "path": "src"
+   }
+  },
+  {
+   "name": "LyricsData",
+   "type": [
+    [
+     [
+      "Object"
+     ]
+    ]
+   ],
+   "props": [
+    {
+     "name": "query",
+     "description": "Search query",
+     "type": [
+      [
+       [
+        "String"
+       ]
+      ]
+     ]
+    },
+    {
+     "name": "result",
+     "description": "Lyrics content",
+     "type": [
+      [
+       [
+        "String"
+       ]
+      ]
+     ]
+    }
+   ],
+   "meta": {
+    "line": 706,
+    "file": "Player.ts",
+    "path": "src"
+   }
+  },
+  {
+   "name": "PlayerFilter",
+   "type": [
+    [
+     [
+      "Object"
+     ]
+    ]
+   ],
+   "props": [
+    {
+     "name": "name",
+     "description": "Filter name",
+     "type": [
+      [
+       [
+        "String"
+       ]
+      ]
+     ]
+    },
+    {
+     "name": "value",
+     "description": "Filter value",
+     "type": [
+      [
+       [
+        "String"
+       ]
+      ]
+     ]
+    }
+   ],
+   "meta": {
+    "line": 715,
+    "file": "Player.ts",
+    "path": "src"
+   }
+  },
+  {
+   "name": "PlaylistTrack",
+   "type": [
+    [
+     [
+      "Object"
+     ]
+    ]
+   ],
+   "props": [
+    {
+     "name": "url",
+     "description": "Track URL",
+     "type": [
+      [
+       [
+        "String"
+       ]
+      ]
+     ]
+    },
+    {
+     "name": "title",
+     "description": "Track Title",
+     "type": [
+      [
+       [
+        "String"
+       ]
+      ]
+     ]
+    }
+   ],
+   "meta": {
+    "line": 724,
+    "file": "Player.ts",
+    "path": "src"
+   }
+  },
+  {
+   "name": "CreatePlaylistData",
+   "type": [
+    [
+     [
+      "Object"
+     ]
+    ]
+   ],
+   "props": [
+    {
+     "name": "title",
+     "description": "Playlist Title",
+     "optional": true,
+     "type": [
+      [
+       [
+        "String"
+       ]
+      ]
+     ]
+    },
+    {
+     "name": "author",
+     "description": "Playlist Author ID",
+     "type": [
+      [
+       [
+        "String"
+       ]
+      ]
+     ]
+    },
+    {
+     "name": "track",
+     "description": "Playlist track object",
+     "type": [
+      [
+       [
+        "PlaylistTrack"
+       ]
+      ]
+     ]
+    }
+   ],
+   "meta": {
+    "line": 733,
+    "file": "Player.ts",
+    "path": "src"
+   }
+  },
+  {
+   "name": "AddPlaylistData",
+   "type": [
+    [
+     [
+      "Object"
+     ]
+    ]
+   ],
+   "props": [
+    {
+     "name": "id",
+     "description": "Playlist ID",
+     "optional": true,
+     "type": [
+      [
+       [
+        "String"
+       ]
+      ]
+     ]
+    },
+    {
+     "name": "track",
+     "description": "Playlist track object",
+     "type": [
+      [
+       [
+        "PlaylistTrack"
+       ]
+      ]
+     ]
+    }
+   ],
+   "meta": {
+    "line": 743,
+    "file": "Player.ts",
+    "path": "src"
+   }
+  },
+  {
+   "name": "GuildPlaylist",
+   "type": [
+    [
+     [
+      "Object"
+     ]
+    ]
+   ],
+   "props": [
+    {
+     "name": "id",
+     "description": "Playlist ID",
+     "type": [
+      [
+       [
+        "String"
+       ]
+      ]
+     ]
+    },
+    {
+     "name": "title",
+     "description": "Playlist Title",
+     "type": [
+      [
+       [
+        "String"
+       ]
+      ]
+     ]
+    },
+    {
+     "name": "author",
+     "description": "Playlist Author ID",
+     "type": [
+      [
+       [
+        "String"
+       ]
+      ]
+     ]
+    },
+    {
+     "name": "created",
+     "description": "Playlist create timestamp",
+     "type": [
+      [
+       [
+        "Number"
+       ]
+      ]
+     ]
+    },
+    {
+     "name": "updated",
+     "description": "Playlist update timestamp",
+     "type": [
+      [
+       [
+        "Number"
+       ]
+      ]
+     ]
+    },
+    {
+     "name": "duration",
+     "description": "Playlist duration",
+     "type": [
+      [
+       [
+        "Number"
+       ]
+      ]
+     ]
+    },
+    {
+     "name": "tracks",
+     "description": "Playlist tracks array",
+     "type": [
+      [
+       [
+        "Array",
+        "<"
+       ],
+       [
+        "PlaylistTrack",
+        ">"
+       ]
+      ]
+     ]
+    }
+   ],
+   "meta": {
+    "line": 752,
     "file": "Player.ts",
     "path": "src"
    }
@@ -3833,7 +4639,426 @@
     }
    ],
    "meta": {
-    "line": 646,
+    "line": 766,
+    "file": "Player.ts",
+    "path": "src"
+   }
+  },
+  {
+   "name": "SkipData",
+   "type": [
+    [
+     [
+      "Object"
+     ]
+    ]
+   ],
+   "props": [
+    {
+     "name": "current",
+     "description": "Current track object",
+     "type": [
+      [
+       [
+        "PlayerTrack"
+       ]
+      ]
+     ]
+    },
+    {
+     "name": "next",
+     "description": "Next track object",
+     "type": [
+      [
+       [
+        "PlayerTrack"
+       ]
+      ]
+     ]
+    }
+   ],
+   "meta": {
+    "line": 776,
+    "file": "Player.ts",
+    "path": "src"
+   }
+  },
+  {
+   "name": "CollectorData",
+   "type": [
+    [
+     [
+      "Object"
+     ]
+    ]
+   ],
+   "props": [
+    {
+     "name": "index",
+     "description": "Collected index",
+     "type": [
+      [
+       [
+        "Number"
+       ]
+      ]
+     ]
+    },
+    {
+     "name": "track",
+     "description": "User selected track object",
+     "type": [
+      [
+       [
+        "PlayerTrack"
+       ]
+      ]
+     ]
+    },
+    {
+     "name": "data",
+     "description": "List of available tracks",
+     "type": [
+      [
+       [
+        "Array",
+        "<"
+       ],
+       [
+        "PlayerTrack",
+        ">"
+       ]
+      ]
+     ]
+    }
+   ],
+   "meta": {
+    "line": 785,
+    "file": "Player.ts",
+    "path": "src"
+   }
+  },
+  {
+   "name": "ProgressData",
+   "type": [
+    [
+     [
+      "Object"
+     ]
+    ]
+   ],
+   "props": [
+    {
+     "name": "bar",
+     "description": "Progress bar",
+     "type": [
+      [
+       [
+        "String"
+       ]
+      ]
+     ]
+    },
+    {
+     "name": "percents",
+     "description": "Progress percents",
+     "type": [
+      [
+       [
+        "String"
+       ]
+      ]
+     ]
+    }
+   ],
+   "meta": {
+    "line": 795,
+    "file": "Player.ts",
+    "path": "src"
+   }
+  },
+  {
+   "name": "StreamData",
+   "type": [
+    [
+     [
+      "Object"
+     ]
+    ]
+   ],
+   "props": [
+    {
+     "name": "loop",
+     "description": "Loop object",
+     "type": [
+      [
+       [
+        "Object"
+       ]
+      ]
+     ]
+    },
+    {
+     "name": "loop.track",
+     "description": "Loop current track status",
+     "type": [
+      [
+       [
+        "Boolean"
+       ]
+      ]
+     ]
+    },
+    {
+     "name": "loop.queue",
+     "description": "Loop guild queue status",
+     "type": [
+      [
+       [
+        "Boolean"
+       ]
+      ]
+     ]
+    },
+    {
+     "name": "filter",
+     "description": "Stream filter",
+     "type": [
+      [
+       [
+        "PlayerFilter"
+       ]
+      ]
+     ]
+    },
+    {
+     "name": "playing",
+     "description": "Stream status value",
+     "type": [
+      [
+       [
+        "Boolean"
+       ]
+      ]
+     ]
+    },
+    {
+     "name": "volume",
+     "description": "Stream volume value",
+     "type": [
+      [
+       [
+        "Number"
+       ]
+      ]
+     ]
+    },
+    {
+     "name": "streamTime",
+     "description": "Stream duration object",
+     "type": [
+      [
+       [
+        "Object"
+       ]
+      ]
+     ]
+    },
+    {
+     "name": "streamTime.days",
+     "description": "Stream duration in days",
+     "type": [
+      [
+       [
+        "String"
+       ]
+      ],
+      [
+       [
+        "Number"
+       ]
+      ]
+     ]
+    },
+    {
+     "name": "streamTime.hours",
+     "description": "Stream duration in hours",
+     "type": [
+      [
+       [
+        "String"
+       ]
+      ],
+      [
+       [
+        "Number"
+       ]
+      ]
+     ]
+    },
+    {
+     "name": "streamTime.minutes",
+     "description": "Stream duration in minutes",
+     "type": [
+      [
+       [
+        "String"
+       ]
+      ],
+      [
+       [
+        "Number"
+       ]
+      ]
+     ]
+    },
+    {
+     "name": "streamTime.seconds",
+     "description": "Stream duration in seconds",
+     "type": [
+      [
+       [
+        "String"
+       ]
+      ],
+      [
+       [
+        "Number"
+       ]
+      ]
+     ]
+    }
+   ],
+   "meta": {
+    "line": 804,
+    "file": "Player.ts",
+    "path": "src"
+   }
+  },
+  {
+   "name": "PlayerError",
+   "type": [
+    [
+     [
+      "Object"
+     ]
+    ]
+   ],
+   "props": [
+    {
+     "name": "channel",
+     "description": "Error Channels",
+     "optional": true,
+     "type": [
+      [
+       [
+        "Object"
+       ]
+      ]
+     ]
+    },
+    {
+     "name": "channel.text",
+     "description": "Discord Guild text Channel",
+     "optional": true,
+     "type": [
+      [
+       [
+        "TextChannel"
+       ]
+      ]
+     ]
+    },
+    {
+     "name": "channel.voice",
+     "description": "Discord Guild Voice Channel",
+     "optional": true,
+     "type": [
+      [
+       [
+        "VoiceChannel"
+       ]
+      ]
+     ]
+    },
+    {
+     "name": "requested",
+     "description": "Requested User",
+     "type": [
+      [
+       [
+        "User"
+       ]
+      ]
+     ]
+    },
+    {
+     "name": "method",
+     "description": "Module method",
+     "type": [
+      [
+       [
+        "String"
+       ]
+      ]
+     ]
+    },
+    {
+     "name": "error",
+     "description": "Error object",
+     "type": [
+      [
+       [
+        "Error"
+       ]
+      ]
+     ]
+    }
+   ],
+   "meta": {
+    "line": 822,
+    "file": "Player.ts",
+    "path": "src"
+   }
+  },
+  {
+   "name": "StreamOptions",
+   "type": [
+    [
+     [
+      "Object"
+     ]
+    ]
+   ],
+   "props": [
+    {
+     "name": "seek",
+     "description": "Seek value",
+     "optional": true,
+     "default": 0,
+     "type": [
+      [
+       [
+        "Number"
+       ]
+      ]
+     ]
+    },
+    {
+     "name": "filter",
+     "description": "Filter value",
+     "optional": true,
+     "type": [
+      [
+       [
+        "String"
+       ]
+      ]
+     ]
+    }
+   ],
+   "meta": {
+    "line": 835,
     "file": "Player.ts",
     "path": "src"
    }
