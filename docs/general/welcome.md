@@ -20,6 +20,7 @@
 * 👍 Simple & easy to use
 * 😄 Beginner friendly
 * 🎸 Audio filters
+* 📌 Guilds Playlists
 * 📃 Lyrics
 * ⏰ Play in multiple servers at the same time
 * ⚙️ 100% Promise-based
@@ -75,7 +76,7 @@ client.login('YOUR_BOT_TOKEN_HERE');
 * Documentation: [Click](https://dpm.js.org)
 * NPM: [Click](https://www.npmjs.com/package/discord-player-music)
 * GitHub: [Click](https://github.com/xyligan-gp/discord-player-music)
-* Examples: [Click](https://github.com/xyligan-gp/discord-player-music/tree/1.1.7/examples)
+* Examples: [Click](https://github.com/xyligan-gp/discord-player-music/tree/stable/examples)
 * Support Server - [Click](https://discord.gg/zzbkvCcu2r)
 
-<h1>Thanks for using Discord Player Music ♥</h1>
+<h1>♥ Thanks for using Discord Player Music ♥</h1>

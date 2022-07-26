@@ -70,4 +70,5 @@
   * Removed support for `discord.js v12` and added support for the current `discord.js v14`
   * Updated dependency versions to the latest ones
   * Updated old and added new events
+  * Partial transition to enumerated types (enum)
   * The rest of the changes can be seen more clearly on the updates page...
