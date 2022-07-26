@@ -2,7 +2,7 @@
  "meta": {
   "generator": "0.11.1",
   "format": 22,
-  "date": 1658863684930
+  "date": 1658865381607
  },
  "custom": {
   "general": {
@@ -1736,7 +1736,7 @@
       ]
      ],
      "meta": {
-      "line": 35,
+      "line": 36,
       "file": "DatabaseManager.ts",
       "path": "src/managers"
      }
@@ -1752,7 +1752,7 @@
       ]
      ],
      "meta": {
-      "line": 43,
+      "line": 44,
       "file": "DatabaseManager.ts",
       "path": "src/managers"
      }
@@ -1769,7 +1769,7 @@
       ]
      ],
      "meta": {
-      "line": 53,
+      "line": 54,
       "file": "DatabaseManager.ts",
       "path": "src/managers"
      }
@@ -1793,7 +1793,7 @@
       "description": "Database object"
      },
      "meta": {
-      "line": 64,
+      "line": 65,
       "file": "DatabaseManager.ts",
       "path": "src/managers"
      }
@@ -1819,7 +1819,7 @@
       }
      ],
      "meta": {
-      "line": 79,
+      "line": 80,
       "file": "DatabaseManager.ts",
       "path": "src/managers"
      }
@@ -1828,7 +1828,7 @@
      "name": "initGuild",
      "description": "Allows you to initialize data for a single server",
      "examples": [
-      "function getStorage() {\r     // If there is no data, it will appear\r     client.player.database.initGuild();\r\r     const storage = client.player.database.get();\r\r     console.log(storage);\r}"
+      "function getGuildStorage(guildID) {\r     // If there is no data, it will appear\r     client.player.database.initGuild(guildID);\r\r     const storage = client.player.database.get();\r\r     console.log(storage[guildID]);\r}\r\rgetGuildStorage('827221018879328298');"
      ],
      "params": [
       {
@@ -1844,7 +1844,7 @@
       }
      ],
      "meta": {
-      "line": 94,
+      "line": 95,
       "file": "DatabaseManager.ts",
       "path": "src/managers"
      }
@@ -1853,14 +1853,14 @@
      "name": "init",
      "description": "Method for module database initialization",
      "meta": {
-      "line": 117,
+      "line": 120,
       "file": "DatabaseManager.ts",
       "path": "src/managers"
      }
     }
    ],
    "meta": {
-    "line": 11,
+    "line": 12,
     "file": "DatabaseManager.ts",
     "path": "src/managers"
    }
@@ -1933,6 +1933,9 @@
     {
      "name": "add",
      "description": "Allows you to add your custom filter to the storage module",
+     "examples": [
+      "const addFilterData = await client.player.filters.add('nightcore', 'asetrate=48000*1.25,aresample=48000,bass=g=5');\r\rif(addFilterData?.status) return message.channel.send({ content: 'Filter nightcore installed!' });"
+     ],
      "params": [
       {
        "name": "key",
@@ -1985,6 +1988,9 @@
     {
      "name": "isExists",
      "description": "Allows you to check the filter key for validity",
+     "examples": [
+      "const isValidFilter = await client.player.filters.isExists('nightcore');\rif(!isValidFilter) return message.channel.send({ content: 'Filter nightcore is invalid!' });"
+     ],
      "params": [
       {
        "name": "key",
@@ -2014,7 +2020,7 @@
       "description": "Key filter search result"
      },
      "meta": {
-      "line": 69,
+      "line": 74,
       "file": "FiltersManager.ts",
       "path": "src/managers"
      }
@@ -2022,6 +2028,9 @@
     {
      "name": "get",
      "description": "Allows you to get the module's filter object",
+     "examples": [
+      "const playerFilter = await client.player.filters.get('nightcore');\rif(playerFilter?.name && playerFilter?.value) return message.channel.send({ content: `Filter name: ${playerFilter.name} | Filter value: ${playerFilter.value}` });"
+     ],
      "params": [
       {
        "name": "key",
@@ -2055,7 +2064,7 @@
       "description": "Filter object (name & value) or object with an error"
      },
      "meta": {
-      "line": 84,
+      "line": 93,
       "file": "FiltersManager.ts",
       "path": "src/managers"
      }
@@ -2063,6 +2072,9 @@
     {
      "name": "list",
      "description": "Allows you to get a collection of module filters (including custom filters)",
+     "examples": [
+      "const playerFilters = await client.player.filters.list();\rreturn message.channel.send({ content: `Filters count: ${playerFilters.size}` });"
+     ],
      "returns": {
       "types": [
        [
@@ -2087,7 +2099,7 @@
       "description": "Filters collection"
      },
      "meta": {
-      "line": 102,
+      "line": 115,
       "file": "FiltersManager.ts",
       "path": "src/managers"
      }
@@ -2095,6 +2107,9 @@
     {
      "name": "delete",
      "description": "Allows you to remove filters from the collection",
+     "examples": [
+      "const deleteFilterData = await client.player.filters.delete('nightcore');\rif(deleteFilterData?.status) return message.channel.send({ content: 'Filter nightcore deleted from module storage!' });"
+     ],
      "params": [
       {
        "name": "key",
@@ -2128,7 +2143,7 @@
       "description": "Filter removal status or error object"
      },
      "meta": {
-      "line": 113,
+      "line": 130,
       "file": "FiltersManager.ts",
       "path": "src/managers"
      }
@@ -2138,7 +2153,7 @@
      "description": "Method for initializing module filters storage",
      "access": "private",
      "meta": {
-      "line": 130,
+      "line": 151,
       "file": "FiltersManager.ts",
       "path": "src/managers"
      }
