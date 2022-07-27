@@ -2,7 +2,7 @@
  "meta": {
   "generator": "0.11.1",
   "format": 22,
-  "date": 1658909505668
+  "date": 1658910318314
  },
  "custom": {
   "general": {
@@ -745,6 +745,7 @@
    "events": [
     {
      "name": "ready",
+     "description": "Emits when the module is ready",
      "params": [
       {
        "name": "player",
@@ -766,6 +767,7 @@
     },
     {
      "name": "error",
+     "description": "Emitted when a module can't do anything and gets an error",
      "params": [
       {
        "name": "channel",
@@ -845,6 +847,7 @@
     },
     {
      "name": "addedTrack",
+     "description": "Emitted when a new track is added to the server queue",
      "params": [
       {
        "name": "index",
@@ -1036,13 +1039,14 @@
       }
      ],
      "meta": {
-      "line": 562,
+      "line": 561,
       "file": "Player.ts",
       "path": "src"
      }
     },
     {
      "name": "playingTrack",
+     "description": "Emitted when a new track starts playing in the server queue",
      "params": [
       {
        "name": "index",
@@ -1234,13 +1238,14 @@
       }
      ],
      "meta": {
-      "line": 586,
+      "line": 584,
       "file": "Player.ts",
       "path": "src"
      }
     },
     {
      "name": "createdPlaylist",
+     "description": "Emitted when a new server playlist is created",
      "params": [
       {
        "name": "id",
@@ -1309,6 +1314,17 @@
        ]
       },
       {
+       "name": "lastPlaying",
+       "description": "Playlist last playind timestamp",
+       "type": [
+        [
+         [
+          "Number"
+         ]
+        ]
+       ]
+      },
+      {
        "name": "tracks",
        "description": "Playlist tracks array",
        "type": [
@@ -1326,13 +1342,14 @@
       }
      ],
      "meta": {
-      "line": 610,
+      "line": 607,
       "file": "Player.ts",
       "path": "src"
      }
     },
     {
      "name": "deletedPlaylist",
+     "description": "Emitted when the server playlist is deleted",
      "params": [
       {
        "name": "id",
@@ -1401,6 +1418,17 @@
        ]
       },
       {
+       "name": "lastPlaying",
+       "description": "Playlist last playind timestamp",
+       "type": [
+        [
+         [
+          "Number"
+         ]
+        ]
+       ]
+      },
+      {
        "name": "tracks",
        "description": "Playlist tracks array",
        "type": [
@@ -1418,13 +1446,14 @@
       }
      ],
      "meta": {
-      "line": 624,
+      "line": 621,
       "file": "Player.ts",
       "path": "src"
      }
     },
     {
      "name": "queueStarted",
+     "description": "Emitted when a new server queue is started",
      "params": [
       {
        "name": "channel",
@@ -1576,13 +1605,14 @@
       }
      ],
      "meta": {
-      "line": 638,
+      "line": 635,
       "file": "Player.ts",
       "path": "src"
      }
     },
     {
      "name": "queueEnded",
+     "description": "Emitted when the server queue finishes playing",
      "params": [
       {
        "name": "channel",
@@ -1734,7 +1764,7 @@
       }
      ],
      "meta": {
-      "line": 658,
+      "line": 654,
       "file": "Player.ts",
       "path": "src"
      }
@@ -2739,7 +2769,7 @@
       ]
      ],
      "meta": {
-      "line": 42,
+      "line": 41,
       "file": "QueueManager.ts",
       "path": "src/managers"
      }
@@ -2751,12 +2781,21 @@
      "type": [
       [
        [
-        "Collection"
+        "Collection",
+        "<"
+       ],
+       [
+        "String",
+        ", "
+       ],
+       [
+        "PlayerQueue",
+        ">"
        ]
       ]
      ],
      "meta": {
-      "line": 50,
+      "line": 49,
       "file": "QueueManager.ts",
       "path": "src/managers"
      }
@@ -2795,7 +2834,7 @@
       "description": "Status of adding a track to the server queue"
      },
      "meta": {
-      "line": 59,
+      "line": 58,
       "file": "QueueManager.ts",
       "path": "src/managers"
      }
@@ -2836,7 +2875,7 @@
       "description": "Playback pause status"
      },
      "meta": {
-      "line": 116,
+      "line": 115,
       "file": "QueueManager.ts",
       "path": "src/managers"
      }
@@ -2877,7 +2916,7 @@
       "description": "Queue object for server or `null`"
      },
      "meta": {
-      "line": 138,
+      "line": 137,
       "file": "QueueManager.ts",
       "path": "src/managers"
      }
@@ -2918,7 +2957,7 @@
       "description": "Progress bar data or an object with an error"
      },
      "meta": {
-      "line": 156,
+      "line": 155,
       "file": "QueueManager.ts",
       "path": "src/managers"
      }
@@ -2959,7 +2998,7 @@
       "description": "General information about the current stream"
      },
      "meta": {
-      "line": 203,
+      "line": 202,
       "file": "QueueManager.ts",
       "path": "src/managers"
      }
@@ -3011,7 +3050,7 @@
       "description": "Object with track information or with an error"
      },
      "meta": {
-      "line": 223,
+      "line": 222,
       "file": "QueueManager.ts",
       "path": "src/managers"
      }
@@ -3063,7 +3102,7 @@
       "description": "Set filter data or an object with an error"
      },
      "meta": {
-      "line": 245,
+      "line": 244,
       "file": "QueueManager.ts",
       "path": "src/managers"
      }
@@ -3115,7 +3154,7 @@
       "description": "Loop setup status or object in error"
      },
      "meta": {
-      "line": 271,
+      "line": 270,
       "file": "QueueManager.ts",
       "path": "src/managers"
      }
@@ -3169,7 +3208,7 @@
       "description": "Server Queue Playback Volume Change Status"
      },
      "meta": {
-      "line": 317,
+      "line": 316,
       "file": "QueueManager.ts",
       "path": "src/managers"
      }
@@ -3210,7 +3249,7 @@
       "description": "Object with current and next track or error"
      },
      "meta": {
-      "line": 342,
+      "line": 341,
       "file": "QueueManager.ts",
       "path": "src/managers"
      }
@@ -3266,7 +3305,7 @@
       "description": "Updated track list for the server or an object with an error"
      },
      "meta": {
-      "line": 383,
+      "line": 382,
       "file": "QueueManager.ts",
       "path": "src/managers"
      }
@@ -3320,7 +3359,7 @@
       "description": "Installation status or object with an error"
      },
      "meta": {
-      "line": 408,
+      "line": 407,
       "file": "QueueManager.ts",
       "path": "src/managers"
      }
@@ -3365,7 +3404,7 @@
       "description": "Shuffled list of tracks in the queue"
      },
      "meta": {
-      "line": 435,
+      "line": 434,
       "file": "QueueManager.ts",
       "path": "src/managers"
      }
@@ -3406,7 +3445,7 @@
       "description": "Playback status change"
      },
      "meta": {
-      "line": 463,
+      "line": 462,
       "file": "QueueManager.ts",
       "path": "src/managers"
      }
@@ -3447,7 +3486,7 @@
       "description": "Presence of a queue for a server in storage or an object with an error"
      },
      "meta": {
-      "line": 485,
+      "line": 484,
       "file": "QueueManager.ts",
       "path": "src/managers"
      }
@@ -3488,14 +3527,14 @@
       "description": "Server queue cleanup status"
      },
      "meta": {
-      "line": 505,
+      "line": 504,
       "file": "QueueManager.ts",
       "path": "src/managers"
      }
     }
    ],
    "meta": {
-    "line": 23,
+    "line": 22,
     "file": "QueueManager.ts",
     "path": "src/managers"
    }
@@ -4142,7 +4181,7 @@
     }
    ],
    "meta": {
-    "line": 682,
+    "line": 677,
     "file": "Player.ts",
     "path": "src"
    }
@@ -4347,7 +4386,7 @@
     }
    ],
    "meta": {
-    "line": 690,
+    "line": 685,
     "file": "Player.ts",
     "path": "src"
    }
@@ -4512,7 +4551,7 @@
     }
    ],
    "meta": {
-    "line": 714,
+    "line": 709,
     "file": "Player.ts",
     "path": "src"
    }
@@ -4551,7 +4590,7 @@
     }
    ],
    "meta": {
-    "line": 734,
+    "line": 729,
     "file": "Player.ts",
     "path": "src"
    }
@@ -4590,7 +4629,7 @@
     }
    ],
    "meta": {
-    "line": 743,
+    "line": 738,
     "file": "Player.ts",
     "path": "src"
    }
@@ -4629,7 +4668,7 @@
     }
    ],
    "meta": {
-    "line": 752,
+    "line": 747,
     "file": "Player.ts",
     "path": "src"
    }
@@ -4680,7 +4719,7 @@
     }
    ],
    "meta": {
-    "line": 761,
+    "line": 756,
     "file": "Player.ts",
     "path": "src"
    }
@@ -4720,7 +4759,7 @@
     }
    ],
    "meta": {
-    "line": 771,
+    "line": 766,
     "file": "Player.ts",
     "path": "src"
    }
@@ -4802,6 +4841,17 @@
      ]
     },
     {
+     "name": "lastPlaying",
+     "description": "Playlist last playind timestamp",
+     "type": [
+      [
+       [
+        "Number"
+       ]
+      ]
+     ]
+    },
+    {
      "name": "tracks",
      "description": "Playlist tracks array",
      "type": [
@@ -4819,7 +4869,7 @@
     }
    ],
    "meta": {
-    "line": 780,
+    "line": 775,
     "file": "Player.ts",
     "path": "src"
    }
@@ -4869,7 +4919,7 @@
     }
    ],
    "meta": {
-    "line": 794,
+    "line": 790,
     "file": "Player.ts",
     "path": "src"
    }
@@ -4908,7 +4958,7 @@
     }
    ],
    "meta": {
-    "line": 804,
+    "line": 800,
     "file": "Player.ts",
     "path": "src"
    }
@@ -4963,7 +5013,7 @@
     }
    ],
    "meta": {
-    "line": 813,
+    "line": 809,
     "file": "Player.ts",
     "path": "src"
    }
@@ -5002,7 +5052,7 @@
     }
    ],
    "meta": {
-    "line": 823,
+    "line": 819,
     "file": "Player.ts",
     "path": "src"
    }
@@ -5160,7 +5210,7 @@
     }
    ],
    "meta": {
-    "line": 832,
+    "line": 828,
     "file": "Player.ts",
     "path": "src"
    }
@@ -5246,7 +5296,7 @@
     }
    ],
    "meta": {
-    "line": 850,
+    "line": 846,
     "file": "Player.ts",
     "path": "src"
    }
@@ -5288,7 +5338,7 @@
     }
    ],
    "meta": {
-    "line": 863,
+    "line": 859,
     "file": "Player.ts",
     "path": "src"
    }
@@ -5327,7 +5377,7 @@
     }
    ],
    "meta": {
-    "line": 872,
+    "line": 868,
     "file": "Player.ts",
     "path": "src"
    }
