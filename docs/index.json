@@ -2,7 +2,7 @@
  "meta": {
   "generator": "0.11.1",
   "format": 22,
-  "date": 1658911586121
+  "date": 1658912148623
  },
  "custom": {
   "general": {
@@ -3824,6 +3824,9 @@
     {
      "name": "join",
      "description": "Allows the bot to join a voice channel on the server",
+     "examples": [
+      "const channel = message.guild?.channels.cache.get('ChannelID');\r\rif(channel && channel.isVoiceBased()) await client.player.voice.join(channel);"
+     ],
      "params": [
       {
        "name": "channel",
@@ -3865,6 +3868,9 @@
     {
      "name": "leave",
      "description": "Allows the bot to leave the server's voice channel",
+     "examples": [
+      "const guildConnection = await client.player.voice.leave('GuildID');\r\rif(guildConnection?.joinConfig) return message.channel.send({ content: `Client leave from ${message.guild.channels.cache.get(guildConnection.joinConfig.channelId)} channel!` });"
+     ],
      "params": [
       {
        "name": "guildID",
@@ -3898,7 +3904,7 @@
       "description": "Connection or error object"
      },
      "meta": {
-      "line": 58,
+      "line": 63,
       "file": "VoiceManager.ts",
       "path": "src/managers"
      }
