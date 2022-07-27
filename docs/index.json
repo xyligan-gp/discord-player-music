@@ -2,7 +2,7 @@
  "meta": {
   "generator": "0.11.1",
   "format": 22,
-  "date": 1658910318314
+  "date": 1658911586121
  },
  "custom": {
   "general": {
@@ -3571,7 +3571,7 @@
       ]
      ],
      "meta": {
-      "line": 25,
+      "line": 26,
       "file": "UtilsManager.ts",
       "path": "src/managers"
      }
@@ -3581,6 +3581,9 @@
     {
      "name": "formatNumbers",
      "description": "Allows you to format numbers in a familiar form for people",
+     "examples": [
+      "const formatData = client.player.utils.formatNumbers([1, 2, 30]);\r\r// Result: ['01', '02', '30']\rconsole.log(formatData);"
+     ],
      "params": [
       {
        "name": "data",
@@ -3615,7 +3618,7 @@
       "description": "Returns an array of formatted numbers"
      },
      "meta": {
-      "line": 34,
+      "line": 35,
       "file": "UtilsManager.ts",
       "path": "src/managers"
      }
@@ -3623,6 +3626,9 @@
     {
      "name": "formatDuration",
      "description": "Allows you to format the duration to the usual form",
+     "examples": [
+      "const formatData = client.player.utils.formatDuration(300);\r\r// Result: '00:05:00'\rconsole.log(formatData);"
+     ],
      "params": [
       {
        "name": "value",
@@ -3647,7 +3653,7 @@
       "description": "Formatted duration value"
      },
      "meta": {
-      "line": 51,
+      "line": 58,
       "file": "UtilsManager.ts",
       "path": "src/managers"
      }
@@ -3680,7 +3686,7 @@
       "description": "Correct module options"
      },
      "meta": {
-      "line": 70,
+      "line": 83,
       "file": "UtilsManager.ts",
       "path": "src/managers"
      }
@@ -3688,6 +3694,9 @@
     {
      "name": "createEmptyProgress",
      "description": "Allows you to create an empty progress bar",
+     "examples": [
+      "const progressBar = client.player.utils.createEmptyProgress();\r\r// Result: '🔘▬▬▬▬▬▬▬▬▬▬'\rconsole.log(progressBar);"
+     ],
      "returns": {
       "types": [
        [
@@ -3699,7 +3708,7 @@
       "description": "Empty progress bar"
      },
      "meta": {
-      "line": 178,
+      "line": 195,
       "file": "UtilsManager.ts",
       "path": "src/managers"
      }
@@ -3707,6 +3716,9 @@
     {
      "name": "getUniqueID",
      "description": "Allows you to get a unique ID",
+     "examples": [
+      "const id = client.player.utils.getUniqueID();\r\r// Result: '632342263918468'\rconsole.log(id);"
+     ],
      "returns": {
       "types": [
        [
@@ -3718,7 +3730,7 @@
       "description": "Unique ID"
      },
      "meta": {
-      "line": 193,
+      "line": 216,
       "file": "UtilsManager.ts",
       "path": "src/managers"
      }
@@ -3726,6 +3738,9 @@
     {
      "name": "getTrackDuration",
      "description": "Allows you to find out the duration of the track",
+     "examples": [
+      "const trackDurationData = await client.player.utils.getTrackDuration('https://youtube.com/watch?v=Vt2TeOptLxE');\r\r// Result: 307\rconsole.log(trackDurationData);"
+     ],
      "params": [
       {
        "name": "url",
@@ -3755,14 +3770,14 @@
       "description": "Track duration"
      },
      "meta": {
-      "line": 210,
+      "line": 239,
       "file": "UtilsManager.ts",
       "path": "src/managers"
      }
     }
    ],
    "meta": {
-    "line": 9,
+    "line": 10,
     "file": "UtilsManager.ts",
     "path": "src/managers"
    }
@@ -4078,6 +4093,7 @@
      "name": "collectorsConfig.message.time",
      "description": "Message collector run time",
      "optional": true,
+     "default": "1m",
      "type": [
       [
        [
@@ -4090,6 +4106,7 @@
      "name": "collectorsConfig.message.attempts",
      "description": "Maximum number of attempts to select a track",
      "optional": true,
+     "default": 1,
      "type": [
       [
        [
@@ -4114,6 +4131,7 @@
      "name": "collectorsConfig.reaction.time",
      "description": "Reaction collector ran time",
      "optional": true,
+     "default": "30s",
      "type": [
       [
        [
@@ -4126,6 +4144,7 @@
      "name": "collectorsConfig.reaction.attempts",
      "description": "Maximum number of attempts to select a track",
      "optional": true,
+     "default": 1,
      "type": [
       [
        [
@@ -4138,6 +4157,7 @@
      "name": "collectorsConfig.reaction.reactions",
      "description": "Array react for collector",
      "optional": true,
+     "default": "['1⃣', '2⃣', '3⃣', '4⃣', '5⃣', '6⃣', '7⃣', '8⃣', '9⃣', '🔟']",
      "type": [
       [
        [
