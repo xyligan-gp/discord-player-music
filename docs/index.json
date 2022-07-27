@@ -2,7 +2,7 @@
  "meta": {
   "generator": "0.11.1",
   "format": 22,
-  "date": 1658866794579
+  "date": 1658909505668
  },
  "custom": {
   "general": {
@@ -645,7 +645,7 @@
       "description": "EventEmitter Class"
      },
      "meta": {
-      "line": 10,
+      "line": 13,
       "file": "PlayerEmitter.ts",
       "path": "src"
      }
@@ -690,7 +690,7 @@
       "description": "EventEmitter Class"
      },
      "meta": {
-      "line": 22,
+      "line": 25,
       "file": "PlayerEmitter.ts",
       "path": "src"
      }
@@ -736,7 +736,7 @@
       "description": "Event emit status"
      },
      "meta": {
-      "line": 34,
+      "line": 37,
       "file": "PlayerEmitter.ts",
       "path": "src"
      }
@@ -1240,6 +1240,190 @@
      }
     },
     {
+     "name": "createdPlaylist",
+     "params": [
+      {
+       "name": "id",
+       "description": "Playlist ID",
+       "type": [
+        [
+         [
+          "String"
+         ]
+        ]
+       ]
+      },
+      {
+       "name": "title",
+       "description": "Playlist Title",
+       "type": [
+        [
+         [
+          "String"
+         ]
+        ]
+       ]
+      },
+      {
+       "name": "author",
+       "description": "Playlist Author ID",
+       "type": [
+        [
+         [
+          "String"
+         ]
+        ]
+       ]
+      },
+      {
+       "name": "created",
+       "description": "Playlist create timestamp",
+       "type": [
+        [
+         [
+          "Number"
+         ]
+        ]
+       ]
+      },
+      {
+       "name": "updated",
+       "description": "Playlist update timestamp",
+       "type": [
+        [
+         [
+          "Number"
+         ]
+        ]
+       ]
+      },
+      {
+       "name": "duration",
+       "description": "Playlist duration",
+       "type": [
+        [
+         [
+          "Number"
+         ]
+        ]
+       ]
+      },
+      {
+       "name": "tracks",
+       "description": "Playlist tracks array",
+       "type": [
+        [
+         [
+          "Array",
+          "<"
+         ],
+         [
+          "PlaylistTrack",
+          ">"
+         ]
+        ]
+       ]
+      }
+     ],
+     "meta": {
+      "line": 610,
+      "file": "Player.ts",
+      "path": "src"
+     }
+    },
+    {
+     "name": "deletedPlaylist",
+     "params": [
+      {
+       "name": "id",
+       "description": "Playlist ID",
+       "type": [
+        [
+         [
+          "String"
+         ]
+        ]
+       ]
+      },
+      {
+       "name": "title",
+       "description": "Playlist Title",
+       "type": [
+        [
+         [
+          "String"
+         ]
+        ]
+       ]
+      },
+      {
+       "name": "author",
+       "description": "Playlist Author ID",
+       "type": [
+        [
+         [
+          "String"
+         ]
+        ]
+       ]
+      },
+      {
+       "name": "created",
+       "description": "Playlist create timestamp",
+       "type": [
+        [
+         [
+          "Number"
+         ]
+        ]
+       ]
+      },
+      {
+       "name": "updated",
+       "description": "Playlist update timestamp",
+       "type": [
+        [
+         [
+          "Number"
+         ]
+        ]
+       ]
+      },
+      {
+       "name": "duration",
+       "description": "Playlist duration",
+       "type": [
+        [
+         [
+          "Number"
+         ]
+        ]
+       ]
+      },
+      {
+       "name": "tracks",
+       "description": "Playlist tracks array",
+       "type": [
+        [
+         [
+          "Array",
+          "<"
+         ],
+         [
+          "PlaylistTrack",
+          ">"
+         ]
+        ]
+       ]
+      }
+     ],
+     "meta": {
+      "line": 624,
+      "file": "Player.ts",
+      "path": "src"
+     }
+    },
+    {
      "name": "queueStarted",
      "params": [
       {
@@ -1392,7 +1576,7 @@
       }
      ],
      "meta": {
-      "line": 610,
+      "line": 638,
       "file": "Player.ts",
       "path": "src"
      }
@@ -1550,7 +1734,7 @@
       }
      ],
      "meta": {
-      "line": 630,
+      "line": 658,
       "file": "Player.ts",
       "path": "src"
      }
@@ -1564,7 +1748,7 @@
   },
   {
    "name": "PlayerEmitter",
-   "description": "Discord Player Event Emitter",
+   "description": "Player Emitter Class",
    "access": "private",
    "methods": [
     {
@@ -1605,7 +1789,7 @@
       "description": "EventEmitter Class"
      },
      "meta": {
-      "line": 10,
+      "line": 13,
       "file": "PlayerEmitter.ts",
       "path": "src"
      }
@@ -1648,7 +1832,7 @@
       "description": "EventEmitter Class"
      },
      "meta": {
-      "line": 22,
+      "line": 25,
       "file": "PlayerEmitter.ts",
       "path": "src"
      }
@@ -1692,7 +1876,7 @@
       "description": "Event emit status"
      },
      "meta": {
-      "line": 34,
+      "line": 37,
       "file": "PlayerEmitter.ts",
       "path": "src"
      }
@@ -1780,7 +1964,7 @@
      "name": "get",
      "description": "Method to get database object",
      "examples": [
-      "const storage = client.player.database.get();\rconst guildPlaylists = storage['827221018879328298'];\r\rconsole.log(guildPlaylists);"
+      "const storage = client.player.database.get();\rconst guildPlaylists = storage['GuildID'];\r\rconsole.log(guildPlaylists);"
      ],
      "returns": {
       "types": [
@@ -1802,7 +1986,7 @@
      "name": "write",
      "description": "Method for writing data to the database",
      "examples": [
-      "const storage = client.player.database.get();\rstorage['827221018879328298']['example'] = {};\r\rclient.player.database.write(storage);"
+      "const storage = client.player.database.get();\rstorage['GuildID']['example'] = {};\r\rclient.player.database.write(storage);"
      ],
      "params": [
       {
@@ -1828,7 +2012,7 @@
      "name": "initGuild",
      "description": "Allows you to initialize data for a single server",
      "examples": [
-      "function getGuildStorage(guildID) {\r     // If there is no data, it will appear\r     client.player.database.initGuild(guildID);\r\r     const storage = client.player.database.get();\r\r     console.log(storage[guildID]);\r}\r\rgetGuildStorage('827221018879328298');"
+      "function getGuildStorage(guildID) {\r     // If there is no data, it will appear\r     client.player.database.initGuild(guildID);\r\r     const storage = client.player.database.get();\r\r     console.log(storage[guildID]);\r}\r\rgetGuildStorage('GuildID');"
      ],
      "params": [
       {
@@ -2197,7 +2381,7 @@
       ]
      ],
      "meta": {
-      "line": 26,
+      "line": 28,
       "file": "PlaylistsManager.ts",
       "path": "src/managers"
      }
@@ -2207,6 +2391,12 @@
     {
      "name": "create",
      "description": "Allows you to create new playlists for the server",
+     "examples": [
+      "const createPlaylistData = await client.player.playlists.create('GuildID', {\r     title: 'Test Playlist #1',\r     author: 'UserID',\r\r     track: {\r         title: 'Xtrullor - Samsara',\r         url: 'https://youtube.com/watch?v=Vt2TeOptLxE'\r     }\r})\r\rif(createPlaylistData?.title) return message.channel.send({ content: `Playlist with title ${createPlaylistData.title} created!` });"
+     ],
+     "emits": [
+      "Player#event:createdPlaylist"
+     ],
      "params": [
       {
        "name": "guildID",
@@ -2247,7 +2437,7 @@
       "description": "Created playlist data"
      },
      "meta": {
-      "line": 35,
+      "line": 37,
       "file": "PlaylistsManager.ts",
       "path": "src/managers"
      }
@@ -2255,6 +2445,9 @@
     {
      "name": "addTrack",
      "description": "Allows you to add new tracks to server playlists",
+     "examples": [
+      "const addTrackToPlaylistData = await client.player.playlists.addTrack('GuildID', {\r     id: 'PlaylistID',\r\r     track: {\r         title: 'Xtrullor - Samsara',\r         url: 'https://youtube.com/watch?v=Vt2TeOptLxE'\r     }\r})\r\rif(addTrackToPlaylistData?.title) return message.channel.send({ content: `Track Xtrullor - Samsara added to playlist!` });"
+     ],
      "params": [
       {
        "name": "guildID",
@@ -2299,7 +2492,7 @@
       "description": "Changed playlist or object with an error"
      },
      "meta": {
-      "line": 72,
+      "line": 91,
       "file": "PlaylistsManager.ts",
       "path": "src/managers"
      }
@@ -2307,6 +2500,9 @@
     {
      "name": "play",
      "description": "Allows you to play a server playlist",
+     "examples": [
+      "client.player.playlists.play('GuildID', 'PlaylistID', message.member, message.channel);"
+     ],
      "params": [
       {
        "name": "guildID",
@@ -2373,7 +2569,7 @@
       "description": "Guild playlist data or object with an error"
      },
      "meta": {
-      "line": 112,
+      "line": 143,
       "file": "PlaylistsManager.ts",
       "path": "src/managers"
      }
@@ -2381,6 +2577,9 @@
     {
      "name": "removeTrack",
      "description": "Allows you to delete tracks by their positions in the playlist",
+     "examples": [
+      "// Delete first track from playlist\rconst removeTrackFromPlaylistData = await client.player.playlists.removeTrack('GuildID', 'PlaylistID', 0);"
+     ],
      "params": [
       {
        "name": "guildID",
@@ -2408,6 +2607,7 @@
        "name": "index",
        "description": "Track index in playlist",
        "optional": true,
+       "default": 0,
        "type": [
         [
          [
@@ -2437,7 +2637,7 @@
       "description": "Changed playlist or object with an error"
      },
      "meta": {
-      "line": 147,
+      "line": 184,
       "file": "PlaylistsManager.ts",
       "path": "src/managers"
      }
@@ -2445,6 +2645,12 @@
     {
      "name": "delete",
      "description": "Allows you to delete server playlists by ID",
+     "examples": [
+      "const deletedPlaylisData = await client.player.playlists.delete('GuildID', 'PlaylistID');\r\rif(deletedPlaylisData?.title) return message.channel.send({ content: `Playlist with title ${deletedPlaylisData.title} deleted!` });"
+     ],
+     "emits": [
+      "Player#event:deletedPlaylist"
+     ],
      "params": [
       {
        "name": "guildID",
@@ -2486,17 +2692,17 @@
         ]
        ]
       ],
-      "description": "Void or object with an error"
+      "description": "Deleted playlist or object with an error"
      },
      "meta": {
-      "line": 183,
+      "line": 224,
       "file": "PlaylistsManager.ts",
       "path": "src/managers"
      }
     }
    ],
    "meta": {
-    "line": 9,
+    "line": 11,
     "file": "PlaylistsManager.ts",
     "path": "src/managers"
    }
@@ -3936,7 +4142,7 @@
     }
    ],
    "meta": {
-    "line": 654,
+    "line": 682,
     "file": "Player.ts",
     "path": "src"
    }
@@ -4141,7 +4347,7 @@
     }
    ],
    "meta": {
-    "line": 662,
+    "line": 690,
     "file": "Player.ts",
     "path": "src"
    }
@@ -4306,7 +4512,7 @@
     }
    ],
    "meta": {
-    "line": 686,
+    "line": 714,
     "file": "Player.ts",
     "path": "src"
    }
@@ -4345,7 +4551,7 @@
     }
    ],
    "meta": {
-    "line": 706,
+    "line": 734,
     "file": "Player.ts",
     "path": "src"
    }
@@ -4384,7 +4590,7 @@
     }
    ],
    "meta": {
-    "line": 715,
+    "line": 743,
     "file": "Player.ts",
     "path": "src"
    }
@@ -4423,7 +4629,7 @@
     }
    ],
    "meta": {
-    "line": 724,
+    "line": 752,
     "file": "Player.ts",
     "path": "src"
    }
@@ -4474,7 +4680,7 @@
     }
    ],
    "meta": {
-    "line": 733,
+    "line": 761,
     "file": "Player.ts",
     "path": "src"
    }
@@ -4514,7 +4720,7 @@
     }
    ],
    "meta": {
-    "line": 743,
+    "line": 771,
     "file": "Player.ts",
     "path": "src"
    }
@@ -4613,7 +4819,7 @@
     }
    ],
    "meta": {
-    "line": 752,
+    "line": 780,
     "file": "Player.ts",
     "path": "src"
    }
@@ -4663,7 +4869,7 @@
     }
    ],
    "meta": {
-    "line": 766,
+    "line": 794,
     "file": "Player.ts",
     "path": "src"
    }
@@ -4702,7 +4908,7 @@
     }
    ],
    "meta": {
-    "line": 776,
+    "line": 804,
     "file": "Player.ts",
     "path": "src"
    }
@@ -4757,7 +4963,7 @@
     }
    ],
    "meta": {
-    "line": 785,
+    "line": 813,
     "file": "Player.ts",
     "path": "src"
    }
@@ -4796,7 +5002,7 @@
     }
    ],
    "meta": {
-    "line": 795,
+    "line": 823,
     "file": "Player.ts",
     "path": "src"
    }
@@ -4954,7 +5160,7 @@
     }
    ],
    "meta": {
-    "line": 804,
+    "line": 832,
     "file": "Player.ts",
     "path": "src"
    }
@@ -5040,7 +5246,7 @@
     }
    ],
    "meta": {
-    "line": 822,
+    "line": 850,
     "file": "Player.ts",
     "path": "src"
    }
@@ -5082,7 +5288,7 @@
     }
    ],
    "meta": {
-    "line": 835,
+    "line": 863,
     "file": "Player.ts",
     "path": "src"
    }
@@ -5121,7 +5327,7 @@
     }
    ],
    "meta": {
-    "line": 844,
+    "line": 872,
     "file": "Player.ts",
     "path": "src"
    }
@@ -5220,6 +5426,28 @@
      ]
     },
     {
+     "name": "PLAYLIST_CREATED",
+     "description": "Player 'createdPlaylist' event",
+     "type": [
+      [
+       [
+        "String"
+       ]
+      ]
+     ]
+    },
+    {
+     "name": "PLAYLIST_DELETED",
+     "description": "Player 'deletedPlaylist' event",
+     "type": [
+      [
+       [
+        "String"
+       ]
+      ]
+     ]
+    },
+    {
      "name": "QUEUE_STARTED",
      "description": "Player 'queueStarted' event",
      "type": [
@@ -5282,7 +5510,7 @@
     }
    ],
    "meta": {
-    "line": 35,
+    "line": 39,
     "file": "PlayerEnums.ts",
     "path": "src"
    }
@@ -5321,7 +5549,7 @@
     }
    ],
    "meta": {
-    "line": 48,
+    "line": 52,
     "file": "PlayerEnums.ts",
     "path": "src"
    }
