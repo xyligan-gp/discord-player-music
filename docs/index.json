@@ -2,7 +2,7 @@
  "meta": {
   "generator": "0.11.1",
   "format": 22,
-  "date": 1658912148623
+  "date": 1658917728981
  },
  "custom": {
   "general": {
@@ -100,6 +100,7 @@
     {
      "name": "ready",
      "description": "Player Ready Status",
+     "access": "private",
      "type": [
       [
        [
@@ -124,7 +125,7 @@
       ]
      ],
      "meta": {
-      "line": 75,
+      "line": 76,
       "file": "Player.ts",
       "path": "src"
      }
@@ -140,7 +141,7 @@
       ]
      ],
      "meta": {
-      "line": 82,
+      "line": 83,
       "file": "Player.ts",
       "path": "src"
      }
@@ -156,7 +157,7 @@
       ]
      ],
      "meta": {
-      "line": 89,
+      "line": 90,
       "file": "Player.ts",
       "path": "src"
      }
@@ -172,7 +173,7 @@
       ]
      ],
      "meta": {
-      "line": 96,
+      "line": 97,
       "file": "Player.ts",
       "path": "src"
      }
@@ -188,7 +189,7 @@
       ]
      ],
      "meta": {
-      "line": 103,
+      "line": 104,
       "file": "Player.ts",
       "path": "src"
      }
@@ -204,7 +205,7 @@
       ]
      ],
      "meta": {
-      "line": 110,
+      "line": 111,
       "file": "Player.ts",
       "path": "src"
      }
@@ -220,7 +221,7 @@
       ]
      ],
      "meta": {
-      "line": 117,
+      "line": 118,
       "file": "Player.ts",
       "path": "src"
      }
@@ -236,7 +237,7 @@
       ]
      ],
      "meta": {
-      "line": 124,
+      "line": 125,
       "file": "Player.ts",
       "path": "src"
      }
@@ -252,7 +253,7 @@
       ]
      ],
      "meta": {
-      "line": 131,
+      "line": 132,
       "file": "Player.ts",
       "path": "src"
      }
@@ -268,7 +269,7 @@
       ]
      ],
      "meta": {
-      "line": 138,
+      "line": 139,
       "file": "Player.ts",
       "path": "src"
      }
@@ -284,7 +285,7 @@
       ]
      ],
      "meta": {
-      "line": 145,
+      "line": 146,
       "file": "Player.ts",
       "path": "src"
      }
@@ -292,8 +293,36 @@
    ],
    "methods": [
     {
+     "name": "isReady",
+     "description": "Player is ready?",
+     "returns": {
+      "types": [
+       [
+        [
+         "Boolean"
+        ]
+       ]
+      ],
+      "description": "Player ready status"
+     },
+     "meta": {
+      "line": 178,
+      "file": "Player.ts",
+      "path": "src"
+     }
+    },
+    {
      "name": "initGuildTrack",
      "description": "Allows you to initialize the next track for playback",
+     "access": "private",
+     "examples": [
+      "const searchResults = await client.player.search('Query', message.member, message.channel);\rif(searchResults?.error) return message.channel.send({ content: `No results found!` });\r\rclient.player.initGuildTrack('GuildID', searchResults[0]);"
+     ],
+     "emits": [
+      "Player#event:error",
+      "Player#event:playingTrack",
+      "Player#event:queueEnded"
+     ],
      "params": [
       {
        "name": "guildID",
@@ -338,7 +367,7 @@
       "description": "Void or error object"
      },
      "meta": {
-      "line": 177,
+      "line": 187,
       "file": "Player.ts",
       "path": "src"
      }
@@ -417,7 +446,7 @@
       "description": "Array with search results or error object"
      },
      "meta": {
-      "line": 268,
+      "line": 289,
       "file": "Player.ts",
       "path": "src"
      }
@@ -458,7 +487,7 @@
       "description": "Returns a result or error object"
      },
      "meta": {
-      "line": 371,
+      "line": 392,
       "file": "Player.ts",
       "path": "src"
      }
@@ -511,7 +540,7 @@
       "description": "Void"
      },
      "meta": {
-      "line": 389,
+      "line": 410,
       "file": "Player.ts",
       "path": "src"
      }
@@ -591,7 +620,7 @@
       "description": "Object with received data or error"
      },
      "meta": {
-      "line": 406,
+      "line": 427,
       "file": "Player.ts",
       "path": "src"
      }
@@ -599,8 +628,9 @@
     {
      "name": "init",
      "description": "Method for initializing module",
+     "access": "private",
      "meta": {
-      "line": 501,
+      "line": 522,
       "file": "Player.ts",
       "path": "src"
      }
@@ -760,7 +790,7 @@
       }
      ],
      "meta": {
-      "line": 541,
+      "line": 568,
       "file": "Player.ts",
       "path": "src"
      }
@@ -840,7 +870,7 @@
       }
      ],
      "meta": {
-      "line": 549,
+      "line": 576,
       "file": "Player.ts",
       "path": "src"
      }
@@ -1039,7 +1069,7 @@
       }
      ],
      "meta": {
-      "line": 561,
+      "line": 588,
       "file": "Player.ts",
       "path": "src"
      }
@@ -1238,7 +1268,7 @@
       }
      ],
      "meta": {
-      "line": 584,
+      "line": 611,
       "file": "Player.ts",
       "path": "src"
      }
@@ -1342,7 +1372,7 @@
       }
      ],
      "meta": {
-      "line": 607,
+      "line": 634,
       "file": "Player.ts",
       "path": "src"
      }
@@ -1446,7 +1476,7 @@
       }
      ],
      "meta": {
-      "line": 621,
+      "line": 648,
       "file": "Player.ts",
       "path": "src"
      }
@@ -1605,7 +1635,7 @@
       }
      ],
      "meta": {
-      "line": 635,
+      "line": 662,
       "file": "Player.ts",
       "path": "src"
      }
@@ -1764,7 +1794,7 @@
       }
      ],
      "meta": {
-      "line": 654,
+      "line": 681,
       "file": "Player.ts",
       "path": "src"
      }
@@ -4163,7 +4193,7 @@
      "name": "collectorsConfig.reaction.reactions",
      "description": "Array react for collector",
      "optional": true,
-     "default": "['1⃣', '2⃣', '3⃣', '4⃣', '5⃣', '6⃣', '7⃣', '8⃣', '9⃣', '🔟']",
+     "default": "[]",
      "type": [
       [
        [
@@ -4179,7 +4209,7 @@
     }
    ],
    "meta": {
-    "line": 513,
+    "line": 540,
     "file": "Player.ts",
     "path": "src"
    }
@@ -4207,7 +4237,7 @@
     }
    ],
    "meta": {
-    "line": 677,
+    "line": 704,
     "file": "Player.ts",
     "path": "src"
    }
@@ -4412,7 +4442,7 @@
     }
    ],
    "meta": {
-    "line": 685,
+    "line": 712,
     "file": "Player.ts",
     "path": "src"
    }
@@ -4577,7 +4607,7 @@
     }
    ],
    "meta": {
-    "line": 709,
+    "line": 736,
     "file": "Player.ts",
     "path": "src"
    }
@@ -4616,7 +4646,7 @@
     }
    ],
    "meta": {
-    "line": 729,
+    "line": 756,
     "file": "Player.ts",
     "path": "src"
    }
@@ -4655,7 +4685,7 @@
     }
    ],
    "meta": {
-    "line": 738,
+    "line": 765,
     "file": "Player.ts",
     "path": "src"
    }
@@ -4694,7 +4724,7 @@
     }
    ],
    "meta": {
-    "line": 747,
+    "line": 774,
     "file": "Player.ts",
     "path": "src"
    }
@@ -4745,7 +4775,7 @@
     }
    ],
    "meta": {
-    "line": 756,
+    "line": 783,
     "file": "Player.ts",
     "path": "src"
    }
@@ -4785,7 +4815,7 @@
     }
    ],
    "meta": {
-    "line": 766,
+    "line": 793,
     "file": "Player.ts",
     "path": "src"
    }
@@ -4895,7 +4925,7 @@
     }
    ],
    "meta": {
-    "line": 775,
+    "line": 802,
     "file": "Player.ts",
     "path": "src"
    }
@@ -4945,7 +4975,7 @@
     }
    ],
    "meta": {
-    "line": 790,
+    "line": 817,
     "file": "Player.ts",
     "path": "src"
    }
@@ -4984,7 +5014,7 @@
     }
    ],
    "meta": {
-    "line": 800,
+    "line": 827,
     "file": "Player.ts",
     "path": "src"
    }
@@ -5039,7 +5069,7 @@
     }
    ],
    "meta": {
-    "line": 809,
+    "line": 836,
     "file": "Player.ts",
     "path": "src"
    }
@@ -5078,7 +5108,7 @@
     }
    ],
    "meta": {
-    "line": 819,
+    "line": 846,
     "file": "Player.ts",
     "path": "src"
    }
@@ -5236,7 +5266,7 @@
     }
    ],
    "meta": {
-    "line": 828,
+    "line": 855,
     "file": "Player.ts",
     "path": "src"
    }
@@ -5322,7 +5352,7 @@
     }
    ],
    "meta": {
-    "line": 846,
+    "line": 873,
     "file": "Player.ts",
     "path": "src"
    }
@@ -5364,7 +5394,7 @@
     }
    ],
    "meta": {
-    "line": 859,
+    "line": 886,
     "file": "Player.ts",
     "path": "src"
    }
@@ -5403,7 +5433,7 @@
     }
    ],
    "meta": {
-    "line": 868,
+    "line": 895,
     "file": "Player.ts",
     "path": "src"
    }
