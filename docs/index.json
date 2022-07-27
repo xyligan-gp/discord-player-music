@@ -2,7 +2,7 @@
  "meta": {
   "generator": "0.11.1",
   "format": 22,
-  "date": 1658917728981
+  "date": 1658951454699
  },
  "custom": {
   "general": {
@@ -11,7 +11,7 @@
     "welcome": {
      "name": "Welcome",
      "type": "md",
-     "content": "<div align=\"center\">\r\n  <br />\r\n  <p>\r\n    <a href=\"https://dpm.js.org\"><img src=\"https://dpm.js.org/static/dpm.png\" width=\"546\" alt=\"DPM Main Image\" /></a>\r\n  </p>\r\n  <br/>\r\n  <p>\r\n    <a href=\"https://discord.gg/zzbkvCcu2r\"><img src=\"https://img.shields.io/discord/827221018879328298?color=5865F2&logo=discord&logoColor=white\" alt=\"Support server\" /></a>\r\n    <a href=\"https://www.npmjs.com/package/discord-player-music\"><img src=\"https://img.shields.io/npm/v/discord-player-music.png?maxAge=3600\" alt=\"NPM version\" /></a>\r\n    <a href=\"https://www.npmjs.com/package/discord-player-music\"><img src=\"https://img.shields.io/npm/dt/discord-player-music.png?maxAge=3600\" alt=\"NPM downloads\" /></a>\r\n  </p>\r\n</div>\r\n\r\n<h1 style=\"text-align: center\">Welcome to the 'discord-player-music' page!</h1>\r\n\r\n## About\r\n\r\n**Discord Player Music is a powerful [Node.js](https://nodejs.org) music module for your Discord.js bot that based on Promises and has a lot of features.**\r\n\r\n* 👍 Simple & easy to use\r\n* 😄 Beginner friendly\r\n* 🎸 Audio filters\r\n* 📌 Guilds Playlists\r\n* 📃 Lyrics\r\n* ⏰ Play in multiple servers at the same time\r\n* ⚙️ 100% Promise-based\r\n\r\n## Installation\r\n\r\n**Node.js 16.9.0 or newer is required.**\r\n\r\n```sh-session\r\n$ npm install discord-player-music\r\n$ yarn add discord-player-music\r\n$ pnpm add discord-player-music\r\n```\r\n\r\n## Example Usage\r\n\r\n```js\r\nconst { Client, GatewayIntentBits, Partials } = require('discord.js');\r\nconst { Player } = require('discord-player-music');\r\n\r\nconst client = new Client({\r\n\tintents: [\r\n\t\tGatewayIntentBits.Guilds,\r\n\t\tGatewayIntentBits.MessageContent,\r\n\t\tGatewayIntentBits.GuildMembers,\r\n\t\tGatewayIntentBits.GuildMessages,\r\n\t\tGatewayIntentBits.GuildMessageReactions,\r\n\t\tGatewayIntentBits.GuildVoiceStates\r\n\t],\r\n    \r\n\tpartials: [\r\n\t\tPartials.Channel,\r\n\t\tPartials.GuildMember,\r\n\t\tPartials.Message,\r\n\t\tPartials.Reaction,\r\n\t\tPartials.User\r\n\t]\r\n});\r\n\r\nclient.player = new Player(client);\r\n\r\nclient.on('ready', async () => {\r\n  \treturn console.log('Client is ready!');\r\n})\r\n\r\nclient.login('YOUR_BOT_TOKEN_HERE');\r\n```\r\n\r\n# Links\r\n\r\n* Module Developer: [xyligan](https://github.com/xyligan-gp)\r\n* Developer Discord: [♡ xүℓ[ι]gαη4εg ♡#9457](https://discord.com/users/533347075463577640)\r\n* Documentation: [Click](https://dpm.js.org)\r\n* NPM: [Click](https://www.npmjs.com/package/discord-player-music)\r\n* GitHub: [Click](https://github.com/xyligan-gp/discord-player-music)\r\n* Examples: [Click](https://github.com/xyligan-gp/discord-player-music/tree/stable/examples)\r\n* Support Server - [Click](https://discord.gg/zzbkvCcu2r)\r\n\r\n<h1>♥ Thanks for using Discord Player Music ♥</h1>",
+     "content": "<div align=\"center\">\r\n\t<h1>Welcome to the 'discord-player-music' page!</h1>\r\n\t<br />\r\n\t<p>\r\n\t\t<a href=\"https://dpm.js.org\"><img src=\"./assets/dpm-grad.gif\" width=\"546\" alt=\"DPM Main Image\" /></a>\r\n\t</p>\r\n\t<br/>\r\n\t<p>\r\n\t\t<a href=\"https://discord.gg/zzbkvCcu2r\"><img src=\"https://img.shields.io/discord/827221018879328298?color=5865F2&logo=discord&logoColor=white\" alt=\"Support Server\" /></a>\r\n\t\t<a href=\"https://www.npmjs.com/package/discord-player-music\"><img src=\"https://img.shields.io/npm/dt/discord-player-music.png?maxAge=3600\" alt=\"NPM downloads\" /></a>\r\n\t\t<a href=\"https://www.npmjs.com/package/discord-player-music\"><img src=\"https://img.shields.io/npm/v/discord-player-music.png?maxAge=3600\" alt=\"NPM page\" /></a>\r\n\t</p>\r\n</div>\r\n\r\n## About\r\n\r\n**Discord Player Music is a powerful [Node.js](https://nodejs.org) music module for your Discord.js bot that based on Promises and has a lot of features.**\r\n\r\n* 👍 Simple & easy to use\r\n* 😄 Beginner friendly\r\n* 🎸 Audio filters\r\n* 📌 Guilds Playlists\r\n* 📃 Lyrics\r\n* 📂 Multiple servers\r\n\r\n## Installation\r\n\r\n**Node.js 16.9.0 or newer is required.**\r\n\r\n```sh-session\r\n$ npm install discord-player-music\r\n$ yarn add discord-player-music\r\n$ pnpm add discord-player-music\r\n```\r\n\r\n## Example Usage\r\n\r\n```js\r\nconst { Client, GatewayIntentBits, Partials } = require('discord.js');\r\nconst { Player } = require('discord-player-music');\r\n\r\nconst client = new Client({\r\n\tintents: [\r\n\t\tGatewayIntentBits.Guilds,\r\n\t\tGatewayIntentBits.MessageContent,\r\n\t\tGatewayIntentBits.GuildMembers,\r\n\t\tGatewayIntentBits.GuildMessages,\r\n\t\tGatewayIntentBits.GuildMessageReactions,\r\n\t\tGatewayIntentBits.GuildVoiceStates\r\n\t],\r\n    \r\n\tpartials: [\r\n\t\tPartials.Channel,\r\n\t\tPartials.GuildMember,\r\n\t\tPartials.Message,\r\n\t\tPartials.Reaction,\r\n\t\tPartials.User\r\n\t]\r\n});\r\n\r\nclient.player = new Player(client);\r\n\r\nclient.on('ready', async () => {\r\n  \treturn console.log('Client is ready!');\r\n})\r\n\r\nclient.player.on('ready', async () => {\r\n\treturn console.log('Player is ready!');\r\n})\r\n\r\nclient.login('YOUR_CLIENT_TOKEN_HERE');\r\n```\r\n\r\n# Links\r\n\r\n* NPM: [Open](https://www.npmjs.com/package/discord-player-music)\r\n* GitHub: [Open](https://github.com/xyligan-gp/discord-player-music)\r\n* Examples: [See](https://github.com/xyligan-gp/discord-player-music/tree/stable/examples)\r\n* Documentation: [Open](https://dpm.js.org)\r\n\r\n* Module Developer: [xyligan](https://github.com/xyligan-gp)\r\n* Developer Discord: [♡ xүℓ[ι]gαη4εg ♡#9457](https://discord.com/users/533347075463577640)\r\n* Support Server: [Join xyligan development](https://discord.gg/zzbkvCcu2r)\r\n\r\n<center><h1>♥ Thanks for using Discord Player Music ♥</h1></center>",
      "path": "docs/general/welcome.md"
     },
     "faq": {
@@ -23,13 +23,13 @@
     "updating": {
      "name": "Updating your code",
      "type": "md",
-     "content": "This documentation page is a short list of changes to your code that will have to be done when switching to a specific version of discord-player-music.\r\n\r\n# 1.1.5\r\nIn version 1.1.5, `discord-player-music` was completely rewritten for the manager system.\r\n\r\n### Player Constructor\r\n\r\n```diff\r\n+ options.searchResultsLimit\r\n+ options.synchronLoop\r\n+ options.defaultVolume\r\n\r\n+ options.collectorsConfig.autoAddingSongs\r\n+ options.collectorsConfig.maxAttempts\r\n+ options.collectorsConfig.time\r\n```\r\n\r\n### Player Methods Update\r\n#### CollectorsManager\r\n\r\n```diff\r\n+ player.collectors.message\r\n```\r\n\r\n#### VoiceManager\r\n\r\n```diff\r\n- player.joinVoiceChannel\r\n+ player.voice.join\r\n\r\n- player.leaveVoiceChannel\r\n+ player.voice.leave\r\n```\r\n\r\n#### UtilsManager\r\n\r\n```diff\r\n- player.createStream\r\n+ player.utils.checkNode\r\n+ player.utils.checkOptions\r\n+ player.utils.checkPermissions\r\n+ player.utils.createCollector\r\n```\r\n\r\n#### Main Player\r\n\r\n```diff\r\n- player.getSongIndex\r\n\r\n- player.skipSong\r\n+ player.skip\r\n\r\n- player.stopPlaying\r\n+ player.stop\r\n\r\n- player.pausePlaying\r\n+ player.pause\r\n\r\n- player.resumePlaying\r\n+ player.resume\r\n\r\n- player.getCurrentSongInfo\r\n+ player.getSongInfo\r\n\r\n- player.initPlayer\r\n+ player.init\r\n```\r\n\r\n# 1.1.7\r\nIn version 1.1.7, `discord-player-music` was completely rewritten on TypeScript language.\r\n\r\n### Module Constructor\r\n\r\n```diff\r\n- options.collectorsConfig.autoAddingSongs\r\n- options.collectorsConfig.maxAttempts\r\n- options.collectorsConfig.time\r\n+ options.autoAddingTracks\r\n\r\n+ options.databaseConfig\r\n+ options.databaseConfig.path\r\n+ options.databaseConfig.checkInterval\r\n\r\n+ options.progressConfig\r\n+ options.progressConfig.size\r\n+ options.progressConfig.line\r\n+ options.progressConfig.slider\r\n\r\n+ options.collectorsConfig.message\r\n+ options.collectorsConfig.message.time\r\n+ options.collectorsConfig.message.attempts\r\n\r\n+ options.collectorsConfig.reaction\r\n+ options.collectorsConfig.reaction.time\r\n+ options.collectorsConfig.reaction.attempts\r\n+ options.collectorsConfig.reaction.reactions\r\n```\r\n\r\n### Player Events Update\r\n\r\n```diff\r\n+ player#ready\r\n+ player#queueStarted\r\n\r\n- player#playerError\r\n+ player#error\r\n\r\n- player#songsAdded\r\n+ player#addedTrack\r\n\r\n- player#playingSong\r\n+ player#playingTrack\r\n```\r\n\r\n### Player Methods Update\r\n\r\n#### Main Player Class\r\n\r\n```diff\r\n- player.collectors.message\r\n+ player.createCollector\r\n\r\n- player.play\r\n+ player.initGuildTrack\r\n\r\n- player.searchSong\r\n+ player.search\r\n\r\n- player.addSong\r\n+ player.initQueueTrack\r\n\r\n- player.pause\r\n+ player.queue.pause\r\n\r\n- player.setLoopSong\r\n- player.setLoopQeue\r\n+ player.queue.setLoop\r\n\r\n- player.skip\r\n+ player.queue.skipTrack\r\n\r\n- player.setFilter\r\n+ player.queue.setFilter\r\n\r\n- player.shuffle\r\n+ player.queue.shuffle\r\n\r\n- player.getGuildMap\r\n- player.getQueue\r\n+ player.queue.get\r\n\r\n- player.getSongInfo\r\n+ player.queue.trackInfo\r\n+ player.queue.streamInfo\r\n\r\n- player.getLyrics\r\n+ player.lyrics\r\n\r\n- player.getFilters\r\n+ player.filters.list\r\n\r\n- player.createProgressBar\r\n+ player.queue.progress\r\n\r\n- player.setVolume\r\n+ player.queue.setVolume\r\n\r\n- player.stop\r\n+ player.queue.stop\r\n\r\n- player.resume\r\n+ player.queue.resume\r\n\r\n- player.removeSong\r\n+ player.queue.removeTrack\r\n```\r\n\r\n#### DatabaseManager\r\n\r\n```diff\r\n+ player.database.get\r\n+ player.database.write\r\n+ player.database.initGuild\r\n+ private player.database.init\r\n```\r\n\r\n#### FiltersManager\r\n\r\n```diff\r\n+ player.filters.add\r\n+ player.filters.isExists\r\n+ player.filters.get\r\n+ player.filters.list\r\n+ player.filters.delete\r\n+ private player.filters.init\r\n```\r\n\r\n#### PlaylistsManager\r\n\r\n```diff\r\n+ player.playlists.create\r\n+ player.playlists.addTrack\r\n+ player.playlists.play\r\n+ player.playlists.removeTrack\r\n+ player.playlists.delete\r\n```\r\n\r\n#### QueueManager\r\n\r\n```diff\r\n+ player.queue.add\r\n+ player.queue.pause\r\n+ player.queue.get\r\n+ player.queue.progress\r\n+ player.queue.streamInfo\r\n+ player.queue.trackInfo\r\n+ player.queue.setFilter\r\n+ player.queue.setLoop\r\n+ player.queue.setVolume\r\n+ player.queue.skipTrack\r\n+ player.queue.removeTrack\r\n+ player.queue.seek\r\n+ player.queue.shuffle\r\n+ player.queue.resume\r\n+ player.queue.stop\r\n+ player.queue.delete\r\n```\r\n\r\n#### UtilsManager\r\n\r\n```diff\r\n- player.utils.checkNode\r\n- player.utils.checkPermissions\r\n- player.utils.getPlayerMode\r\n+ player.utils.formatDuration\r\n+ player.utils.createEmptyProgress\r\n+ player.utils.getUniqueID\r\n+ player.utils.getTrackDuration\r\n```",
+     "content": "# Updating page\r\n\r\nThis documentation page is a short list of changes to your code that will have to be done when switching to a specific version of discord-player-music!\r\n\r\n## 1.1.5\r\nIn version 1.1.5, `discord-player-music` was completely rewritten for the manager system.\r\n\r\n### Player Constructor\r\n\r\n```diff\r\n+ options.searchResultsLimit\r\n+ options.synchronLoop\r\n+ options.defaultVolume\r\n\r\n+ options.collectorsConfig.autoAddingSongs\r\n+ options.collectorsConfig.maxAttempts\r\n+ options.collectorsConfig.time\r\n```\r\n\r\n### Player Methods Update\r\n#### CollectorsManager\r\n\r\n```diff\r\n+ player.collectors.message\r\n```\r\n\r\n#### VoiceManager\r\n\r\n```diff\r\n- player.joinVoiceChannel\r\n+ player.voice.join\r\n\r\n- player.leaveVoiceChannel\r\n+ player.voice.leave\r\n```\r\n\r\n#### UtilsManager\r\n\r\n```diff\r\n- player.createStream\r\n+ player.utils.checkNode\r\n+ player.utils.checkOptions\r\n+ player.utils.checkPermissions\r\n+ player.utils.createCollector\r\n```\r\n\r\n#### Main Player\r\n\r\n```diff\r\n- player.getSongIndex\r\n\r\n- player.skipSong\r\n+ player.skip\r\n\r\n- player.stopPlaying\r\n+ player.stop\r\n\r\n- player.pausePlaying\r\n+ player.pause\r\n\r\n- player.resumePlaying\r\n+ player.resume\r\n\r\n- player.getCurrentSongInfo\r\n+ player.getSongInfo\r\n\r\n- player.initPlayer\r\n+ player.init\r\n```\r\n\r\n## 1.1.7\r\nIn version 1.1.7, `discord-player-music` was completely rewritten on TypeScript language.\r\n\r\n### Module Constructor\r\n\r\n```diff\r\n- options.collectorsConfig.autoAddingSongs\r\n- options.collectorsConfig.maxAttempts\r\n- options.collectorsConfig.time\r\n+ options.autoAddingTracks\r\n\r\n+ options.databaseConfig\r\n+ options.databaseConfig.path\r\n+ options.databaseConfig.checkInterval\r\n\r\n+ options.progressConfig\r\n+ options.progressConfig.size\r\n+ options.progressConfig.line\r\n+ options.progressConfig.slider\r\n\r\n+ options.collectorsConfig.message\r\n+ options.collectorsConfig.message.time\r\n+ options.collectorsConfig.message.attempts\r\n\r\n+ options.collectorsConfig.reaction\r\n+ options.collectorsConfig.reaction.time\r\n+ options.collectorsConfig.reaction.attempts\r\n+ options.collectorsConfig.reaction.reactions\r\n```\r\n\r\n### Player Events Update\r\n\r\n```diff\r\n+ player#ready\r\n+ player#queueStarted\r\n\r\n- player#playerError\r\n+ player#error\r\n\r\n- player#songsAdded\r\n+ player#addedTrack\r\n\r\n- player#playingSong\r\n+ player#playingTrack\r\n```\r\n\r\n### Player Methods Update\r\n\r\n#### Main Player Class\r\n\r\n```diff\r\n- player.collectors.message\r\n+ player.createCollector\r\n\r\n- player.play\r\n+ player.initGuildTrack\r\n\r\n- player.searchSong\r\n+ player.search\r\n\r\n- player.addSong\r\n+ player.initQueueTrack\r\n\r\n- player.pause\r\n+ player.queue.pause\r\n\r\n- player.setLoopSong\r\n- player.setLoopQeue\r\n+ player.queue.setLoop\r\n\r\n- player.skip\r\n+ player.queue.skipTrack\r\n\r\n- player.setFilter\r\n+ player.queue.setFilter\r\n\r\n- player.shuffle\r\n+ player.queue.shuffle\r\n\r\n- player.getGuildMap\r\n- player.getQueue\r\n+ player.queue.get\r\n\r\n- player.getSongInfo\r\n+ player.queue.trackInfo\r\n+ player.queue.streamInfo\r\n\r\n- player.getLyrics\r\n+ player.lyrics\r\n\r\n- player.getFilters\r\n+ player.filters.list\r\n\r\n- player.createProgressBar\r\n+ player.queue.progress\r\n\r\n- player.setVolume\r\n+ player.queue.setVolume\r\n\r\n- player.stop\r\n+ player.queue.stop\r\n\r\n- player.resume\r\n+ player.queue.resume\r\n\r\n- player.removeSong\r\n+ player.queue.removeTrack\r\n```\r\n\r\n#### DatabaseManager\r\n\r\n```diff\r\n+ player.database.get\r\n+ player.database.write\r\n+ player.database.initGuild\r\n+ private player.database.init\r\n```\r\n\r\n#### FiltersManager\r\n\r\n```diff\r\n+ player.filters.add\r\n+ player.filters.isExists\r\n+ player.filters.get\r\n+ player.filters.list\r\n+ player.filters.delete\r\n+ private player.filters.init\r\n```\r\n\r\n#### PlaylistsManager\r\n\r\n```diff\r\n+ player.playlists.create\r\n+ player.playlists.addTrack\r\n+ player.playlists.play\r\n+ player.playlists.removeTrack\r\n+ player.playlists.delete\r\n```\r\n\r\n#### QueueManager\r\n\r\n```diff\r\n+ player.queue.add\r\n+ player.queue.pause\r\n+ player.queue.get\r\n+ player.queue.progress\r\n+ player.queue.streamInfo\r\n+ player.queue.trackInfo\r\n+ player.queue.setFilter\r\n+ player.queue.setLoop\r\n+ player.queue.setVolume\r\n+ player.queue.skipTrack\r\n+ player.queue.removeTrack\r\n+ player.queue.seek\r\n+ player.queue.shuffle\r\n+ player.queue.resume\r\n+ player.queue.stop\r\n+ player.queue.delete\r\n```\r\n\r\n#### UtilsManager\r\n\r\n```diff\r\n- player.utils.checkNode\r\n- player.utils.checkPermissions\r\n- player.utils.getPlayerMode\r\n+ player.utils.formatDuration\r\n+ player.utils.createEmptyProgress\r\n+ player.utils.getUniqueID\r\n+ player.utils.getTrackDuration\r\n```",
      "path": "docs/general/updating.md"
     },
     "index": {
      "name": "Examples",
      "type": "md",
-     "content": "# A small example of writing a music bot using module\r\n\r\nThis is just the smallest part of what can be done. More examples can be found here: **[discord-player-music/examples](https://github.com/xyligan-gp/discord-player-music/tree/stable/examples)**\r\n\r\n## Client and module initialization\r\n\r\n```js\r\nimport { Collector, Loop, Player, Search } from 'discord-player-music';\r\nimport { Client, EmbedBuilder, GatewayIntentBits, Partials, TextChannel, VoiceChannel } from 'discord.js';\r\n\r\nimport { FilterType, PlayerLyricsData, PlayerQueue } from 'discord-player-music/types/PlayerData';\r\n\r\nconst client = new Client({\r\n    rest: {\r\n        offset: 0\r\n    },\r\n\r\n    intents: [\r\n        GatewayIntentBits.Guilds,\r\n        GatewayIntentBits.GuildMembers,\r\n        GatewayIntentBits.GuildMessageReactions,\r\n        GatewayIntentBits.GuildMessages,\r\n        GatewayIntentBits.GuildVoiceStates,\r\n        GatewayIntentBits.MessageContent\r\n    ],\r\n\r\n    partials: [\r\n        Partials.Channel,\r\n        Partials.GuildMember,\r\n        Partials.Message,\r\n        Partials.Reaction,\r\n        Partials.User\r\n    ]\r\n})\r\n\r\nconst defaultPrefix = '!';\r\nconst player = new Player(client);\r\n\r\nclient.on('ready', async () => {\r\n    return console.log(`${client.user?.tag} is ready!`);\r\n})\r\n\r\nclient.login('YOUR_CLIENT_TOKEN_HERE');\r\n```\r\n\r\n## Bot command initialization\r\n```JS\r\nclient.on('messageCreate', async message => {\r\n    const msgChannel = message.channel as TextChannel;\r\n    const messageArray = message.content.split(' ');\r\n    const command = messageArray[0];\r\n})\r\n```\r\n\r\n## Writing bot commands\r\n\r\n### Search command\r\n```JS\r\nif(command === `${defaultPrefix}search`) {\r\n    const searchQuery = message.content.substring(defaultPrefix.length + 7);\r\n\r\n    if(!message.member?.voice.channel) {\r\n        message.channel.send({ content: `${message.member}, join to the voice channel!` });\r\n        return;\r\n    }\r\n\r\n    if(!searchQuery) {\r\n        message.channel.send({ content: `${message.member}, enter your search query!` });\r\n        return;\r\n    }\r\n        \r\n    const searchData = await player.search(searchQuery, message.member, msgChannel);\r\n        \r\n    if(searchData?.error) {\r\n        console.log(searchData.error);\r\n\r\n        message.channel.send({ content: `${message.member}, an error occurred while executing the command, take a look at the console!` });\r\n    }else{\r\n        if(searchData[0].searchType.includes(Search.TITLE)) {\r\n            const embed = new EmbedBuilder()\r\n                \r\n            .setColor('Blue')\r\n            .setTitle('Select track:')\r\n            .setThumbnail(client.user?.avatarURL() as string)\r\n            .setDescription(searchData.map((track, index) => `\\`[${index + 1}]\\` **[${track.title}](${track.url})** \\`[${track.duration.hours}:${track.duration.minutes}:${track.duration.seconds}]\\``).join('\\n'))\r\n\r\n            const msg = await message.channel.send({ embeds: [embed] });\r\n\r\n            player.createCollector(Collector.REACTION, msg, searchData, message.author.id);\r\n        }\r\n    }\r\n}\r\n```\r\n\r\n### Lyrics command\r\n```js\r\nif(command === `${defaultPrefix}lyrics`) {\r\n    const searchQuery = message.content.substring(defaultPrefix.length + 7);\r\n\r\n    if(!searchQuery) {\r\n        message.channel.send({ content: `${message.member}, enter your search query!` });\r\n        return;\r\n    }\r\n\r\n    const searchData = await player.lyrics(searchQuery);\r\n\r\n    if(searchData?.error) {\r\n        console.log(searchData.error);\r\n\r\n        message.channel.send({ content: `${message.member}, an error occurred while executing the command, take a look at the console!` });\r\n    }else{\r\n        const lyricsData = searchData as PlayerLyricsData;\r\n\r\n        if((lyricsData.result.length + lyricsData.query.length) <= 2048) message.channel.send({ content: `Search Query: **${lyricsData.query}**\\n\\n${lyricsData.result}` })\r\n        else message.channel.send({ content: `${message.member}, result content exceeds 2048 characters!` });\r\n    }\r\n}\r\n```\r\n\r\n### Queue command\r\n\r\n```js\r\nif(command === `${defaultPrefix}queue`) {\r\n    const guildQueue = await player.queue.get(msgChannel.guild.id);\r\n\r\n    if(guildQueue?.error) {\r\n        console.log(guildQueue.error);\r\n\r\n        message.channel.send({ content: `${message.member}, an error occurred while executing the command, take a look at the console!` });\r\n    }else{\r\n        const queue = guildQueue as PlayerQueue;\r\n\r\n        const embed = new EmbedBuilder()\r\n\r\n        .setColor('Blue')\r\n        .setTitle(`Guild Queue: ${queue.tracks.length}`)\r\n        .setThumbnail(client.user?.avatarURL() as string)\r\n        .setDescription(queue.tracks.map((track, index) => `\\`[${index + 1}]\\` **[${track.title}](${track.url})** \\`[${track.duration.hours}:${track.duration.minutes}:${track.duration.seconds}]\\``).join('\\n'))\r\n\r\n        message.channel.send({ embeds: [embed] });\r\n    }\r\n}\r\n```\r\n\r\n### Stop command\r\n\r\n```js\r\nif(command === `${defaultPrefix}stop`) {\r\n    if(!message.member?.voice.channel) {\r\n        message.channel.send({ content: `${message.member}, join to the voice channel!` });\r\n        return;\r\n    }\r\n\r\n    const stopData = await player.queue.stop(msgChannel.guild.id);\r\n\r\n    if(stopData?.error) {\r\n        console.log(stopData.error);\r\n\r\n        message.channel.send({ content: `${message.member}, an error occurred while executing the command, take a look at the console!` });\r\n    }else message.channel.send({ content: `${message.member}, server queue playing completed successfully!` });\r\n}\r\n```\r\n\r\n### Skip command\r\n\r\n```js\r\nif(command === `${defaultPrefix}skip`) {\r\n    if(!message.member?.voice.channel) {\r\n        message.channel.send({ content: `${message.member}, join to the voice channel!` });\r\n        return;\r\n    }\r\n\r\n    const skipData = await player.queue.skipTrack(msgChannel.guild.id);\r\n\r\n    if(skipData?.error) {\r\n        console.log(skipData.error);\r\n\r\n        message.channel.send({ content: `${message.member}, an error occurred while executing the command, take a look at the console!` });\r\n    }else{\r\n        if(skipData.next != null) message.channel.send({ content: `Skip track '${skipData.current.title}' and start playing '${skipData.next.title}'!` });\r\n        else message.channel.send({ content: `Skip track '${skipData.current.title}'!` });\r\n    }\r\n}\r\n```\r\n\r\n### Seek command\r\n\r\n```js\r\nif(command === `${defaultPrefix}seek`) {\r\n    const seekValue = Number(message.content.substring(defaultPrefix.length + 5));\r\n        \r\n    if(!message.member?.voice.channel) {\r\n        message.channel.send({ content: `${message.member}, join to the voice channel!` });\r\n        return;\r\n    }\r\n\r\n    if(seekValue && isNaN(seekValue)) {\r\n        message.channel.send({ content: `` });\r\n        return;\r\n    }\r\n        \r\n    const seekData = await player.queue.seek(msgChannel.guild.id, seekValue || 0);\r\n\r\n    if(seekData?.error) {\r\n        console.log(seekData.error);\r\n\r\n        message.channel.send({ content: `${message.member}, an error occurred while executing the command, take a look at the console!` });\r\n    }else message.channel.send({ content: `The current track has been successfully rewound by ${seekValue} seconds!` });\r\n}\r\n```\r\n\r\n### Filter command\r\n\r\n```js\r\nif(command === `${defaultPrefix}filter`) {\r\n    const filter = message.content.substring(defaultPrefix.length + 7) as FilterType;\r\n\r\n    if(!message.member?.voice.channel) {\r\n        message.channel.send({ content: `${message.member}, join to the voice channel!` });\r\n        return;\r\n    }\r\n\r\n    if(filter && !await player.filters.isExists(filter)) {\r\n        message.channel.send({ content: `${message.member}, you have specified an unknown filter!` });\r\n    }else{\r\n        const filterData = await player.queue.setFilter(msgChannel.guild.id, filter || 'clear');\r\n\r\n        if(filterData?.error) {\r\n            console.log(filterData.error);\r\n\r\n            message.channel.send({ content: `${message.member}, an error occurred while executing the command, take a look at the console!` });\r\n        }else message.channel.send({ content: `Playback filter **${filterData.name}** installed successfully!` });\r\n    }\r\n}\r\n```\r\n\r\n### Join command\r\n\r\n```js\r\nif(command === `${defaultPrefix}join`) {\r\n    const channelName = message.content.substring(defaultPrefix.length + 5);\r\n\r\n    if(!channelName) {\r\n        message.channel.send({ content: `${message.member}, enter the name of the voice channel!` });\r\n        return;\r\n    }\r\n\r\n    const channel = message.guild?.channels.cache.find(c => c.name === channelName);\r\n\r\n    if(channel && channel.isVoiceBased()) {\r\n        const joinData = await player.voice.join(channel as VoiceChannel);\r\n\r\n        if(joinData?.error) {\r\n            console.log(joinData.error);\r\n\r\n            message.channel.send({ content: `${message.member}, an error occurred while executing the command, take a look at the console!` });\r\n        }else message.channel.send({ content: `Member, the bot has successfully joined the ${channel} channel!` });\r\n    }\r\n}\r\n```\r\n\r\n### Leave command\r\n\r\n```js\r\nif(command === `${defaultPrefix}leave`) {\r\n    const leaveData = await player.voice.leave(msgChannel.guild.id);\r\n\r\n    if(leaveData?.error) {\r\n        console.log(leaveData.error);\r\n\r\n        message.channel.send({ content: `${message.member}, an error occurred while executing the command, take a look at the console!` });\r\n    }else message.channel.send({ content: `${message.member}, the bot has successfully left the ${message.guild?.channels.cache.get(leaveData.joinConfig.channelId as string)} voice channel!` });\r\n}\r\n```\r\n\r\n### Nowplaying command\r\n\r\n```js\r\nif(command === `${defaultPrefix}nowplaying`) {\r\n    const trackData = await player.queue.trackInfo(msgChannel.guild.id);\r\n\r\n    if(trackData?.error) {\r\n        console.log(trackData.error);\r\n\r\n        message.channel.send({ content: `${message.member}, an error occurred while executing the command, take a look at the console!` });\r\n    }else{\r\n        const progressData = await player.queue.progress(msgChannel.guild.id);\r\n\r\n        message.channel.send({ content: `Track Title: **${trackData.title}**\\nTrack URL: **${trackData.url}**\\nTrack Duration: **[${trackData.duration.hours}:${trackData.duration.minutes}:${trackData.duration.seconds}]**\\n\\nProgress: [${progressData.percents}] ${progressData.bar}` });\r\n    }\r\n}\r\n```\r\n\r\n### Loop command\r\n\r\n```js\r\nif(command === `${defaultPrefix}loop`) {\r\n    const type = message.content.substring(defaultPrefix.length + 5);\r\n\r\n    if(type) {\r\n        if(!type.includes('track') && !type.includes('queue')) {\r\n            message.channel.send({ content: `${message.member}, you specified an incorrect loop type!` });\r\n        }else{\r\n            const loopData = await player.queue.setLoop(msgChannel.guild.id, type.includes('track') ? Loop.TRACK : Loop.QUEUE);\r\n\r\n            if(loopData?.error) {\r\n                console.log(loopData.error);\r\n\r\n                message.channel.send({ content: `${message.member}, an error occurred while executing the command, take a look at the console!` });\r\n            }else message.channel.send({ content: `${message.member}, looping status changed successfully!` });\r\n        }\r\n    }else{\r\n        const loopData = await player.queue.setLoop(msgChannel.guild.id, Loop.TRACK);\r\n\r\n        if(loopData?.error) {\r\n            console.log(loopData.error);\r\n\r\n            message.channel.send({ content: `${message.member}, an error occurred while executing the command, take a look at the console!` });\r\n        }else message.channel.send({ content: `${message.member}, looping status changed successfully!` });\r\n    }\r\n}\r\n```\r\n\r\n## Player Events Handling\r\n\r\n### Ready event\r\n\r\n```js\r\nplayer.on('ready', async () => {\r\n    return console.log(`\\nPlayer by ${player.author} is ready!\\nCurrent package version: ${player.version}\\nPackage website URL: ${player.website}`);\r\n})\r\n```\r\n\r\n### Error event\r\n\r\n```js\r\nplayer.on('error', async errorData => {\r\n    return console.log(errorData);\r\n})\r\n```\r\n\r\n### QueueStarted event\r\n\r\n```js\r\nplayer.on('queueStarted', async queue => {\r\n    const channel = queue.channel.text;\r\n\r\n    return channel.send({ content: `Queue for server with ID '${channel.guild.id}' started!` });\r\n})\r\n```\r\n\r\n### PlayingTrack event\r\n\r\n```js\r\nplayer.on('playingTrack', async track => {\r\n    const channel = track.channel.text;\r\n\r\n    return channel.send({ content: `Playing '${track.title}' track...` });\r\n})\r\n```\r\n\r\n### AddedTrack event\r\n\r\n```js\r\nplayer.on('addedTrack', async track => {\r\n    const channel = track.channel.text;\r\n\r\n    return channel.send({ content: `Track '${track.title}' added to queue...` });\r\n})\r\n```\r\n\r\n### QueueEnded event\r\n\r\n```js\r\nplayer.on('queueEnded', async queue => {\r\n    const channel = queue.channel.text;\r\n\r\n    return channel.send({ content: `Queue for server with ID '${channel.guild.id}' ended!` });\r\n})\r\n```",
+     "content": "# A small example of writing a music bot using module\r\n\r\nThis is just the smallest part of what can be done. More examples can be found here: **[discord-player-music/examples](https://github.com/xyligan-gp/discord-player-music/tree/stable/examples)**\r\n\r\n## Client and module initialization\r\n\r\n```js\r\nimport { Collector, Loop, Player, Search } from 'discord-player-music';\r\nimport { Client, EmbedBuilder, GatewayIntentBits, Partials, TextChannel, VoiceChannel } from 'discord.js';\r\n\r\nimport { FilterType, LyricsData, PlayerQueue } from 'discord-player-music/types/PlayerData';\r\n\r\nconst client = new Client({\r\n    intents: [\r\n        GatewayIntentBits.Guilds,\r\n        GatewayIntentBits.GuildMembers,\r\n        GatewayIntentBits.GuildMessageReactions,\r\n        GatewayIntentBits.GuildMessages,\r\n        GatewayIntentBits.GuildVoiceStates,\r\n        GatewayIntentBits.MessageContent\r\n    ],\r\n\r\n    partials: [\r\n        Partials.Channel,\r\n        Partials.GuildMember,\r\n        Partials.Message,\r\n        Partials.Reaction,\r\n        Partials.User\r\n    ]\r\n})\r\n\r\nconst defaultPrefix = '!';\r\nconst player = new Player(client);\r\n\r\nclient.on('ready', async () => {\r\n    return console.log(`${client.user?.tag} is ready!`);\r\n})\r\n\r\nclient.login('YOUR_CLIENT_TOKEN_HERE');\r\n```\r\n\r\n## Bot command initialization\r\n```js\r\nclient.on('messageCreate', async message => {\r\n    const msgChannel = message.channel as TextChannel;\r\n    const messageArray = message.content.split(' ');\r\n    const command = messageArray[0];\r\n})\r\n```\r\n\r\n## Writing bot commands\r\n\r\n### Search command\r\n```js\r\nif(command === `${defaultPrefix}search`) {\r\n    const searchQuery = message.content.substring(defaultPrefix.length + 7);\r\n\r\n    if(!message.member?.voice.channel) {\r\n        message.channel.send({ content: `${message.member}, join to the voice channel!` });\r\n        return;\r\n    }\r\n\r\n    if(!searchQuery) {\r\n        message.channel.send({ content: `${message.member}, enter your search query!` });\r\n        return;\r\n    }\r\n        \r\n    const searchData = await player.search(searchQuery, message.member, msgChannel);\r\n        \r\n    if(searchData?.error) {\r\n        console.log(searchData.error);\r\n\r\n        message.channel.send({ content: `${message.member}, an error occurred while executing the command, take a look at the console!` });\r\n    }else{\r\n        if(searchData[0].searchType.includes(Search.TITLE)) {\r\n            const embed = new EmbedBuilder()\r\n                \r\n            .setColor('Blue')\r\n            .setTitle('Select track:')\r\n            .setThumbnail(client.user?.avatarURL() as string)\r\n            .setDescription(searchData.map((track, index) => `\\`[${index + 1}]\\` **[${track.title}](${track.url})** \\`[${track.duration.hours}:${track.duration.minutes}:${track.duration.seconds}]\\``).join('\\n'))\r\n\r\n            const msg = await message.channel.send({ embeds: [embed] });\r\n\r\n            player.createCollector(Collector.REACTION, msg, searchData, message.author.id);\r\n        }\r\n    }\r\n}\r\n```\r\n\r\n### Lyrics command\r\n```js\r\nif(command === `${defaultPrefix}lyrics`) {\r\n    const searchQuery = message.content.substring(defaultPrefix.length + 7);\r\n\r\n    if(!searchQuery) {\r\n        message.channel.send({ content: `${message.member}, enter your search query!` });\r\n        return;\r\n    }\r\n\r\n    const searchData = await player.lyrics(searchQuery);\r\n\r\n    if(searchData?.error) {\r\n        console.log(searchData.error);\r\n\r\n        message.channel.send({ content: `${message.member}, an error occurred while executing the command, take a look at the console!` });\r\n    }else{\r\n        const lyricsData = searchData as LyricsData;\r\n\r\n        if((lyricsData.result.length + lyricsData.query.length) <= 2048) message.channel.send({ content: `Search Query: **${lyricsData.query}**\\n\\n${lyricsData.result}` })\r\n        else message.channel.send({ content: `${message.member}, result content exceeds 2048 characters!` });\r\n    }\r\n}\r\n```\r\n\r\n### Queue command\r\n\r\n```js\r\nif(command === `${defaultPrefix}queue`) {\r\n    const guildQueue = await player.queue.get(msgChannel.guild.id);\r\n\r\n    if(guildQueue?.error) {\r\n        console.log(guildQueue.error);\r\n\r\n        message.channel.send({ content: `${message.member}, an error occurred while executing the command, take a look at the console!` });\r\n    }else{\r\n        const queue = guildQueue as PlayerQueue;\r\n\r\n        const embed = new EmbedBuilder()\r\n\r\n        .setColor('Blue')\r\n        .setTitle(`Guild Queue: ${queue.tracks.length}`)\r\n        .setThumbnail(client.user?.avatarURL() as string)\r\n        .setDescription(queue.tracks.map((track, index) => `\\`[${index + 1}]\\` **[${track.title}](${track.url})** \\`[${track.duration.hours}:${track.duration.minutes}:${track.duration.seconds}]\\``).join('\\n'))\r\n\r\n        message.channel.send({ embeds: [embed] });\r\n    }\r\n}\r\n```\r\n\r\n### Stop command\r\n\r\n```js\r\nif(command === `${defaultPrefix}stop`) {\r\n    if(!message.member?.voice.channel) {\r\n        message.channel.send({ content: `${message.member}, join to the voice channel!` });\r\n        return;\r\n    }\r\n\r\n    const stopData = await player.queue.stop(msgChannel.guild.id);\r\n\r\n    if(stopData?.error) {\r\n        console.log(stopData.error);\r\n\r\n        message.channel.send({ content: `${message.member}, an error occurred while executing the command, take a look at the console!` });\r\n    }else message.channel.send({ content: `${message.member}, server queue playing completed successfully!` });\r\n}\r\n```\r\n\r\n### Skip command\r\n\r\n```js\r\nif(command === `${defaultPrefix}skip`) {\r\n    if(!message.member?.voice.channel) {\r\n        message.channel.send({ content: `${message.member}, join to the voice channel!` });\r\n        return;\r\n    }\r\n\r\n    const skipData = await player.queue.skipTrack(msgChannel.guild.id);\r\n\r\n    if(skipData?.error) {\r\n        console.log(skipData.error);\r\n\r\n        message.channel.send({ content: `${message.member}, an error occurred while executing the command, take a look at the console!` });\r\n    }else{\r\n        if(skipData.next != null) message.channel.send({ content: `Skip track '${skipData.current.title}' and start playing '${skipData.next.title}'!` });\r\n        else message.channel.send({ content: `Skip track '${skipData.current.title}'!` });\r\n    }\r\n}\r\n```\r\n\r\n### Seek command\r\n\r\n```js\r\nif(command === `${defaultPrefix}seek`) {\r\n    const seekValue = Number(message.content.substring(defaultPrefix.length + 5));\r\n        \r\n    if(!message.member?.voice.channel) {\r\n        message.channel.send({ content: `${message.member}, join to the voice channel!` });\r\n        return;\r\n    }\r\n\r\n    if(seekValue && isNaN(seekValue)) {\r\n        message.channel.send({ content: `` });\r\n        return;\r\n    }\r\n        \r\n    const seekData = await player.queue.seek(msgChannel.guild.id, seekValue || 0);\r\n\r\n    if(seekData?.error) {\r\n        console.log(seekData.error);\r\n\r\n        message.channel.send({ content: `${message.member}, an error occurred while executing the command, take a look at the console!` });\r\n    }else message.channel.send({ content: `The current track has been successfully rewound by ${seekValue} seconds!` });\r\n}\r\n```\r\n\r\n### Filter command\r\n\r\n```js\r\nif(command === `${defaultPrefix}filter`) {\r\n    const filter = message.content.substring(defaultPrefix.length + 7) as FilterType;\r\n\r\n    if(!message.member?.voice.channel) {\r\n        message.channel.send({ content: `${message.member}, join to the voice channel!` });\r\n        return;\r\n    }\r\n\r\n    if(filter && !await player.filters.isExists(filter)) {\r\n        message.channel.send({ content: `${message.member}, you have specified an unknown filter!` });\r\n    }else{\r\n        const filterData = await player.queue.setFilter(msgChannel.guild.id, filter || 'clear');\r\n\r\n        if(filterData?.error) {\r\n            console.log(filterData.error);\r\n\r\n            message.channel.send({ content: `${message.member}, an error occurred while executing the command, take a look at the console!` });\r\n        }else message.channel.send({ content: `Playback filter **${filterData.name}** installed successfully!` });\r\n    }\r\n}\r\n```\r\n\r\n### Join command\r\n\r\n```js\r\nif(command === `${defaultPrefix}join`) {\r\n    const channelName = message.content.substring(defaultPrefix.length + 5);\r\n\r\n    if(!channelName) {\r\n        message.channel.send({ content: `${message.member}, enter the name of the voice channel!` });\r\n        return;\r\n    }\r\n\r\n    const channel = message.guild?.channels.cache.find(c => c.name === channelName);\r\n\r\n    if(channel && channel.isVoiceBased()) {\r\n        const joinData = await player.voice.join(channel as VoiceChannel);\r\n\r\n        if(joinData?.error) {\r\n            console.log(joinData.error);\r\n\r\n            message.channel.send({ content: `${message.member}, an error occurred while executing the command, take a look at the console!` });\r\n        }else message.channel.send({ content: `Member, the bot has successfully joined the ${channel} channel!` });\r\n    }\r\n}\r\n```\r\n\r\n### Leave command\r\n\r\n```js\r\nif(command === `${defaultPrefix}leave`) {\r\n    const leaveData = await player.voice.leave(msgChannel.guild.id);\r\n\r\n    if(leaveData?.error) {\r\n        console.log(leaveData.error);\r\n\r\n        message.channel.send({ content: `${message.member}, an error occurred while executing the command, take a look at the console!` });\r\n    }else message.channel.send({ content: `${message.member}, the bot has successfully left the ${message.guild?.channels.cache.get(leaveData.joinConfig.channelId as string)} voice channel!` });\r\n}\r\n```\r\n\r\n### Nowplaying command\r\n\r\n```js\r\nif(command === `${defaultPrefix}nowplaying`) {\r\n    const trackData = await player.queue.trackInfo(msgChannel.guild.id);\r\n\r\n    if(trackData?.error) {\r\n        console.log(trackData.error);\r\n\r\n        message.channel.send({ content: `${message.member}, an error occurred while executing the command, take a look at the console!` });\r\n    }else{\r\n        const progressData = await player.queue.progress(msgChannel.guild.id);\r\n\r\n        message.channel.send({ content: `Track Title: **${trackData.title}**\\nTrack URL: **${trackData.url}**\\nTrack Duration: **[${trackData.duration.hours}:${trackData.duration.minutes}:${trackData.duration.seconds}]**\\n\\nProgress: [${progressData.percents}] ${progressData.bar}` });\r\n    }\r\n}\r\n```\r\n\r\n### Loop command\r\n\r\n```js\r\nif(command === `${defaultPrefix}loop`) {\r\n    const type = message.content.substring(defaultPrefix.length + 5);\r\n\r\n    if(type) {\r\n        if(!type.includes('track') && !type.includes('queue')) {\r\n            message.channel.send({ content: `${message.member}, you specified an incorrect loop type!` });\r\n        }else{\r\n            const loopData = await player.queue.setLoop(msgChannel.guild.id, type.includes('track') ? Loop.TRACK : Loop.QUEUE);\r\n\r\n            if(loopData?.error) {\r\n                console.log(loopData.error);\r\n\r\n                message.channel.send({ content: `${message.member}, an error occurred while executing the command, take a look at the console!` });\r\n            }else message.channel.send({ content: `${message.member}, looping status changed successfully!` });\r\n        }\r\n    }else{\r\n        const loopData = await player.queue.setLoop(msgChannel.guild.id, Loop.TRACK);\r\n\r\n        if(loopData?.error) {\r\n            console.log(loopData.error);\r\n\r\n            message.channel.send({ content: `${message.member}, an error occurred while executing the command, take a look at the console!` });\r\n        }else message.channel.send({ content: `${message.member}, looping status changed successfully!` });\r\n    }\r\n}\r\n```\r\n\r\n## Player Events Handling\r\n\r\n### Ready event\r\n\r\n```js\r\nplayer.on('ready', async () => {\r\n    return console.log(`\\nPlayer by ${player.author} is ready!\\nCurrent package version: ${player.version}\\nPackage website URL: ${player.website}`);\r\n})\r\n```\r\n\r\n### Error event\r\n\r\n```js\r\nplayer.on('error', async errorData => {\r\n    return console.log(errorData);\r\n})\r\n```\r\n\r\n### QueueStarted event\r\n\r\n```js\r\nplayer.on('queueStarted', async queue => {\r\n    const channel = queue.channel.text;\r\n\r\n    return channel.send({ content: `Queue for server with ID '${channel.guild.id}' started!` });\r\n})\r\n```\r\n\r\n### CreatedPlaylist event\r\n\r\n```js\r\nplayer.on('createdPlaylist', async playlist => {\r\n    return console.log(`Playlist with id ${playlist.id} success created!`);\r\n})\r\n```\r\n\r\n### DeletedPlaylist event\r\n\r\n```js\r\nplayer.on('deletedPlaylist', async playlist => {\r\n    return console.log(`Playlist with id ${playlist.id} successfully deleted!`);\r\n})\r\n```\r\n\r\n### PlayingTrack event\r\n\r\n```js\r\nplayer.on('playingTrack', async track => {\r\n    const channel = track.channel.text;\r\n\r\n    return channel.send({ content: `Playing '${track.title}' track...` });\r\n})\r\n```\r\n\r\n### AddedTrack event\r\n\r\n```js\r\nplayer.on('addedTrack', async track => {\r\n    const channel = track.channel.text;\r\n\r\n    return channel.send({ content: `Track '${track.title}' added to queue...` });\r\n})\r\n```\r\n\r\n### QueueEnded event\r\n\r\n```js\r\nplayer.on('queueEnded', async queue => {\r\n    const channel = queue.channel.text;\r\n\r\n    return channel.send({ content: `Queue for server with ID '${channel.guild.id}' ended!` });\r\n})\r\n```",
      "path": "docs/general/examples/index.md"
     },
     "changelog": {
@@ -104,7 +104,7 @@
      "type": [
       [
        [
-        "Boolean"
+        "boolean"
        ]
       ]
      ],
@@ -120,7 +120,7 @@
      "type": [
       [
        [
-        "String"
+        "string"
        ]
       ]
      ],
@@ -136,7 +136,7 @@
      "type": [
       [
        [
-        "String"
+        "string"
        ]
       ]
      ],
@@ -152,7 +152,7 @@
      "type": [
       [
        [
-        "String"
+        "string"
        ]
       ]
      ],
@@ -184,7 +184,7 @@
      "type": [
       [
        [
-        "Object"
+        "object"
        ]
       ]
      ],
@@ -299,7 +299,7 @@
       "types": [
        [
         [
-         "Boolean"
+         "boolean"
         ]
        ]
       ],
@@ -330,7 +330,7 @@
        "type": [
         [
          [
-          "String"
+          "string"
          ]
         ]
        ]
@@ -375,6 +375,9 @@
     {
      "name": "search",
      "description": "Allows you to search for tracks in YouTube by link/title",
+     "examples": [
+      "const searchData = await client.player.search('Xtrullor - Samsara', message.member, message.channel);\r\rconsole.log(searchData);"
+     ],
      "params": [
       {
        "name": "query",
@@ -382,7 +385,7 @@
        "type": [
         [
          [
-          "String"
+          "string"
          ]
         ]
        ]
@@ -416,7 +419,7 @@
        "type": [
         [
          [
-          "Boolean"
+          "boolean"
          ]
         ]
        ]
@@ -454,6 +457,9 @@
     {
      "name": "lyrics",
      "description": "Allows you to find lyrics for songs by their name",
+     "examples": [
+      "const lyricsData = await client.player.lyrics('Imagine Dragons - Thunder');\rif(lyricsData?.result) return message.channel.send({ content: `${lyricsData.query}\\n\\n${lyricsData.result}` });"
+     ],
      "params": [
       {
        "name": "query",
@@ -461,7 +467,7 @@
        "type": [
         [
          [
-          "StreamType"
+          "String"
          ]
         ]
        ]
@@ -487,7 +493,7 @@
       "description": "Returns a result or error object"
      },
      "meta": {
-      "line": 392,
+      "line": 397,
       "file": "Player.ts",
       "path": "src"
      }
@@ -495,6 +501,9 @@
     {
      "name": "initQueueTrack",
      "description": "Allows you to add tracks to the playback queue",
+     "examples": [
+      "const searchData = await client.player.search('Xtrullor - Samsara', message.member, message.channel);\rif(searchData[0]?.title) client.player.initQueueTrack(1, searchData);"
+     ],
      "params": [
       {
        "name": "index",
@@ -502,7 +511,7 @@
        "type": [
         [
          [
-          "Number"
+          "number"
          ]
         ]
        ]
@@ -540,7 +549,7 @@
       "description": "Void"
      },
      "meta": {
-      "line": 410,
+      "line": 419,
       "file": "Player.ts",
       "path": "src"
      }
@@ -548,6 +557,9 @@
     {
      "name": "createCollector",
      "description": "Allows you to create a collector to select a track from a list",
+     "examples": [
+      "const searchData = await client.player.search('Xtrullor - Samsara', message.member, message.channel);\rif(searchData[0]?.title && searchData.length === 10) client.player.createCollector(Collector.REACTION, message, searchData, 'UserID');"
+     ],
      "params": [
       {
        "name": "type",
@@ -594,7 +606,7 @@
        "type": [
         [
          [
-          "String"
+          "string"
          ]
         ]
        ]
@@ -617,10 +629,10 @@
         ]
        ]
       ],
-      "description": "Object with received data or error"
+      "description": "object with received data or error"
      },
      "meta": {
-      "line": 427,
+      "line": 440,
       "file": "Player.ts",
       "path": "src"
      }
@@ -630,7 +642,7 @@
      "description": "Method for initializing module",
      "access": "private",
      "meta": {
-      "line": 522,
+      "line": 539,
       "file": "Player.ts",
       "path": "src"
      }
@@ -647,7 +659,7 @@
        "type": [
         [
          [
-          "String"
+          "string"
          ]
         ]
        ]
@@ -692,7 +704,7 @@
        "type": [
         [
          [
-          "String"
+          "string"
          ]
         ]
        ]
@@ -737,7 +749,7 @@
        "type": [
         [
          [
-          "String"
+          "string"
          ]
         ]
        ]
@@ -759,7 +771,7 @@
       "types": [
        [
         [
-         "Boolean"
+         "boolean"
         ]
        ]
       ],
@@ -790,7 +802,7 @@
       }
      ],
      "meta": {
-      "line": 568,
+      "line": 585,
       "file": "Player.ts",
       "path": "src"
      }
@@ -806,7 +818,7 @@
        "type": [
         [
          [
-          "Object"
+          "object"
          ]
         ]
        ]
@@ -852,7 +864,7 @@
        "type": [
         [
          [
-          "String"
+          "string"
          ]
         ]
        ]
@@ -870,7 +882,7 @@
       }
      ],
      "meta": {
-      "line": 576,
+      "line": 593,
       "file": "Player.ts",
       "path": "src"
      }
@@ -886,7 +898,7 @@
        "type": [
         [
          [
-          "Number"
+          "number"
          ]
         ]
        ]
@@ -897,7 +909,7 @@
        "type": [
         [
          [
-          "String"
+          "string"
          ]
         ]
        ]
@@ -908,7 +920,7 @@
        "type": [
         [
          [
-          "String"
+          "string"
          ]
         ]
        ]
@@ -919,7 +931,7 @@
        "type": [
         [
          [
-          "String"
+          "string"
          ]
         ]
        ]
@@ -930,7 +942,7 @@
        "type": [
         [
          [
-          "String"
+          "string"
          ]
         ]
        ]
@@ -941,7 +953,7 @@
        "type": [
         [
          [
-          "Object"
+          "object"
          ]
         ]
        ]
@@ -952,7 +964,7 @@
        "type": [
         [
          [
-          "String"
+          "string"
          ]
         ]
        ]
@@ -963,7 +975,7 @@
        "type": [
         [
          [
-          "String"
+          "string"
          ]
         ]
        ]
@@ -974,7 +986,7 @@
        "type": [
         [
          [
-          "Object"
+          "object"
          ]
         ]
        ]
@@ -1029,7 +1041,7 @@
        "type": [
         [
          [
-          "Object"
+          "object"
          ]
         ]
        ]
@@ -1040,7 +1052,7 @@
        "type": [
         [
          [
-          "String"
+          "string"
          ]
         ]
        ]
@@ -1051,7 +1063,7 @@
        "type": [
         [
          [
-          "String"
+          "string"
          ]
         ]
        ]
@@ -1062,14 +1074,14 @@
        "type": [
         [
          [
-          "String"
+          "string"
          ]
         ]
        ]
       }
      ],
      "meta": {
-      "line": 588,
+      "line": 605,
       "file": "Player.ts",
       "path": "src"
      }
@@ -1085,7 +1097,7 @@
        "type": [
         [
          [
-          "Number"
+          "number"
          ]
         ]
        ]
@@ -1096,7 +1108,7 @@
        "type": [
         [
          [
-          "String"
+          "string"
          ]
         ]
        ]
@@ -1107,7 +1119,7 @@
        "type": [
         [
          [
-          "String"
+          "string"
          ]
         ]
        ]
@@ -1118,7 +1130,7 @@
        "type": [
         [
          [
-          "String"
+          "string"
          ]
         ]
        ]
@@ -1129,7 +1141,7 @@
        "type": [
         [
          [
-          "String"
+          "string"
          ]
         ]
        ]
@@ -1140,7 +1152,7 @@
        "type": [
         [
          [
-          "Object"
+          "object"
          ]
         ]
        ]
@@ -1151,7 +1163,7 @@
        "type": [
         [
          [
-          "String"
+          "string"
          ]
         ]
        ]
@@ -1162,7 +1174,7 @@
        "type": [
         [
          [
-          "String"
+          "string"
          ]
         ]
        ]
@@ -1173,7 +1185,7 @@
        "type": [
         [
          [
-          "Object"
+          "object"
          ]
         ]
        ]
@@ -1228,7 +1240,7 @@
        "type": [
         [
          [
-          "Object"
+          "object"
          ]
         ]
        ]
@@ -1239,7 +1251,7 @@
        "type": [
         [
          [
-          "String"
+          "string"
          ]
         ]
        ]
@@ -1250,7 +1262,7 @@
        "type": [
         [
          [
-          "String"
+          "string"
          ]
         ]
        ]
@@ -1261,14 +1273,14 @@
        "type": [
         [
          [
-          "String"
+          "string"
          ]
         ]
        ]
       }
      ],
      "meta": {
-      "line": 611,
+      "line": 628,
       "file": "Player.ts",
       "path": "src"
      }
@@ -1283,7 +1295,7 @@
        "type": [
         [
          [
-          "String"
+          "string"
          ]
         ]
        ]
@@ -1294,7 +1306,7 @@
        "type": [
         [
          [
-          "String"
+          "string"
          ]
         ]
        ]
@@ -1305,7 +1317,7 @@
        "type": [
         [
          [
-          "String"
+          "string"
          ]
         ]
        ]
@@ -1316,7 +1328,7 @@
        "type": [
         [
          [
-          "Number"
+          "number"
          ]
         ]
        ]
@@ -1327,7 +1339,7 @@
        "type": [
         [
          [
-          "Number"
+          "number"
          ]
         ]
        ]
@@ -1338,7 +1350,7 @@
        "type": [
         [
          [
-          "Number"
+          "number"
          ]
         ]
        ]
@@ -1349,7 +1361,7 @@
        "type": [
         [
          [
-          "Number"
+          "number"
          ]
         ]
        ]
@@ -1372,7 +1384,7 @@
       }
      ],
      "meta": {
-      "line": 634,
+      "line": 651,
       "file": "Player.ts",
       "path": "src"
      }
@@ -1387,7 +1399,7 @@
        "type": [
         [
          [
-          "String"
+          "string"
          ]
         ]
        ]
@@ -1398,7 +1410,7 @@
        "type": [
         [
          [
-          "String"
+          "string"
          ]
         ]
        ]
@@ -1409,7 +1421,7 @@
        "type": [
         [
          [
-          "String"
+          "string"
          ]
         ]
        ]
@@ -1420,7 +1432,7 @@
        "type": [
         [
          [
-          "Number"
+          "number"
          ]
         ]
        ]
@@ -1431,7 +1443,7 @@
        "type": [
         [
          [
-          "Number"
+          "number"
          ]
         ]
        ]
@@ -1442,7 +1454,7 @@
        "type": [
         [
          [
-          "Number"
+          "number"
          ]
         ]
        ]
@@ -1453,7 +1465,7 @@
        "type": [
         [
          [
-          "Number"
+          "number"
          ]
         ]
        ]
@@ -1476,7 +1488,7 @@
       }
      ],
      "meta": {
-      "line": 648,
+      "line": 665,
       "file": "Player.ts",
       "path": "src"
      }
@@ -1491,7 +1503,7 @@
        "type": [
         [
          [
-          "Object"
+          "object"
          ]
         ]
        ]
@@ -1562,7 +1574,7 @@
        "type": [
         [
          [
-          "Object"
+          "object"
          ]
         ]
        ]
@@ -1573,7 +1585,7 @@
        "type": [
         [
          [
-          "Boolean"
+          "boolean"
          ]
         ]
        ]
@@ -1584,7 +1596,7 @@
        "type": [
         [
          [
-          "Boolean"
+          "boolean"
          ]
         ]
        ]
@@ -1595,7 +1607,7 @@
        "type": [
         [
          [
-          "Number"
+          "number"
          ]
         ]
        ]
@@ -1606,7 +1618,7 @@
        "type": [
         [
          [
-          "Number"
+          "number"
          ]
         ]
        ]
@@ -1617,7 +1629,7 @@
        "type": [
         [
          [
-          "Boolean"
+          "boolean"
          ]
         ]
        ]
@@ -1635,7 +1647,7 @@
       }
      ],
      "meta": {
-      "line": 662,
+      "line": 679,
       "file": "Player.ts",
       "path": "src"
      }
@@ -1650,7 +1662,7 @@
        "type": [
         [
          [
-          "Object"
+          "object"
          ]
         ]
        ]
@@ -1721,7 +1733,7 @@
        "type": [
         [
          [
-          "Object"
+          "object"
          ]
         ]
        ]
@@ -1732,7 +1744,7 @@
        "type": [
         [
          [
-          "Boolean"
+          "boolean"
          ]
         ]
        ]
@@ -1743,7 +1755,7 @@
        "type": [
         [
          [
-          "Boolean"
+          "boolean"
          ]
         ]
        ]
@@ -1754,7 +1766,7 @@
        "type": [
         [
          [
-          "Number"
+          "number"
          ]
         ]
        ]
@@ -1765,7 +1777,7 @@
        "type": [
         [
          [
-          "Number"
+          "number"
          ]
         ]
        ]
@@ -1776,7 +1788,7 @@
        "type": [
         [
          [
-          "Boolean"
+          "boolean"
          ]
         ]
        ]
@@ -1794,7 +1806,7 @@
       }
      ],
      "meta": {
-      "line": 681,
+      "line": 698,
       "file": "Player.ts",
       "path": "src"
      }
@@ -1821,7 +1833,7 @@
        "type": [
         [
          [
-          "String"
+          "string"
          ]
         ]
        ]
@@ -1864,7 +1876,7 @@
        "type": [
         [
          [
-          "String"
+          "string"
          ]
         ]
        ]
@@ -1907,7 +1919,7 @@
        "type": [
         [
          [
-          "String"
+          "string"
          ]
         ]
        ]
@@ -1929,7 +1941,7 @@
       "types": [
        [
         [
-         "Boolean"
+         "boolean"
         ]
        ]
       ],
@@ -2008,7 +2020,7 @@
      "type": [
       [
        [
-        "Object"
+        "object"
        ]
       ]
      ],
@@ -2030,7 +2042,7 @@
       "types": [
        [
         [
-         "Object"
+         "object"
         ]
        ]
       ],
@@ -2056,7 +2068,7 @@
        "type": [
         [
          [
-          "Object"
+          "object"
          ]
         ]
        ]
@@ -2081,7 +2093,7 @@
        "type": [
         [
          [
-          "String"
+          "string"
          ]
         ]
        ]
@@ -2157,11 +2169,11 @@
         "<"
        ],
        [
-        "String",
+        "string",
         ", "
        ],
        [
-        "String",
+        "string",
         ">"
        ]
       ]
@@ -2187,7 +2199,7 @@
        "type": [
         [
          [
-          "String"
+          "string"
          ]
         ]
        ]
@@ -2198,7 +2210,7 @@
        "type": [
         [
          [
-          "String"
+          "string"
          ]
         ]
        ]
@@ -2242,7 +2254,7 @@
        "type": [
         [
          [
-          "String"
+          "string"
          ]
         ]
        ]
@@ -2256,7 +2268,7 @@
          "<"
         ],
         [
-         "Boolean",
+         "boolean",
          ">"
         ]
        ]
@@ -2282,7 +2294,7 @@
        "type": [
         [
          [
-          "String"
+          "string"
          ]
         ]
        ]
@@ -2331,11 +2343,11 @@
          "<"
         ],
         [
-         "String",
+         "string",
          ", "
         ],
         [
-         "String",
+         "string",
          ">>"
         ]
        ]
@@ -2361,7 +2373,7 @@
        "type": [
         [
          [
-          "String"
+          "string"
          ]
         ]
        ]
@@ -2464,7 +2476,7 @@
        "type": [
         [
          [
-          "String"
+          "string"
          ]
         ]
        ]
@@ -2515,7 +2527,7 @@
        "type": [
         [
          [
-          "String"
+          "string"
          ]
         ]
        ]
@@ -2570,7 +2582,7 @@
        "type": [
         [
          [
-          "String"
+          "string"
          ]
         ]
        ]
@@ -2581,7 +2593,7 @@
        "type": [
         [
          [
-          "String"
+          "string"
          ]
         ]
        ]
@@ -2647,7 +2659,7 @@
        "type": [
         [
          [
-          "String"
+          "string"
          ]
         ]
        ]
@@ -2658,7 +2670,7 @@
        "type": [
         [
          [
-          "String"
+          "string"
          ]
         ]
        ]
@@ -2671,7 +2683,7 @@
        "type": [
         [
          [
-          "Number"
+          "number"
          ]
         ]
        ]
@@ -2718,7 +2730,7 @@
        "type": [
         [
          [
-          "String"
+          "string"
          ]
         ]
        ]
@@ -2729,7 +2741,7 @@
        "type": [
         [
          [
-          "String"
+          "string"
          ]
         ]
        ]
@@ -2815,7 +2827,7 @@
         "<"
        ],
        [
-        "String",
+        "string",
         ", "
        ],
        [
@@ -2856,7 +2868,7 @@
          "<"
         ],
         [
-         "Boolean",
+         "boolean",
          ">"
         ]
        ]
@@ -2879,7 +2891,7 @@
        "type": [
         [
          [
-          "String"
+          "string"
          ]
         ]
        ]
@@ -2893,7 +2905,7 @@
          "<"
         ],
         [
-         "Boolean",
+         "boolean",
          "|"
         ],
         [
@@ -2920,7 +2932,7 @@
        "type": [
         [
          [
-          "String"
+          "string"
          ]
         ]
        ]
@@ -2961,7 +2973,7 @@
        "type": [
         [
          [
-          "String"
+          "string"
          ]
         ]
        ]
@@ -3002,7 +3014,7 @@
        "type": [
         [
          [
-          "String"
+          "string"
          ]
         ]
        ]
@@ -3043,7 +3055,7 @@
        "type": [
         [
          [
-          "String"
+          "string"
          ]
         ]
        ]
@@ -3054,7 +3066,7 @@
        "type": [
         [
          [
-          "Number"
+          "number"
          ]
         ]
        ]
@@ -3077,7 +3089,7 @@
         ]
        ]
       ],
-      "description": "Object with track information or with an error"
+      "description": "object with track information or with an error"
      },
      "meta": {
       "line": 222,
@@ -3147,7 +3159,7 @@
        "type": [
         [
          [
-          "String"
+          "string"
          ]
         ]
        ]
@@ -3172,7 +3184,7 @@
          "<"
         ],
         [
-         "Boolean",
+         "boolean",
          "|"
         ],
         [
@@ -3199,7 +3211,7 @@
        "type": [
         [
          [
-          "String"
+          "string"
          ]
         ]
        ]
@@ -3212,7 +3224,7 @@
        "type": [
         [
          [
-          "Number"
+          "number"
          ]
         ]
        ]
@@ -3226,7 +3238,7 @@
          "<"
         ],
         [
-         "Boolean",
+         "boolean",
          "|"
         ],
         [
@@ -3253,7 +3265,7 @@
        "type": [
         [
          [
-          "String"
+          "string"
          ]
         ]
        ]
@@ -3276,7 +3288,7 @@
         ]
        ]
       ],
-      "description": "Object with current and next track or error"
+      "description": "object with current and next track or error"
      },
      "meta": {
       "line": 341,
@@ -3294,7 +3306,7 @@
        "type": [
         [
          [
-          "String"
+          "string"
          ]
         ]
        ]
@@ -3305,7 +3317,7 @@
        "type": [
         [
          [
-          "Number"
+          "number"
          ]
         ]
        ]
@@ -3363,7 +3375,7 @@
        "type": [
         [
          [
-          "Number"
+          "number"
          ]
         ]
        ]
@@ -3404,7 +3416,7 @@
        "type": [
         [
          [
-          "String"
+          "string"
          ]
         ]
        ]
@@ -3449,7 +3461,7 @@
        "type": [
         [
          [
-          "String"
+          "string"
          ]
         ]
        ]
@@ -3463,7 +3475,7 @@
          "<"
         ],
         [
-         "Boolean",
+         "boolean",
          "|"
         ],
         [
@@ -3490,7 +3502,7 @@
        "type": [
         [
          [
-          "String"
+          "string"
          ]
         ]
        ]
@@ -3531,7 +3543,7 @@
        "type": [
         [
          [
-          "String"
+          "string"
          ]
         ]
        ]
@@ -3545,7 +3557,7 @@
          "<"
         ],
         [
-         "Boolean",
+         "boolean",
          "|"
         ],
         [
@@ -3609,15 +3621,15 @@
    ],
    "methods": [
     {
-     "name": "formatNumbers",
+     "name": "formatnumbers",
      "description": "Allows you to format numbers in a familiar form for people",
      "examples": [
-      "const formatData = client.player.utils.formatNumbers([1, 2, 30]);\r\r// Result: ['01', '02', '30']\rconsole.log(formatData);"
+      "const formatData = client.player.utils.formatnumbers([1, 2, 30]);\r\r// Result: ['01', '02', '30']\rconsole.log(formatData);"
      ],
      "params": [
       {
        "name": "data",
-       "description": "Numbers Array",
+       "description": "numbers Array",
        "type": [
         [
          [
@@ -3625,7 +3637,7 @@
           "<"
          ],
          [
-          "Number",
+          "number",
           ">"
          ]
         ]
@@ -3640,7 +3652,7 @@
          "<"
         ],
         [
-         "String",
+         "string",
          ">"
         ]
        ]
@@ -3666,7 +3678,7 @@
        "type": [
         [
          [
-          "Number"
+          "number"
          ]
         ]
        ]
@@ -3676,7 +3688,7 @@
       "types": [
        [
         [
-         "String"
+         "string"
         ]
        ]
       ],
@@ -3731,7 +3743,7 @@
       "types": [
        [
         [
-         "String"
+         "string"
         ]
        ]
       ],
@@ -3753,7 +3765,7 @@
       "types": [
        [
         [
-         "String"
+         "string"
         ]
        ]
       ],
@@ -3778,7 +3790,7 @@
        "type": [
         [
          [
-          "String"
+          "string"
          ]
         ]
        ]
@@ -3792,7 +3804,7 @@
          "<"
         ],
         [
-         "Number",
+         "number",
          ">"
         ]
        ]
@@ -3908,7 +3920,7 @@
        "type": [
         [
          [
-          "String"
+          "string"
          ]
         ]
        ]
@@ -3955,7 +3967,7 @@
    "type": [
     [
      [
-      "Object"
+      "object"
      ]
     ]
    ],
@@ -3968,20 +3980,20 @@
      "type": [
       [
        [
-        "Boolean"
+        "boolean"
        ]
       ]
      ]
     },
     {
      "name": "searchResultsLimit",
-     "description": "Number of results to be returned when searching for tracks by title",
+     "description": "number of results to be returned when searching for tracks by title",
      "optional": true,
      "default": 10,
      "type": [
       [
        [
-        "Number"
+        "number"
        ]
       ]
      ]
@@ -3994,7 +4006,7 @@
      "type": [
       [
        [
-        "Boolean"
+        "boolean"
        ]
       ]
      ]
@@ -4007,7 +4019,7 @@
      "type": [
       [
        [
-        "Number"
+        "number"
        ]
       ]
      ]
@@ -4019,7 +4031,7 @@
      "type": [
       [
        [
-        "Object"
+        "object"
        ]
       ]
      ]
@@ -4032,7 +4044,7 @@
      "type": [
       [
        [
-        "String"
+        "string"
        ]
       ]
      ]
@@ -4045,7 +4057,7 @@
      "type": [
       [
        [
-        "String"
+        "string"
        ]
       ]
      ]
@@ -4057,7 +4069,7 @@
      "type": [
       [
        [
-        "Object"
+        "object"
        ]
       ]
      ]
@@ -4070,7 +4082,7 @@
      "type": [
       [
        [
-        "Number"
+        "number"
        ]
       ]
      ]
@@ -4083,7 +4095,7 @@
      "type": [
       [
        [
-        "String"
+        "string"
        ]
       ]
      ]
@@ -4096,7 +4108,7 @@
      "type": [
       [
        [
-        "String"
+        "string"
        ]
       ]
      ]
@@ -4108,7 +4120,7 @@
      "type": [
       [
        [
-        "Object"
+        "object"
        ]
       ]
      ]
@@ -4120,7 +4132,7 @@
      "type": [
       [
        [
-        "Object"
+        "object"
        ]
       ]
      ]
@@ -4133,7 +4145,7 @@
      "type": [
       [
        [
-        "String"
+        "string"
        ]
       ]
      ]
@@ -4146,7 +4158,7 @@
      "type": [
       [
        [
-        "Number"
+        "number"
        ]
       ]
      ]
@@ -4158,7 +4170,7 @@
      "type": [
       [
        [
-        "Object"
+        "object"
        ]
       ]
      ]
@@ -4171,7 +4183,7 @@
      "type": [
       [
        [
-        "String"
+        "string"
        ]
       ]
      ]
@@ -4184,7 +4196,7 @@
      "type": [
       [
        [
-        "Number"
+        "number"
        ]
       ]
      ]
@@ -4201,7 +4213,7 @@
         "<"
        ],
        [
-        "String",
+        "string",
         ">"
        ]
       ]
@@ -4209,7 +4221,7 @@
     }
    ],
    "meta": {
-    "line": 540,
+    "line": 557,
     "file": "Player.ts",
     "path": "src"
    }
@@ -4219,7 +4231,7 @@
    "type": [
     [
      [
-      "Object"
+      "object"
      ]
     ]
    ],
@@ -4230,14 +4242,14 @@
      "type": [
       [
        [
-        "Boolean"
+        "boolean"
        ]
       ]
      ]
     }
    ],
    "meta": {
-    "line": 704,
+    "line": 721,
     "file": "Player.ts",
     "path": "src"
    }
@@ -4247,7 +4259,7 @@
    "type": [
     [
      [
-      "Object"
+      "object"
      ]
     ]
    ],
@@ -4259,7 +4271,7 @@
      "type": [
       [
        [
-        "Number"
+        "number"
        ]
       ]
      ]
@@ -4270,7 +4282,7 @@
      "type": [
       [
        [
-        "String"
+        "string"
        ]
       ]
      ]
@@ -4281,7 +4293,7 @@
      "type": [
       [
        [
-        "String"
+        "string"
        ]
       ]
      ]
@@ -4292,7 +4304,7 @@
      "type": [
       [
        [
-        "String"
+        "string"
        ]
       ]
      ]
@@ -4303,7 +4315,7 @@
      "type": [
       [
        [
-        "String"
+        "string"
        ]
       ]
      ]
@@ -4314,7 +4326,7 @@
      "type": [
       [
        [
-        "Object"
+        "object"
        ]
       ]
      ]
@@ -4325,7 +4337,7 @@
      "type": [
       [
        [
-        "String"
+        "string"
        ]
       ]
      ]
@@ -4336,7 +4348,7 @@
      "type": [
       [
        [
-        "String"
+        "string"
        ]
       ]
      ]
@@ -4347,7 +4359,7 @@
      "type": [
       [
        [
-        "Object"
+        "object"
        ]
       ]
      ]
@@ -4402,7 +4414,7 @@
      "type": [
       [
        [
-        "Object"
+        "object"
        ]
       ]
      ]
@@ -4413,7 +4425,7 @@
      "type": [
       [
        [
-        "String"
+        "string"
        ]
       ]
      ]
@@ -4424,7 +4436,7 @@
      "type": [
       [
        [
-        "String"
+        "string"
        ]
       ]
      ]
@@ -4435,14 +4447,14 @@
      "type": [
       [
        [
-        "String"
+        "string"
        ]
       ]
      ]
     }
    ],
    "meta": {
-    "line": 712,
+    "line": 727,
     "file": "Player.ts",
     "path": "src"
    }
@@ -4452,7 +4464,7 @@
    "type": [
     [
      [
-      "Object"
+      "object"
      ]
     ]
    ],
@@ -4463,7 +4475,7 @@
      "type": [
       [
        [
-        "Object"
+        "object"
        ]
       ]
      ]
@@ -4534,7 +4546,7 @@
      "type": [
       [
        [
-        "Object"
+        "object"
        ]
       ]
      ]
@@ -4545,7 +4557,7 @@
      "type": [
       [
        [
-        "Boolean"
+        "boolean"
        ]
       ]
      ]
@@ -4556,7 +4568,7 @@
      "type": [
       [
        [
-        "Boolean"
+        "boolean"
        ]
       ]
      ]
@@ -4567,7 +4579,7 @@
      "type": [
       [
        [
-        "Number"
+        "number"
        ]
       ]
      ]
@@ -4578,7 +4590,7 @@
      "type": [
       [
        [
-        "Number"
+        "number"
        ]
       ]
      ]
@@ -4589,7 +4601,7 @@
      "type": [
       [
        [
-        "Boolean"
+        "boolean"
        ]
       ]
      ]
@@ -4607,7 +4619,7 @@
     }
    ],
    "meta": {
-    "line": 736,
+    "line": 749,
     "file": "Player.ts",
     "path": "src"
    }
@@ -4617,7 +4629,7 @@
    "type": [
     [
      [
-      "Object"
+      "object"
      ]
     ]
    ],
@@ -4628,7 +4640,7 @@
      "type": [
       [
        [
-        "String"
+        "string"
        ]
       ]
      ]
@@ -4639,14 +4651,14 @@
      "type": [
       [
        [
-        "String"
+        "string"
        ]
       ]
      ]
     }
    ],
    "meta": {
-    "line": 756,
+    "line": 767,
     "file": "Player.ts",
     "path": "src"
    }
@@ -4656,7 +4668,7 @@
    "type": [
     [
      [
-      "Object"
+      "object"
      ]
     ]
    ],
@@ -4667,7 +4679,7 @@
      "type": [
       [
        [
-        "String"
+        "string"
        ]
       ]
      ]
@@ -4678,46 +4690,7 @@
      "type": [
       [
        [
-        "String"
-       ]
-      ]
-     ]
-    }
-   ],
-   "meta": {
-    "line": 765,
-    "file": "Player.ts",
-    "path": "src"
-   }
-  },
-  {
-   "name": "PlaylistTrack",
-   "type": [
-    [
-     [
-      "Object"
-     ]
-    ]
-   ],
-   "props": [
-    {
-     "name": "url",
-     "description": "Track URL",
-     "type": [
-      [
-       [
-        "String"
-       ]
-      ]
-     ]
-    },
-    {
-     "name": "title",
-     "description": "Track Title",
-     "type": [
-      [
-       [
-        "String"
+        "string"
        ]
       ]
      ]
@@ -4730,11 +4703,50 @@
    }
   },
   {
+   "name": "PlaylistTrack",
+   "type": [
+    [
+     [
+      "object"
+     ]
+    ]
+   ],
+   "props": [
+    {
+     "name": "url",
+     "description": "Track URL",
+     "type": [
+      [
+       [
+        "string"
+       ]
+      ]
+     ]
+    },
+    {
+     "name": "title",
+     "description": "Track Title",
+     "type": [
+      [
+       [
+        "string"
+       ]
+      ]
+     ]
+    }
+   ],
+   "meta": {
+    "line": 781,
+    "file": "Player.ts",
+    "path": "src"
+   }
+  },
+  {
    "name": "CreatePlaylistData",
    "type": [
     [
      [
-      "Object"
+      "object"
      ]
     ]
    ],
@@ -4746,7 +4758,7 @@
      "type": [
       [
        [
-        "String"
+        "string"
        ]
       ]
      ]
@@ -4757,7 +4769,7 @@
      "type": [
       [
        [
-        "String"
+        "string"
        ]
       ]
      ]
@@ -4775,7 +4787,7 @@
     }
    ],
    "meta": {
-    "line": 783,
+    "line": 788,
     "file": "Player.ts",
     "path": "src"
    }
@@ -4785,7 +4797,7 @@
    "type": [
     [
      [
-      "Object"
+      "object"
      ]
     ]
    ],
@@ -4797,7 +4809,7 @@
      "type": [
       [
        [
-        "String"
+        "string"
        ]
       ]
      ]
@@ -4815,7 +4827,7 @@
     }
    ],
    "meta": {
-    "line": 793,
+    "line": 796,
     "file": "Player.ts",
     "path": "src"
    }
@@ -4825,7 +4837,7 @@
    "type": [
     [
      [
-      "Object"
+      "object"
      ]
     ]
    ],
@@ -4836,7 +4848,7 @@
      "type": [
       [
        [
-        "String"
+        "string"
        ]
       ]
      ]
@@ -4847,7 +4859,7 @@
      "type": [
       [
        [
-        "String"
+        "string"
        ]
       ]
      ]
@@ -4858,7 +4870,7 @@
      "type": [
       [
        [
-        "String"
+        "string"
        ]
       ]
      ]
@@ -4869,7 +4881,7 @@
      "type": [
       [
        [
-        "Number"
+        "number"
        ]
       ]
      ]
@@ -4880,7 +4892,7 @@
      "type": [
       [
        [
-        "Number"
+        "number"
        ]
       ]
      ]
@@ -4891,7 +4903,7 @@
      "type": [
       [
        [
-        "Number"
+        "number"
        ]
       ]
      ]
@@ -4902,7 +4914,7 @@
      "type": [
       [
        [
-        "Number"
+        "number"
        ]
       ]
      ]
@@ -4925,7 +4937,7 @@
     }
    ],
    "meta": {
-    "line": 802,
+    "line": 803,
     "file": "Player.ts",
     "path": "src"
    }
@@ -4935,18 +4947,18 @@
    "type": [
     [
      [
-      "Object"
+      "object"
      ]
     ]
    ],
    "props": [
     {
      "name": "error",
-     "description": "Error Object",
+     "description": "Error object",
      "type": [
       [
        [
-        "Object"
+        "object"
        ]
       ]
      ]
@@ -4957,7 +4969,7 @@
      "type": [
       [
        [
-        "Number"
+        "number"
        ]
       ]
      ]
@@ -4968,14 +4980,14 @@
      "type": [
       [
        [
-        "String"
+        "string"
        ]
       ]
      ]
     }
    ],
    "meta": {
-    "line": 817,
+    "line": 816,
     "file": "Player.ts",
     "path": "src"
    }
@@ -4985,7 +4997,7 @@
    "type": [
     [
      [
-      "Object"
+      "object"
      ]
     ]
    ],
@@ -5014,7 +5026,7 @@
     }
    ],
    "meta": {
-    "line": 827,
+    "line": 824,
     "file": "Player.ts",
     "path": "src"
    }
@@ -5024,7 +5036,7 @@
    "type": [
     [
      [
-      "Object"
+      "object"
      ]
     ]
    ],
@@ -5035,7 +5047,7 @@
      "type": [
       [
        [
-        "Number"
+        "number"
        ]
       ]
      ]
@@ -5069,7 +5081,7 @@
     }
    ],
    "meta": {
-    "line": 836,
+    "line": 831,
     "file": "Player.ts",
     "path": "src"
    }
@@ -5079,7 +5091,7 @@
    "type": [
     [
      [
-      "Object"
+      "object"
      ]
     ]
    ],
@@ -5090,7 +5102,7 @@
      "type": [
       [
        [
-        "String"
+        "string"
        ]
       ]
      ]
@@ -5101,14 +5113,14 @@
      "type": [
       [
        [
-        "String"
+        "string"
        ]
       ]
      ]
     }
    ],
    "meta": {
-    "line": 846,
+    "line": 839,
     "file": "Player.ts",
     "path": "src"
    }
@@ -5118,7 +5130,7 @@
    "type": [
     [
      [
-      "Object"
+      "object"
      ]
     ]
    ],
@@ -5129,7 +5141,7 @@
      "type": [
       [
        [
-        "Object"
+        "object"
        ]
       ]
      ]
@@ -5140,7 +5152,7 @@
      "type": [
       [
        [
-        "Boolean"
+        "boolean"
        ]
       ]
      ]
@@ -5151,7 +5163,7 @@
      "type": [
       [
        [
-        "Boolean"
+        "boolean"
        ]
       ]
      ]
@@ -5173,7 +5185,7 @@
      "type": [
       [
        [
-        "Boolean"
+        "boolean"
        ]
       ]
      ]
@@ -5184,7 +5196,7 @@
      "type": [
       [
        [
-        "Number"
+        "number"
        ]
       ]
      ]
@@ -5195,7 +5207,7 @@
      "type": [
       [
        [
-        "Object"
+        "object"
        ]
       ]
      ]
@@ -5206,12 +5218,12 @@
      "type": [
       [
        [
-        "String"
+        "string"
        ]
       ],
       [
        [
-        "Number"
+        "number"
        ]
       ]
      ]
@@ -5222,12 +5234,12 @@
      "type": [
       [
        [
-        "String"
+        "string"
        ]
       ],
       [
        [
-        "Number"
+        "number"
        ]
       ]
      ]
@@ -5238,12 +5250,12 @@
      "type": [
       [
        [
-        "String"
+        "string"
        ]
       ],
       [
        [
-        "Number"
+        "number"
        ]
       ]
      ]
@@ -5254,19 +5266,19 @@
      "type": [
       [
        [
-        "String"
+        "string"
        ]
       ],
       [
        [
-        "Number"
+        "number"
        ]
       ]
      ]
     }
    ],
    "meta": {
-    "line": 855,
+    "line": 846,
     "file": "Player.ts",
     "path": "src"
    }
@@ -5276,7 +5288,7 @@
    "type": [
     [
      [
-      "Object"
+      "object"
      ]
     ]
    ],
@@ -5288,7 +5300,7 @@
      "type": [
       [
        [
-        "Object"
+        "object"
        ]
       ]
      ]
@@ -5334,7 +5346,7 @@
      "type": [
       [
        [
-        "String"
+        "string"
        ]
       ]
      ]
@@ -5352,7 +5364,7 @@
     }
    ],
    "meta": {
-    "line": 873,
+    "line": 862,
     "file": "Player.ts",
     "path": "src"
    }
@@ -5362,7 +5374,7 @@
    "type": [
     [
      [
-      "Object"
+      "object"
      ]
     ]
    ],
@@ -5375,7 +5387,7 @@
      "type": [
       [
        [
-        "Number"
+        "number"
        ]
       ]
      ]
@@ -5387,14 +5399,14 @@
      "type": [
       [
        [
-        "String"
+        "string"
        ]
       ]
      ]
     }
    ],
    "meta": {
-    "line": 886,
+    "line": 873,
     "file": "Player.ts",
     "path": "src"
    }
@@ -5404,7 +5416,7 @@
    "type": [
     [
      [
-      "Object"
+      "object"
      ]
     ]
    ],
@@ -5415,7 +5427,7 @@
      "type": [
       [
        [
-        "String"
+        "string"
        ]
       ]
      ]
@@ -5426,14 +5438,14 @@
      "type": [
       [
        [
-        "String"
+        "string"
        ]
       ]
      ]
     }
    ],
    "meta": {
-    "line": 895,
+    "line": 880,
     "file": "Player.ts",
     "path": "src"
    }
@@ -5443,7 +5455,7 @@
    "type": [
     [
      [
-      "Object"
+      "object"
      ]
     ]
    ],
@@ -5454,7 +5466,7 @@
      "type": [
       [
        [
-        "String"
+        "string"
        ]
       ]
      ]
@@ -5465,7 +5477,7 @@
      "type": [
       [
        [
-        "String"
+        "string"
        ]
       ]
      ]
@@ -5482,7 +5494,7 @@
    "type": [
     [
      [
-      "Object"
+      "object"
      ]
     ]
    ],
@@ -5493,7 +5505,7 @@
      "type": [
       [
        [
-        "String"
+        "string"
        ]
       ]
      ]
@@ -5504,7 +5516,7 @@
      "type": [
       [
        [
-        "String"
+        "string"
        ]
       ]
      ]
@@ -5515,7 +5527,7 @@
      "type": [
       [
        [
-        "String"
+        "string"
        ]
       ]
      ]
@@ -5526,7 +5538,7 @@
      "type": [
       [
        [
-        "String"
+        "string"
        ]
       ]
      ]
@@ -5537,7 +5549,7 @@
      "type": [
       [
        [
-        "String"
+        "string"
        ]
       ]
      ]
@@ -5548,7 +5560,7 @@
      "type": [
       [
        [
-        "String"
+        "string"
        ]
       ]
      ]
@@ -5559,7 +5571,7 @@
      "type": [
       [
        [
-        "String"
+        "string"
        ]
       ]
      ]
@@ -5570,7 +5582,7 @@
      "type": [
       [
        [
-        "String"
+        "string"
        ]
       ]
      ]
@@ -5587,7 +5599,7 @@
    "type": [
     [
      [
-      "Object"
+      "object"
      ]
     ]
    ],
@@ -5598,7 +5610,7 @@
      "type": [
       [
        [
-        "String"
+        "string"
        ]
       ]
      ]
@@ -5609,7 +5621,7 @@
      "type": [
       [
        [
-        "String"
+        "string"
        ]
       ]
      ]
@@ -5626,7 +5638,7 @@
    "type": [
     [
      [
-      "Object"
+      "object"
      ]
     ]
    ],
@@ -5637,7 +5649,7 @@
      "type": [
       [
        [
-        "String"
+        "string"
        ]
       ]
      ]
@@ -5648,7 +5660,7 @@
      "type": [
       [
        [
-        "String"
+        "string"
        ]
       ]
      ]

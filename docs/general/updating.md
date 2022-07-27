@@ -1,6 +1,8 @@
-This documentation page is a short list of changes to your code that will have to be done when switching to a specific version of discord-player-music.
+# Updating page
 
-# 1.1.5
+This documentation page is a short list of changes to your code that will have to be done when switching to a specific version of discord-player-music!
+
+## 1.1.5
 In version 1.1.5, `discord-player-music` was completely rewritten for the manager system.
 
 ### Player Constructor
@@ -66,7 +68,7 @@ In version 1.1.5, `discord-player-music` was completely rewritten for the manage
 + player.init
 ```
 
-# 1.1.7
+## 1.1.7
 In version 1.1.7, `discord-player-music` was completely rewritten on TypeScript language.
 
 ### Module Constructor

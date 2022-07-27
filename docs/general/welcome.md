@@ -1,17 +1,16 @@
 <div align="center">
-  <br />
-  <p>
-    <a href="https://dpm.js.org"><img src="https://dpm.js.org/static/dpm.png" width="546" alt="DPM Main Image" /></a>
-  </p>
-  <br/>
-  <p>
-    <a href="https://discord.gg/zzbkvCcu2r"><img src="https://img.shields.io/discord/827221018879328298?color=5865F2&logo=discord&logoColor=white" alt="Support server" /></a>
-    <a href="https://www.npmjs.com/package/discord-player-music"><img src="https://img.shields.io/npm/v/discord-player-music.png?maxAge=3600" alt="NPM version" /></a>
-    <a href="https://www.npmjs.com/package/discord-player-music"><img src="https://img.shields.io/npm/dt/discord-player-music.png?maxAge=3600" alt="NPM downloads" /></a>
-  </p>
+	<h1>Welcome to the 'discord-player-music' page!</h1>
+	<br />
+	<p>
+		<a href="https://dpm.js.org"><img src="./assets/dpm-grad.gif" width="546" alt="DPM Main Image" /></a>
+	</p>
+	<br/>
+	<p>
+		<a href="https://discord.gg/zzbkvCcu2r"><img src="https://img.shields.io/discord/827221018879328298?color=5865F2&logo=discord&logoColor=white" alt="Support Server" /></a>
+		<a href="https://www.npmjs.com/package/discord-player-music"><img src="https://img.shields.io/npm/dt/discord-player-music.png?maxAge=3600" alt="NPM downloads" /></a>
+		<a href="https://www.npmjs.com/package/discord-player-music"><img src="https://img.shields.io/npm/v/discord-player-music.png?maxAge=3600" alt="NPM page" /></a>
+	</p>
 </div>
-
-<h1 style="text-align: center">Welcome to the 'discord-player-music' page!</h1>
 
 ## About
 
@@ -22,8 +21,7 @@
 * 🎸 Audio filters
 * 📌 Guilds Playlists
 * 📃 Lyrics
-* ⏰ Play in multiple servers at the same time
-* ⚙️ 100% Promise-based
+* 📂 Multiple servers
 
 ## Installation
 
@@ -66,17 +64,22 @@ client.on('ready', async () => {
   	return console.log('Client is ready!');
 })
 
-client.login('YOUR_BOT_TOKEN_HERE');
+client.player.on('ready', async () => {
+	return console.log('Player is ready!');
+})
+
+client.login('YOUR_CLIENT_TOKEN_HERE');
 ```
 
 # Links
 
+* NPM: [Open](https://www.npmjs.com/package/discord-player-music)
+* GitHub: [Open](https://github.com/xyligan-gp/discord-player-music)
+* Examples: [See](https://github.com/xyligan-gp/discord-player-music/tree/stable/examples)
+* Documentation: [Open](https://dpm.js.org)
+
 * Module Developer: [xyligan](https://github.com/xyligan-gp)
 * Developer Discord: [♡ xүℓ[ι]gαη4εg ♡#9457](https://discord.com/users/533347075463577640)
-* Documentation: [Click](https://dpm.js.org)
-* NPM: [Click](https://www.npmjs.com/package/discord-player-music)
-* GitHub: [Click](https://github.com/xyligan-gp/discord-player-music)
-* Examples: [Click](https://github.com/xyligan-gp/discord-player-music/tree/stable/examples)
-* Support Server - [Click](https://discord.gg/zzbkvCcu2r)
+* Support Server: [Join xyligan development](https://discord.gg/zzbkvCcu2r)
 
-<h1>♥ Thanks for using Discord Player Music ♥</h1>
+<center><h1>♥ Thanks for using Discord Player Music ♥</h1></center>

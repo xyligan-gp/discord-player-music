@@ -8,13 +8,9 @@ This is just the smallest part of what can be done. More examples can be found h
 import { Collector, Loop, Player, Search } from 'discord-player-music';
 import { Client, EmbedBuilder, GatewayIntentBits, Partials, TextChannel, VoiceChannel } from 'discord.js';
 
-import { FilterType, PlayerLyricsData, PlayerQueue } from 'discord-player-music/types/PlayerData';
+import { FilterType, LyricsData, PlayerQueue } from 'discord-player-music/types/PlayerData';
 
 const client = new Client({
-    rest: {
-        offset: 0
-    },
-
     intents: [
         GatewayIntentBits.Guilds,
         GatewayIntentBits.GuildMembers,
@@ -44,7 +40,7 @@ client.login('YOUR_CLIENT_TOKEN_HERE');
 ```
 
 ## Bot command initialization
-```JS
+```js
 client.on('messageCreate', async message => {
     const msgChannel = message.channel as TextChannel;
     const messageArray = message.content.split(' ');
@@ -55,7 +51,7 @@ client.on('messageCreate', async message => {
 ## Writing bot commands
 
 ### Search command
-```JS
+```js
 if(command === `${defaultPrefix}search`) {
     const searchQuery = message.content.substring(defaultPrefix.length + 7);
 
@@ -109,7 +105,7 @@ if(command === `${defaultPrefix}lyrics`) {
 
         message.channel.send({ content: `${message.member}, an error occurred while executing the command, take a look at the console!` });
     }else{
-        const lyricsData = searchData as PlayerLyricsData;
+        const lyricsData = searchData as LyricsData;
 
         if((lyricsData.result.length + lyricsData.query.length) <= 2048) message.channel.send({ content: `Search Query: **${lyricsData.query}**\n\n${lyricsData.result}` })
         else message.channel.send({ content: `${message.member}, result content exceeds 2048 characters!` });
@@ -346,6 +342,22 @@ player.on('queueStarted', async queue => {
     const channel = queue.channel.text;
 
     return channel.send({ content: `Queue for server with ID '${channel.guild.id}' started!` });
+})
+```
+
+### CreatedPlaylist event
+
+```js
+player.on('createdPlaylist', async playlist => {
+    return console.log(`Playlist with id ${playlist.id} success created!`);
+})
+```
+
+### DeletedPlaylist event
+
+```js
+player.on('deletedPlaylist', async playlist => {
+    return console.log(`Playlist with id ${playlist.id} successfully deleted!`);
 })
 ```
 
