@@ -2,7 +2,7 @@
  "meta": {
   "generator": "0.11.1",
   "format": 22,
-  "date": 1659026612982
+  "date": 1659031054958
  },
  "custom": {
   "general": {
@@ -93,7 +93,7 @@
       ]
      ],
      "meta": {
-      "line": 62,
+      "line": 88,
       "file": "Player.ts",
       "path": "src"
      }
@@ -110,7 +110,7 @@
       ]
      ],
      "meta": {
-      "line": 70,
+      "line": 96,
       "file": "Player.ts",
       "path": "src"
      }
@@ -127,7 +127,7 @@
       ]
      ],
      "meta": {
-      "line": 78,
+      "line": 104,
       "file": "Player.ts",
       "path": "src"
      }
@@ -143,7 +143,7 @@
       ]
      ],
      "meta": {
-      "line": 86,
+      "line": 112,
       "file": "Player.ts",
       "path": "src"
      }
@@ -159,7 +159,7 @@
       ]
      ],
      "meta": {
-      "line": 93,
+      "line": 119,
       "file": "Player.ts",
       "path": "src"
      }
@@ -175,7 +175,7 @@
       ]
      ],
      "meta": {
-      "line": 100,
+      "line": 126,
       "file": "Player.ts",
       "path": "src"
      }
@@ -191,7 +191,7 @@
       ]
      ],
      "meta": {
-      "line": 107,
+      "line": 133,
       "file": "Player.ts",
       "path": "src"
      }
@@ -207,7 +207,7 @@
       ]
      ],
      "meta": {
-      "line": 114,
+      "line": 140,
       "file": "Player.ts",
       "path": "src"
      }
@@ -223,7 +223,7 @@
       ]
      ],
      "meta": {
-      "line": 121,
+      "line": 147,
       "file": "Player.ts",
       "path": "src"
      }
@@ -239,7 +239,7 @@
       ]
      ],
      "meta": {
-      "line": 128,
+      "line": 154,
       "file": "Player.ts",
       "path": "src"
      }
@@ -255,7 +255,7 @@
       ]
      ],
      "meta": {
-      "line": 135,
+      "line": 161,
       "file": "Player.ts",
       "path": "src"
      }
@@ -271,7 +271,7 @@
       ]
      ],
      "meta": {
-      "line": 142,
+      "line": 168,
       "file": "Player.ts",
       "path": "src"
      }
@@ -287,7 +287,7 @@
       ]
      ],
      "meta": {
-      "line": 149,
+      "line": 175,
       "file": "Player.ts",
       "path": "src"
      }
@@ -303,7 +303,7 @@
       ]
      ],
      "meta": {
-      "line": 156,
+      "line": 182,
       "file": "Player.ts",
       "path": "src"
      }
@@ -319,7 +319,7 @@
       ]
      ],
      "meta": {
-      "line": 188,
+      "line": 224,
       "file": "Player.ts",
       "path": "src"
      }
@@ -335,7 +335,7 @@
       ]
      ],
      "meta": {
-      "line": 199,
+      "line": 235,
       "file": "Player.ts",
       "path": "src"
      }
@@ -398,7 +398,7 @@
       "description": "Void or error object"
      },
      "meta": {
-      "line": 210,
+      "line": 246,
       "file": "Player.ts",
       "path": "src"
      }
@@ -480,7 +480,7 @@
       "description": "Array with search results or error object"
      },
      "meta": {
-      "line": 312,
+      "line": 394,
       "file": "Player.ts",
       "path": "src"
      }
@@ -524,7 +524,7 @@
       "description": "Returns a result or error object"
      },
      "meta": {
-      "line": 420,
+      "line": 561,
       "file": "Player.ts",
       "path": "src"
      }
@@ -580,7 +580,7 @@
       "description": "Void"
      },
      "meta": {
-      "line": 442,
+      "line": 594,
       "file": "Player.ts",
       "path": "src"
      }
@@ -663,7 +663,7 @@
       "description": "object with received data or error"
      },
      "meta": {
-      "line": 463,
+      "line": 625,
       "file": "Player.ts",
       "path": "src"
      }
@@ -673,7 +673,7 @@
      "description": "Method for initializing module",
      "access": "private",
      "meta": {
-      "line": 569,
+      "line": 806,
       "file": "Player.ts",
       "path": "src"
      }
@@ -833,7 +833,7 @@
       }
      ],
      "meta": {
-      "line": 640,
+      "line": 902,
       "file": "Player.ts",
       "path": "src"
      }
@@ -849,31 +849,7 @@
        "type": [
         [
          [
-          "object"
-         ]
-        ]
-       ]
-      },
-      {
-       "name": "channel.text",
-       "description": "Discord Guild text Channel",
-       "optional": true,
-       "type": [
-        [
-         [
-          "TextChannel"
-         ]
-        ]
-       ]
-      },
-      {
-       "name": "channel.voice",
-       "description": "Discord Guild Voice Channel",
-       "optional": true,
-       "type": [
-        [
-         [
-          "VoiceChannel"
+          "ChannelTypes"
          ]
         ]
        ]
@@ -913,7 +889,7 @@
       }
      ],
      "meta": {
-      "line": 648,
+      "line": 910,
       "file": "Player.ts",
       "path": "src"
      }
@@ -984,29 +960,7 @@
        "type": [
         [
          [
-          "object"
-         ]
-        ]
-       ]
-      },
-      {
-       "name": "author.name",
-       "description": "Track author name",
-       "type": [
-        [
-         [
-          "string"
-         ]
-        ]
-       ]
-      },
-      {
-       "name": "author.url",
-       "description": "Track author channel URL",
-       "type": [
-        [
-         [
-          "string"
+          "AuthorObject"
          ]
         ]
        ]
@@ -1017,29 +971,7 @@
        "type": [
         [
          [
-          "object"
-         ]
-        ]
-       ]
-      },
-      {
-       "name": "channel.text",
-       "description": "Discord Guild Text Channel",
-       "type": [
-        [
-         [
-          "TextChannel"
-         ]
-        ]
-       ]
-      },
-      {
-       "name": "channel.voice",
-       "description": "Discord Guild Voice Channel",
-       "type": [
-        [
-         [
-          "VoiceChannel"
+          "ChannelTypes"
          ]
         ]
        ]
@@ -1072,47 +1004,14 @@
        "type": [
         [
          [
-          "object"
-         ]
-        ]
-       ]
-      },
-      {
-       "name": "duration.hours",
-       "description": "Track duration in hours",
-       "type": [
-        [
-         [
-          "string"
-         ]
-        ]
-       ]
-      },
-      {
-       "name": "duration.minutes",
-       "description": "Track duration in minutes",
-       "type": [
-        [
-         [
-          "string"
-         ]
-        ]
-       ]
-      },
-      {
-       "name": "duration.seconds",
-       "description": "Track duration in seconds",
-       "type": [
-        [
-         [
-          "string"
+          "DurationObject"
          ]
         ]
        ]
       }
      ],
      "meta": {
-      "line": 660,
+      "line": 920,
       "file": "Player.ts",
       "path": "src"
      }
@@ -1183,29 +1082,7 @@
        "type": [
         [
          [
-          "object"
-         ]
-        ]
-       ]
-      },
-      {
-       "name": "author.name",
-       "description": "Track author name",
-       "type": [
-        [
-         [
-          "string"
-         ]
-        ]
-       ]
-      },
-      {
-       "name": "author.url",
-       "description": "Track author channel URL",
-       "type": [
-        [
-         [
-          "string"
+          "AuthorObject"
          ]
         ]
        ]
@@ -1216,29 +1093,7 @@
        "type": [
         [
          [
-          "object"
-         ]
-        ]
-       ]
-      },
-      {
-       "name": "channel.text",
-       "description": "Discord Guild Text Channel",
-       "type": [
-        [
-         [
-          "TextChannel"
-         ]
-        ]
-       ]
-      },
-      {
-       "name": "channel.voice",
-       "description": "Discord Guild Voice Channel",
-       "type": [
-        [
-         [
-          "VoiceChannel"
+          "ChannelTypes"
          ]
         ]
        ]
@@ -1271,47 +1126,14 @@
        "type": [
         [
          [
-          "object"
-         ]
-        ]
-       ]
-      },
-      {
-       "name": "duration.hours",
-       "description": "Track duration in hours",
-       "type": [
-        [
-         [
-          "string"
-         ]
-        ]
-       ]
-      },
-      {
-       "name": "duration.minutes",
-       "description": "Track duration in minutes",
-       "type": [
-        [
-         [
-          "string"
-         ]
-        ]
-       ]
-      },
-      {
-       "name": "duration.seconds",
-       "description": "Track duration in seconds",
-       "type": [
-        [
-         [
-          "string"
+          "DurationObject"
          ]
         ]
        ]
       }
      ],
      "meta": {
-      "line": 683,
+      "line": 936,
       "file": "Player.ts",
       "path": "src"
      }
@@ -1415,7 +1237,7 @@
       }
      ],
      "meta": {
-      "line": 706,
+      "line": 952,
       "file": "Player.ts",
       "path": "src"
      }
@@ -1519,7 +1341,7 @@
       }
      ],
      "meta": {
-      "line": 720,
+      "line": 966,
       "file": "Player.ts",
       "path": "src"
      }
@@ -1534,29 +1356,7 @@
        "type": [
         [
          [
-          "object"
-         ]
-        ]
-       ]
-      },
-      {
-       "name": "channel.text",
-       "description": "Discord Guild Text Channel",
-       "type": [
-        [
-         [
-          "TextChannel"
-         ]
-        ]
-       ]
-      },
-      {
-       "name": "channel.voice",
-       "description": "Discord Guild Voice Channel",
-       "type": [
-        [
-         [
-          "VoiceChannel"
+          "ChannelTypes"
          ]
         ]
        ]
@@ -1605,29 +1405,7 @@
        "type": [
         [
          [
-          "object"
-         ]
-        ]
-       ]
-      },
-      {
-       "name": "loop.track",
-       "description": "Loop current track status",
-       "type": [
-        [
-         [
-          "boolean"
-         ]
-        ]
-       ]
-      },
-      {
-       "name": "loop.queue",
-       "description": "Loop guild queue status",
-       "type": [
-        [
-         [
-          "boolean"
+          "LoopModes"
          ]
         ]
        ]
@@ -1678,7 +1456,7 @@
       }
      ],
      "meta": {
-      "line": 734,
+      "line": 980,
       "file": "Player.ts",
       "path": "src"
      }
@@ -1693,29 +1471,7 @@
        "type": [
         [
          [
-          "object"
-         ]
-        ]
-       ]
-      },
-      {
-       "name": "channel.text",
-       "description": "Discord Guild Text Channel",
-       "type": [
-        [
-         [
-          "TextChannel"
-         ]
-        ]
-       ]
-      },
-      {
-       "name": "channel.voice",
-       "description": "Discord Guild Voice Channel",
-       "type": [
-        [
-         [
-          "VoiceChannel"
+          "ChannelTypes"
          ]
         ]
        ]
@@ -1764,29 +1520,7 @@
        "type": [
         [
          [
-          "object"
-         ]
-        ]
-       ]
-      },
-      {
-       "name": "loop.track",
-       "description": "Loop current track status",
-       "type": [
-        [
-         [
-          "boolean"
-         ]
-        ]
-       ]
-      },
-      {
-       "name": "loop.queue",
-       "description": "Loop guild queue status",
-       "type": [
-        [
-         [
-          "boolean"
+          "LoopModes"
          ]
         ]
        ]
@@ -1837,7 +1571,7 @@
       }
      ],
      "meta": {
-      "line": 753,
+      "line": 995,
       "file": "Player.ts",
       "path": "src"
      }
@@ -1891,14 +1625,14 @@
       }
      ],
      "meta": {
-      "line": 772,
+      "line": 1010,
       "file": "Player.ts",
       "path": "src"
      }
     }
    ],
    "meta": {
-    "line": 25,
+    "line": 46,
     "file": "Player.ts",
     "path": "src"
    }
@@ -2077,7 +1811,7 @@
       ]
      ],
      "meta": {
-      "line": 36,
+      "line": 42,
       "file": "DatabaseManager.ts",
       "path": "src/managers"
      }
@@ -2093,7 +1827,7 @@
       ]
      ],
      "meta": {
-      "line": 44,
+      "line": 50,
       "file": "DatabaseManager.ts",
       "path": "src/managers"
      }
@@ -2110,7 +1844,7 @@
       ]
      ],
      "meta": {
-      "line": 54,
+      "line": 60,
       "file": "DatabaseManager.ts",
       "path": "src/managers"
      }
@@ -2134,7 +1868,7 @@
       "description": "Database object"
      },
      "meta": {
-      "line": 65,
+      "line": 71,
       "file": "DatabaseManager.ts",
       "path": "src/managers"
      }
@@ -2160,7 +1894,7 @@
       }
      ],
      "meta": {
-      "line": 80,
+      "line": 86,
       "file": "DatabaseManager.ts",
       "path": "src/managers"
      }
@@ -2185,7 +1919,7 @@
       }
      ],
      "meta": {
-      "line": 95,
+      "line": 104,
       "file": "DatabaseManager.ts",
       "path": "src/managers"
      }
@@ -2195,7 +1929,7 @@
      "description": "Method for module database initialization",
      "access": "private",
      "meta": {
-      "line": 120,
+      "line": 131,
       "file": "DatabaseManager.ts",
       "path": "src/managers"
      }
@@ -2239,7 +1973,7 @@
       ]
      ],
      "meta": {
-      "line": 29,
+      "line": 35,
       "file": "FiltersManager.ts",
       "path": "src/managers"
      }
@@ -2265,7 +1999,7 @@
       ]
      ],
      "meta": {
-      "line": 37,
+      "line": 43,
       "file": "FiltersManager.ts",
       "path": "src/managers"
      }
@@ -2322,7 +2056,7 @@
       "description": "The presence of an added filter in the storage or an object with an error"
      },
      "meta": {
-      "line": 48,
+      "line": 54,
       "file": "FiltersManager.ts",
       "path": "src/managers"
      }
@@ -2362,7 +2096,7 @@
       "description": "Key filter search result"
      },
      "meta": {
-      "line": 73,
+      "line": 99,
       "file": "FiltersManager.ts",
       "path": "src/managers"
      }
@@ -2406,7 +2140,7 @@
       "description": "Filter object (name & value) or object with an error"
      },
      "meta": {
-      "line": 92,
+      "line": 124,
       "file": "FiltersManager.ts",
       "path": "src/managers"
      }
@@ -2441,7 +2175,7 @@
       "description": "Filters collection"
      },
      "meta": {
-      "line": 114,
+      "line": 159,
       "file": "FiltersManager.ts",
       "path": "src/managers"
      }
@@ -2485,7 +2219,7 @@
       "description": "Filter removal status or error object"
      },
      "meta": {
-      "line": 129,
+      "line": 174,
       "file": "FiltersManager.ts",
       "path": "src/managers"
      }
@@ -2495,7 +2229,7 @@
      "description": "Method for initializing module filters storage",
      "access": "private",
      "meta": {
-      "line": 150,
+      "line": 208,
       "file": "FiltersManager.ts",
       "path": "src/managers"
      }
@@ -2539,7 +2273,7 @@
       ]
      ],
      "meta": {
-      "line": 28,
+      "line": 39,
       "file": "PlaylistsManager.ts",
       "path": "src/managers"
      }
@@ -2595,7 +2329,7 @@
       "description": "Created playlist data"
      },
      "meta": {
-      "line": 37,
+      "line": 48,
       "file": "PlaylistsManager.ts",
       "path": "src/managers"
      }
@@ -2650,7 +2384,7 @@
       "description": "Changed playlist or object with an error"
      },
      "meta": {
-      "line": 91,
+      "line": 118,
       "file": "PlaylistsManager.ts",
       "path": "src/managers"
      }
@@ -2727,7 +2461,7 @@
       "description": "Guild playlist data or object with an error"
      },
      "meta": {
-      "line": 143,
+      "line": 218,
       "file": "PlaylistsManager.ts",
       "path": "src/managers"
      }
@@ -2795,7 +2529,7 @@
       "description": "Changed playlist or object with an error"
      },
      "meta": {
-      "line": 184,
+      "line": 312,
       "file": "PlaylistsManager.ts",
       "path": "src/managers"
      }
@@ -2853,14 +2587,14 @@
       "description": "Deleted playlist or object with an error"
      },
      "meta": {
-      "line": 225,
+      "line": 402,
       "file": "PlaylistsManager.ts",
       "path": "src/managers"
      }
     }
    ],
    "meta": {
-    "line": 11,
+    "line": 16,
     "file": "PlaylistsManager.ts",
     "path": "src/managers"
    }
@@ -2897,7 +2631,7 @@
       ]
      ],
      "meta": {
-      "line": 41,
+      "line": 66,
       "file": "QueueManager.ts",
       "path": "src/managers"
      }
@@ -2923,7 +2657,7 @@
       ]
      ],
      "meta": {
-      "line": 49,
+      "line": 74,
       "file": "QueueManager.ts",
       "path": "src/managers"
      }
@@ -2939,7 +2673,7 @@
       ]
      ],
      "meta": {
-      "line": 58,
+      "line": 83,
       "file": "QueueManager.ts",
       "path": "src/managers"
      }
@@ -2985,7 +2719,7 @@
       "description": "Status of adding a track to the server queue"
      },
      "meta": {
-      "line": 69,
+      "line": 94,
       "file": "QueueManager.ts",
       "path": "src/managers"
      }
@@ -3043,7 +2777,7 @@
       "description": "Installation status or object with an error"
      },
      "meta": {
-      "line": 133,
+      "line": 171,
       "file": "QueueManager.ts",
       "path": "src/managers"
      }
@@ -3087,7 +2821,7 @@
       "description": "Queue object for server or `null`"
      },
      "meta": {
-      "line": 188,
+      "line": 258,
       "file": "QueueManager.ts",
       "path": "src/managers"
      }
@@ -3131,7 +2865,7 @@
       "description": "Progress bar data or an object with an error"
      },
      "meta": {
-      "line": 210,
+      "line": 296,
       "file": "QueueManager.ts",
       "path": "src/managers"
      }
@@ -3175,7 +2909,7 @@
       "description": "General information about the current stream"
      },
      "meta": {
-      "line": 261,
+      "line": 402,
       "file": "QueueManager.ts",
       "path": "src/managers"
      }
@@ -3230,7 +2964,7 @@
       "description": "object with track information or with an error"
      },
      "meta": {
-      "line": 285,
+      "line": 448,
       "file": "QueueManager.ts",
       "path": "src/managers"
      }
@@ -3285,7 +3019,7 @@
       "description": "Set filter data or an object with an error"
      },
      "meta": {
-      "line": 311,
+      "line": 498,
       "file": "QueueManager.ts",
       "path": "src/managers"
      }
@@ -3328,7 +3062,7 @@
          "<"
         ],
         [
-         "LoopData",
+         "LoopModes",
          "|"
         ],
         [
@@ -3340,7 +3074,7 @@
       "description": "Loop setup status or object in error"
      },
      "meta": {
-      "line": 341,
+      "line": 559,
       "file": "QueueManager.ts",
       "path": "src/managers"
      }
@@ -3397,7 +3131,7 @@
       "description": "Server queue playback volume change status or object with an error"
      },
      "meta": {
-      "line": 396,
+      "line": 651,
       "file": "QueueManager.ts",
       "path": "src/managers"
      }
@@ -3441,7 +3175,7 @@
       "description": "Object with current and next track or error"
      },
      "meta": {
-      "line": 425,
+      "line": 717,
       "file": "QueueManager.ts",
       "path": "src/managers"
      }
@@ -3496,7 +3230,7 @@
       "description": "Updated track list for the server or an object with an error"
      },
      "meta": {
-      "line": 470,
+      "line": 787,
       "file": "QueueManager.ts",
       "path": "src/managers"
      }
@@ -3553,7 +3287,7 @@
       "description": "Installation status or object with an error"
      },
      "meta": {
-      "line": 501,
+      "line": 846,
       "file": "QueueManager.ts",
       "path": "src/managers"
      }
@@ -3601,7 +3335,7 @@
       "description": "Shuffled list of tracks in the queue"
      },
      "meta": {
-      "line": 533,
+      "line": 911,
       "file": "QueueManager.ts",
       "path": "src/managers"
      }
@@ -3645,7 +3379,7 @@
       "description": "Presence of a queue for a server in storage or an object with an error"
      },
      "meta": {
-      "line": 565,
+      "line": 966,
       "file": "QueueManager.ts",
       "path": "src/managers"
      }
@@ -3689,14 +3423,14 @@
       "description": "Server queue cleanup status or object with an error"
      },
      "meta": {
-      "line": 589,
+      "line": 1010,
       "file": "QueueManager.ts",
       "path": "src/managers"
      }
     }
    ],
    "meta": {
-    "line": 22,
+    "line": 41,
     "file": "QueueManager.ts",
     "path": "src/managers"
    }
@@ -3733,7 +3467,7 @@
       ]
      ],
      "meta": {
-      "line": 26,
+      "line": 32,
       "file": "UtilsManager.ts",
       "path": "src/managers"
      }
@@ -3780,7 +3514,7 @@
       "description": "Returns an array of formatted numbers"
      },
      "meta": {
-      "line": 35,
+      "line": 41,
       "file": "UtilsManager.ts",
       "path": "src/managers"
      }
@@ -3815,7 +3549,7 @@
       "description": "Formatted duration value"
      },
      "meta": {
-      "line": 58,
+      "line": 64,
       "file": "UtilsManager.ts",
       "path": "src/managers"
      }
@@ -3851,7 +3585,7 @@
       "description": "Correct module options"
      },
      "meta": {
-      "line": 83,
+      "line": 93,
       "file": "UtilsManager.ts",
       "path": "src/managers"
      }
@@ -3873,7 +3607,7 @@
       "description": "Empty progress bar"
      },
      "meta": {
-      "line": 195,
+      "line": 334,
       "file": "UtilsManager.ts",
       "path": "src/managers"
      }
@@ -3895,7 +3629,7 @@
       "description": "Unique ID"
      },
      "meta": {
-      "line": 216,
+      "line": 354,
       "file": "UtilsManager.ts",
       "path": "src/managers"
      }
@@ -3935,7 +3669,7 @@
       "description": "Track duration"
      },
      "meta": {
-      "line": 239,
+      "line": 379,
       "file": "UtilsManager.ts",
       "path": "src/managers"
      }
@@ -3979,7 +3713,7 @@
       ]
      ],
      "meta": {
-      "line": 28,
+      "line": 38,
       "file": "VoiceManager.ts",
       "path": "src/managers"
      }
@@ -4025,7 +3759,7 @@
       "description": "Voice connection or error object"
      },
      "meta": {
-      "line": 37,
+      "line": 47,
       "file": "VoiceManager.ts",
       "path": "src/managers"
      }
@@ -4069,14 +3803,14 @@
       "description": "Connection or error object"
      },
      "meta": {
-      "line": 62,
+      "line": 104,
       "file": "VoiceManager.ts",
       "path": "src/managers"
      }
     }
    ],
    "meta": {
-    "line": 11,
+    "line": 15,
     "file": "VoiceManager.ts",
     "path": "src/managers"
    }
@@ -4154,33 +3888,7 @@
      "type": [
       [
        [
-        "object"
-       ]
-      ]
-     ]
-    },
-    {
-     "name": "path",
-     "description": "Default path to module database file",
-     "optional": true,
-     "default": "./dpm.playlists.json",
-     "type": [
-      [
-       [
-        "string"
-       ]
-      ]
-     ]
-    },
-    {
-     "name": "checkInterval",
-     "description": "Default interval for checking and updating the module database",
-     "optional": true,
-     "default": "5s",
-     "type": [
-      [
-       [
-        "string"
+        "DatabaseConfig"
        ]
       ]
      ]
@@ -4192,11 +3900,85 @@
      "type": [
       [
        [
-        "object"
+        "ProgressConfig"
        ]
       ]
      ]
     },
+    {
+     "name": "collectorsConfig",
+     "description": "Collectors configuration object",
+     "optional": true,
+     "type": [
+      [
+       [
+        "CollectorsConfig"
+       ]
+      ]
+     ]
+    }
+   ],
+   "meta": {
+    "line": 825,
+    "file": "Player.ts",
+    "path": "src"
+   }
+  },
+  {
+   "name": "DatabaseConfig",
+   "description": "Database Config",
+   "type": [
+    [
+     [
+      "object"
+     ]
+    ]
+   ],
+   "props": [
+    {
+     "name": "path",
+     "description": "Path to module database file",
+     "optional": true,
+     "default": "\"./dpm.playlists.json\"",
+     "type": [
+      [
+       [
+        "string"
+       ]
+      ]
+     ]
+    },
+    {
+     "name": "checkInterval",
+     "description": "Interval for checking and updating the module database",
+     "optional": true,
+     "default": "\"5s\"",
+     "type": [
+      [
+       [
+        "string"
+       ]
+      ]
+     ]
+    }
+   ],
+   "meta": {
+    "line": 839,
+    "file": "Player.ts",
+    "path": "src"
+   }
+  },
+  {
+   "name": "ProgressConfig",
+   "description": "Progress Config",
+   "type": [
+    [
+     [
+      "object"
+     ]
+    ]
+   ],
+   "props": [
     {
      "name": "size",
      "description": "Progress bar size",
@@ -4214,7 +3996,7 @@
      "name": "line",
      "description": "Progress bar line",
      "optional": true,
-     "default": "▬",
+     "default": "\"▬\"",
      "type": [
       [
        [
@@ -4227,7 +4009,78 @@
      "name": "slider",
      "description": "Progress bar slider",
      "optional": true,
-     "default": "🔘",
+     "default": "\"🔘\"",
+     "type": [
+      [
+       [
+        "string"
+       ]
+      ]
+     ]
+    }
+   ],
+   "meta": {
+    "line": 846,
+    "file": "Player.ts",
+    "path": "src"
+   }
+  },
+  {
+   "name": "CollectorsConfig",
+   "description": "Collector Config",
+   "type": [
+    [
+     [
+      "object"
+     ]
+    ]
+   ],
+   "props": [
+    {
+     "name": "message",
+     "description": "Message Collector Configurations",
+     "type": [
+      [
+       [
+        "MessageCollectorConfig"
+       ]
+      ]
+     ]
+    },
+    {
+     "name": "message",
+     "description": "Message Collector Configurations",
+     "type": [
+      [
+       [
+        "ReactionCollectorConfig"
+       ]
+      ]
+     ]
+    }
+   ],
+   "meta": {
+    "line": 854,
+    "file": "Player.ts",
+    "path": "src"
+   }
+  },
+  {
+   "name": "MessageCollectorConfig",
+   "description": "Message Collector Config",
+   "type": [
+    [
+     [
+      "object"
+     ]
+    ]
+   ],
+   "props": [
+    {
+     "name": "time",
+     "description": "Collector Time",
+     "optional": true,
+     "default": "\"1m\"",
      "type": [
       [
        [
@@ -4237,34 +4090,41 @@
      ]
     },
     {
-     "name": "collectorsConfig",
-     "description": "Collectors configuration object",
+     "name": "attempts",
+     "description": "Maximum number of attempts to select a track",
      "optional": true,
+     "default": 1,
      "type": [
       [
        [
-        "object"
+        "number"
        ]
       ]
      ]
-    },
-    {
-     "name": "collectorsConfig.message",
-     "description": "Message collector configuration object",
-     "optional": true,
-     "type": [
-      [
-       [
-        "object"
-       ]
-      ]
+    }
+   ],
+   "meta": {
+    "line": 861,
+    "file": "Player.ts",
+    "path": "src"
+   }
+  },
+  {
+   "name": "ReactionCollectorConfig",
+   "description": "Reaction Collector Config",
+   "type": [
+    [
+     [
+      "object"
      ]
-    },
+    ]
+   ],
+   "props": [
     {
-     "name": "collectorsConfig.message.time",
-     "description": "Message collector run time",
+     "name": "time",
+     "description": "Collector Time",
      "optional": true,
-     "default": "1m",
+     "default": "\"30s\"",
      "type": [
       [
        [
@@ -4274,7 +4134,7 @@
      ]
     },
     {
-     "name": "collectorsConfig.message.attempts",
+     "name": "attempts",
      "description": "Maximum number of attempts to select a track",
      "optional": true,
      "default": 1,
@@ -4287,46 +4147,8 @@
      ]
     },
     {
-     "name": "collectorsConfig.reaction",
-     "description": "Reaction collector configuration object",
-     "optional": true,
-     "type": [
-      [
-       [
-        "object"
-       ]
-      ]
-     ]
-    },
-    {
-     "name": "collectorsConfig.reaction.time",
-     "description": "Reaction collector ran time",
-     "optional": true,
-     "default": "30s",
-     "type": [
-      [
-       [
-        "string"
-       ]
-      ]
-     ]
-    },
-    {
-     "name": "collectorsConfig.reaction.attempts",
-     "description": "Maximum number of attempts to select a track",
-     "optional": true,
-     "default": 1,
-     "type": [
-      [
-       [
-        "number"
-       ]
-      ]
-     ]
-    },
-    {
-     "name": "collectorsConfig.reaction.reactions",
-     "description": "Array react for collector",
+     "name": "reactions",
+     "description": "Array of reactions for collector",
      "optional": true,
      "default": "[]",
      "type": [
@@ -4344,7 +4166,7 @@
     }
    ],
    "meta": {
-    "line": 588,
+    "line": 868,
     "file": "Player.ts",
     "path": "src"
    }
@@ -4589,7 +4411,7 @@
     }
    ],
    "meta": {
-    "line": 614,
+    "line": 876,
     "file": "Player.ts",
     "path": "src"
    }
@@ -4617,7 +4439,7 @@
     }
    ],
    "meta": {
-    "line": 786,
+    "line": 1024,
     "file": "Player.ts",
     "path": "src"
    }
@@ -4694,29 +4516,7 @@
      "type": [
       [
        [
-        "object"
-       ]
-      ]
-     ]
-    },
-    {
-     "name": "author.name",
-     "description": "Track author name",
-     "type": [
-      [
-       [
-        "string"
-       ]
-      ]
-     ]
-    },
-    {
-     "name": "author.url",
-     "description": "Track author channel URL",
-     "type": [
-      [
-       [
-        "string"
+        "AuthorObject"
        ]
       ]
      ]
@@ -4727,29 +4527,7 @@
      "type": [
       [
        [
-        "object"
-       ]
-      ]
-     ]
-    },
-    {
-     "name": "channel.text",
-     "description": "Discord Guild Text Channel",
-     "type": [
-      [
-       [
-        "TextChannel"
-       ]
-      ]
-     ]
-    },
-    {
-     "name": "channel.voice",
-     "description": "Discord Guild Voice Channel",
-     "type": [
-      [
-       [
-        "VoiceChannel"
+        "ChannelTypes"
        ]
       ]
      ]
@@ -4782,47 +4560,14 @@
      "type": [
       [
        [
-        "object"
-       ]
-      ]
-     ]
-    },
-    {
-     "name": "duration.hours",
-     "description": "Track duration in hours",
-     "type": [
-      [
-       [
-        "string"
-       ]
-      ]
-     ]
-    },
-    {
-     "name": "duration.minutes",
-     "description": "Track duration in minutes",
-     "type": [
-      [
-       [
-        "string"
-       ]
-      ]
-     ]
-    },
-    {
-     "name": "duration.seconds",
-     "description": "Track duration in seconds",
-     "type": [
-      [
-       [
-        "string"
+        "DurationObject"
        ]
       ]
      ]
     }
    ],
    "meta": {
-    "line": 792,
+    "line": 1030,
     "file": "Player.ts",
     "path": "src"
    }
@@ -4843,29 +4588,7 @@
      "type": [
       [
        [
-        "object"
-       ]
-      ]
-     ]
-    },
-    {
-     "name": "channel.text",
-     "description": "Discord Guild Text Channel",
-     "type": [
-      [
-       [
-        "TextChannel"
-       ]
-      ]
-     ]
-    },
-    {
-     "name": "channel.voice",
-     "description": "Discord Guild Voice Channel",
-     "type": [
-      [
-       [
-        "VoiceChannel"
+        "ChannelTypes"
        ]
       ]
      ]
@@ -4914,29 +4637,7 @@
      "type": [
       [
        [
-        "object"
-       ]
-      ]
-     ]
-    },
-    {
-     "name": "loop.track",
-     "description": "Loop current track status",
-     "type": [
-      [
-       [
-        "boolean"
-       ]
-      ]
-     ]
-    },
-    {
-     "name": "loop.queue",
-     "description": "Loop guild queue status",
-     "type": [
-      [
-       [
-        "boolean"
+        "LoopModes"
        ]
       ]
      ]
@@ -4987,7 +4688,7 @@
     }
    ],
    "meta": {
-    "line": 814,
+    "line": 1045,
     "file": "Player.ts",
     "path": "src"
    }
@@ -5026,7 +4727,7 @@
     }
    ],
    "meta": {
-    "line": 832,
+    "line": 1059,
     "file": "Player.ts",
     "path": "src"
    }
@@ -5065,7 +4766,7 @@
     }
    ],
    "meta": {
-    "line": 839,
+    "line": 1066,
     "file": "Player.ts",
     "path": "src"
    }
@@ -5104,7 +4805,7 @@
     }
    ],
    "meta": {
-    "line": 846,
+    "line": 1073,
     "file": "Player.ts",
     "path": "src"
    }
@@ -5155,7 +4856,7 @@
     }
    ],
    "meta": {
-    "line": 853,
+    "line": 1080,
     "file": "Player.ts",
     "path": "src"
    }
@@ -5195,7 +4896,7 @@
     }
    ],
    "meta": {
-    "line": 861,
+    "line": 1088,
     "file": "Player.ts",
     "path": "src"
    }
@@ -5305,7 +5006,7 @@
     }
    ],
    "meta": {
-    "line": 868,
+    "line": 1095,
     "file": "Player.ts",
     "path": "src"
    }
@@ -5355,7 +5056,7 @@
     }
    ],
    "meta": {
-    "line": 881,
+    "line": 1108,
     "file": "Player.ts",
     "path": "src"
    }
@@ -5394,7 +5095,7 @@
     }
    ],
    "meta": {
-    "line": 889,
+    "line": 1116,
     "file": "Player.ts",
     "path": "src"
    }
@@ -5449,7 +5150,7 @@
     }
    ],
    "meta": {
-    "line": 896,
+    "line": 1123,
     "file": "Player.ts",
     "path": "src"
    }
@@ -5488,7 +5189,7 @@
     }
    ],
    "meta": {
-    "line": 904,
+    "line": 1131,
     "file": "Player.ts",
     "path": "src"
    }
@@ -5575,84 +5276,21 @@
      "type": [
       [
        [
-        "object"
-       ]
-      ]
-     ]
-    },
-    {
-     "name": "streamTime.days",
-     "description": "Stream duration in days",
-     "type": [
-      [
-       [
-        "string"
-       ]
-      ],
-      [
-       [
-        "number"
-       ]
-      ]
-     ]
-    },
-    {
-     "name": "streamTime.hours",
-     "description": "Stream duration in hours",
-     "type": [
-      [
-       [
-        "string"
-       ]
-      ],
-      [
-       [
-        "number"
-       ]
-      ]
-     ]
-    },
-    {
-     "name": "streamTime.minutes",
-     "description": "Stream duration in minutes",
-     "type": [
-      [
-       [
-        "string"
-       ]
-      ],
-      [
-       [
-        "number"
-       ]
-      ]
-     ]
-    },
-    {
-     "name": "streamTime.seconds",
-     "description": "Stream duration in seconds",
-     "type": [
-      [
-       [
-        "string"
-       ]
-      ],
-      [
-       [
-        "number"
+        "StreamObject"
        ]
       ]
      ]
     }
    ],
    "meta": {
-    "line": 911,
+    "line": 1138,
     "file": "Player.ts",
     "path": "src"
    }
   },
   {
-   "name": "LoopData",
+   "name": "LoopModes",
+   "description": "Loop Modes",
    "type": [
     [
      [
@@ -5663,7 +5301,7 @@
    "props": [
     {
      "name": "track",
-     "description": "Loop track status",
+     "description": "Loop Track status",
      "type": [
       [
        [
@@ -5674,7 +5312,7 @@
     },
     {
      "name": "queue",
-     "description": "Loop queue status",
+     "description": "Loop Queue status",
      "type": [
       [
        [
@@ -5685,7 +5323,7 @@
     }
    ],
    "meta": {
-    "line": 927,
+    "line": 1211,
     "file": "Player.ts",
     "path": "src"
    }
@@ -5729,7 +5367,7 @@
     }
    ],
    "meta": {
-    "line": 934,
+    "line": 1157,
     "file": "Player.ts",
     "path": "src"
    }
@@ -5751,31 +5389,7 @@
      "type": [
       [
        [
-        "object"
-       ]
-      ]
-     ]
-    },
-    {
-     "name": "channel.text",
-     "description": "Discord Guild text Channel",
-     "optional": true,
-     "type": [
-      [
-       [
-        "TextChannel"
-       ]
-      ]
-     ]
-    },
-    {
-     "name": "channel.voice",
-     "description": "Discord Guild Voice Channel",
-     "optional": true,
-     "type": [
-      [
-       [
-        "VoiceChannel"
+        "ChannelTypes"
        ]
       ]
      ]
@@ -5815,7 +5429,7 @@
     }
    ],
    "meta": {
-    "line": 941,
+    "line": 1164,
     "file": "Player.ts",
     "path": "src"
    }
@@ -5857,7 +5471,7 @@
     }
    ],
    "meta": {
-    "line": 952,
+    "line": 1173,
     "file": "Player.ts",
     "path": "src"
    }
@@ -5896,7 +5510,220 @@
     }
    ],
    "meta": {
-    "line": 959,
+    "line": 1180,
+    "file": "Player.ts",
+    "path": "src"
+   }
+  },
+  {
+   "name": "ChannelTypes",
+   "description": "Channel Types",
+   "type": [
+    [
+     [
+      "object"
+     ]
+    ]
+   ],
+   "props": [
+    {
+     "name": "text",
+     "description": "Discord Guild Text Channel",
+     "type": [
+      [
+       [
+        "TextChannel"
+       ]
+      ]
+     ]
+    },
+    {
+     "name": "voice",
+     "description": "Discord Guild Voice Channel",
+     "type": [
+      [
+       [
+        "VoiceChannel"
+       ]
+      ]
+     ]
+    }
+   ],
+   "meta": {
+    "line": 1187,
+    "file": "Player.ts",
+    "path": "src"
+   }
+  },
+  {
+   "name": "StreamObject",
+   "description": "Stream Time Object",
+   "type": [
+    [
+     [
+      "object"
+     ]
+    ]
+   ],
+   "props": [
+    {
+     "name": "days",
+     "description": "Stream Duration in days",
+     "type": [
+      [
+       [
+        "string"
+       ]
+      ],
+      [
+       [
+        "number"
+       ]
+      ]
+     ]
+    },
+    {
+     "name": "hours",
+     "description": "Stream Duration in hours",
+     "type": [
+      [
+       [
+        "string"
+       ]
+      ],
+      [
+       [
+        "number"
+       ]
+      ]
+     ]
+    },
+    {
+     "name": "minutes",
+     "description": "Stream Duration in minutes",
+     "type": [
+      [
+       [
+        "string"
+       ]
+      ],
+      [
+       [
+        "number"
+       ]
+      ]
+     ]
+    },
+    {
+     "name": "seconds",
+     "description": "Stream Duration in seconds",
+     "type": [
+      [
+       [
+        "string"
+       ]
+      ],
+      [
+       [
+        "number"
+       ]
+      ]
+     ]
+    }
+   ],
+   "meta": {
+    "line": 1194,
+    "file": "Player.ts",
+    "path": "src"
+   }
+  },
+  {
+   "name": "DurationObject",
+   "description": "Duration Object",
+   "type": [
+    [
+     [
+      "object"
+     ]
+    ]
+   ],
+   "props": [
+    {
+     "name": "hours",
+     "description": "Duration in hours",
+     "type": [
+      [
+       [
+        "string"
+       ]
+      ]
+     ]
+    },
+    {
+     "name": "minutes",
+     "description": "Duration in minutes",
+     "type": [
+      [
+       [
+        "string"
+       ]
+      ]
+     ]
+    },
+    {
+     "name": "seconds",
+     "description": "Duration in seconds",
+     "type": [
+      [
+       [
+        "string"
+       ]
+      ]
+     ]
+    }
+   ],
+   "meta": {
+    "line": 1203,
+    "file": "Player.ts",
+    "path": "src"
+   }
+  },
+  {
+   "name": "AuthorObject",
+   "description": "Loop Modes",
+   "type": [
+    [
+     [
+      "object"
+     ]
+    ]
+   ],
+   "props": [
+    {
+     "name": "name",
+     "description": "Author Name",
+     "type": [
+      [
+       [
+        "string"
+       ]
+      ]
+     ]
+    },
+    {
+     "name": "url",
+     "description": "Author Avatar URL",
+     "type": [
+      [
+       [
+        "string"
+       ]
+      ]
+     ]
+    }
+   ],
+   "meta": {
+    "line": 1218,
     "file": "Player.ts",
     "path": "src"
    }
