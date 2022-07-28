@@ -2,7 +2,7 @@
  "meta": {
   "generator": "0.11.1",
   "format": 22,
-  "date": 1659031054958
+  "date": 1659032433325
  },
  "custom": {
   "general": {
@@ -1811,7 +1811,7 @@
       ]
      ],
      "meta": {
-      "line": 42,
+      "line": 39,
       "file": "DatabaseManager.ts",
       "path": "src/managers"
      }
@@ -1822,12 +1822,12 @@
      "type": [
       [
        [
-        "DatabaseManagerConfiguration"
+        "DatabaseConfig"
        ]
       ]
      ],
      "meta": {
-      "line": 50,
+      "line": 47,
       "file": "DatabaseManager.ts",
       "path": "src/managers"
      }
@@ -1844,7 +1844,7 @@
       ]
      ],
      "meta": {
-      "line": 60,
+      "line": 57,
       "file": "DatabaseManager.ts",
       "path": "src/managers"
      }
@@ -1868,7 +1868,7 @@
       "description": "Database object"
      },
      "meta": {
-      "line": 71,
+      "line": 68,
       "file": "DatabaseManager.ts",
       "path": "src/managers"
      }
@@ -1894,7 +1894,7 @@
       }
      ],
      "meta": {
-      "line": 86,
+      "line": 83,
       "file": "DatabaseManager.ts",
       "path": "src/managers"
      }
@@ -1919,7 +1919,7 @@
       }
      ],
      "meta": {
-      "line": 104,
+      "line": 101,
       "file": "DatabaseManager.ts",
       "path": "src/managers"
      }
@@ -1929,7 +1929,7 @@
      "description": "Method for module database initialization",
      "access": "private",
      "meta": {
-      "line": 131,
+      "line": 128,
       "file": "DatabaseManager.ts",
       "path": "src/managers"
      }
@@ -4048,7 +4048,7 @@
      ]
     },
     {
-     "name": "message",
+     "name": "reaction",
      "description": "Message Collector Configurations",
      "type": [
       [
@@ -5323,7 +5323,7 @@
     }
    ],
    "meta": {
-    "line": 1211,
+    "line": 1204,
     "file": "Player.ts",
     "path": "src"
    }
@@ -5477,45 +5477,6 @@
    }
   },
   {
-   "name": "DatabaseManagerConfiguration",
-   "type": [
-    [
-     [
-      "object"
-     ]
-    ]
-   ],
-   "props": [
-    {
-     "name": "path",
-     "description": "Default path to module database file",
-     "type": [
-      [
-       [
-        "string"
-       ]
-      ]
-     ]
-    },
-    {
-     "name": "checkInterval",
-     "description": "Default interval for checking and updating the module database",
-     "type": [
-      [
-       [
-        "string"
-       ]
-      ]
-     ]
-    }
-   ],
-   "meta": {
-    "line": 1180,
-    "file": "Player.ts",
-    "path": "src"
-   }
-  },
-  {
    "name": "ChannelTypes",
    "description": "Channel Types",
    "type": [
@@ -5550,7 +5511,7 @@
     }
    ],
    "meta": {
-    "line": 1187,
+    "line": 1180,
     "file": "Player.ts",
     "path": "src"
    }
@@ -5632,7 +5593,7 @@
     }
    ],
    "meta": {
-    "line": 1194,
+    "line": 1187,
     "file": "Player.ts",
     "path": "src"
    }
@@ -5683,7 +5644,7 @@
     }
    ],
    "meta": {
-    "line": 1203,
+    "line": 1196,
     "file": "Player.ts",
     "path": "src"
    }
@@ -5723,7 +5684,7 @@
     }
    ],
    "meta": {
-    "line": 1218,
+    "line": 1211,
     "file": "Player.ts",
     "path": "src"
    }
