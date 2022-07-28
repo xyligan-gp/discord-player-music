@@ -2,7 +2,7 @@
  "meta": {
   "generator": "0.11.1",
   "format": 22,
-  "date": 1658952301036
+  "date": 1659013925044
  },
  "custom": {
   "general": {
@@ -11,7 +11,7 @@
     "welcome": {
      "name": "Welcome",
      "type": "md",
-     "content": "<div align=\"center\">\r\n\t<h1>Welcome to the 'discord-player-music' page!</h1>\r\n\t<br />\r\n\t<p>\r\n\t\t<a href=\"https://dpm.js.org\"><img src=\"https://i.imgur.com/4Pk9WlS.gif\" width=\"546\" alt=\"DPM Main Image\" /></a>\r\n\t</p>\r\n\t<br/>\r\n\t<p>\r\n\t\t<a href=\"https://discord.gg/zzbkvCcu2r\"><img src=\"https://img.shields.io/discord/827221018879328298?color=5865F2&logo=discord&logoColor=white\" alt=\"Support Server\" /></a>\r\n\t\t<a href=\"https://www.npmjs.com/package/discord-player-music\"><img src=\"https://img.shields.io/npm/dt/discord-player-music.png?maxAge=3600\" alt=\"NPM downloads\" /></a>\r\n\t\t<a href=\"https://www.npmjs.com/package/discord-player-music\"><img src=\"https://img.shields.io/npm/v/discord-player-music.png?maxAge=3600\" alt=\"NPM page\" /></a>\r\n\t</p>\r\n</div>\r\n\r\n## About\r\n\r\n**Discord Player Music is a powerful [Node.js](https://nodejs.org) music module for your Discord.js bot that based on Promises and has a lot of features.**\r\n\r\n* 👍 Simple & easy to use\r\n* 😄 Beginner friendly\r\n* 🎸 Audio filters\r\n* 📌 Guilds Playlists\r\n* 📃 Lyrics\r\n* 📂 Multiple servers\r\n\r\n## Installation\r\n\r\n**Node.js 16.9.0 or newer is required.**\r\n\r\n```sh-session\r\n$ npm install discord-player-music\r\n$ yarn add discord-player-music\r\n$ pnpm add discord-player-music\r\n```\r\n\r\n## Example Usage\r\n\r\n```js\r\nconst { Client, GatewayIntentBits, Partials } = require('discord.js');\r\nconst { Player } = require('discord-player-music');\r\n\r\nconst client = new Client({\r\n\tintents: [\r\n\t\tGatewayIntentBits.Guilds,\r\n\t\tGatewayIntentBits.MessageContent,\r\n\t\tGatewayIntentBits.GuildMembers,\r\n\t\tGatewayIntentBits.GuildMessages,\r\n\t\tGatewayIntentBits.GuildMessageReactions,\r\n\t\tGatewayIntentBits.GuildVoiceStates\r\n\t],\r\n    \r\n\tpartials: [\r\n\t\tPartials.Channel,\r\n\t\tPartials.GuildMember,\r\n\t\tPartials.Message,\r\n\t\tPartials.Reaction,\r\n\t\tPartials.User\r\n\t]\r\n});\r\n\r\nclient.player = new Player(client);\r\n\r\nclient.on('ready', async () => {\r\n  \treturn console.log('Client is ready!');\r\n})\r\n\r\nclient.player.on('ready', async () => {\r\n\treturn console.log('Player is ready!');\r\n})\r\n\r\nclient.login('YOUR_CLIENT_TOKEN_HERE');\r\n```\r\n\r\n# Links\r\n\r\n* NPM: [Open](https://www.npmjs.com/package/discord-player-music)\r\n* GitHub: [Open](https://github.com/xyligan-gp/discord-player-music)\r\n* Examples: [See](https://github.com/xyligan-gp/discord-player-music/tree/stable/examples)\r\n* Documentation: [Open](https://dpm.js.org)\r\n\r\n* Module Developer: [xyligan](https://github.com/xyligan-gp)\r\n* Developer Discord: [♡ xүℓ[ι]gαη4εg ♡#9457](https://discord.com/users/533347075463577640)\r\n* Support Server: [Join xyligan development](https://discord.gg/zzbkvCcu2r)\r\n\r\n<center><h1>♥ Thanks for using Discord Player Music ♥</h1></center>",
+     "content": "<div align=\"center\">\r\n\t<h1>Welcome to the 'discord-player-music' page!</h1>\r\n\t<br />\r\n\t<p>\r\n\t\t<a href=\"https://dpm.js.org\"><img src=\"https://i.imgur.com/4Pk9WlS.gif\" width=\"546\" alt=\"DPM Main Image\" /></a>\r\n\t</p>\r\n\t<br/>\r\n\t<p>\r\n\t\t<a href=\"https://discord.gg/zzbkvCcu2r\"><img src=\"https://img.shields.io/discord/827221018879328298?color=5865F2&logo=discord&logoColor=white\" alt=\"Support Server\" /></a>\r\n\t\t<a href=\"https://www.npmjs.com/package/discord-player-music\"><img src=\"https://img.shields.io/npm/dt/discord-player-music.png?maxAge=3600\" alt=\"NPM downloads\" /></a>\r\n\t\t<a href=\"https://www.npmjs.com/package/discord-player-music\"><img src=\"https://img.shields.io/npm/v/discord-player-music.png?maxAge=3600\" alt=\"NPM page\" /></a>\r\n\t</p>\r\n</div>\r\n\r\n## About\r\n\r\n**Discord Player Music is a powerful [Node.js](https://nodejs.org) music module for your Discord.js bot that based on Promises and has a lot of features.**\r\n\r\n* 👍 Simple & easy to use\r\n* 😄 Beginner friendly\r\n* 🎸 Audio filters\r\n* 📌 Guilds Playlists\r\n* 📃 Lyrics\r\n* 📂 Multiple servers\r\n\r\n## Installation\r\n\r\n**Node.js 16.9.0 or newer is required.**\r\n\r\n```sh-session\r\n$ npm install discord-player-music\r\n$ yarn add discord-player-music\r\n$ pnpm add discord-player-music\r\n```\r\n\r\n## Example Usage\r\n\r\n```js\r\nconst { Client, GatewayIntentBits, Partials } = require('discord.js');\r\nconst { Player } = require('discord-player-music');\r\n\r\nconst client = new Client({\r\n\tintents: [\r\n\t\tGatewayIntentBits.Guilds,\r\n\t\tGatewayIntentBits.MessageContent,\r\n\t\tGatewayIntentBits.GuildMembers,\r\n\t\tGatewayIntentBits.GuildMessages,\r\n\t\tGatewayIntentBits.GuildMessageReactions,\r\n\t\tGatewayIntentBits.GuildVoiceStates\r\n\t],\r\n    \r\n\tpartials: [\r\n\t\tPartials.Channel,\r\n\t\tPartials.GuildMember,\r\n\t\tPartials.Message,\r\n\t\tPartials.Reaction,\r\n\t\tPartials.User\r\n\t]\r\n});\r\n\r\nclient.player = new Player(client);\r\n\r\nclient.on('ready', async () => {\r\n  \treturn console.log('Client is ready!');\r\n})\r\n\r\nclient.player.on('ready', async () => {\r\n\treturn console.log('Player is ready!');\r\n})\r\n\r\nclient.login('YOUR_CLIENT_TOKEN_HERE');\r\n```\r\n\r\n## Links\r\n\r\n* NPM: [Open](https://www.npmjs.com/package/discord-player-music)\r\n* GitHub: [Open](https://github.com/xyligan-gp/discord-player-music)\r\n* Examples: [See](https://github.com/xyligan-gp/discord-player-music/tree/stable/examples)\r\n* Documentation: [Open](https://dpm.js.org)\r\n\r\n* Module Developer: [xyligan](https://github.com/xyligan-gp)\r\n* Developer Discord: [♡ xүℓ[ι]gαη4εg ♡#9457](https://discord.com/users/533347075463577640)\r\n* Support Server: [Join xyligan development](https://discord.gg/zzbkvCcu2r)\r\n\r\n<center><h1>♥ Thanks for using Discord Player Music ♥</h1></center>",
      "path": "docs/general/welcome.md"
     },
     "faq": {
@@ -23,13 +23,13 @@
     "updating": {
      "name": "Updating your code",
      "type": "md",
-     "content": "# Updating page\r\n\r\nThis documentation page is a short list of changes to your code that will have to be done when switching to a specific version of discord-player-music!\r\n\r\n## 1.1.5\r\nIn version 1.1.5, `discord-player-music` was completely rewritten for the manager system.\r\n\r\n### Player Constructor\r\n\r\n```diff\r\n+ options.searchResultsLimit\r\n+ options.synchronLoop\r\n+ options.defaultVolume\r\n\r\n+ options.collectorsConfig.autoAddingSongs\r\n+ options.collectorsConfig.maxAttempts\r\n+ options.collectorsConfig.time\r\n```\r\n\r\n### Player Methods Update\r\n#### CollectorsManager\r\n\r\n```diff\r\n+ player.collectors.message\r\n```\r\n\r\n#### VoiceManager\r\n\r\n```diff\r\n- player.joinVoiceChannel\r\n+ player.voice.join\r\n\r\n- player.leaveVoiceChannel\r\n+ player.voice.leave\r\n```\r\n\r\n#### UtilsManager\r\n\r\n```diff\r\n- player.createStream\r\n+ player.utils.checkNode\r\n+ player.utils.checkOptions\r\n+ player.utils.checkPermissions\r\n+ player.utils.createCollector\r\n```\r\n\r\n#### Main Player\r\n\r\n```diff\r\n- player.getSongIndex\r\n\r\n- player.skipSong\r\n+ player.skip\r\n\r\n- player.stopPlaying\r\n+ player.stop\r\n\r\n- player.pausePlaying\r\n+ player.pause\r\n\r\n- player.resumePlaying\r\n+ player.resume\r\n\r\n- player.getCurrentSongInfo\r\n+ player.getSongInfo\r\n\r\n- player.initPlayer\r\n+ player.init\r\n```\r\n\r\n## 1.1.7\r\nIn version 1.1.7, `discord-player-music` was completely rewritten on TypeScript language.\r\n\r\n### Module Constructor\r\n\r\n```diff\r\n- options.collectorsConfig.autoAddingSongs\r\n- options.collectorsConfig.maxAttempts\r\n- options.collectorsConfig.time\r\n+ options.autoAddingTracks\r\n\r\n+ options.databaseConfig\r\n+ options.databaseConfig.path\r\n+ options.databaseConfig.checkInterval\r\n\r\n+ options.progressConfig\r\n+ options.progressConfig.size\r\n+ options.progressConfig.line\r\n+ options.progressConfig.slider\r\n\r\n+ options.collectorsConfig.message\r\n+ options.collectorsConfig.message.time\r\n+ options.collectorsConfig.message.attempts\r\n\r\n+ options.collectorsConfig.reaction\r\n+ options.collectorsConfig.reaction.time\r\n+ options.collectorsConfig.reaction.attempts\r\n+ options.collectorsConfig.reaction.reactions\r\n```\r\n\r\n### Player Events Update\r\n\r\n```diff\r\n+ player#ready\r\n+ player#queueStarted\r\n\r\n- player#playerError\r\n+ player#error\r\n\r\n- player#songsAdded\r\n+ player#addedTrack\r\n\r\n- player#playingSong\r\n+ player#playingTrack\r\n```\r\n\r\n### Player Methods Update\r\n\r\n#### Main Player Class\r\n\r\n```diff\r\n- player.collectors.message\r\n+ player.createCollector\r\n\r\n- player.play\r\n+ player.initGuildTrack\r\n\r\n- player.searchSong\r\n+ player.search\r\n\r\n- player.addSong\r\n+ player.initQueueTrack\r\n\r\n- player.pause\r\n+ player.queue.pause\r\n\r\n- player.setLoopSong\r\n- player.setLoopQeue\r\n+ player.queue.setLoop\r\n\r\n- player.skip\r\n+ player.queue.skipTrack\r\n\r\n- player.setFilter\r\n+ player.queue.setFilter\r\n\r\n- player.shuffle\r\n+ player.queue.shuffle\r\n\r\n- player.getGuildMap\r\n- player.getQueue\r\n+ player.queue.get\r\n\r\n- player.getSongInfo\r\n+ player.queue.trackInfo\r\n+ player.queue.streamInfo\r\n\r\n- player.getLyrics\r\n+ player.lyrics\r\n\r\n- player.getFilters\r\n+ player.filters.list\r\n\r\n- player.createProgressBar\r\n+ player.queue.progress\r\n\r\n- player.setVolume\r\n+ player.queue.setVolume\r\n\r\n- player.stop\r\n+ player.queue.stop\r\n\r\n- player.resume\r\n+ player.queue.resume\r\n\r\n- player.removeSong\r\n+ player.queue.removeTrack\r\n```\r\n\r\n#### DatabaseManager\r\n\r\n```diff\r\n+ player.database.get\r\n+ player.database.write\r\n+ player.database.initGuild\r\n+ private player.database.init\r\n```\r\n\r\n#### FiltersManager\r\n\r\n```diff\r\n+ player.filters.add\r\n+ player.filters.isExists\r\n+ player.filters.get\r\n+ player.filters.list\r\n+ player.filters.delete\r\n+ private player.filters.init\r\n```\r\n\r\n#### PlaylistsManager\r\n\r\n```diff\r\n+ player.playlists.create\r\n+ player.playlists.addTrack\r\n+ player.playlists.play\r\n+ player.playlists.removeTrack\r\n+ player.playlists.delete\r\n```\r\n\r\n#### QueueManager\r\n\r\n```diff\r\n+ player.queue.add\r\n+ player.queue.pause\r\n+ player.queue.get\r\n+ player.queue.progress\r\n+ player.queue.streamInfo\r\n+ player.queue.trackInfo\r\n+ player.queue.setFilter\r\n+ player.queue.setLoop\r\n+ player.queue.setVolume\r\n+ player.queue.skipTrack\r\n+ player.queue.removeTrack\r\n+ player.queue.seek\r\n+ player.queue.shuffle\r\n+ player.queue.resume\r\n+ player.queue.stop\r\n+ player.queue.delete\r\n```\r\n\r\n#### UtilsManager\r\n\r\n```diff\r\n- player.utils.checkNode\r\n- player.utils.checkPermissions\r\n- player.utils.getPlayerMode\r\n+ player.utils.formatDuration\r\n+ player.utils.createEmptyProgress\r\n+ player.utils.getUniqueID\r\n+ player.utils.getTrackDuration\r\n```",
+     "content": "# Updating page\r\n\r\nThis documentation page is a short list of changes to your code that will have to be done when switching to a specific version of discord-player-music!\r\n\r\n## 1.1.5\r\nIn version 1.1.5, `discord-player-music` was completely rewritten for the manager system.\r\n\r\n### Player Constructor\r\n\r\n```diff\r\n+ options.searchResultsLimit\r\n+ options.synchronLoop\r\n+ options.defaultVolume\r\n\r\n+ options.collectorsConfig.autoAddingSongs\r\n+ options.collectorsConfig.maxAttempts\r\n+ options.collectorsConfig.time\r\n```\r\n\r\n### Player Methods Update\r\n#### CollectorsManager\r\n\r\n```diff\r\n+ player.collectors.message\r\n```\r\n\r\n#### VoiceManager\r\n\r\n```diff\r\n- player.joinVoiceChannel\r\n+ player.voice.join\r\n\r\n- player.leaveVoiceChannel\r\n+ player.voice.leave\r\n```\r\n\r\n#### UtilsManager\r\n\r\n```diff\r\n- player.createStream\r\n+ player.utils.checkNode\r\n+ player.utils.checkOptions\r\n+ player.utils.checkPermissions\r\n+ player.utils.createCollector\r\n```\r\n\r\n#### Main Player\r\n\r\n```diff\r\n- player.getSongIndex\r\n\r\n- player.skipSong\r\n+ player.skip\r\n\r\n- player.stopPlaying\r\n+ player.stop\r\n\r\n- player.pausePlaying\r\n+ player.pause\r\n\r\n- player.resumePlaying\r\n+ player.resume\r\n\r\n- player.getCurrentSongInfo\r\n+ player.getSongInfo\r\n\r\n- player.initPlayer\r\n+ player.init\r\n```\r\n\r\n## 1.1.7\r\nIn version 1.1.7, `discord-player-music` was completely rewritten on TypeScript language.\r\n\r\n### Module Constructor\r\n\r\n```diff\r\n- options.collectorsConfig.autoAddingSongs\r\n- options.collectorsConfig.maxAttempts\r\n- options.collectorsConfig.time\r\n+ options.autoAddingTracks\r\n\r\n+ options.databaseConfig\r\n+ options.databaseConfig.path\r\n+ options.databaseConfig.checkInterval\r\n\r\n+ options.progressConfig\r\n+ options.progressConfig.size\r\n+ options.progressConfig.line\r\n+ options.progressConfig.slider\r\n\r\n+ options.collectorsConfig.message\r\n+ options.collectorsConfig.message.time\r\n+ options.collectorsConfig.message.attempts\r\n\r\n+ options.collectorsConfig.reaction\r\n+ options.collectorsConfig.reaction.time\r\n+ options.collectorsConfig.reaction.attempts\r\n+ options.collectorsConfig.reaction.reactions\r\n```\r\n\r\n### Player Events Update\r\n\r\n```diff\r\n+ player#ready\r\n+ player#queueStarted\r\n+ player#createdPlaylist\r\n+ player#deletedPlaylist\r\n+ player#queueStateChange\r\n\r\n- player#playerError\r\n+ player#error\r\n\r\n- player#songsAdded\r\n+ player#addedTrack\r\n\r\n- player#playingSong\r\n+ player#playingTrack\r\n```\r\n\r\n### Player Methods Update\r\n\r\n#### Main Player Class\r\n\r\n```diff\r\n- player.collectors.message\r\n+ player.createCollector\r\n\r\n- player.play\r\n+ player.initGuildTrack\r\n\r\n- player.searchSong\r\n+ player.search\r\n\r\n- player.addSong\r\n+ player.initQueueTrack\r\n\r\n- player.pause\r\n- player.resume\r\n+ player.queue.setState\r\n\r\n- player.setLoopSong\r\n- player.setLoopQeue\r\n+ player.queue.setLoop\r\n\r\n- player.skip\r\n+ player.queue.skipTrack\r\n\r\n- player.setFilter\r\n+ player.queue.setFilter\r\n\r\n- player.shuffle\r\n+ player.queue.shuffle\r\n\r\n- player.getGuildMap\r\n- player.getQueue\r\n+ player.queue.get\r\n\r\n- player.getSongInfo\r\n+ player.queue.trackInfo\r\n+ player.queue.streamInfo\r\n\r\n- player.getLyrics\r\n+ player.lyrics\r\n\r\n- player.getFilters\r\n+ player.filters.list\r\n\r\n- player.createProgressBar\r\n+ player.queue.progress\r\n\r\n- player.setVolume\r\n+ player.queue.setVolume\r\n\r\n- player.stop\r\n+ player.queue.stop\r\n\r\n- player.removeSong\r\n+ player.queue.removeTrack\r\n```\r\n\r\n#### DatabaseManager\r\n\r\n```diff\r\n+ player.database.get\r\n+ player.database.write\r\n+ player.database.initGuild\r\n+ private player.database.init\r\n```\r\n\r\n#### FiltersManager\r\n\r\n```diff\r\n+ player.filters.add\r\n+ player.filters.isExists\r\n+ player.filters.get\r\n+ player.filters.list\r\n+ player.filters.delete\r\n+ private player.filters.init\r\n```\r\n\r\n#### PlaylistsManager\r\n\r\n```diff\r\n+ player.playlists.create\r\n+ player.playlists.addTrack\r\n+ player.playlists.play\r\n+ player.playlists.removeTrack\r\n+ player.playlists.delete\r\n```\r\n\r\n#### QueueManager\r\n\r\n```diff\r\n+ player.queue.add\r\n+ player.queue.get\r\n+ player.queue.progress\r\n+ player.queue.streamInfo\r\n+ player.queue.trackInfo\r\n+ player.queue.setFilter\r\n+ player.queue.setLoop\r\n+ player.queue.setState\r\n+ player.queue.setVolume\r\n+ player.queue.skipTrack\r\n+ player.queue.removeTrack\r\n+ player.queue.seek\r\n+ player.queue.shuffle\r\n+ player.queue.stop\r\n+ player.queue.delete\r\n```\r\n\r\n#### UtilsManager\r\n\r\n```diff\r\n- player.utils.checkNode\r\n- player.utils.checkPermissions\r\n- player.utils.getPlayerMode\r\n+ player.utils.formatDuration\r\n+ player.utils.createEmptyProgress\r\n+ player.utils.getUniqueID\r\n+ player.utils.getTrackDuration\r\n```",
      "path": "docs/general/updating.md"
     },
     "index": {
      "name": "Examples",
      "type": "md",
-     "content": "# A small example of writing a music bot using module\r\n\r\nThis is just the smallest part of what can be done. More examples can be found here: **[discord-player-music/examples](https://github.com/xyligan-gp/discord-player-music/tree/stable/examples)**\r\n\r\n## Client and module initialization\r\n\r\n```js\r\nimport { Collector, Loop, Player, Search } from 'discord-player-music';\r\nimport { Client, EmbedBuilder, GatewayIntentBits, Partials, TextChannel, VoiceChannel } from 'discord.js';\r\n\r\nimport { FilterType, LyricsData, PlayerQueue } from 'discord-player-music/types/PlayerData';\r\n\r\nconst client = new Client({\r\n    intents: [\r\n        GatewayIntentBits.Guilds,\r\n        GatewayIntentBits.GuildMembers,\r\n        GatewayIntentBits.GuildMessageReactions,\r\n        GatewayIntentBits.GuildMessages,\r\n        GatewayIntentBits.GuildVoiceStates,\r\n        GatewayIntentBits.MessageContent\r\n    ],\r\n\r\n    partials: [\r\n        Partials.Channel,\r\n        Partials.GuildMember,\r\n        Partials.Message,\r\n        Partials.Reaction,\r\n        Partials.User\r\n    ]\r\n})\r\n\r\nconst defaultPrefix = '!';\r\nconst player = new Player(client);\r\n\r\nclient.on('ready', async () => {\r\n    return console.log(`${client.user?.tag} is ready!`);\r\n})\r\n\r\nclient.login('YOUR_CLIENT_TOKEN_HERE');\r\n```\r\n\r\n## Bot command initialization\r\n```js\r\nclient.on('messageCreate', async message => {\r\n    const msgChannel = message.channel as TextChannel;\r\n    const messageArray = message.content.split(' ');\r\n    const command = messageArray[0];\r\n})\r\n```\r\n\r\n## Writing bot commands\r\n\r\n### Search command\r\n```js\r\nif(command === `${defaultPrefix}search`) {\r\n    const searchQuery = message.content.substring(defaultPrefix.length + 7);\r\n\r\n    if(!message.member?.voice.channel) {\r\n        message.channel.send({ content: `${message.member}, join to the voice channel!` });\r\n        return;\r\n    }\r\n\r\n    if(!searchQuery) {\r\n        message.channel.send({ content: `${message.member}, enter your search query!` });\r\n        return;\r\n    }\r\n        \r\n    const searchData = await player.search(searchQuery, message.member, msgChannel);\r\n        \r\n    if(searchData?.error) {\r\n        console.log(searchData.error);\r\n\r\n        message.channel.send({ content: `${message.member}, an error occurred while executing the command, take a look at the console!` });\r\n    }else{\r\n        if(searchData[0].searchType.includes(Search.TITLE)) {\r\n            const embed = new EmbedBuilder()\r\n                \r\n            .setColor('Blue')\r\n            .setTitle('Select track:')\r\n            .setThumbnail(client.user?.avatarURL() as string)\r\n            .setDescription(searchData.map((track, index) => `\\`[${index + 1}]\\` **[${track.title}](${track.url})** \\`[${track.duration.hours}:${track.duration.minutes}:${track.duration.seconds}]\\``).join('\\n'))\r\n\r\n            const msg = await message.channel.send({ embeds: [embed] });\r\n\r\n            player.createCollector(Collector.REACTION, msg, searchData, message.author.id);\r\n        }\r\n    }\r\n}\r\n```\r\n\r\n### Lyrics command\r\n```js\r\nif(command === `${defaultPrefix}lyrics`) {\r\n    const searchQuery = message.content.substring(defaultPrefix.length + 7);\r\n\r\n    if(!searchQuery) {\r\n        message.channel.send({ content: `${message.member}, enter your search query!` });\r\n        return;\r\n    }\r\n\r\n    const searchData = await player.lyrics(searchQuery);\r\n\r\n    if(searchData?.error) {\r\n        console.log(searchData.error);\r\n\r\n        message.channel.send({ content: `${message.member}, an error occurred while executing the command, take a look at the console!` });\r\n    }else{\r\n        const lyricsData = searchData as LyricsData;\r\n\r\n        if((lyricsData.result.length + lyricsData.query.length) <= 2048) message.channel.send({ content: `Search Query: **${lyricsData.query}**\\n\\n${lyricsData.result}` })\r\n        else message.channel.send({ content: `${message.member}, result content exceeds 2048 characters!` });\r\n    }\r\n}\r\n```\r\n\r\n### Queue command\r\n\r\n```js\r\nif(command === `${defaultPrefix}queue`) {\r\n    const guildQueue = await player.queue.get(msgChannel.guild.id);\r\n\r\n    if(guildQueue?.error) {\r\n        console.log(guildQueue.error);\r\n\r\n        message.channel.send({ content: `${message.member}, an error occurred while executing the command, take a look at the console!` });\r\n    }else{\r\n        const queue = guildQueue as PlayerQueue;\r\n\r\n        const embed = new EmbedBuilder()\r\n\r\n        .setColor('Blue')\r\n        .setTitle(`Guild Queue: ${queue.tracks.length}`)\r\n        .setThumbnail(client.user?.avatarURL() as string)\r\n        .setDescription(queue.tracks.map((track, index) => `\\`[${index + 1}]\\` **[${track.title}](${track.url})** \\`[${track.duration.hours}:${track.duration.minutes}:${track.duration.seconds}]\\``).join('\\n'))\r\n\r\n        message.channel.send({ embeds: [embed] });\r\n    }\r\n}\r\n```\r\n\r\n### Stop command\r\n\r\n```js\r\nif(command === `${defaultPrefix}stop`) {\r\n    if(!message.member?.voice.channel) {\r\n        message.channel.send({ content: `${message.member}, join to the voice channel!` });\r\n        return;\r\n    }\r\n\r\n    const stopData = await player.queue.stop(msgChannel.guild.id);\r\n\r\n    if(stopData?.error) {\r\n        console.log(stopData.error);\r\n\r\n        message.channel.send({ content: `${message.member}, an error occurred while executing the command, take a look at the console!` });\r\n    }else message.channel.send({ content: `${message.member}, server queue playing completed successfully!` });\r\n}\r\n```\r\n\r\n### Skip command\r\n\r\n```js\r\nif(command === `${defaultPrefix}skip`) {\r\n    if(!message.member?.voice.channel) {\r\n        message.channel.send({ content: `${message.member}, join to the voice channel!` });\r\n        return;\r\n    }\r\n\r\n    const skipData = await player.queue.skipTrack(msgChannel.guild.id);\r\n\r\n    if(skipData?.error) {\r\n        console.log(skipData.error);\r\n\r\n        message.channel.send({ content: `${message.member}, an error occurred while executing the command, take a look at the console!` });\r\n    }else{\r\n        if(skipData.next != null) message.channel.send({ content: `Skip track '${skipData.current.title}' and start playing '${skipData.next.title}'!` });\r\n        else message.channel.send({ content: `Skip track '${skipData.current.title}'!` });\r\n    }\r\n}\r\n```\r\n\r\n### Seek command\r\n\r\n```js\r\nif(command === `${defaultPrefix}seek`) {\r\n    const seekValue = Number(message.content.substring(defaultPrefix.length + 5));\r\n        \r\n    if(!message.member?.voice.channel) {\r\n        message.channel.send({ content: `${message.member}, join to the voice channel!` });\r\n        return;\r\n    }\r\n\r\n    if(seekValue && isNaN(seekValue)) {\r\n        message.channel.send({ content: `` });\r\n        return;\r\n    }\r\n        \r\n    const seekData = await player.queue.seek(msgChannel.guild.id, seekValue || 0);\r\n\r\n    if(seekData?.error) {\r\n        console.log(seekData.error);\r\n\r\n        message.channel.send({ content: `${message.member}, an error occurred while executing the command, take a look at the console!` });\r\n    }else message.channel.send({ content: `The current track has been successfully rewound by ${seekValue} seconds!` });\r\n}\r\n```\r\n\r\n### Filter command\r\n\r\n```js\r\nif(command === `${defaultPrefix}filter`) {\r\n    const filter = message.content.substring(defaultPrefix.length + 7) as FilterType;\r\n\r\n    if(!message.member?.voice.channel) {\r\n        message.channel.send({ content: `${message.member}, join to the voice channel!` });\r\n        return;\r\n    }\r\n\r\n    if(filter && !await player.filters.isExists(filter)) {\r\n        message.channel.send({ content: `${message.member}, you have specified an unknown filter!` });\r\n    }else{\r\n        const filterData = await player.queue.setFilter(msgChannel.guild.id, filter || 'clear');\r\n\r\n        if(filterData?.error) {\r\n            console.log(filterData.error);\r\n\r\n            message.channel.send({ content: `${message.member}, an error occurred while executing the command, take a look at the console!` });\r\n        }else message.channel.send({ content: `Playback filter **${filterData.name}** installed successfully!` });\r\n    }\r\n}\r\n```\r\n\r\n### Join command\r\n\r\n```js\r\nif(command === `${defaultPrefix}join`) {\r\n    const channelName = message.content.substring(defaultPrefix.length + 5);\r\n\r\n    if(!channelName) {\r\n        message.channel.send({ content: `${message.member}, enter the name of the voice channel!` });\r\n        return;\r\n    }\r\n\r\n    const channel = message.guild?.channels.cache.find(c => c.name === channelName);\r\n\r\n    if(channel && channel.isVoiceBased()) {\r\n        const joinData = await player.voice.join(channel as VoiceChannel);\r\n\r\n        if(joinData?.error) {\r\n            console.log(joinData.error);\r\n\r\n            message.channel.send({ content: `${message.member}, an error occurred while executing the command, take a look at the console!` });\r\n        }else message.channel.send({ content: `Member, the bot has successfully joined the ${channel} channel!` });\r\n    }\r\n}\r\n```\r\n\r\n### Leave command\r\n\r\n```js\r\nif(command === `${defaultPrefix}leave`) {\r\n    const leaveData = await player.voice.leave(msgChannel.guild.id);\r\n\r\n    if(leaveData?.error) {\r\n        console.log(leaveData.error);\r\n\r\n        message.channel.send({ content: `${message.member}, an error occurred while executing the command, take a look at the console!` });\r\n    }else message.channel.send({ content: `${message.member}, the bot has successfully left the ${message.guild?.channels.cache.get(leaveData.joinConfig.channelId as string)} voice channel!` });\r\n}\r\n```\r\n\r\n### Nowplaying command\r\n\r\n```js\r\nif(command === `${defaultPrefix}nowplaying`) {\r\n    const trackData = await player.queue.trackInfo(msgChannel.guild.id);\r\n\r\n    if(trackData?.error) {\r\n        console.log(trackData.error);\r\n\r\n        message.channel.send({ content: `${message.member}, an error occurred while executing the command, take a look at the console!` });\r\n    }else{\r\n        const progressData = await player.queue.progress(msgChannel.guild.id);\r\n\r\n        message.channel.send({ content: `Track Title: **${trackData.title}**\\nTrack URL: **${trackData.url}**\\nTrack Duration: **[${trackData.duration.hours}:${trackData.duration.minutes}:${trackData.duration.seconds}]**\\n\\nProgress: [${progressData.percents}] ${progressData.bar}` });\r\n    }\r\n}\r\n```\r\n\r\n### Loop command\r\n\r\n```js\r\nif(command === `${defaultPrefix}loop`) {\r\n    const type = message.content.substring(defaultPrefix.length + 5);\r\n\r\n    if(type) {\r\n        if(!type.includes('track') && !type.includes('queue')) {\r\n            message.channel.send({ content: `${message.member}, you specified an incorrect loop type!` });\r\n        }else{\r\n            const loopData = await player.queue.setLoop(msgChannel.guild.id, type.includes('track') ? Loop.TRACK : Loop.QUEUE);\r\n\r\n            if(loopData?.error) {\r\n                console.log(loopData.error);\r\n\r\n                message.channel.send({ content: `${message.member}, an error occurred while executing the command, take a look at the console!` });\r\n            }else message.channel.send({ content: `${message.member}, looping status changed successfully!` });\r\n        }\r\n    }else{\r\n        const loopData = await player.queue.setLoop(msgChannel.guild.id, Loop.TRACK);\r\n\r\n        if(loopData?.error) {\r\n            console.log(loopData.error);\r\n\r\n            message.channel.send({ content: `${message.member}, an error occurred while executing the command, take a look at the console!` });\r\n        }else message.channel.send({ content: `${message.member}, looping status changed successfully!` });\r\n    }\r\n}\r\n```\r\n\r\n## Player Events Handling\r\n\r\n### Ready event\r\n\r\n```js\r\nplayer.on('ready', async () => {\r\n    return console.log(`\\nPlayer by ${player.author} is ready!\\nCurrent package version: ${player.version}\\nPackage website URL: ${player.website}`);\r\n})\r\n```\r\n\r\n### Error event\r\n\r\n```js\r\nplayer.on('error', async errorData => {\r\n    return console.log(errorData);\r\n})\r\n```\r\n\r\n### QueueStarted event\r\n\r\n```js\r\nplayer.on('queueStarted', async queue => {\r\n    const channel = queue.channel.text;\r\n\r\n    return channel.send({ content: `Queue for server with ID '${channel.guild.id}' started!` });\r\n})\r\n```\r\n\r\n### CreatedPlaylist event\r\n\r\n```js\r\nplayer.on('createdPlaylist', async playlist => {\r\n    return console.log(`Playlist with id ${playlist.id} success created!`);\r\n})\r\n```\r\n\r\n### DeletedPlaylist event\r\n\r\n```js\r\nplayer.on('deletedPlaylist', async playlist => {\r\n    return console.log(`Playlist with id ${playlist.id} successfully deleted!`);\r\n})\r\n```\r\n\r\n### PlayingTrack event\r\n\r\n```js\r\nplayer.on('playingTrack', async track => {\r\n    const channel = track.channel.text;\r\n\r\n    return channel.send({ content: `Playing '${track.title}' track...` });\r\n})\r\n```\r\n\r\n### AddedTrack event\r\n\r\n```js\r\nplayer.on('addedTrack', async track => {\r\n    const channel = track.channel.text;\r\n\r\n    return channel.send({ content: `Track '${track.title}' added to queue...` });\r\n})\r\n```\r\n\r\n### QueueEnded event\r\n\r\n```js\r\nplayer.on('queueEnded', async queue => {\r\n    const channel = queue.channel.text;\r\n\r\n    return channel.send({ content: `Queue for server with ID '${channel.guild.id}' ended!` });\r\n})\r\n```",
+     "content": "# A small example of writing a music bot using module\r\n\r\nThis is just the smallest part of what can be done. More examples can be found here: **[discord-player-music/examples](https://github.com/xyligan-gp/discord-player-music/tree/stable/examples)**\r\n\r\n## Client and module initialization\r\n\r\n```js\r\nimport { Collector, GuildQueueState, Loop, Player, Search } from 'discord-player-music';\r\nimport { Client, EmbedBuilder, GatewayIntentBits, Partials, TextChannel, VoiceChannel } from 'discord.js';\r\n\r\nimport { FilterType, LyricsData, PlayerQueue } from 'discord-player-music/types/PlayerData';\r\n\r\nconst client = new Client({\r\n    intents: [\r\n        GatewayIntentBits.Guilds,\r\n        GatewayIntentBits.GuildMembers,\r\n        GatewayIntentBits.GuildMessageReactions,\r\n        GatewayIntentBits.GuildMessages,\r\n        GatewayIntentBits.GuildVoiceStates,\r\n        GatewayIntentBits.MessageContent\r\n    ],\r\n\r\n    partials: [\r\n        Partials.Channel,\r\n        Partials.GuildMember,\r\n        Partials.Message,\r\n        Partials.Reaction,\r\n        Partials.User\r\n    ]\r\n})\r\n\r\nconst defaultPrefix = '!';\r\nconst player = new Player(client);\r\n\r\nclient.on('ready', async () => {\r\n    return console.log(`${client.user?.tag} is ready!`);\r\n})\r\n\r\nclient.login('YOUR_CLIENT_TOKEN_HERE');\r\n```\r\n\r\n## Bot command initialization\r\n```js\r\nclient.on('messageCreate', async message => {\r\n    const msgChannel = message.channel as TextChannel;\r\n    const messageArray = message.content.split(' ');\r\n    const command = messageArray[0];\r\n})\r\n```\r\n\r\n## Writing bot commands\r\n\r\n### Search command\r\n```js\r\nif(command === `${defaultPrefix}search`) {\r\n    const searchQuery = message.content.substring(defaultPrefix.length + 7);\r\n\r\n    if(!message.member?.voice.channel) {\r\n        message.channel.send({ content: `${message.member}, join to the voice channel!` });\r\n        return;\r\n    }\r\n\r\n    if(!searchQuery) {\r\n        message.channel.send({ content: `${message.member}, enter your search query!` });\r\n        return;\r\n    }\r\n        \r\n    const searchData = await player.search(searchQuery, message.member, msgChannel);\r\n        \r\n    if(searchData?.error) {\r\n        console.log(searchData.error);\r\n\r\n        message.channel.send({ content: `${message.member}, an error occurred while executing the command, take a look at the console!` });\r\n    }else{\r\n        if(searchData[0].searchType.includes(Search.TITLE)) {\r\n            const embed = new EmbedBuilder()\r\n                \r\n            .setColor('Blue')\r\n            .setTitle('Select track:')\r\n            .setThumbnail(client.user?.avatarURL() as string)\r\n            .setDescription(searchData.map((track, index) => `\\`[${index + 1}]\\` **[${track.title}](${track.url})** \\`[${track.duration.hours}:${track.duration.minutes}:${track.duration.seconds}]\\``).join('\\n'))\r\n\r\n            const msg = await message.channel.send({ embeds: [embed] });\r\n\r\n            player.createCollector(Collector.REACTION, msg, searchData, message.author.id);\r\n        }\r\n    }\r\n}\r\n```\r\n\r\n### Lyrics command\r\n```js\r\nif(command === `${defaultPrefix}lyrics`) {\r\n    const searchQuery = message.content.substring(defaultPrefix.length + 7);\r\n\r\n    if(!searchQuery) {\r\n        message.channel.send({ content: `${message.member}, enter your search query!` });\r\n        return;\r\n    }\r\n\r\n    const searchData = await player.lyrics(searchQuery);\r\n\r\n    if(searchData?.error) {\r\n        console.log(searchData.error);\r\n\r\n        message.channel.send({ content: `${message.member}, an error occurred while executing the command, take a look at the console!` });\r\n    }else{\r\n        const lyricsData = searchData as LyricsData;\r\n\r\n        if((lyricsData.result.length + lyricsData.query.length) <= 2048) message.channel.send({ content: `Search Query: **${lyricsData.query}**\\n\\n${lyricsData.result}` })\r\n        else message.channel.send({ content: `${message.member}, result content exceeds 2048 characters!` });\r\n    }\r\n}\r\n```\r\n\r\n### Queue command\r\n\r\n```js\r\nif(command === `${defaultPrefix}queue`) {\r\n    const guildQueue = await player.queue.get(msgChannel.guild.id);\r\n\r\n    if(guildQueue?.error) {\r\n        console.log(guildQueue.error);\r\n\r\n        message.channel.send({ content: `${message.member}, an error occurred while executing the command, take a look at the console!` });\r\n    }else{\r\n        const queue = guildQueue as PlayerQueue;\r\n\r\n        const embed = new EmbedBuilder()\r\n\r\n        .setColor('Blue')\r\n        .setTitle(`Guild Queue: ${queue.tracks.length}`)\r\n        .setThumbnail(client.user?.avatarURL() as string)\r\n        .setDescription(queue.tracks.map((track, index) => `\\`[${index + 1}]\\` **[${track.title}](${track.url})** \\`[${track.duration.hours}:${track.duration.minutes}:${track.duration.seconds}]\\``).join('\\n'))\r\n\r\n        message.channel.send({ embeds: [embed] });\r\n    }\r\n}\r\n```\r\n\r\n### Stop command\r\n\r\n```js\r\nif(command === `${defaultPrefix}stop`) {\r\n    if(!message.member?.voice.channel) {\r\n        message.channel.send({ content: `${message.member}, join to the voice channel!` });\r\n        return;\r\n    }\r\n\r\n    const stopData = await player.queue.stop(msgChannel.guild.id);\r\n\r\n    if(stopData?.error) {\r\n        console.log(stopData.error);\r\n\r\n        message.channel.send({ content: `${message.member}, an error occurred while executing the command, take a look at the console!` });\r\n    }else message.channel.send({ content: `${message.member}, server queue playing completed successfully!` });\r\n}\r\n```\r\n\r\n### Skip command\r\n\r\n```js\r\nif(command === `${defaultPrefix}skip`) {\r\n    if(!message.member?.voice.channel) {\r\n        message.channel.send({ content: `${message.member}, join to the voice channel!` });\r\n        return;\r\n    }\r\n\r\n    const skipData = await player.queue.skipTrack(msgChannel.guild.id);\r\n\r\n    if(skipData?.error) {\r\n        console.log(skipData.error);\r\n\r\n        message.channel.send({ content: `${message.member}, an error occurred while executing the command, take a look at the console!` });\r\n    }else{\r\n        if(skipData.next != null) message.channel.send({ content: `Skip track '${skipData.current.title}' and start playing '${skipData.next.title}'!` });\r\n        else message.channel.send({ content: `Skip track '${skipData.current.title}'!` });\r\n    }\r\n}\r\n```\r\n\r\n### Seek command\r\n\r\n```js\r\nif(command === `${defaultPrefix}seek`) {\r\n    const seekValue = Number(message.content.substring(defaultPrefix.length + 5));\r\n        \r\n    if(!message.member?.voice.channel) {\r\n        message.channel.send({ content: `${message.member}, join to the voice channel!` });\r\n        return;\r\n    }\r\n\r\n    if(seekValue && isNaN(seekValue)) {\r\n        message.channel.send({ content: `` });\r\n        return;\r\n    }\r\n        \r\n    const seekData = await player.queue.seek(msgChannel.guild.id, seekValue || 0);\r\n\r\n    if(seekData?.error) {\r\n        console.log(seekData.error);\r\n\r\n        message.channel.send({ content: `${message.member}, an error occurred while executing the command, take a look at the console!` });\r\n    }else message.channel.send({ content: `The current track has been successfully rewound by ${seekValue} seconds!` });\r\n}\r\n```\r\n\r\n### Filter command\r\n\r\n```js\r\nif(command === `${defaultPrefix}filter`) {\r\n    const filter = message.content.substring(defaultPrefix.length + 7) as FilterType;\r\n\r\n    if(!message.member?.voice.channel) {\r\n        message.channel.send({ content: `${message.member}, join to the voice channel!` });\r\n        return;\r\n    }\r\n\r\n    if(filter && !await player.filters.isExists(filter)) {\r\n        message.channel.send({ content: `${message.member}, you have specified an unknown filter!` });\r\n    }else{\r\n        const filterData = await player.queue.setFilter(msgChannel.guild.id, filter || 'clear');\r\n\r\n        if(filterData?.error) {\r\n            console.log(filterData.error);\r\n\r\n            message.channel.send({ content: `${message.member}, an error occurred while executing the command, take a look at the console!` });\r\n        }else message.channel.send({ content: `Playback filter **${filterData.name}** installed successfully!` });\r\n    }\r\n}\r\n```\r\n\r\n### Join command\r\n\r\n```js\r\nif(command === `${defaultPrefix}join`) {\r\n    const channelName = message.content.substring(defaultPrefix.length + 5);\r\n\r\n    if(!channelName) {\r\n        message.channel.send({ content: `${message.member}, enter the name of the voice channel!` });\r\n        return;\r\n    }\r\n\r\n    const channel = message.guild?.channels.cache.find(c => c.name === channelName);\r\n\r\n    if(channel && channel.isVoiceBased()) {\r\n        const joinData = await player.voice.join(channel as VoiceChannel);\r\n\r\n        if(joinData?.error) {\r\n            console.log(joinData.error);\r\n\r\n            message.channel.send({ content: `${message.member}, an error occurred while executing the command, take a look at the console!` });\r\n        }else message.channel.send({ content: `Member, the bot has successfully joined the ${channel} channel!` });\r\n    }\r\n}\r\n```\r\n\r\n### Leave command\r\n\r\n```js\r\nif(command === `${defaultPrefix}leave`) {\r\n    const leaveData = await player.voice.leave(msgChannel.guild.id);\r\n\r\n    if(leaveData?.error) {\r\n        console.log(leaveData.error);\r\n\r\n        message.channel.send({ content: `${message.member}, an error occurred while executing the command, take a look at the console!` });\r\n    }else message.channel.send({ content: `${message.member}, the bot has successfully left the ${message.guild?.channels.cache.get(leaveData.joinConfig.channelId as string)} voice channel!` });\r\n}\r\n```\r\n\r\n### Nowplaying command\r\n\r\n```js\r\nif(command === `${defaultPrefix}nowplaying`) {\r\n    const trackData = await player.queue.trackInfo(msgChannel.guild.id);\r\n\r\n    if(trackData?.error) {\r\n        console.log(trackData.error);\r\n\r\n        message.channel.send({ content: `${message.member}, an error occurred while executing the command, take a look at the console!` });\r\n    }else{\r\n        const progressData = await player.queue.progress(msgChannel.guild.id);\r\n\r\n        message.channel.send({ content: `Track Title: **${trackData.title}**\\nTrack URL: **${trackData.url}**\\nTrack Duration: **[${trackData.duration.hours}:${trackData.duration.minutes}:${trackData.duration.seconds}]**\\n\\nProgress: [${progressData.percents}] ${progressData.bar}` });\r\n    }\r\n}\r\n```\r\n\r\n### Loop command\r\n\r\n```js\r\nif(command === `${defaultPrefix}loop`) {\r\n    const type = message.content.substring(defaultPrefix.length + 5);\r\n\r\n    if(type) {\r\n        if(!type.includes('track') && !type.includes('queue')) {\r\n            message.channel.send({ content: `${message.member}, you specified an incorrect loop type!` });\r\n        }else{\r\n            const loopData = await player.queue.setLoop(msgChannel.guild.id, type.includes('track') ? Loop.TRACK : Loop.QUEUE);\r\n\r\n            if(loopData?.error) {\r\n                console.log(loopData.error);\r\n\r\n                message.channel.send({ content: `${message.member}, an error occurred while executing the command, take a look at the console!` });\r\n            }else message.channel.send({ content: `${message.member}, looping status changed successfully!` });\r\n        }\r\n    }else{\r\n        const loopData = await player.queue.setLoop(msgChannel.guild.id, Loop.TRACK);\r\n\r\n        if(loopData?.error) {\r\n            console.log(loopData.error);\r\n\r\n            message.channel.send({ content: `${message.member}, an error occurred while executing the command, take a look at the console!` });\r\n        }else message.channel.send({ content: `${message.member}, looping status changed successfully!` });\r\n    }\r\n}\r\n```\r\n\r\n### Pause command\r\n\r\n```js\r\nif(command === `${defaultPrefix}pause`) {\r\n    const setStateData = await player.queue.setState(message.guild?.id as string, GuildQueueState.PAUSED);\r\n\r\n    if(setStateData?.error) {\r\n        console.log(setStateData.error);\r\n\r\n        message.channel.send({ content: `${message.member}, an error occurred while executing the command, take a look at the console!` });\r\n    }else message.channel.send({ content: `${message.member}, queue playback successfully paused!` });\r\n}\r\n```\r\n\r\n### Resume command\r\n\r\n```js\r\nif(command === `${defaultPrefix}resume`) {\r\n    const setStateData = await player.queue.setState(message.guild?.id as string, GuildQueueState.PLAYING);\r\n\r\n    if(setStateData?.error) {\r\n        console.log(setStateData.error);\r\n\r\n        message.channel.send({ content: `${message.member}, an error occurred while executing the command, take a look at the console!` });\r\n    }else message.channel.send({ content: `${message.member}, queue playback successfully resumed!` });\r\n}\r\n```\r\n\r\n## Player Events Handling\r\n\r\n### Ready event\r\n\r\n```js\r\nplayer.on('ready', async () => {\r\n    return console.log(`\\nPlayer by ${player.author} is ready!\\nCurrent package version: ${player.version}\\nPackage website URL: ${player.website}`);\r\n})\r\n```\r\n\r\n### Error event\r\n\r\n```js\r\nplayer.on('error', async errorData => {\r\n    return console.log(errorData);\r\n})\r\n```\r\n\r\n### QueueStarted event\r\n\r\n```js\r\nplayer.on('queueStarted', async queue => {\r\n    const channel = queue.channel.text;\r\n\r\n    return channel.send({ content: `Queue for server with ID '${channel.guild.id}' started!` });\r\n})\r\n```\r\n\r\n### CreatedPlaylist event\r\n\r\n```js\r\nplayer.on('createdPlaylist', async playlist => {\r\n    return console.log(`Playlist with id ${playlist.id} success created!`);\r\n})\r\n```\r\n\r\n### DeletedPlaylist event\r\n\r\n```js\r\nplayer.on('deletedPlaylist', async playlist => {\r\n    return console.log(`Playlist with id ${playlist.id} successfully deleted!`);\r\n})\r\n```\r\n\r\n### PlayingTrack event\r\n\r\n```js\r\nplayer.on('playingTrack', async track => {\r\n    const channel = track.channel.text;\r\n\r\n    return channel.send({ content: `Playing '${track.title}' track...` });\r\n})\r\n```\r\n\r\n### AddedTrack event\r\n\r\n```js\r\nplayer.on('addedTrack', async track => {\r\n    const channel = track.channel.text;\r\n\r\n    return channel.send({ content: `Track '${track.title}' added to queue...` });\r\n})\r\n```\r\n\r\n### QueueEnded event\r\n\r\n```js\r\nplayer.on('queueEnded', async queue => {\r\n    const channel = queue.channel.text;\r\n\r\n    return channel.send({ content: `Queue for server with ID '${channel.guild.id}' ended!` });\r\n})\r\n```\r\n\r\n### QueueStateChange event\r\n\r\n```js\r\nplayer.on('queueStateChange', (queue, oldState, newState) => {\r\n    const channel = queue.channel.text;\r\n\r\n    channel.send({ content: `Queue state changed with '${oldState}' on '${newState}'!` });\r\n})\r\n```",
      "path": "docs/general/examples/index.md"
     },
     "changelog": {
@@ -84,6 +84,7 @@
     {
      "name": "client",
      "description": "Discord Client",
+     "access": "private",
      "type": [
       [
        [
@@ -109,7 +110,7 @@
       ]
      ],
      "meta": {
-      "line": 68,
+      "line": 69,
       "file": "Player.ts",
       "path": "src"
      }
@@ -125,7 +126,7 @@
       ]
      ],
      "meta": {
-      "line": 76,
+      "line": 77,
       "file": "Player.ts",
       "path": "src"
      }
@@ -141,7 +142,7 @@
       ]
      ],
      "meta": {
-      "line": 83,
+      "line": 84,
       "file": "Player.ts",
       "path": "src"
      }
@@ -157,7 +158,7 @@
       ]
      ],
      "meta": {
-      "line": 90,
+      "line": 91,
       "file": "Player.ts",
       "path": "src"
      }
@@ -173,7 +174,7 @@
       ]
      ],
      "meta": {
-      "line": 97,
+      "line": 98,
       "file": "Player.ts",
       "path": "src"
      }
@@ -189,7 +190,7 @@
       ]
      ],
      "meta": {
-      "line": 104,
+      "line": 105,
       "file": "Player.ts",
       "path": "src"
      }
@@ -205,7 +206,7 @@
       ]
      ],
      "meta": {
-      "line": 111,
+      "line": 112,
       "file": "Player.ts",
       "path": "src"
      }
@@ -221,7 +222,7 @@
       ]
      ],
      "meta": {
-      "line": 118,
+      "line": 119,
       "file": "Player.ts",
       "path": "src"
      }
@@ -237,7 +238,7 @@
       ]
      ],
      "meta": {
-      "line": 125,
+      "line": 126,
       "file": "Player.ts",
       "path": "src"
      }
@@ -253,7 +254,7 @@
       ]
      ],
      "meta": {
-      "line": 132,
+      "line": 133,
       "file": "Player.ts",
       "path": "src"
      }
@@ -269,7 +270,7 @@
       ]
      ],
      "meta": {
-      "line": 139,
+      "line": 140,
       "file": "Player.ts",
       "path": "src"
      }
@@ -285,7 +286,7 @@
       ]
      ],
      "meta": {
-      "line": 146,
+      "line": 147,
       "file": "Player.ts",
       "path": "src"
      }
@@ -306,7 +307,7 @@
       "description": "Player ready status"
      },
      "meta": {
-      "line": 178,
+      "line": 179,
       "file": "Player.ts",
       "path": "src"
      }
@@ -367,7 +368,7 @@
       "description": "Void or error object"
      },
      "meta": {
-      "line": 187,
+      "line": 188,
       "file": "Player.ts",
       "path": "src"
      }
@@ -449,7 +450,7 @@
       "description": "Array with search results or error object"
      },
      "meta": {
-      "line": 289,
+      "line": 290,
       "file": "Player.ts",
       "path": "src"
      }
@@ -493,7 +494,7 @@
       "description": "Returns a result or error object"
      },
      "meta": {
-      "line": 397,
+      "line": 398,
       "file": "Player.ts",
       "path": "src"
      }
@@ -549,7 +550,7 @@
       "description": "Void"
      },
      "meta": {
-      "line": 419,
+      "line": 420,
       "file": "Player.ts",
       "path": "src"
      }
@@ -632,7 +633,7 @@
       "description": "object with received data or error"
      },
      "meta": {
-      "line": 440,
+      "line": 441,
       "file": "Player.ts",
       "path": "src"
      }
@@ -642,7 +643,7 @@
      "description": "Method for initializing module",
      "access": "private",
      "meta": {
-      "line": 539,
+      "line": 540,
       "file": "Player.ts",
       "path": "src"
      }
@@ -802,7 +803,7 @@
       }
      ],
      "meta": {
-      "line": 585,
+      "line": 610,
       "file": "Player.ts",
       "path": "src"
      }
@@ -882,7 +883,7 @@
       }
      ],
      "meta": {
-      "line": 593,
+      "line": 618,
       "file": "Player.ts",
       "path": "src"
      }
@@ -1081,7 +1082,7 @@
       }
      ],
      "meta": {
-      "line": 605,
+      "line": 630,
       "file": "Player.ts",
       "path": "src"
      }
@@ -1280,7 +1281,7 @@
       }
      ],
      "meta": {
-      "line": 628,
+      "line": 653,
       "file": "Player.ts",
       "path": "src"
      }
@@ -1384,7 +1385,7 @@
       }
      ],
      "meta": {
-      "line": 651,
+      "line": 676,
       "file": "Player.ts",
       "path": "src"
      }
@@ -1488,7 +1489,7 @@
       }
      ],
      "meta": {
-      "line": 665,
+      "line": 690,
       "file": "Player.ts",
       "path": "src"
      }
@@ -1624,12 +1625,12 @@
        ]
       },
       {
-       "name": "playing",
+       "name": "state",
        "description": "Queue playback status",
        "type": [
         [
          [
-          "boolean"
+          "GuildQueueState"
          ]
         ]
        ]
@@ -1647,7 +1648,7 @@
       }
      ],
      "meta": {
-      "line": 679,
+      "line": 704,
       "file": "Player.ts",
       "path": "src"
      }
@@ -1783,12 +1784,12 @@
        ]
       },
       {
-       "name": "playing",
+       "name": "state",
        "description": "Queue playback status",
        "type": [
         [
          [
-          "boolean"
+          "GuildQueueState"
          ]
         ]
        ]
@@ -1806,7 +1807,7 @@
       }
      ],
      "meta": {
-      "line": 698,
+      "line": 723,
       "file": "Player.ts",
       "path": "src"
      }
@@ -2847,6 +2848,13 @@
     {
      "name": "add",
      "description": "Allows you to add tracks to the server queue",
+     "examples": [
+      "const searchData = client.player.search('Xtrullor - Samsara', message.member, message.channel);\rif(searchData[0]?.title) client.player.queue.add(searchData[0]);"
+     ],
+     "emits": [
+      "Player#event:addedTrack",
+      "Player#event:queueStarted"
+     ],
      "params": [
       {
        "name": "track",
@@ -2882,8 +2890,11 @@
      }
     },
     {
-     "name": "pause",
-     "description": "Allows you to pause playback of the server queue",
+     "name": "setState",
+     "description": "Allows you to set the state of the server queue (pause and resume)",
+     "examples": [
+      "// Pause command\rconst setStateData = await client.player.queue.setState('GuildID', GuildQueueState.PAUSE);\r\r// Resume command\rconst setStateData = await client.player.queue.setState('GuildID', GuildQueueState.PLAYING);\r\rconsole.log(setStateData);"
+     ],
      "params": [
       {
        "name": "guildID",
@@ -2892,6 +2903,17 @@
         [
          [
           "string"
+         ]
+        ]
+       ]
+      },
+      {
+       "name": "type",
+       "description": "State type",
+       "type": [
+        [
+         [
+          "GuildQueueState"
          ]
         ]
        ]
@@ -2905,7 +2927,7 @@
          "<"
         ],
         [
-         "boolean",
+         "DefaultData",
          "|"
         ],
         [
@@ -2914,10 +2936,10 @@
         ]
        ]
       ],
-      "description": "Playback pause status"
+      "description": "Installation status or object with an error"
      },
      "meta": {
-      "line": 115,
+      "line": 122,
       "file": "QueueManager.ts",
       "path": "src/managers"
      }
@@ -2925,6 +2947,9 @@
     {
      "name": "get",
      "description": "Allows you to get the queue object for the server",
+     "examples": [
+      "const guildQueue = await client.player.queue.get('GuildID');\rif(guildQueue?.tracks) return message.channel.send({ content: `${guildQueue.tracks.length} tracks found in server queue!` });"
+     ],
      "params": [
       {
        "name": "guildID",
@@ -2958,7 +2983,7 @@
       "description": "Queue object for server or `null`"
      },
      "meta": {
-      "line": 137,
+      "line": 175,
       "file": "QueueManager.ts",
       "path": "src/managers"
      }
@@ -2966,6 +2991,9 @@
     {
      "name": "progress",
      "description": "Allows you to create a progress bar for playing the current track in the server queue",
+     "examples": [
+      "const progressData = await client.player.queue.pregress('GuildID');\rif(progressData?.bar) return message.channel.send({ content: `[${progressData.percents}] ${progressData.bar}` });"
+     ],
      "params": [
       {
        "name": "guildID",
@@ -2999,7 +3027,7 @@
       "description": "Progress bar data or an object with an error"
      },
      "meta": {
-      "line": 155,
+      "line": 197,
       "file": "QueueManager.ts",
       "path": "src/managers"
      }
@@ -3007,6 +3035,9 @@
     {
      "name": "streamInfo",
      "description": "Allows you to find out information about the current stream",
+     "examples": [
+      "const streamData = await client.player.queue.streamInfo('GuildID');\rif(streamData?.state) return message.channel.send({ content: `Stream filter: ${streamData.filter.name}\\nStream ${state: streamData.state.includes(GuildQueueState.PLAYING) ? '▶️' : '⏸️'}` });"
+     ],
      "params": [
       {
        "name": "guildID",
@@ -3040,7 +3071,7 @@
       "description": "General information about the current stream"
      },
      "meta": {
-      "line": 202,
+      "line": 248,
       "file": "QueueManager.ts",
       "path": "src/managers"
      }
@@ -3048,6 +3079,9 @@
     {
      "name": "trackInfo",
      "description": "Allows you to get an object with information about the track",
+     "examples": [
+      "const trackData = await client.player.queue.trackInfo('GuildID', 0);\rif(trackData?.title) return message.channel.send({ content: `Track title: ${trackData.title}\\ntrack URL: ${trackData.url}` });"
+     ],
      "params": [
       {
        "name": "guildID",
@@ -3092,7 +3126,7 @@
       "description": "object with track information or with an error"
      },
      "meta": {
-      "line": 222,
+      "line": 272,
       "file": "QueueManager.ts",
       "path": "src/managers"
      }
@@ -3100,6 +3134,9 @@
     {
      "name": "setFilter",
      "description": "Allows you to set a playback filter for the queue",
+     "examples": [
+      "const setFilterData = await client.player.queue.setFilter('GuildID', 'nightcore');\rif(setFilterData?.name) return message.channel.send({ content: `Filter '${setFilterData.name}' successfully installed!` });"
+     ],
      "params": [
       {
        "name": "guildID",
@@ -3107,7 +3144,7 @@
        "type": [
         [
          [
-          "StreamType"
+          "string"
          ]
         ]
        ]
@@ -3118,7 +3155,7 @@
        "type": [
         [
          [
-          "FilterType"
+          "Filter"
          ]
         ]
        ]
@@ -3144,7 +3181,7 @@
       "description": "Set filter data or an object with an error"
      },
      "meta": {
-      "line": 244,
+      "line": 298,
       "file": "QueueManager.ts",
       "path": "src/managers"
      }
@@ -3152,6 +3189,9 @@
     {
      "name": "setLoop",
      "description": "Allows you to set the looping of a queue or a single track",
+     "examples": [
+      "// Loop only first track\rconst setLoopData = await client.player.queue.setLoop('GuildID', Loop.TRACK);\r\r// Loop all queue tracks\rconst setLoopData = await client.player.queue.setLoop('GuildID', Loop.QUEUE);\r\rconsole.log(setLoopData);"
+     ],
      "params": [
       {
        "name": "guildID",
@@ -3184,7 +3224,7 @@
          "<"
         ],
         [
-         "boolean",
+         "LoopData",
          "|"
         ],
         [
@@ -3196,7 +3236,7 @@
       "description": "Loop setup status or object in error"
      },
      "meta": {
-      "line": 270,
+      "line": 328,
       "file": "QueueManager.ts",
       "path": "src/managers"
      }
@@ -3204,6 +3244,9 @@
     {
      "name": "setVolume",
      "description": "Allows you to set the playback volume of the server queue",
+     "examples": [
+      "const setVolumeData = await client.player.queue.setVolume('GuildID', 10);\rif(setVolumeData?.status) return message.channel.send({ content: `Volume playback successfully installed on 10!` });"
+     ],
      "params": [
       {
        "name": "guildID",
@@ -3238,7 +3281,7 @@
          "<"
         ],
         [
-         "boolean",
+         "DefaultData",
          "|"
         ],
         [
@@ -3247,10 +3290,10 @@
         ]
        ]
       ],
-      "description": "Server Queue Playback Volume Change Status"
+      "description": "Server queue playback volume change status or object with an error"
      },
      "meta": {
-      "line": 316,
+      "line": 383,
       "file": "QueueManager.ts",
       "path": "src/managers"
      }
@@ -3258,6 +3301,9 @@
     {
      "name": "skipTrack",
      "description": "Allows you to skip server tracks",
+     "examples": [
+      "const skipData = await client.player.queue.skipTrack('GuildID');\rif(skipData?.next) return message.channel.send({ content: `Skip track '${skipData.current}' and start playing track '${skipData.next}'!` });"
+     ],
      "params": [
       {
        "name": "guildID",
@@ -3288,10 +3334,10 @@
         ]
        ]
       ],
-      "description": "object with current and next track or error"
+      "description": "Object with current and next track or error"
      },
      "meta": {
-      "line": 341,
+      "line": 412,
       "file": "QueueManager.ts",
       "path": "src/managers"
      }
@@ -3299,6 +3345,9 @@
     {
      "name": "removeTrack",
      "description": "Allows you to delete tracks by index in the server queue",
+     "examples": [
+      "const removeTrackData = await client.player.queue.removetrack('GuildID', 0);\rif(!removeTrackData?.error) return message.channel.send({ content: `` });"
+     ],
      "params": [
       {
        "name": "guildID",
@@ -3331,12 +3380,8 @@
          "<"
         ],
         [
-         "Array",
-         "<"
-        ],
-        [
-         "PlayerTrack",
-         ">|"
+         "RemoveTrackData",
+         "|"
         ],
         [
          "ErrorData",
@@ -3347,7 +3392,7 @@
       "description": "Updated track list for the server or an object with an error"
      },
      "meta": {
-      "line": 382,
+      "line": 457,
       "file": "QueueManager.ts",
       "path": "src/managers"
      }
@@ -3355,6 +3400,9 @@
     {
      "name": "seek",
      "description": "Allows you to rewind the current track in the queue",
+     "examples": [
+      "// Seek 10 seconds\rconst seekData = await client.player.queue.seek('GuildID', 10);\rif(seekData?.status) return message.channel.send({ content: `The track has been successfully rewound by 10 seconds!` });"
+     ],
      "params": [
       {
        "name": "guildID",
@@ -3362,7 +3410,7 @@
        "type": [
         [
          [
-          "StreamType"
+          "string"
          ]
         ]
        ]
@@ -3401,7 +3449,7 @@
       "description": "Installation status or object with an error"
      },
      "meta": {
-      "line": 407,
+      "line": 488,
       "file": "QueueManager.ts",
       "path": "src/managers"
      }
@@ -3409,6 +3457,9 @@
     {
      "name": "shuffle",
      "description": "Allows you to shuffle tracks in the server queue",
+     "examples": [
+      "const shuffleData = await client.player.queue.shuffle('GuildID');\rif(!shuffleData?.error) return message.channel.send({ content: `10 tracks successfully shuffled!` });"
+     ],
      "params": [
       {
        "name": "guildID",
@@ -3446,48 +3497,7 @@
       "description": "Shuffled list of tracks in the queue"
      },
      "meta": {
-      "line": 434,
-      "file": "QueueManager.ts",
-      "path": "src/managers"
-     }
-    },
-    {
-     "name": "resume",
-     "description": "Allows you to remove the pause playback of the server queue",
-     "params": [
-      {
-       "name": "guildID",
-       "description": "Discord Guild ID",
-       "type": [
-        [
-         [
-          "string"
-         ]
-        ]
-       ]
-      }
-     ],
-     "returns": {
-      "types": [
-       [
-        [
-         "Promise",
-         "<"
-        ],
-        [
-         "boolean",
-         "|"
-        ],
-        [
-         "ErrorData",
-         ">"
-        ]
-       ]
-      ],
-      "description": "Playback status change"
-     },
-     "meta": {
-      "line": 462,
+      "line": 520,
       "file": "QueueManager.ts",
       "path": "src/managers"
      }
@@ -3495,6 +3505,9 @@
     {
      "name": "stop",
      "description": "Allows you to end playback of the server queue",
+     "examples": [
+      "const stopData = await client.player.queue.stop('GuildID);\rif(stopData?.status) return message.channel.send({ content: `Server queue playback successfully stopped!` });"
+     ],
      "params": [
       {
        "name": "guildID",
@@ -3528,7 +3541,7 @@
       "description": "Presence of a queue for a server in storage or an object with an error"
      },
      "meta": {
-      "line": 484,
+      "line": 552,
       "file": "QueueManager.ts",
       "path": "src/managers"
      }
@@ -3536,6 +3549,9 @@
     {
      "name": "delete",
      "description": "Allows you to clear the server queue",
+     "examples": [
+      "const deleteData = client.player.queue.delete('GuildID');\rif(deleteData?.status) return message.channel.send({ content: `The server queue has been successfully removed from the repository!` });"
+     ],
      "params": [
       {
        "name": "guildID",
@@ -3557,7 +3573,7 @@
          "<"
         ],
         [
-         "boolean",
+         "DefaultData",
          "|"
         ],
         [
@@ -3566,10 +3582,10 @@
         ]
        ]
       ],
-      "description": "Server queue cleanup status"
+      "description": "Server queue cleanup status or object with an error"
      },
      "meta": {
-      "line": 504,
+      "line": 576,
       "file": "QueueManager.ts",
       "path": "src/managers"
      }
@@ -4221,7 +4237,252 @@
     }
    ],
    "meta": {
-    "line": 557,
+    "line": 558,
+    "file": "Player.ts",
+    "path": "src"
+   }
+  },
+  {
+   "name": "Filter",
+   "type": [
+    [
+     [
+      "object"
+     ]
+    ]
+   ],
+   "props": [
+    {
+     "name": "3D",
+     "description": "3D filter",
+     "optional": true,
+     "type": [
+      [
+       [
+        "string"
+       ]
+      ]
+     ]
+    },
+    {
+     "name": "bassboost",
+     "description": "Bassboost filter",
+     "optional": true,
+     "type": [
+      [
+       [
+        "string"
+       ]
+      ]
+     ]
+    },
+    {
+     "name": "echo",
+     "description": "Echo filter",
+     "optional": true,
+     "type": [
+      [
+       [
+        "string"
+       ]
+      ]
+     ]
+    },
+    {
+     "name": "fadein",
+     "description": "Fadein filter",
+     "optional": true,
+     "type": [
+      [
+       [
+        "string"
+       ]
+      ]
+     ]
+    },
+    {
+     "name": "flanger",
+     "description": "Flanger filter",
+     "optional": true,
+     "type": [
+      [
+       [
+        "string"
+       ]
+      ]
+     ]
+    },
+    {
+     "name": "gate",
+     "description": "Gate filter",
+     "optional": true,
+     "type": [
+      [
+       [
+        "string"
+       ]
+      ]
+     ]
+    },
+    {
+     "name": "haas",
+     "description": "Haas filter",
+     "optional": true,
+     "type": [
+      [
+       [
+        "string"
+       ]
+      ]
+     ]
+    },
+    {
+     "name": "karaoke",
+     "description": "Karaoke filter",
+     "optional": true,
+     "type": [
+      [
+       [
+        "string"
+       ]
+      ]
+     ]
+    },
+    {
+     "name": "nightcore",
+     "description": "Nightcore filter",
+     "optional": true,
+     "type": [
+      [
+       [
+        "string"
+       ]
+      ]
+     ]
+    },
+    {
+     "name": "reverse",
+     "description": "Reverse filter",
+     "optional": true,
+     "type": [
+      [
+       [
+        "string"
+       ]
+      ]
+     ]
+    },
+    {
+     "name": "vaporwave",
+     "description": "Vaporwave filter",
+     "optional": true,
+     "type": [
+      [
+       [
+        "string"
+       ]
+      ]
+     ]
+    },
+    {
+     "name": "mcompand",
+     "description": "MCompand filter",
+     "optional": true,
+     "type": [
+      [
+       [
+        "string"
+       ]
+      ]
+     ]
+    },
+    {
+     "name": "phaser",
+     "description": "Phaser filter",
+     "optional": true,
+     "type": [
+      [
+       [
+        "string"
+       ]
+      ]
+     ]
+    },
+    {
+     "name": "tremolo",
+     "description": "Tremolo filter",
+     "optional": true,
+     "type": [
+      [
+       [
+        "string"
+       ]
+      ]
+     ]
+    },
+    {
+     "name": "surround",
+     "description": "Surround filter",
+     "optional": true,
+     "type": [
+      [
+       [
+        "string"
+       ]
+      ]
+     ]
+    },
+    {
+     "name": "slowed",
+     "description": "Slowed filter",
+     "optional": true,
+     "type": [
+      [
+       [
+        "string"
+       ]
+      ]
+     ]
+    },
+    {
+     "name": "earwax",
+     "description": "Earwax filter",
+     "optional": true,
+     "type": [
+      [
+       [
+        "string"
+       ]
+      ]
+     ]
+    },
+    {
+     "name": "underwater",
+     "description": "Underwater filter",
+     "optional": true,
+     "type": [
+      [
+       [
+        "string"
+       ]
+      ]
+     ]
+    },
+    {
+     "name": "clear",
+     "description": "Clear filter",
+     "optional": true,
+     "type": [
+      [
+       [
+        "string"
+       ]
+      ]
+     ]
+    }
+   ],
+   "meta": {
+    "line": 584,
     "file": "Player.ts",
     "path": "src"
    }
@@ -4249,7 +4510,7 @@
     }
    ],
    "meta": {
-    "line": 721,
+    "line": 746,
     "file": "Player.ts",
     "path": "src"
    }
@@ -4454,7 +4715,7 @@
     }
    ],
    "meta": {
-    "line": 727,
+    "line": 752,
     "file": "Player.ts",
     "path": "src"
    }
@@ -4596,12 +4857,12 @@
      ]
     },
     {
-     "name": "playing",
+     "name": "state",
      "description": "Queue playback status",
      "type": [
       [
        [
-        "boolean"
+        "GuildQueueState"
        ]
       ]
      ]
@@ -4619,7 +4880,7 @@
     }
    ],
    "meta": {
-    "line": 749,
+    "line": 774,
     "file": "Player.ts",
     "path": "src"
    }
@@ -4658,7 +4919,7 @@
     }
    ],
    "meta": {
-    "line": 767,
+    "line": 792,
     "file": "Player.ts",
     "path": "src"
    }
@@ -4697,7 +4958,7 @@
     }
    ],
    "meta": {
-    "line": 774,
+    "line": 799,
     "file": "Player.ts",
     "path": "src"
    }
@@ -4736,7 +4997,7 @@
     }
    ],
    "meta": {
-    "line": 781,
+    "line": 806,
     "file": "Player.ts",
     "path": "src"
    }
@@ -4787,7 +5048,7 @@
     }
    ],
    "meta": {
-    "line": 788,
+    "line": 813,
     "file": "Player.ts",
     "path": "src"
    }
@@ -4827,7 +5088,7 @@
     }
    ],
    "meta": {
-    "line": 796,
+    "line": 821,
     "file": "Player.ts",
     "path": "src"
    }
@@ -4937,7 +5198,7 @@
     }
    ],
    "meta": {
-    "line": 803,
+    "line": 828,
     "file": "Player.ts",
     "path": "src"
    }
@@ -4987,7 +5248,7 @@
     }
    ],
    "meta": {
-    "line": 816,
+    "line": 841,
     "file": "Player.ts",
     "path": "src"
    }
@@ -5026,7 +5287,7 @@
     }
    ],
    "meta": {
-    "line": 824,
+    "line": 849,
     "file": "Player.ts",
     "path": "src"
    }
@@ -5081,7 +5342,7 @@
     }
    ],
    "meta": {
-    "line": 831,
+    "line": 856,
     "file": "Player.ts",
     "path": "src"
    }
@@ -5120,7 +5381,7 @@
     }
    ],
    "meta": {
-    "line": 839,
+    "line": 864,
     "file": "Player.ts",
     "path": "src"
    }
@@ -5180,12 +5441,12 @@
      ]
     },
     {
-     "name": "playing",
+     "name": "state",
      "description": "Stream status value",
      "type": [
       [
        [
-        "boolean"
+        "GuildQueueState"
        ]
       ]
      ]
@@ -5278,7 +5539,90 @@
     }
    ],
    "meta": {
-    "line": 846,
+    "line": 871,
+    "file": "Player.ts",
+    "path": "src"
+   }
+  },
+  {
+   "name": "LoopData",
+   "type": [
+    [
+     [
+      "object"
+     ]
+    ]
+   ],
+   "props": [
+    {
+     "name": "track",
+     "description": "Loop track status",
+     "type": [
+      [
+       [
+        "boolean"
+       ]
+      ]
+     ]
+    },
+    {
+     "name": "queue",
+     "description": "Loop queue status",
+     "type": [
+      [
+       [
+        "boolean"
+       ]
+      ]
+     ]
+    }
+   ],
+   "meta": {
+    "line": 887,
+    "file": "Player.ts",
+    "path": "src"
+   }
+  },
+  {
+   "name": "RemoveTrackData",
+   "type": [
+    [
+     [
+      "object"
+     ]
+    ]
+   ],
+   "props": [
+    {
+     "name": "deleted",
+     "description": "Remove track object",
+     "type": [
+      [
+       [
+        "PlayerTrack"
+       ]
+      ]
+     ]
+    },
+    {
+     "name": "tracks",
+     "description": "Updated tracks list",
+     "type": [
+      [
+       [
+        "Array",
+        "<"
+       ],
+       [
+        "PlayerTrack",
+        ">"
+       ]
+      ]
+     ]
+    }
+   ],
+   "meta": {
+    "line": 894,
     "file": "Player.ts",
     "path": "src"
    }
@@ -5364,7 +5708,7 @@
     }
    ],
    "meta": {
-    "line": 862,
+    "line": 901,
     "file": "Player.ts",
     "path": "src"
    }
@@ -5406,7 +5750,7 @@
     }
    ],
    "meta": {
-    "line": 873,
+    "line": 912,
     "file": "Player.ts",
     "path": "src"
    }
@@ -5445,13 +5789,13 @@
     }
    ],
    "meta": {
-    "line": 880,
+    "line": 919,
     "file": "Player.ts",
     "path": "src"
    }
   },
   {
-   "name": "Loop",
+   "name": "Collector",
    "type": [
     [
      [
@@ -5461,8 +5805,8 @@
    ],
    "props": [
     {
-     "name": "QUEUE",
-     "description": "Loop all tracks in queue",
+     "name": "MESSAGE",
+     "description": "Message collector",
      "type": [
       [
        [
@@ -5472,8 +5816,8 @@
      ]
     },
     {
-     "name": "TRACK",
-     "description": "Loop only current track",
+     "name": "REACTION",
+     "description": "Reactions collector",
      "type": [
       [
        [
@@ -5586,16 +5930,27 @@
        ]
       ]
      ]
+    },
+    {
+     "name": "QUEUE_STATE",
+     "description": "Player 'queueStateChange' event",
+     "type": [
+      [
+       [
+        "string"
+       ]
+      ]
+     ]
     }
    ],
    "meta": {
-    "line": 14,
+    "line": 12,
     "file": "PlayerEnums.ts",
     "path": "src"
    }
   },
   {
-   "name": "Collector",
+   "name": "GuildQueueState",
    "type": [
     [
      [
@@ -5605,8 +5960,8 @@
    ],
    "props": [
     {
-     "name": "MESSAGE",
-     "description": "Message collector",
+     "name": "PAUSED",
+     "description": "Playback is paused (waiting to be restored)",
      "type": [
       [
        [
@@ -5616,8 +5971,8 @@
      ]
     },
     {
-     "name": "REACTION",
-     "description": "Reactions collector",
+     "name": "PLAYING",
+     "description": "Playback is active and not stopped",
      "type": [
       [
        [
@@ -5628,7 +5983,46 @@
     }
    ],
    "meta": {
-    "line": 39,
+    "line": 37,
+    "file": "PlayerEnums.ts",
+    "path": "src"
+   }
+  },
+  {
+   "name": "Loop",
+   "type": [
+    [
+     [
+      "object"
+     ]
+    ]
+   ],
+   "props": [
+    {
+     "name": "QUEUE",
+     "description": "Loop all tracks in queue",
+     "type": [
+      [
+       [
+        "string"
+       ]
+      ]
+     ]
+    },
+    {
+     "name": "TRACK",
+     "description": "Loop only current track",
+     "type": [
+      [
+       [
+        "string"
+       ]
+      ]
+     ]
+    }
+   ],
+   "meta": {
+    "line": 48,
     "file": "PlayerEnums.ts",
     "path": "src"
    }
@@ -5667,7 +6061,7 @@
     }
    ],
    "meta": {
-    "line": 52,
+    "line": 59,
     "file": "PlayerEnums.ts",
     "path": "src"
    }

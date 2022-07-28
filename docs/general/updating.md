@@ -103,6 +103,9 @@ In version 1.1.7, `discord-player-music` was completely rewritten on TypeScript 
 ```diff
 + player#ready
 + player#queueStarted
++ player#createdPlaylist
++ player#deletedPlaylist
++ player#queueStateChange
 
 - player#playerError
 + player#error
@@ -132,7 +135,8 @@ In version 1.1.7, `discord-player-music` was completely rewritten on TypeScript 
 + player.initQueueTrack
 
 - player.pause
-+ player.queue.pause
+- player.resume
++ player.queue.setState
 
 - player.setLoopSong
 - player.setLoopQeue
@@ -169,9 +173,6 @@ In version 1.1.7, `discord-player-music` was completely rewritten on TypeScript 
 
 - player.stop
 + player.queue.stop
-
-- player.resume
-+ player.queue.resume
 
 - player.removeSong
 + player.queue.removeTrack
@@ -211,19 +212,18 @@ In version 1.1.7, `discord-player-music` was completely rewritten on TypeScript 
 
 ```diff
 + player.queue.add
-+ player.queue.pause
 + player.queue.get
 + player.queue.progress
 + player.queue.streamInfo
 + player.queue.trackInfo
 + player.queue.setFilter
 + player.queue.setLoop
++ player.queue.setState
 + player.queue.setVolume
 + player.queue.skipTrack
 + player.queue.removeTrack
 + player.queue.seek
 + player.queue.shuffle
-+ player.queue.resume
 + player.queue.stop
 + player.queue.delete
 ```

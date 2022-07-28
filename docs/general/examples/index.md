@@ -5,7 +5,7 @@ This is just the smallest part of what can be done. More examples can be found h
 ## Client and module initialization
 
 ```js
-import { Collector, Loop, Player, Search } from 'discord-player-music';
+import { Collector, GuildQueueState, Loop, Player, Search } from 'discord-player-music';
 import { Client, EmbedBuilder, GatewayIntentBits, Partials, TextChannel, VoiceChannel } from 'discord.js';
 
 import { FilterType, LyricsData, PlayerQueue } from 'discord-player-music/types/PlayerData';
@@ -317,6 +317,34 @@ if(command === `${defaultPrefix}loop`) {
 }
 ```
 
+### Pause command
+
+```js
+if(command === `${defaultPrefix}pause`) {
+    const setStateData = await player.queue.setState(message.guild?.id as string, GuildQueueState.PAUSED);
+
+    if(setStateData?.error) {
+        console.log(setStateData.error);
+
+        message.channel.send({ content: `${message.member}, an error occurred while executing the command, take a look at the console!` });
+    }else message.channel.send({ content: `${message.member}, queue playback successfully paused!` });
+}
+```
+
+### Resume command
+
+```js
+if(command === `${defaultPrefix}resume`) {
+    const setStateData = await player.queue.setState(message.guild?.id as string, GuildQueueState.PLAYING);
+
+    if(setStateData?.error) {
+        console.log(setStateData.error);
+
+        message.channel.send({ content: `${message.member}, an error occurred while executing the command, take a look at the console!` });
+    }else message.channel.send({ content: `${message.member}, queue playback successfully resumed!` });
+}
+```
+
 ## Player Events Handling
 
 ### Ready event
@@ -388,5 +416,15 @@ player.on('queueEnded', async queue => {
     const channel = queue.channel.text;
 
     return channel.send({ content: `Queue for server with ID '${channel.guild.id}' ended!` });
+})
+```
+
+### QueueStateChange event
+
+```js
+player.on('queueStateChange', (queue, oldState, newState) => {
+    const channel = queue.channel.text;
+
+    channel.send({ content: `Queue state changed with '${oldState}' on '${newState}'!` });
 })
 ```

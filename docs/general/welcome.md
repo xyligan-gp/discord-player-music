@@ -71,7 +71,7 @@ client.player.on('ready', async () => {
 client.login('YOUR_CLIENT_TOKEN_HERE');
 ```
 
-# Links
+## Links
 
 * NPM: [Open](https://www.npmjs.com/package/discord-player-music)
 * GitHub: [Open](https://github.com/xyligan-gp/discord-player-music)
