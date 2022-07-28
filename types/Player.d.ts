@@ -156,7 +156,7 @@ export declare class Player extends PlayerEmitter {
      * 
      * @returns Array with search results or error object
      */
-    public search(query: string, member: GuildMember, channel: TextChannel, isPlaylist?: boolean): Promise<Array<PlayerTrack> & ErrorData>;
+    public search(query: string, member: GuildMember, channel: TextChannel, isPlaylist?: boolean): Promise<PlayerTrack[] & ErrorData>;
 
     /**
      * Allows you to find lyrics for songs by their name
@@ -173,7 +173,7 @@ export declare class Player extends PlayerEmitter {
      * @param index Track index
      * @param results Array with search results
      */
-    public initQueueTrack(index: number, results: Array<PlayerTrack>): Promise<void>;
+    public initQueueTrack(index: number, results: PlayerTrack[]): Promise<void>;
     
     /**
      * Allows you to create a collector to select a track from a list
@@ -185,7 +185,7 @@ export declare class Player extends PlayerEmitter {
      * 
      * @returns Object with received data or error
      */
-    public createCollector(type: Collector, message: Message, results: Array<PlayerTrack>, userID?: string): Promise<CollectorData & ErrorData>;
+    public createCollector(type: Collector, message: Message, results: PlayerTrack[], userID?: string): Promise<CollectorData & ErrorData>;
 
     /**
      * Method for initializing module

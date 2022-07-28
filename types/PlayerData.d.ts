@@ -1,200 +1,192 @@
-import { Guild, TextChannel, VoiceChannel, User } from 'discord.js';
-import { AudioPlayer, VoiceConnection } from '@discordjs/voice';
+import { Guild, TextChannel, VoiceChannel, User } from "discord.js";
+import { AudioPlayer, VoiceConnection } from "@discordjs/voice";
 
-import { GuildQueueState } from './Player';
+import { GuildQueueState } from "./Player";
 
 interface PlayerFilters {
-    '3D': string;
-    bassboost: string;
-    echo: string;
-    fadein: string;
-    flanger: string;
-    gate: string;
-    haas: string;
-    karaoke: string;
-    nightcore: string;
-    reverse: string;
-    vaporwave: string;
-    mcompand: string;
-    phaser: string;
-    tremolo: string;
-    surround: string;
-    slowed: string;
-    earwax: string;
-    underwater: string;
-    clear: null;
+  "3D": string;
+  bassboost: string;
+  echo: string;
+  fadein: string;
+  flanger: string;
+  gate: string;
+  haas: string;
+  karaoke: string;
+  nightcore: string;
+  reverse: string;
+  vaporwave: string;
+  mcompand: string;
+  phaser: string;
+  tremolo: string;
+  surround: string;
+  slowed: string;
+  earwax: string;
+  underwater: string;
+  clear: null;
 }
 
 export type Filter = keyof PlayerFilters;
 
 export interface PlayerQueue {
-    channel: {
-        text: TextChannel;
-        voice: VoiceChannel;
-    }
-    
-    dispatcher: AudioPlayer;
-    tracks: Array<PlayerTrack>;
-    connection: VoiceConnection;
+  channel: ChannelTypes;
 
-    loop: {
-        track: boolean;
-        queue: boolean;
-    }
-    
-    volume: number;
-    startStream: number;
-    state: GuildQueueState;
-    filter: PlayerFilter;
+  dispatcher: AudioPlayer;
+  tracks: PlayerTrack[];
+  connection: VoiceConnection;
+
+  loop: LoopModes;
+
+  volume: number;
+  startStream: number;
+  state: GuildQueueState;
+  filter: PlayerFilter;
 }
 
 export interface PlayerTrack {
-    index?: number;
-    searchType: string;
-    title: string;
-    url: string;
-    thumbnail: string;
-    
-    author: {
-        name: string;
-        url: string;
-    }
+  index?: number;
+  searchType: string;
+  title: string;
+  url: string;
+  thumbnail: string;
 
-    channel: {
-        text: TextChannel;
-        voice: VoiceChannel;
-    }
+  author: AuthorObject;
+  channel: ChannelTypes;
 
-    guild: Guild;
-    requested: User;
+  guild: Guild;
+  requested: User;
 
-    duration: {
-        hours: string;
-        minutes: string;
-        seconds: string;
-    }
+  duration: DurationObject;
 }
 
 export interface PlayerFilter {
-    name: string | null;
-    value: string | null;
+  name: string | null;
+  value: string | null;
 }
 
 export interface PlayerError {
-    channel?: {
-        text?: TextChannel;
-        voice?: VoiceChannel;
-    }
+  channel?: ChannelTypes;
 
-    requested: User;
-    method: string;
-    error: Error;
+  requested: User;
+  method: string;
+  error: Error;
 }
 
 export interface LyricsData {
-    query: string;
-    result: string;
+  query: string;
+  result: string;
 }
 
 export interface PlaylistTrack {
-    url: string;
-    title: string;
+  url: string;
+  title: string;
 }
 
 export interface CreatePlaylistData {
-    title?: string;
-    author: string;
-    track: PlaylistTrack;
+  title?: string;
+  author: string;
+  track: PlaylistTrack;
 }
 
 export interface AddPlaylistData {
-    id?: string;
-    track: PlaylistTrack;
+  id?: string;
+  track: PlaylistTrack;
 }
 
 export interface GuildPlaylist {
-    id: string;
-    title: string;
-    author: string;
-    created: number;
-    updated: number;
-    duration: number;
-    lastPlaying: number;
-    tracks: Array<PlaylistTrack>;
+  id: string;
+  title: string;
+  author: string;
+  created: number;
+  updated: number;
+  duration: number;
+  lastPlaying: number;
+  tracks: PlaylistTrack[];
 }
 
 export interface ErrorData {
-    error: {
-        code: number;
-        message: string;
-    }
+  error: {
+    code: number;
+    message: string;
+  };
 }
 
 export interface SkipData {
-    current: PlayerTrack;
-    next: PlayerTrack;
+  current: PlayerTrack;
+  next: PlayerTrack;
 }
 
 export interface DefaultData {
-    status: boolean;
+  status: boolean;
 }
 
 export interface CollectorData {
-    index: number;
-    track: PlayerTrack;
-    data: Array<PlayerTrack>;
+  index: number;
+  track: PlayerTrack;
+  data: PlayerTrack[];
 }
 
 export interface ProgressData {
-    bar: string;
-    percents: string;
+  bar: string;
+  percents: string;
 }
 
 export interface StreamData {
-    loop: {
-        track: boolean;
-        queue: boolean;
-    },
+  loop: LoopModes;
 
-    filter: PlayerFilter;
-    state: GuildQueueState;
-    volume: number;
+  filter: PlayerFilter;
+  state: GuildQueueState;
+  volume: number;
 
-    streamTime: {
-        days: string | number;
-        hours: string | number;
-        minutes: string | number;
-        seconds: string | number;
-    }
+  streamTime: StreamObject;
 }
 
-export interface LoopData {
-    track: boolean;
-    queue: boolean;
+export interface LoopModes {
+  track: boolean;
+  queue: boolean;
 }
 
 export interface RemoveTrackData {
-    deleted: PlayerTrack;
-    tracks: Array<PlayerTrack>;
+  deleted: PlayerTrack;
+  tracks: PlayerTrack[];
 }
 
 export interface PlayerError {
-    channel?: {
-        text?: TextChannel;
-        voice?: VoiceChannel;
-    }
+  channel?: ChannelTypes;
 
-    requested: User;
-    method: string;
-    error: Error;
+  requested: User;
+  method: string;
+  error: Error;
 }
 
 export interface StreamOptions {
-    seek?: number;
-    filter?: string;
+  seek?: number;
+  filter?: string;
 }
 
 export interface DatabaseManagerConfiguration {
-    path: string;
-    checkInterval: string;
+  path: string;
+  checkInterval: string;
+}
+
+interface ChannelTypes {
+  text: TextChannel;
+  voice: VoiceChannel;
+}
+
+interface StreamObject {
+  days: string | number;
+  hours: string | number;
+  minutes: string | number;
+  seconds: string | number;
+}
+
+interface DurationObject {
+  hours: string;
+  minutes: string;
+  seconds: string;
+}
+
+interface AuthorObject {
+  name: string;
+  url: string;
 }

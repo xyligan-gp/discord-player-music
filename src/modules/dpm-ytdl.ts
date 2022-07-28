@@ -6,17 +6,19 @@ import { StreamOptions } from '../../types/PlayerData';
 /**
  * Generating a link to play a song using FFmpeg
  * 
- * @param {Array<ytdl.videoFormat>} data YTDL Video Formats
+ * @param {ytdl.videoFormat[]} data YTDL Video Formats
  * 
- * @returns {Array<ytdl.videoFormat>} All possible link formats
+ * @returns {ytdl.videoFormat[]} All possible link formats
  * @private
  */
-function formatURL(data: Array<ytdl.videoFormat>): Array<ytdl.videoFormat> {
-    let results: Array<ytdl.videoFormat> = [];
+function formatURL(data: ytdl.videoFormat[]): ytdl.videoFormat[] {
+    let results: ytdl.videoFormat[] = [];
 
-    data.forEach(videoFormat => {
-        if(videoFormat.codecs === 'opus' && videoFormat.container === 'webm' && videoFormat.audioSampleRate === '48000' && videoFormat.audioQuality === 'AUDIO_QUALITY_MEDIUM') results.push(videoFormat);
-    })
+    for(const videoFormat of data) {
+        if(videoFormat.codecs === 'opus' && videoFormat.container === 'webm' && videoFormat.audioSampleRate === '48000' && videoFormat.audioQuality === 'AUDIO_QUALITY_MEDIUM') {
+            results.push(videoFormat);
+        }
+    }
 
     return results;
 }
@@ -33,7 +35,7 @@ async function createStream(inputURL: string, options?: StreamOptions): Promise<
     const trackInfo = await ytdl.getInfo(inputURL);
     const outputURL = formatURL(trackInfo.formats)[0].url;
 
-    const FFMPEG_OPUS_DEFAULT: Array<string> = [
+    const FFMPEG_OPUS_DEFAULT: string[] = [
         '-analyzeduration',
         '0',
         '-loglevel',
@@ -48,7 +50,7 @@ async function createStream(inputURL: string, options?: StreamOptions): Promise<
         '2'
     ];
 
-    let FFmpegArgs: Array<string> = ['-reconnect', '1', '-reconnect_streamed', '1', '-reconnect_delay_max', '5', '-i', outputURL, ...FFMPEG_OPUS_DEFAULT];
+    let FFmpegArgs: string[] = ['-reconnect', '1', '-reconnect_streamed', '1', '-reconnect_delay_max', '5', '-i', outputURL, ...FFMPEG_OPUS_DEFAULT];
     if(options.seek && options.seek != null) FFmpegArgs = FFmpegArgs.concat(['-ss', options.seek.toString()]);
     if(options.filter && options.filter != null) FFmpegArgs = FFmpegArgs.concat(['-af', options.filter]);
 

@@ -4,27 +4,34 @@ export interface PlayerOptions {
     synchronLoop?: boolean;
     defaultVolume?: number;
 
-    databaseConfig?: {
-        path?: string;
-        checkInterval?: string;
-    }
+    databaseConfig?: DatabaseConfig;
+    progressConfig?: ProgressConfig;
+    collectorsConfig?: CollectorsConfig;
+}
 
-    progressConfig?: {
-        size?: number;
-        line?: string;
-        slider?: string;
-    }
+interface DatabaseConfig {
+    path: string;
+    checkInterval: string;
+}
 
-    collectorsConfig?: {
-        message?: {
-            time?: string;
-            attempts?: number;
-        }
+interface ProgressConfig {
+    size: number;
+    line: string;
+    slider: string;
+}
 
-        reaction?: {
-            time?: string;
-            attempts?: number;
-            reactions?: Array<string>;
-        }
-    }
+interface CollectorsConfig {
+    message: MessageCollectorConfig;
+    reaction: ReactionCollectorConfig;
+}
+
+interface MessageCollectorConfig {
+    time: string;
+    attempts: number;
+}
+
+interface ReactionCollectorConfig {
+    time: string;
+    attempts: number;
+    reactions: string[];
 }
