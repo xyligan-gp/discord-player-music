@@ -8,7 +8,7 @@ This is just the smallest part of what can be done. More examples can be found h
 import { Collector, GuildQueueState, Loop, Player, Search } from 'discord-player-music';
 import { Client, EmbedBuilder, GatewayIntentBits, Partials, TextChannel, VoiceChannel } from 'discord.js';
 
-import { FilterType, LyricsData, PlayerQueue } from 'discord-player-music/types/PlayerData';
+import { Filter, LyricsData, PlayerQueue } from 'discord-player-music/types/PlayerData';
 
 const client = new Client({
     intents: [
@@ -209,7 +209,7 @@ if(command === `${defaultPrefix}seek`) {
 
 ```js
 if(command === `${defaultPrefix}filter`) {
-    const filter = message.content.substring(defaultPrefix.length + 7) as FilterType;
+    const filter = message.content.substring(defaultPrefix.length + 7) as Filter;
 
     if(!message.member?.voice.channel) {
         message.channel.send({ content: `${message.member}, join to the voice channel!` });
