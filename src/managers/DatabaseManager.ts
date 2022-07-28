@@ -7,7 +7,7 @@ import { PlayerError } from "../PlayerError";
 
 import errors from "../data/errors.json";
 
-import { DatabaseManagerConfiguration } from "../../types/PlayerData";
+import { DatabaseConfig } from "./../../types/PlayerOptions.d";
 
 /**
  * Class that controls Player Database Manager
@@ -20,10 +20,7 @@ export class DatabaseManager {
 
   private storage: object;
 
-  public config: {
-    path: string;
-    checkInterval: string;
-  };
+  public config: DatabaseConfig;
 
   /**
    * @constructor
@@ -50,7 +47,7 @@ export class DatabaseManager {
     /**
      * Player Database Configuration
      *
-     * @type {DatabaseManagerConfiguration}
+     * @type {DatabaseConfig}
      */
     this.config = {
       path: player.options.databaseConfig.path,

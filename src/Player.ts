@@ -855,7 +855,7 @@ export class Player extends PlayerEmitter {
  * Collector Config
  * @typedef {object} CollectorsConfig
  * @prop {MessageCollectorConfig} message Message Collector Configurations
- * @prop {ReactionCollectorConfig} message Message Collector Configurations
+ * @prop {ReactionCollectorConfig} reaction Message Collector Configurations
  */
 
 /**
@@ -1175,13 +1175,6 @@ export class Player extends PlayerEmitter {
  *
  * @prop {number} [seek=0] Seek value
  * @prop {string} [filter] Filter value
- */
-
-/**
- * @typedef {object} DatabaseManagerConfiguration
- *
- * @prop {string} path Default path to module database file
- * @prop {string} checkInterval Default interval for checking and updating the module database
  */
 
 /**

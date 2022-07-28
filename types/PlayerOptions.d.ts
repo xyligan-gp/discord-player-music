@@ -9,7 +9,7 @@ export interface PlayerOptions {
     collectorsConfig?: CollectorsConfig;
 }
 
-interface DatabaseConfig {
+export interface DatabaseConfig {
     path: string;
     checkInterval: string;
 }

@@ -163,11 +163,6 @@ export interface StreamOptions {
   filter?: string;
 }
 
-export interface DatabaseManagerConfiguration {
-  path: string;
-  checkInterval: string;
-}
-
 interface ChannelTypes {
   text: TextChannel;
   voice: VoiceChannel;
