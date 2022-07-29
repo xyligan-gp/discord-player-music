@@ -1,17 +1,21 @@
 {
-	"compilerOptions": {
-		"lib": ["ESNext"],
-		"module": "commonjs",
-		"moduleResolution": "node",
-		"target": "ESNext",
-		"outDir": "build",
-		"sourceMap": false,
-		"esModuleInterop": true,
-		"experimentalDecorators": true,
-		"emitDecoratorMetadata": true,
-		"allowSyntheticDefaultImports": true,
-		"skipLibCheck": true,
-		"skipDefaultLibCheck": true,
-		"resolveJsonModule": true
-	}
+  "compilerOptions": {
+    "lib": ["ESNext"],
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "target": "ESNext",
+    "outDir": "build",
+    "sourceMap": false,
+    "esModuleInterop": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "allowSyntheticDefaultImports": true,
+    "skipLibCheck": true,
+    "skipDefaultLibCheck": true,
+    "resolveJsonModule": true,
+    "declaration": false
+  },
+
+  "include": ["index.ts", "src/**/*.ts"],
+  "exclude": ["node_modules", "build"]
 }

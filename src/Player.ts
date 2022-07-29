@@ -346,8 +346,9 @@ export class Player extends PlayerEmitter {
             return this.emit(Events.QUEUE_ENDED, guildQueue);
           }
 
-          if (guildQueue.loop.track)
+          if (guildQueue.loop.track) {
             this.initGuildTrack(guildID, guildQueue.tracks[0]);
+          }
 
           if (guildQueue.loop.queue) {
             const lastTrack = guildQueue.tracks.shift();
@@ -854,8 +855,8 @@ export class Player extends PlayerEmitter {
 /**
  * Collector Config
  * @typedef {object} CollectorsConfig
- * @prop {MessageCollectorConfig} message Message Collector Configurations
- * @prop {ReactionCollectorConfig} reaction Message Collector Configurations
+ * @prop {MessageCollectorConfig} [message] Message Collector Configurations
+ * @prop {ReactionCollectorConfig} [reaction] Message Collector Configurations
  */
 
 /**
@@ -937,16 +938,8 @@ export class Player extends PlayerEmitter {
  * Emitted when a new track starts playing in the server queue
  * @event Player#playingTrack
  *
- * @param {number} [index] Track index
- * @param {string} searchType Search type
- * @param {string} title Track title
- * @param {string} url Track URL
- * @param {string} thumbnail Track thumbnail
- * @param {AuthorObject} author Track author object
- * @param {ChannelTypes} channel Track active channels
- * @param {Guild} guild Discord Guild
- * @param {User} requested Requested track user object
- * @param {DurationObject} duration Track duration
+ * @type {object}
+ * @param {PlayerTrack} data Track data
  */
 
 /**
@@ -1138,9 +1131,7 @@ export class Player extends PlayerEmitter {
 /**
  * @typedef {object} StreamData
  *
- * @prop {object} loop Loop object
- * @prop {boolean} loop.track Loop current track status
- * @prop {boolean} loop.queue Loop guild queue status
+ * @prop {LoopModes} loop Loop object
  * @prop {PlayerFilter} filter Stream filter
  * @prop {GuildQueueState} state Stream status value
  * @prop {number} volume Stream volume value
