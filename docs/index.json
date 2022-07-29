@@ -2,7 +2,7 @@
  "meta": {
   "generator": "0.11.1",
   "format": 22,
-  "date": 1659032433325
+  "date": 1659095679180
  },
  "custom": {
   "general": {
@@ -480,7 +480,7 @@
       "description": "Array with search results or error object"
      },
      "meta": {
-      "line": 394,
+      "line": 395,
       "file": "Player.ts",
       "path": "src"
      }
@@ -524,7 +524,7 @@
       "description": "Returns a result or error object"
      },
      "meta": {
-      "line": 561,
+      "line": 562,
       "file": "Player.ts",
       "path": "src"
      }
@@ -580,7 +580,7 @@
       "description": "Void"
      },
      "meta": {
-      "line": 594,
+      "line": 595,
       "file": "Player.ts",
       "path": "src"
      }
@@ -663,7 +663,7 @@
       "description": "object with received data or error"
      },
      "meta": {
-      "line": 625,
+      "line": 626,
       "file": "Player.ts",
       "path": "src"
      }
@@ -673,7 +673,7 @@
      "description": "Method for initializing module",
      "access": "private",
      "meta": {
-      "line": 806,
+      "line": 807,
       "file": "Player.ts",
       "path": "src"
      }
@@ -833,7 +833,7 @@
       }
      ],
      "meta": {
-      "line": 902,
+      "line": 903,
       "file": "Player.ts",
       "path": "src"
      }
@@ -889,7 +889,7 @@
       }
      ],
      "meta": {
-      "line": 910,
+      "line": 911,
       "file": "Player.ts",
       "path": "src"
      }
@@ -1011,7 +1011,7 @@
       }
      ],
      "meta": {
-      "line": 920,
+      "line": 921,
       "file": "Player.ts",
       "path": "src"
      }
@@ -1021,119 +1021,19 @@
      "description": "Emitted when a new track starts playing in the server queue",
      "params": [
       {
-       "name": "index",
-       "description": "Track index",
-       "optional": true,
+       "name": "data",
+       "description": "Track data",
        "type": [
         [
          [
-          "number"
-         ]
-        ]
-       ]
-      },
-      {
-       "name": "searchType",
-       "description": "Search type",
-       "type": [
-        [
-         [
-          "string"
-         ]
-        ]
-       ]
-      },
-      {
-       "name": "title",
-       "description": "Track title",
-       "type": [
-        [
-         [
-          "string"
-         ]
-        ]
-       ]
-      },
-      {
-       "name": "url",
-       "description": "Track URL",
-       "type": [
-        [
-         [
-          "string"
-         ]
-        ]
-       ]
-      },
-      {
-       "name": "thumbnail",
-       "description": "Track thumbnail",
-       "type": [
-        [
-         [
-          "string"
-         ]
-        ]
-       ]
-      },
-      {
-       "name": "author",
-       "description": "Track author object",
-       "type": [
-        [
-         [
-          "AuthorObject"
-         ]
-        ]
-       ]
-      },
-      {
-       "name": "channel",
-       "description": "Track active channels",
-       "type": [
-        [
-         [
-          "ChannelTypes"
-         ]
-        ]
-       ]
-      },
-      {
-       "name": "guild",
-       "description": "Discord Guild",
-       "type": [
-        [
-         [
-          "Guild"
-         ]
-        ]
-       ]
-      },
-      {
-       "name": "requested",
-       "description": "Requested track user object",
-       "type": [
-        [
-         [
-          "User"
-         ]
-        ]
-       ]
-      },
-      {
-       "name": "duration",
-       "description": "Track duration",
-       "type": [
-        [
-         [
-          "DurationObject"
+          "PlayerTrack"
          ]
         ]
        ]
       }
      ],
      "meta": {
-      "line": 936,
+      "line": 937,
       "file": "Player.ts",
       "path": "src"
      }
@@ -1237,7 +1137,7 @@
       }
      ],
      "meta": {
-      "line": 952,
+      "line": 945,
       "file": "Player.ts",
       "path": "src"
      }
@@ -1341,7 +1241,7 @@
       }
      ],
      "meta": {
-      "line": 966,
+      "line": 959,
       "file": "Player.ts",
       "path": "src"
      }
@@ -1456,7 +1356,7 @@
       }
      ],
      "meta": {
-      "line": 980,
+      "line": 973,
       "file": "Player.ts",
       "path": "src"
      }
@@ -1571,7 +1471,7 @@
       }
      ],
      "meta": {
-      "line": 995,
+      "line": 988,
       "file": "Player.ts",
       "path": "src"
      }
@@ -1625,7 +1525,7 @@
       }
      ],
      "meta": {
-      "line": 1010,
+      "line": 1003,
       "file": "Player.ts",
       "path": "src"
      }
@@ -3919,7 +3819,7 @@
     }
    ],
    "meta": {
-    "line": 825,
+    "line": 826,
     "file": "Player.ts",
     "path": "src"
    }
@@ -3963,7 +3863,7 @@
     }
    ],
    "meta": {
-    "line": 839,
+    "line": 840,
     "file": "Player.ts",
     "path": "src"
    }
@@ -4020,7 +3920,7 @@
     }
    ],
    "meta": {
-    "line": 846,
+    "line": 847,
     "file": "Player.ts",
     "path": "src"
    }
@@ -4039,6 +3939,7 @@
     {
      "name": "message",
      "description": "Message Collector Configurations",
+     "optional": true,
      "type": [
       [
        [
@@ -4050,6 +3951,7 @@
     {
      "name": "reaction",
      "description": "Message Collector Configurations",
+     "optional": true,
      "type": [
       [
        [
@@ -4060,7 +3962,7 @@
     }
    ],
    "meta": {
-    "line": 854,
+    "line": 855,
     "file": "Player.ts",
     "path": "src"
    }
@@ -4104,7 +4006,7 @@
     }
    ],
    "meta": {
-    "line": 861,
+    "line": 862,
     "file": "Player.ts",
     "path": "src"
    }
@@ -4166,7 +4068,7 @@
     }
    ],
    "meta": {
-    "line": 868,
+    "line": 869,
     "file": "Player.ts",
     "path": "src"
    }
@@ -4411,7 +4313,7 @@
     }
    ],
    "meta": {
-    "line": 876,
+    "line": 877,
     "file": "Player.ts",
     "path": "src"
    }
@@ -4439,7 +4341,7 @@
     }
    ],
    "meta": {
-    "line": 1024,
+    "line": 1017,
     "file": "Player.ts",
     "path": "src"
    }
@@ -4567,7 +4469,7 @@
     }
    ],
    "meta": {
-    "line": 1030,
+    "line": 1023,
     "file": "Player.ts",
     "path": "src"
    }
@@ -4688,7 +4590,7 @@
     }
    ],
    "meta": {
-    "line": 1045,
+    "line": 1038,
     "file": "Player.ts",
     "path": "src"
    }
@@ -4727,7 +4629,7 @@
     }
    ],
    "meta": {
-    "line": 1059,
+    "line": 1052,
     "file": "Player.ts",
     "path": "src"
    }
@@ -4766,7 +4668,7 @@
     }
    ],
    "meta": {
-    "line": 1066,
+    "line": 1059,
     "file": "Player.ts",
     "path": "src"
    }
@@ -4805,7 +4707,7 @@
     }
    ],
    "meta": {
-    "line": 1073,
+    "line": 1066,
     "file": "Player.ts",
     "path": "src"
    }
@@ -4856,7 +4758,7 @@
     }
    ],
    "meta": {
-    "line": 1080,
+    "line": 1073,
     "file": "Player.ts",
     "path": "src"
    }
@@ -4896,7 +4798,7 @@
     }
    ],
    "meta": {
-    "line": 1088,
+    "line": 1081,
     "file": "Player.ts",
     "path": "src"
    }
@@ -5006,7 +4908,7 @@
     }
    ],
    "meta": {
-    "line": 1095,
+    "line": 1088,
     "file": "Player.ts",
     "path": "src"
    }
@@ -5056,7 +4958,7 @@
     }
    ],
    "meta": {
-    "line": 1108,
+    "line": 1101,
     "file": "Player.ts",
     "path": "src"
    }
@@ -5095,7 +4997,7 @@
     }
    ],
    "meta": {
-    "line": 1116,
+    "line": 1109,
     "file": "Player.ts",
     "path": "src"
    }
@@ -5150,7 +5052,7 @@
     }
    ],
    "meta": {
-    "line": 1123,
+    "line": 1116,
     "file": "Player.ts",
     "path": "src"
    }
@@ -5189,7 +5091,7 @@
     }
    ],
    "meta": {
-    "line": 1131,
+    "line": 1124,
     "file": "Player.ts",
     "path": "src"
    }
@@ -5210,29 +5112,7 @@
      "type": [
       [
        [
-        "object"
-       ]
-      ]
-     ]
-    },
-    {
-     "name": "loop.track",
-     "description": "Loop current track status",
-     "type": [
-      [
-       [
-        "boolean"
-       ]
-      ]
-     ]
-    },
-    {
-     "name": "loop.queue",
-     "description": "Loop guild queue status",
-     "type": [
-      [
-       [
-        "boolean"
+        "LoopModes"
        ]
       ]
      ]
@@ -5283,7 +5163,7 @@
     }
    ],
    "meta": {
-    "line": 1138,
+    "line": 1131,
     "file": "Player.ts",
     "path": "src"
    }
@@ -5323,7 +5203,7 @@
     }
    ],
    "meta": {
-    "line": 1204,
+    "line": 1195,
     "file": "Player.ts",
     "path": "src"
    }
@@ -5367,7 +5247,7 @@
     }
    ],
    "meta": {
-    "line": 1157,
+    "line": 1148,
     "file": "Player.ts",
     "path": "src"
    }
@@ -5429,7 +5309,7 @@
     }
    ],
    "meta": {
-    "line": 1164,
+    "line": 1155,
     "file": "Player.ts",
     "path": "src"
    }
@@ -5471,7 +5351,7 @@
     }
    ],
    "meta": {
-    "line": 1173,
+    "line": 1164,
     "file": "Player.ts",
     "path": "src"
    }
@@ -5511,7 +5391,7 @@
     }
    ],
    "meta": {
-    "line": 1180,
+    "line": 1171,
     "file": "Player.ts",
     "path": "src"
    }
@@ -5593,7 +5473,7 @@
     }
    ],
    "meta": {
-    "line": 1187,
+    "line": 1178,
     "file": "Player.ts",
     "path": "src"
    }
@@ -5644,7 +5524,7 @@
     }
    ],
    "meta": {
-    "line": 1196,
+    "line": 1187,
     "file": "Player.ts",
     "path": "src"
    }
@@ -5684,7 +5564,7 @@
     }
    ],
    "meta": {
-    "line": 1211,
+    "line": 1202,
     "file": "Player.ts",
     "path": "src"
    }
