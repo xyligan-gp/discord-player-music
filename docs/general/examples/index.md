@@ -90,7 +90,6 @@ if(command === `${defaultPrefix}search`) {
         console.log(searchData.error);
 
         message.channel.send({ content: `${message.member}, an error occurred while executing the command, take a look at the console!` });
-
         return;
     }
 
@@ -103,7 +102,6 @@ if(command === `${defaultPrefix}search`) {
         .setDescription(searchData.map((track, index) => `\`[${index + 1}]\` **[${track.title}](${track.url})** \`[${track.duration.hours}:${track.duration.minutes}:${track.duration.seconds}]\``).join('\n'))
 
         const msg = await message.channel.send({ embeds: [embed] });
-
         player.createCollector(Collector.REACTION, msg, searchData, message.author.id);
     }
 }
@@ -126,7 +124,6 @@ if(command === `${defaultPrefix}lyrics`) {
         console.log(searchData.error);
 
         message.channel.send({ content: `${message.member}, an error occurred while executing the command, take a look at the console!` });
-
         return;
     }
 
@@ -147,6 +144,7 @@ if(command === `${defaultPrefix}queue`) {
         console.log(guildQueue.error);
 
         message.channel.send({ content: `${message.member}, an error occurred while executing the command, take a look at the console!` });
+        return;
     }
 
     const queue = guildQueue as PlayerQueue;
@@ -170,6 +168,7 @@ if (command === `${defaultPrefix}stop`) {
     message.channel.send({
       content: `${message.member}, join to the voice channel!`,
     });
+
     return;
   }
 
@@ -180,11 +179,15 @@ if (command === `${defaultPrefix}stop`) {
     message.channel.send({
       content: `${message.member}, an error occurred while executing the command, take a look at the console!`,
     });
+
+    return;
   }
 
   message.channel.send({
     content: `${message.member}, server queue playing completed successfully!`,
   });
+
+  return;
 }
 ```
 
@@ -287,7 +290,6 @@ if(command === `${defaultPrefix}filter`) {
         console.log(filterData.error);
 
         message.channel.send({ content: `${message.member}, an error occurred while executing the command, take a look at the console!` });
-
         return;
     }
 
@@ -352,7 +354,6 @@ if(command === `${defaultPrefix}leave`) {
         console.log(leaveData.error);
 
         message.channel.send({ content: `${message.member}, an error occurred while executing the command, take a look at the console!` });
-
         return;
     }
 
@@ -454,7 +455,6 @@ if(command === `${defaultPrefix}pause`) {
         console.log(setStateData.error);
 
         message.channel.send({ content: `${message.member}, an error occurred while executing the command, take a look at the console!` });
-
         return;
     }
 
@@ -473,7 +473,6 @@ if(command === `${defaultPrefix}resume`) {
         console.log(setStateData.error);
 
         message.channel.send({ content: `${message.member}, an error occurred while executing the command, take a look at the console!` });
-
         return;
     }
 
