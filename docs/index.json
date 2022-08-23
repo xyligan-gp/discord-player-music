@@ -2,7 +2,7 @@
  "meta": {
   "generator": "0.11.1",
   "format": 22,
-  "date": 1659019279461
+  "date": 1661286132975
  },
  "custom": {
   "general": {
@@ -3175,7 +3175,7 @@
       "description": "General information about the current stream"
      },
      "meta": {
-      "line": 261,
+      "line": 263,
       "file": "QueueManager.ts",
       "path": "src/managers"
      }
@@ -3230,7 +3230,7 @@
       "description": "object with track information or with an error"
      },
      "meta": {
-      "line": 285,
+      "line": 287,
       "file": "QueueManager.ts",
       "path": "src/managers"
      }
@@ -3285,7 +3285,7 @@
       "description": "Set filter data or an object with an error"
      },
      "meta": {
-      "line": 311,
+      "line": 313,
       "file": "QueueManager.ts",
       "path": "src/managers"
      }
@@ -3340,7 +3340,7 @@
       "description": "Loop setup status or object in error"
      },
      "meta": {
-      "line": 341,
+      "line": 346,
       "file": "QueueManager.ts",
       "path": "src/managers"
      }
@@ -3397,7 +3397,7 @@
       "description": "Server queue playback volume change status or object with an error"
      },
      "meta": {
-      "line": 396,
+      "line": 401,
       "file": "QueueManager.ts",
       "path": "src/managers"
      }
@@ -3441,7 +3441,7 @@
       "description": "Object with current and next track or error"
      },
      "meta": {
-      "line": 425,
+      "line": 430,
       "file": "QueueManager.ts",
       "path": "src/managers"
      }
@@ -3496,7 +3496,7 @@
       "description": "Updated track list for the server or an object with an error"
      },
      "meta": {
-      "line": 470,
+      "line": 475,
       "file": "QueueManager.ts",
       "path": "src/managers"
      }
@@ -3553,7 +3553,7 @@
       "description": "Installation status or object with an error"
      },
      "meta": {
-      "line": 501,
+      "line": 506,
       "file": "QueueManager.ts",
       "path": "src/managers"
      }
@@ -3601,7 +3601,7 @@
       "description": "Shuffled list of tracks in the queue"
      },
      "meta": {
-      "line": 533,
+      "line": 538,
       "file": "QueueManager.ts",
       "path": "src/managers"
      }
@@ -3645,7 +3645,7 @@
       "description": "Presence of a queue for a server in storage or an object with an error"
      },
      "meta": {
-      "line": 565,
+      "line": 570,
       "file": "QueueManager.ts",
       "path": "src/managers"
      }
@@ -3689,7 +3689,7 @@
       "description": "Server queue cleanup status or object with an error"
      },
      "meta": {
-      "line": 589,
+      "line": 594,
       "file": "QueueManager.ts",
       "path": "src/managers"
      }
@@ -3733,7 +3733,7 @@
       ]
      ],
      "meta": {
-      "line": 26,
+      "line": 27,
       "file": "UtilsManager.ts",
       "path": "src/managers"
      }
@@ -3780,7 +3780,7 @@
       "description": "Returns an array of formatted numbers"
      },
      "meta": {
-      "line": 35,
+      "line": 36,
       "file": "UtilsManager.ts",
       "path": "src/managers"
      }
@@ -3815,7 +3815,7 @@
       "description": "Formatted duration value"
      },
      "meta": {
-      "line": 58,
+      "line": 59,
       "file": "UtilsManager.ts",
       "path": "src/managers"
      }
@@ -3851,16 +3851,16 @@
       "description": "Correct module options"
      },
      "meta": {
-      "line": 83,
+      "line": 84,
       "file": "UtilsManager.ts",
       "path": "src/managers"
      }
     },
     {
-     "name": "createEmptyProgress",
-     "description": "Allows you to create an empty progress bar",
+     "name": "createProgress",
+     "description": "Allows you to create progress bar",
      "examples": [
-      "const progressBar = client.player.utils.createEmptyProgress();\r\r// Result: '🔘▬▬▬▬▬▬▬▬▬▬'\rconsole.log(progressBar);"
+      "const progressBar = client.player.utils.createProgress();\r\r// Result: '🔘▬▬▬▬▬▬▬▬▬▬'\rconsole.log(progressBar);"
      ],
      "returns": {
       "types": [
@@ -3870,10 +3870,10 @@
         ]
        ]
       ],
-      "description": "Empty progress bar"
+      "description": "Created progress bar"
      },
      "meta": {
-      "line": 195,
+      "line": 196,
       "file": "UtilsManager.ts",
       "path": "src/managers"
      }
@@ -3895,7 +3895,7 @@
       "description": "Unique ID"
      },
      "meta": {
-      "line": 216,
+      "line": 234,
       "file": "UtilsManager.ts",
       "path": "src/managers"
      }
@@ -3935,14 +3935,14 @@
       "description": "Track duration"
      },
      "meta": {
-      "line": 239,
+      "line": 257,
       "file": "UtilsManager.ts",
       "path": "src/managers"
      }
     }
    ],
    "meta": {
-    "line": 10,
+    "line": 11,
     "file": "UtilsManager.ts",
     "path": "src/managers"
    }
@@ -6169,6 +6169,45 @@
    ],
    "meta": {
     "line": 59,
+    "file": "PlayerEnums.ts",
+    "path": "src"
+   }
+  },
+  {
+   "name": "ProgressType",
+   "type": [
+    [
+     [
+      "object"
+     ]
+    ]
+   ],
+   "props": [
+    {
+     "name": "FULL",
+     "description": "Full progress bar",
+     "type": [
+      [
+       [
+        "string"
+       ]
+      ]
+     ]
+    },
+    {
+     "name": "EMPTY",
+     "description": "Empty progress bar",
+     "type": [
+      [
+       [
+        "string"
+       ]
+      ]
+     ]
+    }
+   ],
+   "meta": {
+    "line": 70,
     "file": "PlayerEnums.ts",
     "path": "src"
    }
