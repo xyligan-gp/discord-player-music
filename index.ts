@@ -1,6 +1,8 @@
 // Import package requirements
-import { TypedEmitter } from "tiny-typed-emitter"
 import { Client } from "discord.js";
+
+// Import player emitter
+import { PlayerEmitter } from "./src/Emitter";
 
 // Import package utils
 import { PlayerUtils } from "./src/Utils";
@@ -17,9 +19,8 @@ import { author, homepage, version } from "./package.json";
  * @class
  * @classdesc Player Main Class
  * 
- * @extends {TypedEmitter<PlayerEvents>}
  */
-class Player extends TypedEmitter<PlayerEvents> {
+class Player extends PlayerEmitter<PlayerEvents> {
     public client: Client;
     public options: PlayerOptions;
     public readyTimestamp: number;
@@ -118,3 +119,66 @@ class Player extends TypedEmitter<PlayerEvents> {
 }
 
 export { Player }
+
+/********************************** PLAYER OPTIONS (DOCS) **********************************/
+
+/**
+ * Represents options for the Player.
+ *
+ * @typedef {object} PlayerOptions
+ * 
+ * @prop {boolean} [addTracksToQueue] Determines whether to add tracks to the queue.
+ * @prop {number} [searchResultsCount] The number of search results.
+ * @prop {boolean} [synchronLoop] Determines whether to enable synchronous looping.
+ * @prop {number} [defaultVolume] The default volume level.
+ * @prop {PlayerConfigs} [configs] Additional player configurations.
+ */
+
+/**
+ * Represents additional configurations for the Player.
+ *
+ * @typedef {object} PlayerConfigs
+ * 
+ * @prop {PlayerProgressBarConfig} [progressBar] Configuration for the progress bar.
+ * @prop {PlayerCollectorsConfig} [collectors] Configuration for the collectors.
+ */
+
+/**
+ * Represents the configuration for the progress bar of the Player.
+ *
+ * @typedef {object} PlayerProgressBarConfig
+ * 
+ * @prop {number} [size] The size of the progress bar.
+ * @prop {string} [line] The style of the progress bar line.
+ * @prop {string} [slider] The style of the progress bar slider.
+ */
+
+/**
+ * Represents the configuration for the collectors of the Player.
+ *
+ * @typedef {object} PlayerCollectorsConfig
+ * 
+ * @prop {object} [message] Configuration for message collectors.
+ * @prop {string} [message.time] The time duration for message collectors.
+ * @prop {number} [message.attempts] The number of attempts for message collectors.
+ * @prop {object} [reaction] Configuration for reaction collectors.
+ * @prop {string} [reaction.time] The time duration for reaction collectors.
+ * @prop {number} [reaction.attempts] The number of attempts for reaction collectors.
+ * @prop {Array<string>} [reaction.reactions] The allowed reactions for reaction collectors.
+ */
+
+/********************************** PLAYER EVENTS (DOCS) **********************************/
+
+/**
+ * Represents the events for the Player.
+ *
+ * @typedef {object} PlayerEvents
+ * 
+ * @prop {Function} ready Event triggered when the player is ready.
+ */
+
+/**
+ * Emits when the module is ready.
+ * 
+ * @event Player#ready
+ */

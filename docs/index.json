@@ -2,7 +2,7 @@
  "meta": {
   "generator": "0.11.1",
   "format": 22,
-  "date": 1687458186951
+  "date": 1687463525412
  },
  "custom": {
   "general": {
@@ -45,18 +45,6 @@
   {
    "name": "Player",
    "description": "Player Main Class",
-   "extends": [
-    [
-     [
-      "TypedEmitter",
-      "<"
-     ],
-     [
-      "PlayerEvents",
-      ">"
-     ]
-    ]
-   ],
    "props": [
     {
      "name": "utils",
@@ -69,7 +57,7 @@
       ]
      ],
      "meta": {
-      "line": 40,
+      "line": 41,
       "file": "index.ts",
       "path": ""
      }
@@ -85,7 +73,7 @@
       ]
      ],
      "meta": {
-      "line": 47,
+      "line": 48,
       "file": "index.ts",
       "path": ""
      }
@@ -101,7 +89,7 @@
       ]
      ],
      "meta": {
-      "line": 54,
+      "line": 55,
       "file": "index.ts",
       "path": ""
      }
@@ -117,7 +105,7 @@
       ]
      ],
      "meta": {
-      "line": 64,
+      "line": 65,
       "file": "index.ts",
       "path": ""
      }
@@ -133,7 +121,7 @@
       ]
      ],
      "meta": {
-      "line": 73,
+      "line": 74,
       "file": "index.ts",
       "path": ""
      }
@@ -149,7 +137,7 @@
       ]
      ],
      "meta": {
-      "line": 82,
+      "line": 83,
       "file": "index.ts",
       "path": ""
      }
@@ -165,7 +153,7 @@
       ]
      ],
      "meta": {
-      "line": 91,
+      "line": 92,
       "file": "index.ts",
       "path": ""
      }
@@ -184,20 +172,555 @@
       ]
      ],
      "meta": {
-      "line": 100,
+      "line": 101,
+      "file": "index.ts",
+      "path": ""
+     }
+    }
+   ],
+   "events": [
+    {
+     "name": "ready",
+     "description": "Emits when the module is ready.",
+     "meta": {
+      "line": 180,
       "file": "index.ts",
       "path": ""
      }
     }
    ],
    "meta": {
-    "line": 14,
+    "line": 16,
+    "file": "index.ts",
+    "path": ""
+   }
+  },
+  {
+   "name": "PlayerEmitter",
+   "description": "Player EventEmitter",
+   "access": "private",
+   "methods": [
+    {
+     "name": "on",
+     "description": "Registers an event listener for the specified event.",
+     "params": [
+      {
+       "name": "event",
+       "description": "The event to listen for.",
+       "type": [
+        [
+         [
+          "PlayerEvents"
+         ]
+        ]
+       ]
+      },
+      {
+       "name": "listener",
+       "description": "The listener function to be called when the event occurs.",
+       "type": [
+        [
+         [
+          "function"
+         ]
+        ]
+       ]
+      }
+     ],
+     "returns": {
+      "types": [
+       [
+        [
+         "PlayerEmitter"
+        ]
+       ]
+      ],
+      "description": "The current PlayerEmitter instance for method chaining."
+     },
+     "meta": {
+      "line": 22,
+      "file": "Emitter.ts",
+      "path": "src"
+     }
+    },
+    {
+     "name": "once",
+     "description": "Registers a one-time event listener for the specified event.\rThe listener will be automatically removed after being called once.",
+     "params": [
+      {
+       "name": "event",
+       "description": "The event to listen for.",
+       "type": [
+        [
+         [
+          "PlayerEvents"
+         ]
+        ]
+       ]
+      },
+      {
+       "name": "listener",
+       "description": "The listener function to be called when the event occurs.",
+       "type": [
+        [
+         [
+          "function"
+         ]
+        ]
+       ]
+      }
+     ],
+     "returns": {
+      "types": [
+       [
+        [
+         "PlayerEmitter"
+        ]
+       ]
+      ],
+      "description": "The current PlayerEmitter instance for method chaining."
+     },
+     "meta": {
+      "line": 36,
+      "file": "Emitter.ts",
+      "path": "src"
+     }
+    },
+    {
+     "name": "emit",
+     "description": "Emits the specified event and passes all parameters to the listener.",
+     "params": [
+      {
+       "name": "event",
+       "description": "The event to emit.",
+       "type": [
+        [
+         [
+          "PlayerEvents"
+         ]
+        ]
+       ]
+      },
+      {
+       "name": "args",
+       "description": "The arguments to pass to the listeners.",
+       "variable": true,
+       "type": [
+        [
+         [
+          "any"
+         ]
+        ]
+       ]
+      }
+     ],
+     "returns": {
+      "types": [
+       [
+        [
+         "boolean"
+        ]
+       ]
+      ],
+      "description": "A flag indicating whether the event had listeners or not."
+     },
+     "meta": {
+      "line": 51,
+      "file": "Emitter.ts",
+      "path": "src"
+     }
+    }
+   ],
+   "meta": {
+    "line": 11,
+    "file": "Emitter.ts",
+    "path": "src"
+   }
+  },
+  {
+   "name": "PlayerError",
+   "description": "Player Error Class",
+   "access": "private",
+   "construct": {
+    "name": "PlayerError",
+    "description": "Constructs a new instance of PlayerError.",
+    "params": [
+     {
+      "name": "error",
+      "description": "The error message.",
+      "type": [
+       [
+        [
+         "string"
+        ]
+       ]
+      ]
+     }
+    ]
+   },
+   "meta": {
+    "line": 1,
+    "file": "Error.ts",
+    "path": "src"
+   }
+  },
+  {
+   "name": "PlayerUtils",
+   "description": "Player Utils",
+   "methods": [
+    {
+     "name": "checkOptions",
+     "description": "Checks and updates the player options.",
+     "params": [
+      {
+       "name": "options",
+       "description": "The player options to be checked and updated.",
+       "optional": true,
+       "type": [
+        [
+         [
+          "PlayerOptions"
+         ]
+        ]
+       ]
+      }
+     ],
+     "returns": {
+      "types": [
+       [
+        [
+         "PlayerOptions"
+        ]
+       ]
+      ],
+      "description": "The updated player options."
+     },
+     "meta": {
+      "line": 11,
+      "file": "Utils.ts",
+      "path": "src"
+     }
+    }
+   ],
+   "meta": {
+    "line": 4,
+    "file": "Utils.ts",
+    "path": "src"
+   }
+  }
+ ],
+ "interfaces": [],
+ "typedefs": [
+  {
+   "name": "PlayerOptions",
+   "description": "Represents options for the Player.",
+   "type": [
+    [
+     [
+      "object"
+     ]
+    ]
+   ],
+   "props": [
+    {
+     "name": "addTracksToQueue",
+     "description": "Determines whether to add tracks to the queue.",
+     "optional": true,
+     "type": [
+      [
+       [
+        "boolean"
+       ]
+      ]
+     ]
+    },
+    {
+     "name": "searchResultsCount",
+     "description": "The number of search results.",
+     "optional": true,
+     "type": [
+      [
+       [
+        "number"
+       ]
+      ]
+     ]
+    },
+    {
+     "name": "synchronLoop",
+     "description": "Determines whether to enable synchronous looping.",
+     "optional": true,
+     "type": [
+      [
+       [
+        "boolean"
+       ]
+      ]
+     ]
+    },
+    {
+     "name": "defaultVolume",
+     "description": "The default volume level.",
+     "optional": true,
+     "type": [
+      [
+       [
+        "number"
+       ]
+      ]
+     ]
+    },
+    {
+     "name": "configs",
+     "description": "Additional player configurations.",
+     "optional": true,
+     "type": [
+      [
+       [
+        "PlayerConfigs"
+       ]
+      ]
+     ]
+    }
+   ],
+   "meta": {
+    "line": 125,
+    "file": "index.ts",
+    "path": ""
+   }
+  },
+  {
+   "name": "PlayerConfigs",
+   "description": "Represents additional configurations for the Player.",
+   "type": [
+    [
+     [
+      "object"
+     ]
+    ]
+   ],
+   "props": [
+    {
+     "name": "progressBar",
+     "description": "Configuration for the progress bar.",
+     "optional": true,
+     "type": [
+      [
+       [
+        "PlayerProgressBarConfig"
+       ]
+      ]
+     ]
+    },
+    {
+     "name": "collectors",
+     "description": "Configuration for the collectors.",
+     "optional": true,
+     "type": [
+      [
+       [
+        "PlayerCollectorsConfig"
+       ]
+      ]
+     ]
+    }
+   ],
+   "meta": {
+    "line": 137,
+    "file": "index.ts",
+    "path": ""
+   }
+  },
+  {
+   "name": "PlayerProgressBarConfig",
+   "description": "Represents the configuration for the progress bar of the Player.",
+   "type": [
+    [
+     [
+      "object"
+     ]
+    ]
+   ],
+   "props": [
+    {
+     "name": "size",
+     "description": "The size of the progress bar.",
+     "optional": true,
+     "type": [
+      [
+       [
+        "number"
+       ]
+      ]
+     ]
+    },
+    {
+     "name": "line",
+     "description": "The style of the progress bar line.",
+     "optional": true,
+     "type": [
+      [
+       [
+        "string"
+       ]
+      ]
+     ]
+    },
+    {
+     "name": "slider",
+     "description": "The style of the progress bar slider.",
+     "optional": true,
+     "type": [
+      [
+       [
+        "string"
+       ]
+      ]
+     ]
+    }
+   ],
+   "meta": {
+    "line": 146,
+    "file": "index.ts",
+    "path": ""
+   }
+  },
+  {
+   "name": "PlayerCollectorsConfig",
+   "description": "Represents the configuration for the collectors of the Player.",
+   "type": [
+    [
+     [
+      "object"
+     ]
+    ]
+   ],
+   "props": [
+    {
+     "name": "message",
+     "description": "Configuration for message collectors.",
+     "optional": true,
+     "type": [
+      [
+       [
+        "object"
+       ]
+      ]
+     ]
+    },
+    {
+     "name": "message.time",
+     "description": "The time duration for message collectors.",
+     "optional": true,
+     "type": [
+      [
+       [
+        "string"
+       ]
+      ]
+     ]
+    },
+    {
+     "name": "message.attempts",
+     "description": "The number of attempts for message collectors.",
+     "optional": true,
+     "type": [
+      [
+       [
+        "number"
+       ]
+      ]
+     ]
+    },
+    {
+     "name": "reaction",
+     "description": "Configuration for reaction collectors.",
+     "optional": true,
+     "type": [
+      [
+       [
+        "object"
+       ]
+      ]
+     ]
+    },
+    {
+     "name": "reaction.time",
+     "description": "The time duration for reaction collectors.",
+     "optional": true,
+     "type": [
+      [
+       [
+        "string"
+       ]
+      ]
+     ]
+    },
+    {
+     "name": "reaction.attempts",
+     "description": "The number of attempts for reaction collectors.",
+     "optional": true,
+     "type": [
+      [
+       [
+        "number"
+       ]
+      ]
+     ]
+    },
+    {
+     "name": "reaction.reactions",
+     "description": "The allowed reactions for reaction collectors.",
+     "optional": true,
+     "type": [
+      [
+       [
+        "Array",
+        "<"
+       ],
+       [
+        "string",
+        ">"
+       ]
+      ]
+     ]
+    }
+   ],
+   "meta": {
+    "line": 156,
+    "file": "index.ts",
+    "path": ""
+   }
+  },
+  {
+   "name": "PlayerEvents",
+   "description": "Represents the events for the Player.",
+   "type": [
+    [
+     [
+      "object"
+     ]
+    ]
+   ],
+   "props": [
+    {
+     "name": "ready",
+     "description": "Event triggered when the player is ready.",
+     "type": [
+      [
+       [
+        "function"
+       ]
+      ]
+     ]
+    }
+   ],
+   "meta": {
+    "line": 172,
     "file": "index.ts",
     "path": ""
    }
   }
  ],
- "interfaces": [],
- "typedefs": [],
  "externals": []
 }

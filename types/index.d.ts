@@ -50,6 +50,7 @@ declare class Player extends TypedEmitter<PlayerEvents> {
 
 interface PlayerEvents {
     ready: () => void;
+    test: (arg: string, arg2: number, arg3: boolean) => void;
 }
 
 interface PlayerOptions {
