@@ -4,7 +4,7 @@
 		"module": "commonjs",
 		"moduleResolution": "node",
 		"target": "ESNext",
-		"outDir": "build",
+		"outDir": "dist",
 		"sourceMap": false,
 		"esModuleInterop": true,
 		"experimentalDecorators": true,
@@ -13,5 +13,8 @@
 		"skipLibCheck": true,
 		"skipDefaultLibCheck": true,
 		"resolveJsonModule": true
-	}
+	},
+
+	"include": ["src", "index.ts"],
+	"exclude": ["node_modules"]
 }

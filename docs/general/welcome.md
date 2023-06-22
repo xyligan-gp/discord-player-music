@@ -19,7 +19,6 @@
 * 👍 Simple & easy to use
 * 😄 Beginner friendly
 * 🎸 Audio filters
-* 📌 Guilds Playlists
 * 📃 Lyrics
 * 📂 Multiple servers
 
