@@ -2,7 +2,7 @@
  "meta": {
   "generator": "0.11.1",
   "format": 22,
-  "date": 1687475059829
+  "date": 1687475854181
  },
  "custom": {
   "general": {
@@ -448,6 +448,123 @@
     "line": 1,
     "file": "Error.ts",
     "path": "src"
+   }
+  },
+  {
+   "name": "VoiceManager",
+   "description": "Class representing a Voice Manager.",
+   "methods": [
+    {
+     "name": "isConnected",
+     "description": "Checks if the bot is connected to a voice channel in the specified guild.",
+     "params": [
+      {
+       "name": "guild",
+       "description": "The guild to check.",
+       "type": [
+        [
+         [
+          "Guild"
+         ]
+        ]
+       ]
+      }
+     ],
+     "returns": {
+      "types": [
+       [
+        [
+         "boolean"
+        ]
+       ]
+      ],
+      "description": "Returns true if the bot is connected to a voice channel in the guild, otherwise false."
+     },
+     "meta": {
+      "line": 15,
+      "file": "VoiceManager.ts",
+      "path": "src/managers"
+     }
+    },
+    {
+     "name": "join",
+     "description": "Joins a voice channel.",
+     "params": [
+      {
+       "name": "channel",
+       "description": "The voice channel to join.",
+       "type": [
+        [
+         [
+          "VoiceBasedChannel"
+         ]
+        ]
+       ]
+      }
+     ],
+     "returns": {
+      "types": [
+       [
+        [
+         "Promise",
+         "<"
+        ],
+        [
+         "VoiceConnection",
+         ">"
+        ]
+       ]
+      ],
+      "description": "A Promise that resolves to the VoiceConnection instance."
+     },
+     "meta": {
+      "line": 30,
+      "file": "VoiceManager.ts",
+      "path": "src/managers"
+     }
+    },
+    {
+     "name": "leave",
+     "description": "Leaves the voice channel.",
+     "params": [
+      {
+       "name": "channel",
+       "description": "The voice channel to leave.",
+       "type": [
+        [
+         [
+          "VoiceBasedChannel"
+         ]
+        ]
+       ]
+      }
+     ],
+     "returns": {
+      "types": [
+       [
+        [
+         "Promise",
+         "<"
+        ],
+        [
+         "void",
+         ">"
+        ]
+       ]
+      ],
+      "description": "A Promise that resolves when the voice channel is left."
+     },
+     "meta": {
+      "line": 61,
+      "file": "VoiceManager.ts",
+      "path": "src/managers"
+     }
+    }
+   ],
+   "meta": {
+    "line": 8,
+    "file": "VoiceManager.ts",
+    "path": "src/managers"
    }
   },
   {
