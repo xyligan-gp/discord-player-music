@@ -4,7 +4,7 @@
  * @class
  * @classdesc Custom error class for player-related errors.
  * 
- * @extends {Error}
+ * @extends {Error} Default Error Class
  * 
  * @private
  */

@@ -2,7 +2,7 @@
  "meta": {
   "generator": "0.11.1",
   "format": 22,
-  "date": 1687467451771
+  "date": 1687475059829
  },
  "custom": {
   "general": {
@@ -45,6 +45,18 @@
   {
    "name": "Player",
    "description": "Player Main Class",
+   "extends": [
+    [
+     [
+      "PlayerEmitter",
+      "<"
+     ],
+     [
+      "PlayerEvents",
+      ">"
+     ]
+    ]
+   ],
    "construct": {
     "name": "Player",
     "description": "Creates a new instance of the Player.",
@@ -86,7 +98,7 @@
       ]
      ],
      "meta": {
-      "line": 49,
+      "line": 56,
       "file": "index.ts",
       "path": ""
      }
@@ -102,7 +114,7 @@
       ]
      ],
      "meta": {
-      "line": 56,
+      "line": 63,
       "file": "index.ts",
       "path": ""
      }
@@ -118,7 +130,23 @@
       ]
      ],
      "meta": {
-      "line": 63,
+      "line": 70,
+      "file": "index.ts",
+      "path": ""
+     }
+    },
+    {
+     "name": "voice",
+     "description": "Player Voice Manager",
+     "type": [
+      [
+       [
+        "VoiceManager"
+       ]
+      ]
+     ],
+     "meta": {
+      "line": 77,
       "file": "index.ts",
       "path": ""
      }
@@ -134,7 +162,7 @@
       ]
      ],
      "meta": {
-      "line": 73,
+      "line": 87,
       "file": "index.ts",
       "path": ""
      }
@@ -150,7 +178,7 @@
       ]
      ],
      "meta": {
-      "line": 82,
+      "line": 96,
       "file": "index.ts",
       "path": ""
      }
@@ -166,7 +194,7 @@
       ]
      ],
      "meta": {
-      "line": 91,
+      "line": 105,
       "file": "index.ts",
       "path": ""
      }
@@ -182,7 +210,7 @@
       ]
      ],
      "meta": {
-      "line": 100,
+      "line": 114,
       "file": "index.ts",
       "path": ""
      }
@@ -201,7 +229,7 @@
       ]
      ],
      "meta": {
-      "line": 109,
+      "line": 123,
       "file": "index.ts",
       "path": ""
      }
@@ -212,7 +240,7 @@
      "name": "ready",
      "description": "Event triggered when the player is ready.",
      "meta": {
-      "line": 189,
+      "line": 205,
       "file": "index.ts",
       "path": ""
      }
@@ -234,14 +262,14 @@
       }
      ],
      "meta": {
-      "line": 195,
+      "line": 211,
       "file": "index.ts",
       "path": ""
      }
     }
    ],
    "meta": {
-    "line": 16,
+    "line": 19,
     "file": "index.ts",
     "path": ""
    }
@@ -546,7 +574,7 @@
     }
    ],
    "meta": {
-    "line": 133,
+    "line": 149,
     "file": "index.ts",
     "path": ""
    }
@@ -588,7 +616,7 @@
     }
    ],
    "meta": {
-    "line": 145,
+    "line": 161,
     "file": "index.ts",
     "path": ""
    }
@@ -645,7 +673,7 @@
     }
    ],
    "meta": {
-    "line": 154,
+    "line": 170,
     "file": "index.ts",
     "path": ""
    }
@@ -756,7 +784,7 @@
     }
    ],
    "meta": {
-    "line": 164,
+    "line": 180,
     "file": "index.ts",
     "path": ""
    }
@@ -796,7 +824,7 @@
     }
    ],
    "meta": {
-    "line": 180,
+    "line": 196,
     "file": "index.ts",
     "path": ""
    }

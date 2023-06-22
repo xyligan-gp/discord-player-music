@@ -10,6 +10,9 @@ import { PlayerError } from "./Error";
 // Import package utils
 import { PlayerUtils } from "./Utils";
 
+// Import player managers
+import { VoiceManager } from "./managers/VoiceManager";
+
 declare class Player extends PlayerEmitter<PlayerEvents> {
     constructor(client: Client, options?: PlayerOptions);
 
@@ -18,6 +21,8 @@ declare class Player extends PlayerEmitter<PlayerEvents> {
     public readyTimestamp: number;
 
     public utils: PlayerUtils;
+
+    public voice: VoiceManager;
 
     /**
      * Package ready state

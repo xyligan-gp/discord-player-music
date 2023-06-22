@@ -34,12 +34,10 @@
 	"engines": {
 		"node": ">=16.9.0"
 	},
-	"peerDependencies": {
-		"discord.js": "14"
-	},
 	"types": "./types/index.d.ts",
 	"dependencies": {
-		"discord.js": "14.11.0"
+		"@discordjs/voice": "^0.16.0",
+		"discord.js": "^14.11.0"
 	},
 	"devDependencies": {
 		"@babel/core": "^7.22.5",

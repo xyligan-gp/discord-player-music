@@ -7,6 +7,9 @@ import { PlayerEmitter } from "./src/Emitter";
 // Import package utils
 import { PlayerUtils } from "./src/Utils";
 
+// Import player managers
+import { VoiceManager } from "./src/managers/VoiceManager";
+
 // Import package interfaces
 import { PlayerEvents, PlayerOptions } from "./types/index";
 
@@ -19,6 +22,8 @@ import { author, homepage, version } from "./package.json";
  * @class
  * @classdesc Player Main Class
  * 
+ * @extends {PlayerEmitter<PlayerEvents>}
+ * 
  */
 class Player extends PlayerEmitter<PlayerEvents> {
     public client: Client;
@@ -26,6 +31,8 @@ class Player extends PlayerEmitter<PlayerEvents> {
     public readyTimestamp: number;
 
     public utils: PlayerUtils;
+
+    public voice: VoiceManager;
 
     /**
      * Creates a new instance of the Player.
@@ -66,6 +73,13 @@ class Player extends PlayerEmitter<PlayerEvents> {
          * @type {number}
          */
         this.readyTimestamp = null;
+
+        /**
+         * Player Voice Manager
+         * 
+         * @type {VoiceManager}
+         */
+        this.voice = null;
 
         this.init();
     }
@@ -117,6 +131,8 @@ class Player extends PlayerEmitter<PlayerEvents> {
         const interval = setInterval(() => {
             if(this.client.isReady()) {
                 this.readyTimestamp = Date.now();
+
+                this.voice = new VoiceManager();
 
                 this.emit("ready");
 
