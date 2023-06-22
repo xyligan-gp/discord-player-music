@@ -1,8 +1,10 @@
 /**
- * Custom error class for player-related errors.
+ * Player Error Class
  * 
  * @class
- * @classdesc Player Error Class
+ * @classdesc Custom error class for player-related errors.
+ * 
+ * @extends {Error}
  * 
  * @private
  */

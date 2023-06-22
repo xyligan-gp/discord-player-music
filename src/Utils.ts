@@ -5,7 +5,7 @@ import { PlayerOptions } from "../types";
  * Player Utils Class
  * 
  * @class
- * @classdesc Player Utils
+ * @classdesc Utility class for Player-related operations.
  */
 class PlayerUtils {
     /**
@@ -102,4 +102,4 @@ class PlayerUtils {
     }
 }
 
-export { PlayerUtils }
+export { PlayerUtils };

@@ -1,18 +1,10 @@
 import { EventEmitter } from "events";
 
-export type ListenerSignature<L> = {
-    [E in keyof L]: (...args: any[]) => any;
-}
-
-export interface IDefaultListener {
-    [k: string]: (...args: any[]) => any;
-}
-
 /**
- * Represents an event emitter for player events.
+ * Player EventEmitter
  * 
  * @class
- * @classdesc Player EventEmitter
+ * @classdesc Represents an event emitter for player events.
  * 
  * @private
  */
@@ -61,4 +53,12 @@ class PlayerEmitter<V extends ListenerSignature<V> = IDefaultListener> {
     }
 }
 
-export { PlayerEmitter }
+type ListenerSignature<L> = {
+    [E in keyof L]: (...args: any[]) => any;
+}
+
+interface IDefaultListener {
+    [k: string]: (...args: any[]) => any;
+}
+
+export { PlayerEmitter };

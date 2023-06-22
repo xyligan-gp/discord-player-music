@@ -2,7 +2,7 @@
  "meta": {
   "generator": "0.11.1",
   "format": 22,
-  "date": 1687463525412
+  "date": 1687467451771
  },
  "custom": {
   "general": {
@@ -45,6 +45,35 @@
   {
    "name": "Player",
    "description": "Player Main Class",
+   "construct": {
+    "name": "Player",
+    "description": "Creates a new instance of the Player.",
+    "params": [
+     {
+      "name": "client",
+      "description": "The client instance associated with the player.",
+      "type": [
+       [
+        [
+         "Client"
+        ]
+       ]
+      ]
+     },
+     {
+      "name": "options",
+      "description": "Optional player options.",
+      "optional": true,
+      "type": [
+       [
+        [
+         "PlayerOptions"
+        ]
+       ]
+      ]
+     }
+    ]
+   },
    "props": [
     {
      "name": "utils",
@@ -57,7 +86,7 @@
       ]
      ],
      "meta": {
-      "line": 41,
+      "line": 49,
       "file": "index.ts",
       "path": ""
      }
@@ -73,7 +102,7 @@
       ]
      ],
      "meta": {
-      "line": 48,
+      "line": 56,
       "file": "index.ts",
       "path": ""
      }
@@ -89,7 +118,7 @@
       ]
      ],
      "meta": {
-      "line": 55,
+      "line": 63,
       "file": "index.ts",
       "path": ""
      }
@@ -105,7 +134,7 @@
       ]
      ],
      "meta": {
-      "line": 65,
+      "line": 73,
       "file": "index.ts",
       "path": ""
      }
@@ -121,7 +150,7 @@
       ]
      ],
      "meta": {
-      "line": 74,
+      "line": 82,
       "file": "index.ts",
       "path": ""
      }
@@ -137,7 +166,7 @@
       ]
      ],
      "meta": {
-      "line": 83,
+      "line": 91,
       "file": "index.ts",
       "path": ""
      }
@@ -153,7 +182,7 @@
       ]
      ],
      "meta": {
-      "line": 92,
+      "line": 100,
       "file": "index.ts",
       "path": ""
      }
@@ -172,7 +201,7 @@
       ]
      ],
      "meta": {
-      "line": 101,
+      "line": 109,
       "file": "index.ts",
       "path": ""
      }
@@ -181,9 +210,31 @@
    "events": [
     {
      "name": "ready",
-     "description": "Emits when the module is ready.",
+     "description": "Event triggered when the player is ready.",
      "meta": {
-      "line": 180,
+      "line": 189,
+      "file": "index.ts",
+      "path": ""
+     }
+    },
+    {
+     "name": "error",
+     "description": "Event triggered when an error occurs.",
+     "params": [
+      {
+       "name": "error",
+       "description": "The error object associated with the error event.",
+       "type": [
+        [
+         [
+          "PlayerError"
+         ]
+        ]
+       ]
+      }
+     ],
+     "meta": {
+      "line": 195,
       "file": "index.ts",
       "path": ""
      }
@@ -197,7 +248,7 @@
   },
   {
    "name": "PlayerEmitter",
-   "description": "Player EventEmitter",
+   "description": "Represents an event emitter for player events.",
    "access": "private",
    "methods": [
     {
@@ -238,7 +289,7 @@
       "description": "The current PlayerEmitter instance for method chaining."
      },
      "meta": {
-      "line": 22,
+      "line": 14,
       "file": "Emitter.ts",
       "path": "src"
      }
@@ -281,7 +332,7 @@
       "description": "The current PlayerEmitter instance for method chaining."
      },
      "meta": {
-      "line": 36,
+      "line": 28,
       "file": "Emitter.ts",
       "path": "src"
      }
@@ -325,21 +376,28 @@
       "description": "A flag indicating whether the event had listeners or not."
      },
      "meta": {
-      "line": 51,
+      "line": 43,
       "file": "Emitter.ts",
       "path": "src"
      }
     }
    ],
    "meta": {
-    "line": 11,
+    "line": 3,
     "file": "Emitter.ts",
     "path": "src"
    }
   },
   {
    "name": "PlayerError",
-   "description": "Player Error Class",
+   "description": "Custom error class for player-related errors.",
+   "extends": [
+    [
+     [
+      "Error"
+     ]
+    ]
+   ],
    "access": "private",
    "construct": {
     "name": "PlayerError",
@@ -366,7 +424,7 @@
   },
   {
    "name": "PlayerUtils",
-   "description": "Player Utils",
+   "description": "Utility class for Player-related operations.",
    "methods": [
     {
      "name": "checkOptions",
@@ -426,6 +484,7 @@
      "name": "addTracksToQueue",
      "description": "Determines whether to add tracks to the queue.",
      "optional": true,
+     "default": true,
      "type": [
       [
        [
@@ -438,6 +497,7 @@
      "name": "searchResultsCount",
      "description": "The number of search results.",
      "optional": true,
+     "default": 10,
      "type": [
       [
        [
@@ -450,6 +510,7 @@
      "name": "synchronLoop",
      "description": "Determines whether to enable synchronous looping.",
      "optional": true,
+     "default": true,
      "type": [
       [
        [
@@ -462,6 +523,7 @@
      "name": "defaultVolume",
      "description": "The default volume level.",
      "optional": true,
+     "default": 5,
      "type": [
       [
        [
@@ -484,7 +546,7 @@
     }
    ],
    "meta": {
-    "line": 125,
+    "line": 133,
     "file": "index.ts",
     "path": ""
    }
@@ -526,7 +588,7 @@
     }
    ],
    "meta": {
-    "line": 137,
+    "line": 145,
     "file": "index.ts",
     "path": ""
    }
@@ -546,6 +608,7 @@
      "name": "size",
      "description": "The size of the progress bar.",
      "optional": true,
+     "default": 11,
      "type": [
       [
        [
@@ -558,6 +621,7 @@
      "name": "line",
      "description": "The style of the progress bar line.",
      "optional": true,
+     "default": "▬",
      "type": [
       [
        [
@@ -570,6 +634,7 @@
      "name": "slider",
      "description": "The style of the progress bar slider.",
      "optional": true,
+     "default": "🔘",
      "type": [
       [
        [
@@ -580,7 +645,7 @@
     }
    ],
    "meta": {
-    "line": 146,
+    "line": 154,
     "file": "index.ts",
     "path": ""
    }
@@ -612,6 +677,7 @@
      "name": "message.time",
      "description": "The time duration for message collectors.",
      "optional": true,
+     "default": "30s",
      "type": [
       [
        [
@@ -624,6 +690,7 @@
      "name": "message.attempts",
      "description": "The number of attempts for message collectors.",
      "optional": true,
+     "default": 1,
      "type": [
       [
        [
@@ -648,6 +715,7 @@
      "name": "reaction.time",
      "description": "The time duration for reaction collectors.",
      "optional": true,
+     "default": "30s",
      "type": [
       [
        [
@@ -660,6 +728,7 @@
      "name": "reaction.attempts",
      "description": "The number of attempts for reaction collectors.",
      "optional": true,
+     "default": 1,
      "type": [
       [
        [
@@ -687,7 +756,7 @@
     }
    ],
    "meta": {
-    "line": 156,
+    "line": 164,
     "file": "index.ts",
     "path": ""
    }
@@ -713,10 +782,21 @@
        ]
       ]
      ]
+    },
+    {
+     "name": "error",
+     "description": "Event triggered when an error occurs.",
+     "type": [
+      [
+       [
+        "function"
+       ]
+      ]
+     ]
     }
    ],
    "meta": {
-    "line": 172,
+    "line": 180,
     "file": "index.ts",
     "path": ""
    }

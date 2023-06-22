@@ -27,6 +27,14 @@ class Player extends PlayerEmitter<PlayerEvents> {
 
     public utils: PlayerUtils;
 
+    /**
+     * Creates a new instance of the Player.
+     *
+     * @constructor
+     * 
+     * @param {Client} client - The client instance associated with the player.
+     * @param {PlayerOptions} [options] - Optional player options.
+     */
     constructor(client: Client, options?: PlayerOptions) {
         super();
 
@@ -118,7 +126,7 @@ class Player extends PlayerEmitter<PlayerEvents> {
     }
 }
 
-export { Player }
+export { Player };
 
 /********************************** PLAYER OPTIONS (DOCS) **********************************/
 
@@ -127,10 +135,10 @@ export { Player }
  *
  * @typedef {object} PlayerOptions
  * 
- * @prop {boolean} [addTracksToQueue] Determines whether to add tracks to the queue.
- * @prop {number} [searchResultsCount] The number of search results.
- * @prop {boolean} [synchronLoop] Determines whether to enable synchronous looping.
- * @prop {number} [defaultVolume] The default volume level.
+ * @prop {boolean} [addTracksToQueue=true] Determines whether to add tracks to the queue.
+ * @prop {number} [searchResultsCount=10] The number of search results.
+ * @prop {boolean} [synchronLoop=true] Determines whether to enable synchronous looping.
+ * @prop {number} [defaultVolume=5] The default volume level.
  * @prop {PlayerConfigs} [configs] Additional player configurations.
  */
 
@@ -148,9 +156,9 @@ export { Player }
  *
  * @typedef {object} PlayerProgressBarConfig
  * 
- * @prop {number} [size] The size of the progress bar.
- * @prop {string} [line] The style of the progress bar line.
- * @prop {string} [slider] The style of the progress bar slider.
+ * @prop {number} [size=11] The size of the progress bar.
+ * @prop {string} [line=▬] The style of the progress bar line.
+ * @prop {string} [slider=🔘] The style of the progress bar slider.
  */
 
 /**
@@ -159,11 +167,11 @@ export { Player }
  * @typedef {object} PlayerCollectorsConfig
  * 
  * @prop {object} [message] Configuration for message collectors.
- * @prop {string} [message.time] The time duration for message collectors.
- * @prop {number} [message.attempts] The number of attempts for message collectors.
+ * @prop {string} [message.time=30s] The time duration for message collectors.
+ * @prop {number} [message.attempts=1] The number of attempts for message collectors.
  * @prop {object} [reaction] Configuration for reaction collectors.
- * @prop {string} [reaction.time] The time duration for reaction collectors.
- * @prop {number} [reaction.attempts] The number of attempts for reaction collectors.
+ * @prop {string} [reaction.time=30s] The time duration for reaction collectors.
+ * @prop {number} [reaction.attempts=1] The number of attempts for reaction collectors.
  * @prop {Array<string>} [reaction.reactions] The allowed reactions for reaction collectors.
  */
 
@@ -175,10 +183,19 @@ export { Player }
  * @typedef {object} PlayerEvents
  * 
  * @prop {Function} ready Event triggered when the player is ready.
+ * @prop {Function} error - Event triggered when an error occurs.
  */
 
 /**
- * Emits when the module is ready.
+ * Event triggered when the player is ready.
  * 
  * @event Player#ready
+ */
+
+/**
+ * Event triggered when an error occurs.
+ * 
+ * @event Player#error
+ * 
+ * @param {PlayerError} error The error object associated with the error event.
  */

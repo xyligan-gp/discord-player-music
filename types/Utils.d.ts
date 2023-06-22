@@ -12,4 +12,4 @@ declare class PlayerUtils {
     public checkOptions(options?: PlayerOptions): PlayerOptions;
 }
 
-export { PlayerUtils }
+export { PlayerUtils };
