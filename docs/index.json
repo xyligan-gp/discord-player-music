@@ -2,7 +2,7 @@
  "meta": {
   "generator": "0.11.1",
   "format": 22,
-  "date": 1687457664145
+  "date": 1687458186951
  },
  "custom": {
   "general": {
@@ -43,74 +43,157 @@
  },
  "classes": [
   {
-   "name": "PlayerError",
-   "description": "Player Error Class",
-   "access": "private",
-   "construct": {
-    "name": "PlayerError",
-    "description": "Constructs a new instance of PlayerError.",
-    "params": [
-     {
-      "name": "error",
-      "description": "The error message.",
-      "type": [
+   "name": "Player",
+   "description": "Player Main Class",
+   "extends": [
+    [
+     [
+      "TypedEmitter",
+      "<"
+     ],
+     [
+      "PlayerEvents",
+      ">"
+     ]
+    ]
+   ],
+   "props": [
+    {
+     "name": "utils",
+     "description": "Player utils",
+     "type": [
+      [
        [
-        [
-         "string"
-        ]
+        "PlayerUtils"
        ]
       ]
+     ],
+     "meta": {
+      "line": 40,
+      "file": "index.ts",
+      "path": ""
      }
-    ]
-   },
-   "meta": {
-    "line": 1,
-    "file": "Error.ts",
-    "path": "src"
-   }
-  },
-  {
-   "name": "PlayerUtils",
-   "description": "Player Utils",
+    },
+    {
+     "name": "options",
+     "description": "Player options",
+     "type": [
+      [
+       [
+        "PlayerOptions"
+       ]
+      ]
+     ],
+     "meta": {
+      "line": 47,
+      "file": "index.ts",
+      "path": ""
+     }
+    },
+    {
+     "name": "readyTimestamp",
+     "description": "Package ready timestamp",
+     "type": [
+      [
+       [
+        "number"
+       ]
+      ]
+     ],
+     "meta": {
+      "line": 54,
+      "file": "index.ts",
+      "path": ""
+     }
+    },
+    {
+     "name": "isReady",
+     "description": "Package ready state",
+     "type": [
+      [
+       [
+        "boolean"
+       ]
+      ]
+     ],
+     "meta": {
+      "line": 64,
+      "file": "index.ts",
+      "path": ""
+     }
+    },
+    {
+     "name": "author",
+     "description": "Get package author",
+     "type": [
+      [
+       [
+        "string"
+       ]
+      ]
+     ],
+     "meta": {
+      "line": 73,
+      "file": "index.ts",
+      "path": ""
+     }
+    },
+    {
+     "name": "homepage",
+     "description": "Get package homepage url",
+     "type": [
+      [
+       [
+        "string"
+       ]
+      ]
+     ],
+     "meta": {
+      "line": 82,
+      "file": "index.ts",
+      "path": ""
+     }
+    },
+    {
+     "name": "version",
+     "description": "Get package version",
+     "type": [
+      [
+       [
+        "string"
+       ]
+      ]
+     ],
+     "meta": {
+      "line": 91,
+      "file": "index.ts",
+      "path": ""
+     }
+    }
+   ],
    "methods": [
     {
-     "name": "checkOptions",
-     "description": "Checks and updates the player options.",
-     "params": [
-      {
-       "name": "options",
-       "description": "The player options to be checked and updated.",
-       "optional": true,
-       "type": [
-        [
-         [
-          "PlayerOptions"
-         ]
-        ]
-       ]
-      }
-     ],
-     "returns": {
-      "types": [
+     "name": "init",
+     "description": "Initializes the package.",
+     "access": "private",
+     "returns": [
+      [
        [
-        [
-         "PlayerOptions"
-        ]
+        "void"
        ]
-      ],
-      "description": "The updated player options."
-     },
+      ]
+     ],
      "meta": {
-      "line": 11,
-      "file": "Utils.ts",
-      "path": "src"
+      "line": 100,
+      "file": "index.ts",
+      "path": ""
      }
     }
    ],
    "meta": {
-    "line": 4,
-    "file": "Utils.ts",
-    "path": "src"
+    "line": 14,
+    "file": "index.ts",
+    "path": ""
    }
   }
  ],

@@ -73,7 +73,7 @@ class Player extends TypedEmitter<PlayerEvents> {
     /**
      * Get package author
      * 
-     * @returns {string} Package author
+     * @type {string}
      */
     public get author(): string {
         return author;
@@ -82,7 +82,7 @@ class Player extends TypedEmitter<PlayerEvents> {
     /**
      * Get package homepage url
      * 
-     * @returns {string} Package homepage url
+     * @type {string}
      */
     public get homepage(): string {
         return homepage;
@@ -91,7 +91,7 @@ class Player extends TypedEmitter<PlayerEvents> {
     /**
      * Get package version
      * 
-     * @returns {string} Package version
+     * @type {string}
      */
     public get version(): string {
         return version;
