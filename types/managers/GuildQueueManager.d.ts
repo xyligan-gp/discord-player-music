@@ -16,11 +16,51 @@ declare class GuildQueueManager {
     public tracks: GuildQueueTrack[];
 
     /**
+     * Sets the timestamp value for the specified type in the GuildQueueManager.
+     * 
+     * @param type - The type of timestamp.
+     * @param value - The timestamp value to set. If not provided, the current timestamp will be used.
+     * 
+     * @returns The GuildQueueManager instance.
+     */
+    public setTimestamp(type: ChannelType, value?: number): GuildQueueManager;
+
+    /**
+     * Sets the repeat mode for the GuildQueueManager.
+     * 
+     * @param type - The repeat mode to set.
+     * 
+     * @returns The GuildQueueManager instance.
+     */
+    public setRepeatMode(type: RepeatMode = RepeatMode.DISABLED): GuildQueueManager;
+
+    /**
+     * Sets the channel for the specified channel type in the GuildQueueManager.
+     *
+     * @template TChannelType - The channel type (ChannelType.TEXT or ChannelType.VOICE).
+     * 
+     * @param type - The channel type.
+     * @param channel - The channel to set.
+     * 
+     * @returns The GuildQueueManager instance.
+     */
+    public setChannel<TChannelType extends ChannelType>(
+        type: TChannelType,
+        channel: SetChannelType<TChannelType>
+    ): GuildQueueManager;
+
+    /**
      * Converts the GuildQueueManager instance to a plain object representation.
      *
      * @returns The GuildQueue object representation of the GuildQueueManager.
      */
     public toJSON(): GuildQueue;
+}
+
+enum RepeatMode {
+    DISABLED,
+    TRACK,
+    QUEUE
 }
 
 interface GuildQueueTrack {
@@ -45,7 +85,7 @@ interface GuildQueue {
     startTimestamp: number;
     endTimestamp: number;
 
-    repeat: GuildQueueRepeat;
+    repeat: RepeatMode;
     channel: GuildQueueChannel;
     playback: GuildQueuePlayback;
 
@@ -74,17 +114,35 @@ interface GuildQueueRepeat {
 type PlayerTextChannel = Exclude<TextBasedChannel, DMChannel | PartialDMChannel>;
 type PlayerVoiceChannel = StageChannel | VoiceChannel;
 
+enum ChannelType {
+    TEXT = "text",
+    VOICE = "voice"
+}
+
+enum TimestampType {
+    END = "end",
+    START = "start"
+}
+
+type SetChannelType<TChannelType extends ChannelType> = TChannelType extends ChannelType.TEXT
+    ? PlayerTextChannel
+    : PlayerVoiceChannel
+
 export {
     GuildQueueManager,
 
     GuildQueue,
     GuildQueueChannel,
     GuildQueuePlayback,
-    GuildQueueRepeat,
 
     GuildQueueTrack,
     GuildQueueTrackDuration,
 
+    SetChannelType,
     PlayerTextChannel,
-    PlayerVoiceChannel
+    PlayerVoiceChannel,
+
+    RepeatMode,
+    ChannelType,
+    TimestampType
 }

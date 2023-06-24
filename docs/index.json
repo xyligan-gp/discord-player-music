@@ -2,7 +2,7 @@
  "meta": {
   "generator": "0.11.1",
   "format": 22,
-  "date": 1687631325057
+  "date": 1687641672011
  },
  "custom": {
   "general": {
@@ -281,7 +281,7 @@
      "type": [
       [
        [
-        "GuildQueueRepeat"
+        "RepeatMode"
        ]
       ]
      ],
@@ -302,7 +302,7 @@
       ]
      ],
      "meta": {
-      "line": 56,
+      "line": 53,
       "file": "GuildQueueManager.ts",
       "path": "src/managers"
      }
@@ -318,7 +318,7 @@
       ]
      ],
      "meta": {
-      "line": 66,
+      "line": 63,
       "file": "GuildQueueManager.ts",
       "path": "src/managers"
      }
@@ -334,7 +334,7 @@
       ]
      ],
      "meta": {
-      "line": 77,
+      "line": 74,
       "file": "GuildQueueManager.ts",
       "path": "src/managers"
      }
@@ -350,7 +350,7 @@
       ]
      ],
      "meta": {
-      "line": 84,
+      "line": 81,
       "file": "GuildQueueManager.ts",
       "path": "src/managers"
      }
@@ -371,13 +371,139 @@
       ]
      ],
      "meta": {
-      "line": 91,
+      "line": 88,
       "file": "GuildQueueManager.ts",
       "path": "src/managers"
      }
     }
    ],
    "methods": [
+    {
+     "name": "setTimestamp",
+     "description": "Sets the timestamp value for the specified type in the GuildQueueManager.",
+     "params": [
+      {
+       "name": "type",
+       "description": "The type of timestamp.",
+       "type": [
+        [
+         [
+          "TimestampType"
+         ]
+        ]
+       ]
+      },
+      {
+       "name": "value",
+       "description": "The timestamp value to set. If not provided, the current timestamp will be used.",
+       "optional": true,
+       "type": [
+        [
+         [
+          "number"
+         ]
+        ]
+       ]
+      }
+     ],
+     "returns": {
+      "types": [
+       [
+        [
+         "GuildQueueManager"
+        ]
+       ]
+      ],
+      "description": "The GuildQueueManager instance."
+     },
+     "meta": {
+      "line": 96,
+      "file": "GuildQueueManager.ts",
+      "path": "src/managers"
+     }
+    },
+    {
+     "name": "setRepeatMode",
+     "description": "Sets the repeat mode for the GuildQueueManager.",
+     "params": [
+      {
+       "name": "type",
+       "description": "The repeat mode to set.",
+       "optional": true,
+       "default": "RepeatMode.DISABLED",
+       "type": [
+        [
+         [
+          "RepeatMode"
+         ]
+        ]
+       ]
+      }
+     ],
+     "returns": {
+      "types": [
+       [
+        [
+         "GuildQueueManager"
+        ]
+       ]
+      ],
+      "description": "The GuildQueueManager instance."
+     },
+     "meta": {
+      "line": 110,
+      "file": "GuildQueueManager.ts",
+      "path": "src/managers"
+     }
+    },
+    {
+     "name": "setChannel",
+     "description": "Sets the channel for the specified channel type in the GuildQueueManager.",
+     "params": [
+      {
+       "name": "type",
+       "description": "The channel type.",
+       "type": [
+        [
+         [
+          "ChannelType"
+         ]
+        ]
+       ]
+      },
+      {
+       "name": "channel",
+       "description": "The channel to set.",
+       "type": [
+        [
+         [
+          "PlayerTextChannel"
+         ]
+        ],
+        [
+         [
+          "PlayerVoiceChannel"
+         ]
+        ]
+       ]
+      }
+     ],
+     "returns": {
+      "types": [
+       [
+        [
+         "GuildQueueManager"
+        ]
+       ]
+      ],
+      "description": "The GuildQueueManager instance."
+     },
+     "meta": {
+      "line": 123,
+      "file": "GuildQueueManager.ts",
+      "path": "src/managers"
+     }
+    },
     {
      "name": "toJSON",
      "description": "Converts the GuildQueueManager instance to a plain object representation.",
@@ -392,7 +518,7 @@
       "description": "The GuildQueue object representation of the GuildQueueManager."
      },
      "meta": {
-      "line": 99,
+      "line": 141,
       "file": "GuildQueueManager.ts",
       "path": "src/managers"
      }
@@ -848,6 +974,137 @@
  ],
  "interfaces": [],
  "typedefs": [
+  {
+   "name": "RepeatMode",
+   "description": "Enum representing the repeat mode types.",
+   "type": [
+    [
+     [
+      "object"
+     ]
+    ]
+   ],
+   "props": [
+    {
+     "name": "DISABLED",
+     "description": "Repeat mode for disabling repeat.",
+     "type": [
+      [
+       [
+        "string"
+       ]
+      ]
+     ]
+    },
+    {
+     "name": "TRACK",
+     "description": "Repeat mode for repeating the current track.",
+     "type": [
+      [
+       [
+        "string"
+       ]
+      ]
+     ]
+    },
+    {
+     "name": "QUEUE",
+     "description": "Repeat mode for repeating the entire queue.",
+     "type": [
+      [
+       [
+        "string"
+       ]
+      ]
+     ]
+    }
+   ],
+   "meta": {
+    "line": 163,
+    "file": "GuildQueueManager.ts",
+    "path": "src/managers"
+   }
+  },
+  {
+   "name": "ChannelType",
+   "description": "Enum representing the channel types.",
+   "type": [
+    [
+     [
+      "object"
+     ]
+    ]
+   ],
+   "props": [
+    {
+     "name": "TEXT",
+     "description": "Channel type for text channels.",
+     "type": [
+      [
+       [
+        "string"
+       ]
+      ]
+     ]
+    },
+    {
+     "name": "VOICE",
+     "description": "Channel type for voice channels.",
+     "type": [
+      [
+       [
+        "string"
+       ]
+      ]
+     ]
+    }
+   ],
+   "meta": {
+    "line": 178,
+    "file": "GuildQueueManager.ts",
+    "path": "src/managers"
+   }
+  },
+  {
+   "name": "TimestampType",
+   "description": "Enum representing the timestamp types.",
+   "type": [
+    [
+     [
+      "object"
+     ]
+    ]
+   ],
+   "props": [
+    {
+     "name": "END",
+     "description": "Timestamp type for the end timestamp.",
+     "type": [
+      [
+       [
+        "string"
+       ]
+      ]
+     ]
+    },
+    {
+     "name": "START",
+     "description": "Timestamp type for the start timestamp.",
+     "type": [
+      [
+       [
+        "string"
+       ]
+      ]
+     ]
+    }
+   ],
+   "meta": {
+    "line": 191,
+    "file": "GuildQueueManager.ts",
+    "path": "src/managers"
+   }
+  },
   {
    "name": "PlayerOptions",
    "description": "Represents options for the Player.",

@@ -2,7 +2,7 @@
 import { AudioPlayer, VoiceConnection } from "@discordjs/voice";
 
 // Import manager interfaces
-import { GuildQueue, GuildQueueChannel, GuildQueuePlayback, GuildQueueRepeat, GuildQueueTrack } from "../../types/managers/GuildQueueManager";
+import { GuildQueue, GuildQueueChannel, GuildQueuePlayback, GuildQueueTrack, SetChannelType } from "../../types/managers/GuildQueueManager";
 
 /**
  * Player Guild Queue Manager
@@ -16,7 +16,7 @@ class GuildQueueManager implements GuildQueue {
     public startTimestamp: number;
     public endTimestamp: number;
 
-    public repeat: GuildQueueRepeat;
+    public repeat: RepeatMode;
     public channel: GuildQueueChannel;
     public playback: GuildQueuePlayback;
 
@@ -46,12 +46,9 @@ class GuildQueueManager implements GuildQueue {
         /**
          * The repeat settings of the guild queue.
          *
-         * @type {GuildQueueRepeat}
+         * @type {RepeatMode}
          */
-        this.repeat = {
-            track: false,
-            queue: false
-        }
+        this.repeat = null;
 
         /**
          * The guild channels of the queue.
@@ -97,6 +94,51 @@ class GuildQueueManager implements GuildQueue {
     }
 
     /**
+     * Sets the timestamp value for the specified type in the GuildQueueManager.
+     * 
+     * @param {TimestampType} type - The type of timestamp.
+     * @param {number} [value] - The timestamp value to set. If not provided, the current timestamp will be used.
+     * 
+     * @returns {GuildQueueManager} The GuildQueueManager instance.
+     */
+    public setTimestamp(type: TimestampType, value?: number): GuildQueueManager {
+        this[`${type}Timestamp`] = value ? new Date(value).getTime() : Date.now();
+
+        return this;
+    }
+
+    /**
+     * Sets the repeat mode for the GuildQueueManager.
+     * 
+     * @param {RepeatMode} [type=RepeatMode.DISABLED] - The repeat mode to set.
+     * 
+     * @returns {GuildQueueManager} The GuildQueueManager instance.
+     */
+    public setRepeatMode(type: RepeatMode = RepeatMode.DISABLED): GuildQueueManager {
+        this.repeat = type;
+
+        return this;
+    }
+
+    /**
+     * Sets the channel for the specified channel type in the GuildQueueManager.
+     * 
+     * @param {ChannelType} type - The channel type.
+     * @param {(PlayerTextChannel|PlayerVoiceChannel)} channel - The channel to set.
+     * 
+     * @returns {GuildQueueManager} The GuildQueueManager instance.
+     */
+    public setChannel<TChannelType extends ChannelType>(
+        type: TChannelType,
+        channel: SetChannelType<TChannelType>
+    ): GuildQueueManager {
+        // @ts-ignore
+        this.channel[type] = channel;
+
+        return this;
+    }
+
+    /**
      * Converts the GuildQueueManager instance to a plain object representation.
      *
      * @returns {GuildQueue} The GuildQueue object representation of the GuildQueueManager.
@@ -118,4 +160,51 @@ class GuildQueueManager implements GuildQueue {
     }
 }
 
-export { GuildQueueManager };
+/**
+ * Enum representing the repeat mode types.
+ *
+ * @typedef {object} RepeatMode
+ * 
+ * @prop {string} DISABLED Repeat mode for disabling repeat.
+ * @prop {string} TRACK Repeat mode for repeating the current track.
+ * @prop {string} QUEUE Repeat mode for repeating the entire queue.
+ */
+enum RepeatMode {
+    DISABLED = "disabled",
+    TRACK = "track",
+    QUEUE = "queue"
+}
+
+/**
+ * Enum representing the channel types.
+ *
+ * @typedef {object} ChannelType
+ * 
+ * @prop {string} TEXT Channel type for text channels.
+ * @prop {string} VOICE Channel type for voice channels.
+ */
+enum ChannelType {
+    TEXT = "text",
+    VOICE = "voice"
+}
+
+/**
+ * Enum representing the timestamp types.
+ *
+ * @typedef {object} TimestampType
+ * 
+ * @prop {string} END Timestamp type for the end timestamp.
+ * @prop {string} START Timestamp type for the start timestamp.
+ */
+enum TimestampType {
+    END = "end",
+    START = "start"
+}
+
+export {
+    GuildQueueManager,
+
+    RepeatMode,
+    ChannelType,
+    TimestampType
+}
