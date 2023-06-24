@@ -2,7 +2,7 @@
  "meta": {
   "generator": "0.11.1",
   "format": 22,
-  "date": 1687617980752
+  "date": 1687624461121
  },
  "custom": {
   "general": {
@@ -98,7 +98,7 @@
       ]
      ],
      "meta": {
-      "line": 56,
+      "line": 59,
       "file": "index.ts",
       "path": ""
      }
@@ -114,7 +114,7 @@
       ]
      ],
      "meta": {
-      "line": 63,
+      "line": 66,
       "file": "index.ts",
       "path": ""
      }
@@ -130,7 +130,7 @@
       ]
      ],
      "meta": {
-      "line": 70,
+      "line": 73,
       "file": "index.ts",
       "path": ""
      }
@@ -146,7 +146,32 @@
       ]
      ],
      "meta": {
-      "line": 77,
+      "line": 80,
+      "file": "index.ts",
+      "path": ""
+     }
+    },
+    {
+     "name": "queue",
+     "description": "Player Queue Storage",
+     "type": [
+      [
+       [
+        "Collection",
+        "<"
+       ],
+       [
+        "string",
+        ", "
+       ],
+       [
+        "GuildQueue",
+        ">"
+       ]
+      ]
+     ],
+     "meta": {
+      "line": 87,
       "file": "index.ts",
       "path": ""
      }
@@ -162,7 +187,7 @@
       ]
      ],
      "meta": {
-      "line": 87,
+      "line": 97,
       "file": "index.ts",
       "path": ""
      }
@@ -178,7 +203,7 @@
       ]
      ],
      "meta": {
-      "line": 96,
+      "line": 106,
       "file": "index.ts",
       "path": ""
      }
@@ -194,7 +219,7 @@
       ]
      ],
      "meta": {
-      "line": 105,
+      "line": 115,
       "file": "index.ts",
       "path": ""
      }
@@ -210,7 +235,7 @@
       ]
      ],
      "meta": {
-      "line": 114,
+      "line": 124,
       "file": "index.ts",
       "path": ""
      }
@@ -229,7 +254,7 @@
       ]
      ],
      "meta": {
-      "line": 123,
+      "line": 133,
       "file": "index.ts",
       "path": ""
      }
@@ -253,7 +278,7 @@
       }
      ],
      "meta": {
-      "line": 205,
+      "line": 217,
       "file": "index.ts",
       "path": ""
      }
@@ -275,14 +300,14 @@
       }
      ],
      "meta": {
-      "line": 213,
+      "line": 225,
       "file": "index.ts",
       "path": ""
      }
     }
    ],
    "meta": {
-    "line": 19,
+    "line": 20,
     "file": "index.ts",
     "path": ""
    }
@@ -464,6 +489,171 @@
    }
   },
   {
+   "name": "GuildQueueManager",
+   "description": "Class representing a Guild Queue Manager.",
+   "implements": [
+    [
+     [
+      "GuildQueue"
+     ]
+    ]
+   ],
+   "construct": {
+    "name": "GuildQueueManager",
+    "description": "Creates a new instance of the Player Guild Queue."
+   },
+   "props": [
+    {
+     "name": "startTimestamp",
+     "description": "The start timestamp of the queue.",
+     "type": [
+      [
+       [
+        "number"
+       ]
+      ],
+      [
+       [
+        "null"
+       ]
+      ]
+     ],
+     "meta": {
+      "line": 32,
+      "file": "GuildQueueManager.ts",
+      "path": "src/managers"
+     }
+    },
+    {
+     "name": "endTimestamp",
+     "description": "The end timestamp of the queue.",
+     "type": [
+      [
+       [
+        "number"
+       ]
+      ],
+      [
+       [
+        "null"
+       ]
+      ]
+     ],
+     "meta": {
+      "line": 39,
+      "file": "GuildQueueManager.ts",
+      "path": "src/managers"
+     }
+    },
+    {
+     "name": "repeat",
+     "description": "The repeat settings of the guild queue.",
+     "type": [
+      [
+       [
+        "GuildQueueRepeat"
+       ]
+      ]
+     ],
+     "meta": {
+      "line": 46,
+      "file": "GuildQueueManager.ts",
+      "path": "src/managers"
+     }
+    },
+    {
+     "name": "channel",
+     "description": "The guild channels of the queue.",
+     "type": [
+      [
+       [
+        "GuildQueueChannel"
+       ]
+      ]
+     ],
+     "meta": {
+      "line": 56,
+      "file": "GuildQueueManager.ts",
+      "path": "src/managers"
+     }
+    },
+    {
+     "name": "playback",
+     "description": "The playback settings of the guild queue.",
+     "type": [
+      [
+       [
+        "GuildQueuePlayback"
+       ]
+      ]
+     ],
+     "meta": {
+      "line": 66,
+      "file": "GuildQueueManager.ts",
+      "path": "src/managers"
+     }
+    },
+    {
+     "name": "dispatcher",
+     "description": "The AudioPlayer instance associated with the guild queue.",
+     "type": [
+      [
+       [
+        "AudioPlayer"
+       ]
+      ]
+     ],
+     "meta": {
+      "line": 77,
+      "file": "GuildQueueManager.ts",
+      "path": "src/managers"
+     }
+    },
+    {
+     "name": "connection",
+     "description": "The VoiceConnection instance associated with the guild queue.",
+     "type": [
+      [
+       [
+        "VoiceConnection"
+       ]
+      ]
+     ],
+     "meta": {
+      "line": 84,
+      "file": "GuildQueueManager.ts",
+      "path": "src/managers"
+     }
+    },
+    {
+     "name": "tracks",
+     "description": "The tracks in the guild queue.",
+     "type": [
+      [
+       [
+        "Array",
+        "<"
+       ],
+       [
+        "GuildQueueTrack",
+        ">"
+       ]
+      ]
+     ],
+     "meta": {
+      "line": 91,
+      "file": "GuildQueueManager.ts",
+      "path": "src/managers"
+     }
+    }
+   ],
+   "meta": {
+    "line": 7,
+    "file": "GuildQueueManager.ts",
+    "path": "src/managers"
+   }
+  },
+  {
    "name": "VoiceManager",
    "description": "Class representing a Player Voice Manager.",
    "methods": [
@@ -506,7 +696,6 @@
       {
        "name": "channel",
        "description": "The voice channel to join.",
-       "nullable": true,
        "type": [
         [
          [
@@ -549,7 +738,6 @@
       {
        "name": "channel",
        "description": "The voice channel to leave.",
-       "nullable": true,
        "type": [
         [
          [
@@ -716,7 +904,7 @@
     }
    ],
    "meta": {
-    "line": 149,
+    "line": 161,
     "file": "index.ts",
     "path": ""
    }
@@ -758,7 +946,7 @@
     }
    ],
    "meta": {
-    "line": 161,
+    "line": 173,
     "file": "index.ts",
     "path": ""
    }
@@ -815,7 +1003,7 @@
     }
    ],
    "meta": {
-    "line": 170,
+    "line": 182,
     "file": "index.ts",
     "path": ""
    }
@@ -926,7 +1114,7 @@
     }
    ],
    "meta": {
-    "line": 180,
+    "line": 192,
     "file": "index.ts",
     "path": ""
    }
@@ -966,7 +1154,462 @@
     }
    ],
    "meta": {
-    "line": 196,
+    "line": 208,
+    "file": "index.ts",
+    "path": ""
+   }
+  },
+  {
+   "name": "GuildQueueTrack",
+   "description": "Represents a track in the Guild Queue.",
+   "type": [
+    [
+     [
+      "object"
+     ]
+    ]
+   ],
+   "props": [
+    {
+     "name": "index",
+     "description": "The index of the track.",
+     "type": [
+      [
+       [
+        "number"
+       ]
+      ]
+     ]
+    },
+    {
+     "name": "searchType",
+     "description": "The type of search (\"search#url\" or \"search#title\").",
+     "type": [
+      [
+       [
+        "string"
+       ]
+      ]
+     ]
+    },
+    {
+     "name": "url",
+     "description": "The URL of the track.",
+     "type": [
+      [
+       [
+        "string"
+       ]
+      ]
+     ]
+    },
+    {
+     "name": "title",
+     "description": "The title of the track.",
+     "type": [
+      [
+       [
+        "string"
+       ]
+      ]
+     ]
+    },
+    {
+     "name": "thumbnail",
+     "description": "The thumbnail URL of the track.",
+     "type": [
+      [
+       [
+        "string"
+       ]
+      ]
+     ]
+    },
+    {
+     "name": "duration",
+     "description": "The duration of the track.",
+     "type": [
+      [
+       [
+        "GuildQueueTrackDuration"
+       ]
+      ]
+     ]
+    },
+    {
+     "name": "requested",
+     "description": "The user who requested the track.",
+     "type": [
+      [
+       [
+        "User"
+       ]
+      ]
+     ]
+    }
+   ],
+   "meta": {
+    "line": 233,
+    "file": "index.ts",
+    "path": ""
+   }
+  },
+  {
+   "name": "GuildQueueTrackDuration",
+   "description": "Represents the duration of a Guild Queue track.",
+   "type": [
+    [
+     [
+      "object"
+     ]
+    ]
+   ],
+   "props": [
+    {
+     "name": "hours",
+     "description": "The hours component of the duration.",
+     "type": [
+      [
+       [
+        "string"
+       ]
+      ]
+     ]
+    },
+    {
+     "name": "minutes",
+     "description": "The minutes component of the duration.",
+     "type": [
+      [
+       [
+        "string"
+       ]
+      ]
+     ]
+    },
+    {
+     "name": "seconds",
+     "description": "The seconds component of the duration.",
+     "type": [
+      [
+       [
+        "string"
+       ]
+      ]
+     ]
+    }
+   ],
+   "meta": {
+    "line": 247,
+    "file": "index.ts",
+    "path": ""
+   }
+  },
+  {
+   "name": "GuildQueue",
+   "description": "Represents the Guild Queue.",
+   "type": [
+    [
+     [
+      "object"
+     ]
+    ]
+   ],
+   "props": [
+    {
+     "name": "startTimestamp",
+     "description": "The start timestamp of the Guild Queue.",
+     "type": [
+      [
+       [
+        "number"
+       ]
+      ]
+     ]
+    },
+    {
+     "name": "endTimestamp",
+     "description": "The end timestamp of the Guild Queue.",
+     "type": [
+      [
+       [
+        "number"
+       ]
+      ]
+     ]
+    },
+    {
+     "name": "repeat",
+     "description": "The repeat settings of the Guild Queue.",
+     "type": [
+      [
+       [
+        "GuildQueueRepeat"
+       ]
+      ]
+     ]
+    },
+    {
+     "name": "channel",
+     "description": "The channel settings of the Guild Queue.",
+     "type": [
+      [
+       [
+        "GuildQueueChannel"
+       ]
+      ]
+     ]
+    },
+    {
+     "name": "playback",
+     "description": "The playback settings of the Guild Queue.",
+     "type": [
+      [
+       [
+        "GuildQueuePlayback"
+       ]
+      ]
+     ]
+    },
+    {
+     "name": "dispatcher",
+     "description": "The AudioPlayer instance associated with the Guild Queue.",
+     "type": [
+      [
+       [
+        "AudioPlayer"
+       ]
+      ]
+     ]
+    },
+    {
+     "name": "connection",
+     "description": "The VoiceConnection instance associated with the Guild Queue.",
+     "type": [
+      [
+       [
+        "VoiceConnection"
+       ]
+      ]
+     ]
+    },
+    {
+     "name": "tracks",
+     "description": "The tracks in the Guild Queue.",
+     "type": [
+      [
+       [
+        "Array",
+        "<"
+       ],
+       [
+        "GuildQueueTrack",
+        ">"
+       ]
+      ]
+     ]
+    }
+   ],
+   "meta": {
+    "line": 257,
+    "file": "index.ts",
+    "path": ""
+   }
+  },
+  {
+   "name": "GuildQueueChannel",
+   "description": "Represents the channel settings of the Guild Queue.",
+   "type": [
+    [
+     [
+      "object"
+     ]
+    ]
+   ],
+   "props": [
+    {
+     "name": "text",
+     "description": "The text channel associated with the Guild Queue.",
+     "type": [
+      [
+       [
+        "PlayerTextChannel"
+       ]
+      ]
+     ]
+    },
+    {
+     "name": "voice",
+     "description": "The voice channel associated with the Guild Queue.",
+     "type": [
+      [
+       [
+        "PlayerVoiceChannel"
+       ]
+      ]
+     ]
+    }
+   ],
+   "meta": {
+    "line": 272,
+    "file": "index.ts",
+    "path": ""
+   }
+  },
+  {
+   "name": "GuildQueuePlayback",
+   "description": "Represents the playback settings of the Guild Queue.",
+   "type": [
+    [
+     [
+      "object"
+     ]
+    ]
+   ],
+   "props": [
+    {
+     "name": "state",
+     "description": "The state of playback (null).",
+     "type": [
+      [
+       [
+        "null"
+       ]
+      ]
+     ]
+    },
+    {
+     "name": "filter",
+     "description": "The filter applied to playback (null).",
+     "type": [
+      [
+       [
+        "null"
+       ]
+      ]
+     ]
+    },
+    {
+     "name": "volume",
+     "description": "The volume level of playback.",
+     "type": [
+      [
+       [
+        "number"
+       ]
+      ]
+     ]
+    }
+   ],
+   "meta": {
+    "line": 281,
+    "file": "index.ts",
+    "path": ""
+   }
+  },
+  {
+   "name": "GuildQueueRepeat",
+   "description": "Represents the repeat settings of the Guild Queue.",
+   "type": [
+    [
+     [
+      "object"
+     ]
+    ]
+   ],
+   "props": [
+    {
+     "name": "track",
+     "description": "Determines if track repeat is enabled.",
+     "type": [
+      [
+       [
+        "boolean"
+       ]
+      ]
+     ]
+    },
+    {
+     "name": "queue",
+     "description": "Determines if queue repeat is enabled.",
+     "type": [
+      [
+       [
+        "boolean"
+       ]
+      ]
+     ]
+    }
+   ],
+   "meta": {
+    "line": 291,
+    "file": "index.ts",
+    "path": ""
+   }
+  },
+  {
+   "name": "PlayerTextChannel",
+   "description": "Represents a text channel associated with the player.",
+   "type": [
+    [
+     [
+      "NewsChannel"
+     ]
+    ],
+    [
+     [
+      "StageChannel"
+     ]
+    ],
+    [
+     [
+      "TextChannel"
+     ]
+    ],
+    [
+     [
+      "PrivateThreadChannel"
+     ]
+    ],
+    [
+     [
+      "PublicThreadChannel",
+      "<"
+     ],
+     [
+      "boolean",
+      ">"
+     ]
+    ],
+    [
+     [
+      "VoiceChannel"
+     ]
+    ]
+   ],
+   "meta": {
+    "line": 300,
+    "file": "index.ts",
+    "path": ""
+   }
+  },
+  {
+   "name": "PlayerVoiceChannel",
+   "description": "Represents a voice channel associated with the player.",
+   "type": [
+    [
+     [
+      "VoiceChannel"
+     ]
+    ],
+    [
+     [
+      "StageChannel"
+     ]
+    ]
+   ],
+   "meta": {
+    "line": 306,
     "file": "index.ts",
     "path": ""
    }

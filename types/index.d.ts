@@ -1,5 +1,5 @@
 // Import package requirements
-import { Client } from "discord.js";
+import { Client, Collection } from "discord.js";
 
 // Import package emitter
 import { PlayerEmitter } from "./Emitter";
@@ -12,6 +12,7 @@ import { PlayerUtils } from "./Utils";
 
 // Import player managers
 import { VoiceManager } from "./managers/VoiceManager";
+import { GuildQueueTrackDuration } from "./managers/GuildQueueManager";
 
 declare class Player extends PlayerEmitter<PlayerEvents> {
     constructor(client: Client, options?: PlayerOptions);
@@ -23,6 +24,8 @@ declare class Player extends PlayerEmitter<PlayerEvents> {
     public utils: PlayerUtils;
 
     public voice: VoiceManager;
+
+    public queue: Collection<string, GuildQueueTrackDuration>;
 
     /**
      * Player Ready State
