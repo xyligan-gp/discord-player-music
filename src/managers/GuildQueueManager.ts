@@ -128,10 +128,7 @@ class GuildQueueManager implements GuildQueue {
      * 
      * @returns {GuildQueueManager} The GuildQueueManager instance.
      */
-    public setChannel<TChannelType extends ChannelType>(
-        type: TChannelType,
-        channel: SetChannelType<TChannelType>
-    ): GuildQueueManager {
+    public setChannel<TChannelType extends ChannelType>(type: TChannelType, channel: SetChannelType<TChannelType>): GuildQueueManager {
         // @ts-ignore
         this.channel[type] = channel;
 

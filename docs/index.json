@@ -2,7 +2,7 @@
  "meta": {
   "generator": "0.11.1",
   "format": 22,
-  "date": 1687641672011
+  "date": 1687648105674
  },
  "custom": {
   "general": {
@@ -518,7 +518,7 @@
       "description": "The GuildQueue object representation of the GuildQueueManager."
      },
      "meta": {
-      "line": 141,
+      "line": 138,
       "file": "GuildQueueManager.ts",
       "path": "src/managers"
      }
@@ -1020,7 +1020,7 @@
     }
    ],
    "meta": {
-    "line": 163,
+    "line": 160,
     "file": "GuildQueueManager.ts",
     "path": "src/managers"
    }
@@ -1060,7 +1060,7 @@
     }
    ],
    "meta": {
-    "line": 178,
+    "line": 175,
     "file": "GuildQueueManager.ts",
     "path": "src/managers"
    }
@@ -1100,7 +1100,7 @@
     }
    ],
    "meta": {
-    "line": 191,
+    "line": 188,
     "file": "GuildQueueManager.ts",
     "path": "src/managers"
    }
