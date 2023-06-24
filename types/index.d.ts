@@ -25,30 +25,22 @@ declare class Player extends PlayerEmitter<PlayerEvents> {
     public voice: VoiceManager;
 
     /**
-     * Package ready state
-     * 
-     * @type {boolean}
+     * Player Ready State
      */
     public get isReady(): boolean;
 
     /**
-     * Get package author
-     * 
-     * @returns {string} Package author
+     * Player Developer
      */
-    public get author(): string;
+    public get developer(): string;
 
     /**
-     * Get package homepage url
-     * 
-     * @returns {string} Package homepage url
+     * Player Documentation URL
      */
-    public get homepage(): string;
+    public get docs(): string;
 
     /**
-     * Get package version
-     * 
-     * @returns {string} Package version
+     * Player Version
      */
     public get version(): string;
 
@@ -59,7 +51,7 @@ declare class Player extends PlayerEmitter<PlayerEvents> {
 }
 
 interface PlayerEvents {
-    ready: () => void;
+    ready: (player: Player) => void;
     error: (error: PlayerError) => void;
 }
 

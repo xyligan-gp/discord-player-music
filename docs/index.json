@@ -2,7 +2,7 @@
  "meta": {
   "generator": "0.11.1",
   "format": 22,
-  "date": 1687475854181
+  "date": 1687617980752
  },
  "custom": {
   "general": {
@@ -44,7 +44,7 @@
  "classes": [
   {
    "name": "Player",
-   "description": "Player Main Class",
+   "description": "Class representing a Player.",
    "extends": [
     [
      [
@@ -89,7 +89,7 @@
    "props": [
     {
      "name": "utils",
-     "description": "Player utils",
+     "description": "Player Utils",
      "type": [
       [
        [
@@ -105,7 +105,7 @@
     },
     {
      "name": "options",
-     "description": "Player options",
+     "description": "Player Options",
      "type": [
       [
        [
@@ -121,7 +121,7 @@
     },
     {
      "name": "readyTimestamp",
-     "description": "Package ready timestamp",
+     "description": "Player Ready Timestamp",
      "type": [
       [
        [
@@ -153,7 +153,7 @@
     },
     {
      "name": "isReady",
-     "description": "Package ready state",
+     "description": "Player Ready State",
      "type": [
       [
        [
@@ -168,8 +168,8 @@
      }
     },
     {
-     "name": "author",
-     "description": "Get package author",
+     "name": "developer",
+     "description": "Player Developer",
      "type": [
       [
        [
@@ -184,8 +184,8 @@
      }
     },
     {
-     "name": "homepage",
-     "description": "Get package homepage url",
+     "name": "docs",
+     "description": "Player Documentation URL",
      "type": [
       [
        [
@@ -201,7 +201,7 @@
     },
     {
      "name": "version",
-     "description": "Get package version",
+     "description": "Player Version",
      "type": [
       [
        [
@@ -239,6 +239,19 @@
     {
      "name": "ready",
      "description": "Event triggered when the player is ready.",
+     "params": [
+      {
+       "name": "player",
+       "description": "The Player instance associated with the ready event.",
+       "type": [
+        [
+         [
+          "Player"
+         ]
+        ]
+       ]
+      }
+     ],
      "meta": {
       "line": 205,
       "file": "index.ts",
@@ -262,7 +275,7 @@
       }
      ],
      "meta": {
-      "line": 211,
+      "line": 213,
       "file": "index.ts",
       "path": ""
      }
@@ -452,7 +465,7 @@
   },
   {
    "name": "VoiceManager",
-   "description": "Class representing a Voice Manager.",
+   "description": "Class representing a Player Voice Manager.",
    "methods": [
     {
      "name": "isConnected",
@@ -493,10 +506,16 @@
       {
        "name": "channel",
        "description": "The voice channel to join.",
+       "nullable": true,
        "type": [
         [
          [
-          "VoiceBasedChannel"
+          "VoiceChannel"
+         ]
+        ],
+        [
+         [
+          "StageChannel"
          ]
         ]
        ]
@@ -530,10 +549,16 @@
       {
        "name": "channel",
        "description": "The voice channel to leave.",
+       "nullable": true,
        "type": [
         [
          [
-          "VoiceBasedChannel"
+          "VoiceChannel"
+         ]
+        ],
+        [
+         [
+          "StageChannel"
          ]
         ]
        ]

@@ -9,7 +9,7 @@ import { PlayerError } from "../Error";
  * Player Voice Manager Class
  * 
  * @class
- * @classdesc Class representing a Voice Manager.
+ * @classdesc Class representing a Player Voice Manager.
  */
 class VoiceManager {
     /**
@@ -30,7 +30,7 @@ class VoiceManager {
     /**
      * Joins a voice channel.
      *
-     * @param {VoiceBasedChannel} channel - The voice channel to join.
+     * @param {?(VoiceChannel|StageChannel)} channel - The voice channel to join.
      * 
      * @returns {Promise<VoiceConnection>} A Promise that resolves to the VoiceConnection instance.
      * 
@@ -61,7 +61,7 @@ class VoiceManager {
     /**
      * Leaves the voice channel.
      *
-     * @param {VoiceBasedChannel} channel - The voice channel to leave.
+     * @param {?(VoiceChannel|StageChannel)} channel - The voice channel to leave.
      * 
      * @returns {Promise<void>} A Promise that resolves when the voice channel is left.
      * 

@@ -17,10 +17,10 @@ import { PlayerEvents, PlayerOptions } from "./types/index";
 import { author, homepage, version } from "./package.json";
 
 /**
- * Player Class
+ * Player Main Class
  * 
  * @class
- * @classdesc Player Main Class
+ * @classdesc Class representing a Player.
  * 
  * @extends {PlayerEmitter<PlayerEvents>}
  * 
@@ -46,7 +46,7 @@ class Player extends PlayerEmitter<PlayerEvents> {
         super();
 
         /**
-         * Discord client
+         * Discord Client
          * 
          * @type {Client}
          * @private
@@ -54,21 +54,21 @@ class Player extends PlayerEmitter<PlayerEvents> {
         this.client = client;
 
         /**
-         * Player utils
+         * Player Utils
          * 
          * @type {PlayerUtils}
          */
         this.utils = new PlayerUtils();
 
         /**
-         * Player options
+         * Player Options
          * 
          * @type {PlayerOptions}
          */
         this.options = this.utils.checkOptions(options);
 
         /**
-         * Package ready timestamp
+         * Player Ready Timestamp
          * 
          * @type {number}
          */
@@ -85,7 +85,7 @@ class Player extends PlayerEmitter<PlayerEvents> {
     }
 
     /**
-     * Package ready state
+     * Player Ready State
      * 
      * @type {boolean}
      */
@@ -94,25 +94,25 @@ class Player extends PlayerEmitter<PlayerEvents> {
     }
     
     /**
-     * Get package author
+     * Player Developer
      * 
      * @type {string}
      */
-    public get author(): string {
+    public get developer(): string {
         return author;
     }
 
     /**
-     * Get package homepage url
+     * Player Documentation URL
      * 
      * @type {string}
      */
-    public get homepage(): string {
+    public get docs(): string {
         return homepage;
     }
 
     /**
-     * Get package version
+     * Player Version
      * 
      * @type {string}
      */
@@ -134,7 +134,7 @@ class Player extends PlayerEmitter<PlayerEvents> {
 
                 this.voice = new VoiceManager();
 
-                this.emit("ready");
+                this.emit("ready", this as any);
 
                 clearInterval(interval);
             }
@@ -199,13 +199,15 @@ export { Player };
  * @typedef {object} PlayerEvents
  * 
  * @prop {Function} ready Event triggered when the player is ready.
- * @prop {Function} error - Event triggered when an error occurs.
+ * @prop {Function} error Event triggered when an error occurs.
  */
 
 /**
  * Event triggered when the player is ready.
  * 
  * @event Player#ready
+ * 
+ * @param {Player} player The Player instance associated with the ready event.
  */
 
 /**
