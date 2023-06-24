@@ -173,4 +173,17 @@ interface PlayerCollectorsConfig {
     }
 }
 
-export { Player, PlayerEvents, PlayerOptions };
+export {
+    Player,
+    PlayerEvents,
+    PlayerOptions,
+
+    PlayerConfigs,
+    PlayerCollectorsConfig,
+    PlayerProgressBarConfig
+}
+
+export * from "./Utils";
+
+export * from "./managers/GuildQueueManager";
+export * from "./managers/VoiceManager";

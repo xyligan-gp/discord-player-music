@@ -1,6 +1,6 @@
 // Import manager requirements
 import { AudioPlayer, VoiceConnection } from "@discordjs/voice";
-import { DMChannel, PartialDMChannel, TextBasedChannel, VoiceBasedChannel as PlayerVoiceChannel, User } from "discord.js";
+import { DMChannel, PartialDMChannel, StageChannel, TextBasedChannel, VoiceChannel, User } from "discord.js";
 
 declare class GuildQueueManager {
     public startTimestamp: number;
@@ -14,6 +14,13 @@ declare class GuildQueueManager {
     public connection: VoiceConnection;
 
     public tracks: GuildQueueTrack[];
+
+    /**
+     * Converts the GuildQueueManager instance to a plain object representation.
+     *
+     * @returns The GuildQueue object representation of the GuildQueueManager.
+     */
+    public toJSON(): GuildQueue;
 }
 
 interface GuildQueueTrack {
@@ -65,6 +72,7 @@ interface GuildQueueRepeat {
 }
 
 type PlayerTextChannel = Exclude<TextBasedChannel, DMChannel | PartialDMChannel>;
+type PlayerVoiceChannel = StageChannel | VoiceChannel;
 
 export {
     GuildQueueManager,
@@ -75,5 +83,8 @@ export {
     GuildQueueRepeat,
 
     GuildQueueTrack,
-    GuildQueueTrackDuration
+    GuildQueueTrackDuration,
+
+    PlayerTextChannel,
+    PlayerVoiceChannel
 }

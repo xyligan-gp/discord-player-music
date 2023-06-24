@@ -2,7 +2,7 @@
  "meta": {
   "generator": "0.11.1",
   "format": 22,
-  "date": 1687624461121
+  "date": 1687631325057
  },
  "custom": {
   "general": {
@@ -42,276 +42,6 @@
   }
  },
  "classes": [
-  {
-   "name": "Player",
-   "description": "Class representing a Player.",
-   "extends": [
-    [
-     [
-      "PlayerEmitter",
-      "<"
-     ],
-     [
-      "PlayerEvents",
-      ">"
-     ]
-    ]
-   ],
-   "construct": {
-    "name": "Player",
-    "description": "Creates a new instance of the Player.",
-    "params": [
-     {
-      "name": "client",
-      "description": "The client instance associated with the player.",
-      "type": [
-       [
-        [
-         "Client"
-        ]
-       ]
-      ]
-     },
-     {
-      "name": "options",
-      "description": "Optional player options.",
-      "optional": true,
-      "type": [
-       [
-        [
-         "PlayerOptions"
-        ]
-       ]
-      ]
-     }
-    ]
-   },
-   "props": [
-    {
-     "name": "utils",
-     "description": "Player Utils",
-     "type": [
-      [
-       [
-        "PlayerUtils"
-       ]
-      ]
-     ],
-     "meta": {
-      "line": 59,
-      "file": "index.ts",
-      "path": ""
-     }
-    },
-    {
-     "name": "options",
-     "description": "Player Options",
-     "type": [
-      [
-       [
-        "PlayerOptions"
-       ]
-      ]
-     ],
-     "meta": {
-      "line": 66,
-      "file": "index.ts",
-      "path": ""
-     }
-    },
-    {
-     "name": "readyTimestamp",
-     "description": "Player Ready Timestamp",
-     "type": [
-      [
-       [
-        "number"
-       ]
-      ]
-     ],
-     "meta": {
-      "line": 73,
-      "file": "index.ts",
-      "path": ""
-     }
-    },
-    {
-     "name": "voice",
-     "description": "Player Voice Manager",
-     "type": [
-      [
-       [
-        "VoiceManager"
-       ]
-      ]
-     ],
-     "meta": {
-      "line": 80,
-      "file": "index.ts",
-      "path": ""
-     }
-    },
-    {
-     "name": "queue",
-     "description": "Player Queue Storage",
-     "type": [
-      [
-       [
-        "Collection",
-        "<"
-       ],
-       [
-        "string",
-        ", "
-       ],
-       [
-        "GuildQueue",
-        ">"
-       ]
-      ]
-     ],
-     "meta": {
-      "line": 87,
-      "file": "index.ts",
-      "path": ""
-     }
-    },
-    {
-     "name": "isReady",
-     "description": "Player Ready State",
-     "type": [
-      [
-       [
-        "boolean"
-       ]
-      ]
-     ],
-     "meta": {
-      "line": 97,
-      "file": "index.ts",
-      "path": ""
-     }
-    },
-    {
-     "name": "developer",
-     "description": "Player Developer",
-     "type": [
-      [
-       [
-        "string"
-       ]
-      ]
-     ],
-     "meta": {
-      "line": 106,
-      "file": "index.ts",
-      "path": ""
-     }
-    },
-    {
-     "name": "docs",
-     "description": "Player Documentation URL",
-     "type": [
-      [
-       [
-        "string"
-       ]
-      ]
-     ],
-     "meta": {
-      "line": 115,
-      "file": "index.ts",
-      "path": ""
-     }
-    },
-    {
-     "name": "version",
-     "description": "Player Version",
-     "type": [
-      [
-       [
-        "string"
-       ]
-      ]
-     ],
-     "meta": {
-      "line": 124,
-      "file": "index.ts",
-      "path": ""
-     }
-    }
-   ],
-   "methods": [
-    {
-     "name": "init",
-     "description": "Initializes the package.",
-     "access": "private",
-     "returns": [
-      [
-       [
-        "void"
-       ]
-      ]
-     ],
-     "meta": {
-      "line": 133,
-      "file": "index.ts",
-      "path": ""
-     }
-    }
-   ],
-   "events": [
-    {
-     "name": "ready",
-     "description": "Event triggered when the player is ready.",
-     "params": [
-      {
-       "name": "player",
-       "description": "The Player instance associated with the ready event.",
-       "type": [
-        [
-         [
-          "Player"
-         ]
-        ]
-       ]
-      }
-     ],
-     "meta": {
-      "line": 217,
-      "file": "index.ts",
-      "path": ""
-     }
-    },
-    {
-     "name": "error",
-     "description": "Event triggered when an error occurs.",
-     "params": [
-      {
-       "name": "error",
-       "description": "The error object associated with the error event.",
-       "type": [
-        [
-         [
-          "PlayerError"
-         ]
-        ]
-       ]
-      }
-     ],
-     "meta": {
-      "line": 225,
-      "file": "index.ts",
-      "path": ""
-     }
-    }
-   ],
-   "meta": {
-    "line": 20,
-    "file": "index.ts",
-    "path": ""
-   }
-  },
   {
    "name": "PlayerEmitter",
    "description": "Represents an event emitter for player events.",
@@ -647,6 +377,27 @@
      }
     }
    ],
+   "methods": [
+    {
+     "name": "toJSON",
+     "description": "Converts the GuildQueueManager instance to a plain object representation.",
+     "returns": {
+      "types": [
+       [
+        [
+         "GuildQueue"
+        ]
+       ]
+      ],
+      "description": "The GuildQueue object representation of the GuildQueueManager."
+     },
+     "meta": {
+      "line": 99,
+      "file": "GuildQueueManager.ts",
+      "path": "src/managers"
+     }
+    }
+   ],
    "meta": {
     "line": 7,
     "file": "GuildQueueManager.ts",
@@ -781,6 +532,276 @@
    }
   },
   {
+   "name": "Player",
+   "description": "Class representing a Player.",
+   "extends": [
+    [
+     [
+      "PlayerEmitter",
+      "<"
+     ],
+     [
+      "PlayerEvents",
+      ">"
+     ]
+    ]
+   ],
+   "construct": {
+    "name": "Player",
+    "description": "Creates a new instance of the Player.",
+    "params": [
+     {
+      "name": "client",
+      "description": "The client instance associated with the player.",
+      "type": [
+       [
+        [
+         "Client"
+        ]
+       ]
+      ]
+     },
+     {
+      "name": "options",
+      "description": "Optional player options.",
+      "optional": true,
+      "type": [
+       [
+        [
+         "PlayerOptions"
+        ]
+       ]
+      ]
+     }
+    ]
+   },
+   "props": [
+    {
+     "name": "utils",
+     "description": "Player Utils",
+     "type": [
+      [
+       [
+        "PlayerUtils"
+       ]
+      ]
+     ],
+     "meta": {
+      "line": 59,
+      "file": "Player.ts",
+      "path": "src"
+     }
+    },
+    {
+     "name": "options",
+     "description": "Player Options",
+     "type": [
+      [
+       [
+        "PlayerOptions"
+       ]
+      ]
+     ],
+     "meta": {
+      "line": 66,
+      "file": "Player.ts",
+      "path": "src"
+     }
+    },
+    {
+     "name": "readyTimestamp",
+     "description": "Player Ready Timestamp",
+     "type": [
+      [
+       [
+        "number"
+       ]
+      ]
+     ],
+     "meta": {
+      "line": 73,
+      "file": "Player.ts",
+      "path": "src"
+     }
+    },
+    {
+     "name": "voice",
+     "description": "Player Voice Manager",
+     "type": [
+      [
+       [
+        "VoiceManager"
+       ]
+      ]
+     ],
+     "meta": {
+      "line": 80,
+      "file": "Player.ts",
+      "path": "src"
+     }
+    },
+    {
+     "name": "queue",
+     "description": "Player Queue Storage",
+     "type": [
+      [
+       [
+        "Collection",
+        "<"
+       ],
+       [
+        "string",
+        ", "
+       ],
+       [
+        "GuildQueue",
+        ">"
+       ]
+      ]
+     ],
+     "meta": {
+      "line": 87,
+      "file": "Player.ts",
+      "path": "src"
+     }
+    },
+    {
+     "name": "isReady",
+     "description": "Player Ready State",
+     "type": [
+      [
+       [
+        "boolean"
+       ]
+      ]
+     ],
+     "meta": {
+      "line": 97,
+      "file": "Player.ts",
+      "path": "src"
+     }
+    },
+    {
+     "name": "developer",
+     "description": "Player Developer",
+     "type": [
+      [
+       [
+        "string"
+       ]
+      ]
+     ],
+     "meta": {
+      "line": 106,
+      "file": "Player.ts",
+      "path": "src"
+     }
+    },
+    {
+     "name": "docs",
+     "description": "Player Documentation URL",
+     "type": [
+      [
+       [
+        "string"
+       ]
+      ]
+     ],
+     "meta": {
+      "line": 115,
+      "file": "Player.ts",
+      "path": "src"
+     }
+    },
+    {
+     "name": "version",
+     "description": "Player Version",
+     "type": [
+      [
+       [
+        "string"
+       ]
+      ]
+     ],
+     "meta": {
+      "line": 124,
+      "file": "Player.ts",
+      "path": "src"
+     }
+    }
+   ],
+   "methods": [
+    {
+     "name": "init",
+     "description": "Initializes the package.",
+     "access": "private",
+     "returns": [
+      [
+       [
+        "void"
+       ]
+      ]
+     ],
+     "meta": {
+      "line": 133,
+      "file": "Player.ts",
+      "path": "src"
+     }
+    }
+   ],
+   "events": [
+    {
+     "name": "ready",
+     "description": "Event triggered when the player is ready.",
+     "params": [
+      {
+       "name": "player",
+       "description": "The Player instance associated with the ready event.",
+       "type": [
+        [
+         [
+          "Player"
+         ]
+        ]
+       ]
+      }
+     ],
+     "meta": {
+      "line": 217,
+      "file": "Player.ts",
+      "path": "src"
+     }
+    },
+    {
+     "name": "error",
+     "description": "Event triggered when an error occurs.",
+     "params": [
+      {
+       "name": "error",
+       "description": "The error object associated with the error event.",
+       "type": [
+        [
+         [
+          "PlayerError"
+         ]
+        ]
+       ]
+      }
+     ],
+     "meta": {
+      "line": 225,
+      "file": "Player.ts",
+      "path": "src"
+     }
+    }
+   ],
+   "meta": {
+    "line": 20,
+    "file": "Player.ts",
+    "path": "src"
+   }
+  },
+  {
    "name": "PlayerUtils",
    "description": "Utility class for Player-related operations.",
    "methods": [
@@ -905,8 +926,8 @@
    ],
    "meta": {
     "line": 161,
-    "file": "index.ts",
-    "path": ""
+    "file": "Player.ts",
+    "path": "src"
    }
   },
   {
@@ -947,8 +968,8 @@
    ],
    "meta": {
     "line": 173,
-    "file": "index.ts",
-    "path": ""
+    "file": "Player.ts",
+    "path": "src"
    }
   },
   {
@@ -1004,8 +1025,8 @@
    ],
    "meta": {
     "line": 182,
-    "file": "index.ts",
-    "path": ""
+    "file": "Player.ts",
+    "path": "src"
    }
   },
   {
@@ -1115,8 +1136,8 @@
    ],
    "meta": {
     "line": 192,
-    "file": "index.ts",
-    "path": ""
+    "file": "Player.ts",
+    "path": "src"
    }
   },
   {
@@ -1155,8 +1176,8 @@
    ],
    "meta": {
     "line": 208,
-    "file": "index.ts",
-    "path": ""
+    "file": "Player.ts",
+    "path": "src"
    }
   },
   {
@@ -1250,8 +1271,8 @@
    ],
    "meta": {
     "line": 233,
-    "file": "index.ts",
-    "path": ""
+    "file": "Player.ts",
+    "path": "src"
    }
   },
   {
@@ -1301,8 +1322,8 @@
    ],
    "meta": {
     "line": 247,
-    "file": "index.ts",
-    "path": ""
+    "file": "Player.ts",
+    "path": "src"
    }
   },
   {
@@ -1412,8 +1433,8 @@
    ],
    "meta": {
     "line": 257,
-    "file": "index.ts",
-    "path": ""
+    "file": "Player.ts",
+    "path": "src"
    }
   },
   {
@@ -1452,8 +1473,8 @@
    ],
    "meta": {
     "line": 272,
-    "file": "index.ts",
-    "path": ""
+    "file": "Player.ts",
+    "path": "src"
    }
   },
   {
@@ -1503,8 +1524,8 @@
    ],
    "meta": {
     "line": 281,
-    "file": "index.ts",
-    "path": ""
+    "file": "Player.ts",
+    "path": "src"
    }
   },
   {
@@ -1543,8 +1564,8 @@
    ],
    "meta": {
     "line": 291,
-    "file": "index.ts",
-    "path": ""
+    "file": "Player.ts",
+    "path": "src"
    }
   },
   {
@@ -1589,8 +1610,8 @@
    ],
    "meta": {
     "line": 300,
-    "file": "index.ts",
-    "path": ""
+    "file": "Player.ts",
+    "path": "src"
    }
   },
   {
@@ -1610,8 +1631,8 @@
    ],
    "meta": {
     "line": 306,
-    "file": "index.ts",
-    "path": ""
+    "file": "Player.ts",
+    "path": "src"
    }
   }
  ],

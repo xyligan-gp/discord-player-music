@@ -95,6 +95,27 @@ class GuildQueueManager implements GuildQueue {
          */
         this.tracks = [];
     }
+
+    /**
+     * Converts the GuildQueueManager instance to a plain object representation.
+     *
+     * @returns {GuildQueue} The GuildQueue object representation of the GuildQueueManager.
+     */
+    public toJSON(): GuildQueue {
+        return {
+            startTimestamp: this.startTimestamp,
+            endTimestamp: this.endTimestamp,
+
+            repeat: this.repeat,
+            channel: this.channel,
+            playback: this.playback,
+
+            dispatcher: this.dispatcher,
+            connection: this.connection,
+
+            tracks: this.tracks
+        }
+    }
 }
 
 export { GuildQueueManager };
