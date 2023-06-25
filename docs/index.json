@@ -2,7 +2,7 @@
  "meta": {
   "generator": "0.11.1",
   "format": 22,
-  "date": 1687648105674
+  "date": 1687714397916
  },
  "custom": {
   "general": {
@@ -375,6 +375,43 @@
       "file": "GuildQueueManager.ts",
       "path": "src/managers"
      }
+    },
+    {
+     "name": "isEmpty",
+     "description": "Checks if the queue is empty.",
+     "type": [
+      [
+       [
+        "boolean"
+       ]
+      ]
+     ],
+     "meta": {
+      "line": 96,
+      "file": "GuildQueueManager.ts",
+      "path": "src/managers"
+     }
+    },
+    {
+     "name": "nowPlaying",
+     "description": "Retrieves the currently playing track from the queue.",
+     "type": [
+      [
+       [
+        "GuildQueueTrack"
+       ]
+      ],
+      [
+       [
+        "null"
+       ]
+      ]
+     ],
+     "meta": {
+      "line": 105,
+      "file": "GuildQueueManager.ts",
+      "path": "src/managers"
+     }
     }
    ],
    "methods": [
@@ -417,7 +454,7 @@
       "description": "The GuildQueueManager instance."
      },
      "meta": {
-      "line": 96,
+      "line": 114,
       "file": "GuildQueueManager.ts",
       "path": "src/managers"
      }
@@ -451,7 +488,7 @@
       "description": "The GuildQueueManager instance."
      },
      "meta": {
-      "line": 110,
+      "line": 128,
       "file": "GuildQueueManager.ts",
       "path": "src/managers"
      }
@@ -499,7 +536,7 @@
       "description": "The GuildQueueManager instance."
      },
      "meta": {
-      "line": 123,
+      "line": 141,
       "file": "GuildQueueManager.ts",
       "path": "src/managers"
      }
@@ -518,7 +555,40 @@
       "description": "The GuildQueue object representation of the GuildQueueManager."
      },
      "meta": {
-      "line": 138,
+      "line": 177,
+      "file": "GuildQueueManager.ts",
+      "path": "src/managers"
+     }
+    },
+    {
+     "name": "from",
+     "description": "Creates a GuildQueueManager instance from the provided GuildQueue data.",
+     "scope": "static",
+     "params": [
+      {
+       "name": "data",
+       "description": "The GuildQueue data.",
+       "type": [
+        [
+         [
+          "GuildQueue"
+         ]
+        ]
+       ]
+      }
+     ],
+     "returns": {
+      "types": [
+       [
+        [
+         "GuildQueueManager"
+        ]
+       ]
+      ],
+      "description": "The created GuildQueueManager instance."
+     },
+     "meta": {
+      "line": 156,
       "file": "GuildQueueManager.ts",
       "path": "src/managers"
      }
@@ -893,7 +963,7 @@
       }
      ],
      "meta": {
-      "line": 217,
+      "line": 216,
       "file": "Player.ts",
       "path": "src"
      }
@@ -915,7 +985,7 @@
       }
      ],
      "meta": {
-      "line": 225,
+      "line": 224,
       "file": "Player.ts",
       "path": "src"
      }
@@ -1020,7 +1090,7 @@
     }
    ],
    "meta": {
-    "line": 160,
+    "line": 199,
     "file": "GuildQueueManager.ts",
     "path": "src/managers"
    }
@@ -1060,7 +1130,7 @@
     }
    ],
    "meta": {
-    "line": 175,
+    "line": 214,
     "file": "GuildQueueManager.ts",
     "path": "src/managers"
    }
@@ -1100,7 +1170,7 @@
     }
    ],
    "meta": {
-    "line": 188,
+    "line": 227,
     "file": "GuildQueueManager.ts",
     "path": "src/managers"
    }
@@ -1138,19 +1208,6 @@
       [
        [
         "number"
-       ]
-      ]
-     ]
-    },
-    {
-     "name": "synchronLoop",
-     "description": "Determines whether to enable synchronous looping.",
-     "optional": true,
-     "default": true,
-     "type": [
-      [
-       [
-        "boolean"
        ]
       ]
      ]
@@ -1224,7 +1281,7 @@
     }
    ],
    "meta": {
-    "line": 173,
+    "line": 172,
     "file": "Player.ts",
     "path": "src"
    }
@@ -1281,7 +1338,7 @@
     }
    ],
    "meta": {
-    "line": 182,
+    "line": 181,
     "file": "Player.ts",
     "path": "src"
    }
@@ -1392,7 +1449,7 @@
     }
    ],
    "meta": {
-    "line": 192,
+    "line": 191,
     "file": "Player.ts",
     "path": "src"
    }
@@ -1432,7 +1489,7 @@
     }
    ],
    "meta": {
-    "line": 208,
+    "line": 207,
     "file": "Player.ts",
     "path": "src"
    }
@@ -1527,7 +1584,7 @@
     }
    ],
    "meta": {
-    "line": 233,
+    "line": 232,
     "file": "Player.ts",
     "path": "src"
    }
@@ -1578,7 +1635,7 @@
     }
    ],
    "meta": {
-    "line": 247,
+    "line": 246,
     "file": "Player.ts",
     "path": "src"
    }
@@ -1689,7 +1746,7 @@
     }
    ],
    "meta": {
-    "line": 257,
+    "line": 256,
     "file": "Player.ts",
     "path": "src"
    }
@@ -1729,7 +1786,7 @@
     }
    ],
    "meta": {
-    "line": 272,
+    "line": 271,
     "file": "Player.ts",
     "path": "src"
    }
@@ -1780,7 +1837,7 @@
     }
    ],
    "meta": {
-    "line": 281,
+    "line": 280,
     "file": "Player.ts",
     "path": "src"
    }
@@ -1820,7 +1877,7 @@
     }
    ],
    "meta": {
-    "line": 291,
+    "line": 290,
     "file": "Player.ts",
     "path": "src"
    }
@@ -1866,7 +1923,7 @@
     ]
    ],
    "meta": {
-    "line": 300,
+    "line": 299,
     "file": "Player.ts",
     "path": "src"
    }
@@ -1887,7 +1944,7 @@
     ]
    ],
    "meta": {
-    "line": 306,
+    "line": 305,
     "file": "Player.ts",
     "path": "src"
    }

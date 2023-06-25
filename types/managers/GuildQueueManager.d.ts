@@ -17,15 +17,11 @@ declare class GuildQueueManager {
 
     /**
      * Checks if the queue is empty.
-     *
-     * @returns Returns true if the queue is empty, false otherwise.
      */
     public get isEmpty(): boolean;
 
     /**
      * Retrieves the currently playing track from the queue.
-     *
-     * @returns The currently playing track or null if there is no track.
      */
     public get nowPlaying(): GuildQueueTrack;
 

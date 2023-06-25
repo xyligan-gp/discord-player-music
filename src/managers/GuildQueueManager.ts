@@ -96,7 +96,7 @@ class GuildQueueManager implements GuildQueue {
     /**
      * Checks if the queue is empty.
      *
-     * @returns {boolean} Returns true if the queue is empty, false otherwise.
+     * @type {boolean} Returns true if the queue is empty, false otherwise.
      */
     public get isEmpty(): boolean {
         return !this.tracks?.length;
@@ -105,7 +105,7 @@ class GuildQueueManager implements GuildQueue {
     /**
      * Retrieves the currently playing track from the queue.
      *
-     * @returns {GuildQueueTrack|null} The currently playing track or null if there is no track.
+     * @type {GuildQueueTrack|null} The currently playing track or null if there is no track.
      */
     public get nowPlaying(): GuildQueueTrack {
         return this.tracks[0] || null;
