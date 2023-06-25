@@ -2,7 +2,7 @@
  "meta": {
   "generator": "0.11.1",
   "format": 22,
-  "date": 1687714397916
+  "date": 1687721461057
  },
  "custom": {
   "general": {
@@ -773,22 +773,6 @@
    },
    "props": [
     {
-     "name": "utils",
-     "description": "Player Utils",
-     "type": [
-      [
-       [
-        "PlayerUtils"
-       ]
-      ]
-     ],
-     "meta": {
-      "line": 59,
-      "file": "Player.ts",
-      "path": "src"
-     }
-    },
-    {
      "name": "options",
      "description": "Player Options",
      "type": [
@@ -799,7 +783,7 @@
       ]
      ],
      "meta": {
-      "line": 66,
+      "line": 57,
       "file": "Player.ts",
       "path": "src"
      }
@@ -815,7 +799,7 @@
       ]
      ],
      "meta": {
-      "line": 73,
+      "line": 64,
       "file": "Player.ts",
       "path": "src"
      }
@@ -831,7 +815,7 @@
       ]
      ],
      "meta": {
-      "line": 80,
+      "line": 71,
       "file": "Player.ts",
       "path": "src"
      }
@@ -856,7 +840,7 @@
       ]
      ],
      "meta": {
-      "line": 87,
+      "line": 78,
       "file": "Player.ts",
       "path": "src"
      }
@@ -872,7 +856,7 @@
       ]
      ],
      "meta": {
-      "line": 97,
+      "line": 88,
       "file": "Player.ts",
       "path": "src"
      }
@@ -888,7 +872,7 @@
       ]
      ],
      "meta": {
-      "line": 106,
+      "line": 97,
       "file": "Player.ts",
       "path": "src"
      }
@@ -904,7 +888,7 @@
       ]
      ],
      "meta": {
-      "line": 115,
+      "line": 106,
       "file": "Player.ts",
       "path": "src"
      }
@@ -920,7 +904,7 @@
       ]
      ],
      "meta": {
-      "line": 124,
+      "line": 115,
       "file": "Player.ts",
       "path": "src"
      }
@@ -939,7 +923,7 @@
       ]
      ],
      "meta": {
-      "line": 133,
+      "line": 124,
       "file": "Player.ts",
       "path": "src"
      }
@@ -963,7 +947,7 @@
       }
      ],
      "meta": {
-      "line": 216,
+      "line": 207,
       "file": "Player.ts",
       "path": "src"
      }
@@ -985,7 +969,7 @@
       }
      ],
      "meta": {
-      "line": 224,
+      "line": 215,
       "file": "Player.ts",
       "path": "src"
      }
@@ -994,50 +978,6 @@
    "meta": {
     "line": 20,
     "file": "Player.ts",
-    "path": "src"
-   }
-  },
-  {
-   "name": "PlayerUtils",
-   "description": "Utility class for Player-related operations.",
-   "methods": [
-    {
-     "name": "checkOptions",
-     "description": "Checks and updates the player options.",
-     "params": [
-      {
-       "name": "options",
-       "description": "The player options to be checked and updated.",
-       "optional": true,
-       "type": [
-        [
-         [
-          "PlayerOptions"
-         ]
-        ]
-       ]
-      }
-     ],
-     "returns": {
-      "types": [
-       [
-        [
-         "PlayerOptions"
-        ]
-       ]
-      ],
-      "description": "The updated player options."
-     },
-     "meta": {
-      "line": 11,
-      "file": "Utils.ts",
-      "path": "src"
-     }
-    }
-   ],
-   "meta": {
-    "line": 4,
-    "file": "Utils.ts",
     "path": "src"
    }
   }
@@ -1239,7 +1179,7 @@
     }
    ],
    "meta": {
-    "line": 161,
+    "line": 152,
     "file": "Player.ts",
     "path": "src"
    }
@@ -1281,7 +1221,7 @@
     }
    ],
    "meta": {
-    "line": 172,
+    "line": 163,
     "file": "Player.ts",
     "path": "src"
    }
@@ -1338,7 +1278,7 @@
     }
    ],
    "meta": {
-    "line": 181,
+    "line": 172,
     "file": "Player.ts",
     "path": "src"
    }
@@ -1449,7 +1389,7 @@
     }
    ],
    "meta": {
-    "line": 191,
+    "line": 182,
     "file": "Player.ts",
     "path": "src"
    }
@@ -1489,7 +1429,7 @@
     }
    ],
    "meta": {
-    "line": 207,
+    "line": 198,
     "file": "Player.ts",
     "path": "src"
    }
@@ -1584,7 +1524,7 @@
     }
    ],
    "meta": {
-    "line": 232,
+    "line": 223,
     "file": "Player.ts",
     "path": "src"
    }
@@ -1635,7 +1575,7 @@
     }
    ],
    "meta": {
-    "line": 246,
+    "line": 237,
     "file": "Player.ts",
     "path": "src"
    }
@@ -1746,7 +1686,7 @@
     }
    ],
    "meta": {
-    "line": 256,
+    "line": 247,
     "file": "Player.ts",
     "path": "src"
    }
@@ -1786,7 +1726,7 @@
     }
    ],
    "meta": {
-    "line": 271,
+    "line": 262,
     "file": "Player.ts",
     "path": "src"
    }
@@ -1837,7 +1777,7 @@
     }
    ],
    "meta": {
-    "line": 280,
+    "line": 271,
     "file": "Player.ts",
     "path": "src"
    }
@@ -1877,7 +1817,7 @@
     }
    ],
    "meta": {
-    "line": 290,
+    "line": 281,
     "file": "Player.ts",
     "path": "src"
    }
@@ -1923,7 +1863,7 @@
     ]
    ],
    "meta": {
-    "line": 299,
+    "line": 290,
     "file": "Player.ts",
     "path": "src"
    }
@@ -1944,9 +1884,98 @@
     ]
    ],
    "meta": {
-    "line": 305,
+    "line": 296,
     "file": "Player.ts",
     "path": "src"
+   }
+  },
+  {
+   "name": "checkOptions",
+   "description": "Checks and updates the player options.",
+   "type": [
+    [
+     [
+      "function"
+     ]
+    ]
+   ],
+   "params": [
+    {
+     "name": "options",
+     "description": "The player options to be checked and updated.",
+     "optional": true,
+     "type": [
+      [
+       [
+        "PlayerOptions"
+       ]
+      ]
+     ]
+    }
+   ],
+   "returns": {
+    "types": [
+     [
+      [
+       "PlayerOptions"
+      ]
+     ]
+    ],
+    "description": "The updated player options."
+   },
+   "meta": {
+    "line": 4,
+    "file": "checkOptions.ts",
+    "path": "src/util"
+   }
+  },
+  {
+   "name": "normalizeArray",
+   "description": "Normalize an array or a rest parameter array to a standard array.\rIf the input is already an array, it returns the input array as is.\rIf the input is a rest parameter array, it returns the first element of the array.",
+   "type": [
+    [
+     [
+      "function"
+     ]
+    ]
+   ],
+   "params": [
+    {
+     "name": "arr",
+     "description": "The input array or rest parameter array.",
+     "type": [
+      [
+       [
+        "RestOrArray",
+        "<"
+       ],
+       [
+        "T",
+        ">"
+       ]
+      ]
+     ]
+    }
+   ],
+   "returns": {
+    "types": [
+     [
+      [
+       "Array",
+       "<"
+      ],
+      [
+       "T",
+       ">"
+      ]
+     ]
+    ],
+    "description": "- The normalized array."
+   },
+   "meta": {
+    "line": 1,
+    "file": "normalizeArray.ts",
+    "path": "src/util"
    }
   }
  ],

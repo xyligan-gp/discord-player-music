@@ -7,9 +7,6 @@ import { PlayerEmitter } from "./Emitter";
 // Import error class
 import { PlayerError } from "./Error";
 
-// Import package utils
-import { PlayerUtils } from "./Utils";
-
 // Import player managers
 import { VoiceManager } from "./managers/VoiceManager";
 import { GuildQueueTrackDuration } from "./managers/GuildQueueManager";
@@ -20,8 +17,6 @@ declare class Player extends PlayerEmitter<PlayerEvents> {
     private client: Client;
     public options: PlayerOptions;
     public readyTimestamp: number;
-
-    public utils: PlayerUtils;
 
     public voice: VoiceManager;
 
@@ -176,7 +171,8 @@ export {
     PlayerProgressBarConfig
 }
 
-export * from "./Utils";
+export * from "./util/checkOptions";
+export * from "./util/normalizeArray";
 
 export * from "./managers/GuildQueueManager";
 export * from "./managers/VoiceManager";

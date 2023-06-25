@@ -4,8 +4,8 @@ import { Client, Collection } from "discord.js";
 // Import player emitter
 import { PlayerEmitter } from "./Emitter";
 
-// Import package utils
-import { PlayerUtils } from "./Utils";
+// Import player utils
+import { checkOptions } from "./util/checkOptions";
 
 // Import player managers
 import { VoiceManager } from "./managers/VoiceManager";
@@ -31,8 +31,6 @@ class Player extends PlayerEmitter<PlayerEvents> {
     public options: PlayerOptions;
     public readyTimestamp: number;
 
-    public utils: PlayerUtils;
-
     public voice: VoiceManager;
 
     public queue: Collection<string, GuildQueue>;
@@ -57,18 +55,11 @@ class Player extends PlayerEmitter<PlayerEvents> {
         this.client = client;
 
         /**
-         * Player Utils
-         * 
-         * @type {PlayerUtils}
-         */
-        this.utils = new PlayerUtils();
-
-        /**
          * Player Options
          * 
          * @type {PlayerOptions}
          */
-        this.options = this.utils.checkOptions(options);
+        this.options = checkOptions(options);
 
         /**
          * Player Ready Timestamp
