@@ -94,6 +94,24 @@ class GuildQueueManager implements GuildQueue {
     }
 
     /**
+     * Checks if the queue is empty.
+     *
+     * @returns {boolean} Returns true if the queue is empty, false otherwise.
+     */
+    public get isEmpty(): boolean {
+        return !this.tracks?.length;
+    }
+
+    /**
+     * Retrieves the currently playing track from the queue.
+     *
+     * @returns {GuildQueueTrack|null} The currently playing track or null if there is no track.
+     */
+    public get nowPlaying(): GuildQueueTrack {
+        return this.tracks[0] || null;
+    }
+
+    /**
      * Sets the timestamp value for the specified type in the GuildQueueManager.
      * 
      * @param {TimestampType} type - The type of timestamp.
@@ -133,6 +151,27 @@ class GuildQueueManager implements GuildQueue {
         this.channel[type] = channel;
 
         return this;
+    }
+
+    /**
+     * Creates a GuildQueueManager instance from the provided GuildQueue data.
+     *
+     * @static
+     * 
+     * @param {GuildQueue} data - The GuildQueue data.
+     * 
+     * @returns {GuildQueueManager} The created GuildQueueManager instance.
+     */
+    public static from(data: GuildQueue): GuildQueueManager {
+        const queue = new GuildQueueManager()
+            .setRepeatMode(data.repeat)
+            .setChannel(ChannelType.TEXT, data.channel.text)
+            .setChannel(ChannelType.VOICE, data.channel.voice);
+        
+        if(data.endTimestamp) queue.setTimestamp(TimestampType.END, data.endTimestamp);
+        if(data.startTimestamp) queue.setTimestamp(TimestampType.START, data.startTimestamp);
+        
+        return queue;
     }
 
     /**

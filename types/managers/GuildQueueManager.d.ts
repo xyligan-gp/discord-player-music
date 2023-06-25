@@ -16,6 +16,20 @@ declare class GuildQueueManager {
     public tracks: GuildQueueTrack[];
 
     /**
+     * Checks if the queue is empty.
+     *
+     * @returns Returns true if the queue is empty, false otherwise.
+     */
+    public get isEmpty(): boolean;
+
+    /**
+     * Retrieves the currently playing track from the queue.
+     *
+     * @returns The currently playing track or null if there is no track.
+     */
+    public get nowPlaying(): GuildQueueTrack;
+
+    /**
      * Sets the timestamp value for the specified type in the GuildQueueManager.
      * 
      * @param type - The type of timestamp.
@@ -23,7 +37,7 @@ declare class GuildQueueManager {
      * 
      * @returns The GuildQueueManager instance.
      */
-    public setTimestamp(type: ChannelType, value?: number): GuildQueueManager;
+    public setTimestamp(type: TimestampType, value?: number): GuildQueueManager;
 
     /**
      * Sets the repeat mode for the GuildQueueManager.
@@ -48,6 +62,15 @@ declare class GuildQueueManager {
         type: TChannelType,
         channel: SetChannelType<TChannelType>
     ): GuildQueueManager;
+
+    /**
+     * Creates a GuildQueueManager instance from the provided GuildQueue data.
+     * 
+     * @param data - The GuildQueue data.
+     * 
+     * @returns The created GuildQueueManager instance.
+     */
+    public static from(data: GuildQueue): GuildQueueManager
 
     /**
      * Converts the GuildQueueManager instance to a plain object representation.

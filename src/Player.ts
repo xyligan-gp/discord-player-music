@@ -165,7 +165,6 @@ export { Player };
  * 
  * @prop {boolean} [addTracksToQueue=true] Determines whether to add tracks to the queue.
  * @prop {number} [searchResultsCount=10] The number of search results.
- * @prop {boolean} [synchronLoop=true] Determines whether to enable synchronous looping.
  * @prop {number} [defaultVolume=5] The default volume level.
  * @prop {PlayerConfigs} [configs] Additional player configurations.
  */

@@ -74,13 +74,6 @@ interface PlayerOptions {
     searchResultsCount?: number;
 
     /**
-     * Determines whether to enable synchronous looping.
-     * 
-     * @default true
-     */
-    synchronLoop?: boolean;
-
-    /**
      * The default volume level.
      * 
      * @default 5

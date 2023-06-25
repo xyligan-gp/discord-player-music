@@ -19,7 +19,6 @@ class PlayerUtils {
         if(!options) return {
             addTracksToQueue: true,
             searchResultsCount: 10,
-            synchronLoop: true,
             defaultVolume: 5,
 
             configs: {
@@ -46,7 +45,6 @@ class PlayerUtils {
 
         if(typeof options?.addTracksToQueue != "boolean") options.addTracksToQueue = true;
         if(!options.searchResultsCount || typeof options.searchResultsCount != "number") options.searchResultsCount = 10;
-        if(!options.synchronLoop || typeof options.synchronLoop != "boolean") options.synchronLoop = true;
         if(!options.defaultVolume || typeof options.defaultVolume != "number") options.defaultVolume = 5;
 
         if(!options.configs.progressBar || typeof options.configs.progressBar != "object") {
