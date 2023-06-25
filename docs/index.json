@@ -2,7 +2,7 @@
  "meta": {
   "generator": "0.11.1",
   "format": 22,
-  "date": 1687724259907
+  "date": 1687724901913
  },
  "custom": {
   "general": {
@@ -1964,6 +1964,27 @@
    "meta": {
     "line": 4,
     "file": "checkOptions.ts",
+    "path": "src/util"
+   }
+  },
+  {
+   "name": "RestOrArray",
+   "description": "Represents data that may be an array or came from a rest parameter.",
+   "type": [
+    [
+     [
+      "Array",
+      "<"
+     ],
+     [
+      "T",
+      ">"
+     ]
+    ]
+   ],
+   "meta": {
+    "line": 28,
+    "file": "normalizeArray.ts",
     "path": "src/util"
    }
   },

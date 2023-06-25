@@ -24,3 +24,9 @@ export function normalizeArray<T>(arr: RestOrArray<T>): T[] {
  * may be used.
  */
 export type RestOrArray<T> = T[] | [T[]];
+
+/**
+ * Represents data that may be an array or came from a rest parameter.
+ * 
+ * @typedef {T[]} RestOrArray
+ */
