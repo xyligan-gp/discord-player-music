@@ -4,7 +4,7 @@ import { PlayerOptions } from "../index";
 /**
  * Checks and updates the player options.
  * 
- * @param [options] - The player options to be checked and updated.
+ * @param options - The player options to be checked and updated.
  * 
  * @returns The updated player options.
  */

@@ -9,7 +9,7 @@
  * 
  * @param {RestOrArray<T>} arr - The input array or rest parameter array.
  * 
- * @returns {T[]} - The normalized array.
+ * @returns {T[]} The normalized array.
  */
 export function normalizeArray<T>(arr: RestOrArray<T>): T[] {
 	if (Array.isArray(arr[0])) return arr[0];

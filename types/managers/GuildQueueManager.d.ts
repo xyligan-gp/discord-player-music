@@ -2,6 +2,9 @@
 import { AudioPlayer, VoiceConnection } from "@discordjs/voice";
 import { DMChannel, PartialDMChannel, StageChannel, TextBasedChannel, VoiceChannel, User } from "discord.js";
 
+// Import utils
+import { RestOrArray } from "../util/normalizeArray";
+
 declare class GuildQueueManager {
     public startTimestamp: number;
     public endTimestamp: number;
@@ -33,7 +36,7 @@ declare class GuildQueueManager {
      * 
      * @returns The GuildQueueManager instance.
      */
-    public setTimestamp(type: TimestampType, value?: number): GuildQueueManager;
+    public setTimestamp(type: TimestampType, value?: number): this;
 
     /**
      * Sets the repeat mode for the GuildQueueManager.
@@ -42,7 +45,7 @@ declare class GuildQueueManager {
      * 
      * @returns The GuildQueueManager instance.
      */
-    public setRepeatMode(type: RepeatMode = RepeatMode.DISABLED): GuildQueueManager;
+    public setRepeatMode(type: RepeatMode = RepeatMode.DISABLED): this;
 
     /**
      * Sets the channel for the specified channel type in the GuildQueueManager.
@@ -57,7 +60,16 @@ declare class GuildQueueManager {
     public setChannel<TChannelType extends ChannelType>(
         type: TChannelType,
         channel: SetChannelType<TChannelType>
-    ): GuildQueueManager;
+    ): this;
+
+    /**
+     * Adds tracks to the guild queue.
+     *
+     * @param tracks - The tracks to add. Accepts both array and variadic arguments.
+     * 
+     * @returns The GuildQueueManager instance.
+     */
+    public addTracks(...tracks: RestOrArray<GuildQueueTrack>): this;
 
     /**
      * Creates a GuildQueueManager instance from the provided GuildQueue data.
@@ -66,7 +78,7 @@ declare class GuildQueueManager {
      * 
      * @returns The created GuildQueueManager instance.
      */
-    public static from(data: GuildQueue): GuildQueueManager
+    public static from(data: GuildQueue): this;
 
     /**
      * Converts the GuildQueueManager instance to a plain object representation.

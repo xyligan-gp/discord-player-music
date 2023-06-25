@@ -1,6 +1,9 @@
 // Import manager requirements
 import { AudioPlayer, VoiceConnection } from "@discordjs/voice";
 
+// Import utils
+import { RestOrArray, normalizeArray } from "../util/normalizeArray";
+
 // Import manager interfaces
 import { GuildQueue, GuildQueueChannel, GuildQueuePlayback, GuildQueueTrack, SetChannelType } from "../../types/managers/GuildQueueManager";
 
@@ -119,7 +122,7 @@ class GuildQueueManager implements GuildQueue {
      * 
      * @returns {GuildQueueManager} The GuildQueueManager instance.
      */
-    public setTimestamp(type: TimestampType, value?: number): GuildQueueManager {
+    public setTimestamp(type: TimestampType, value?: number): this {
         this[`${type}Timestamp`] = value ? new Date(value).getTime() : Date.now();
 
         return this;
@@ -132,7 +135,7 @@ class GuildQueueManager implements GuildQueue {
      * 
      * @returns {GuildQueueManager} The GuildQueueManager instance.
      */
-    public setRepeatMode(type: RepeatMode = RepeatMode.DISABLED): GuildQueueManager {
+    public setRepeatMode(type: RepeatMode = RepeatMode.DISABLED): this {
         this.repeat = type;
 
         return this;
@@ -146,9 +149,28 @@ class GuildQueueManager implements GuildQueue {
      * 
      * @returns {GuildQueueManager} The GuildQueueManager instance.
      */
-    public setChannel<TChannelType extends ChannelType>(type: TChannelType, channel: SetChannelType<TChannelType>): GuildQueueManager {
+    public setChannel<TChannelType extends ChannelType>(
+        type: TChannelType,
+        channel: SetChannelType<TChannelType>
+    ): this {
         // @ts-ignore
         this.channel[type] = channel;
+
+        return this;
+    }
+
+    /**
+     * Adds tracks to the guild queue.
+     *
+     * @param {RestOrArray<GuildQueueTrack>} tracks - The tracks to add. Accepts both array and variadic arguments.
+     * 
+     * @returns {GuildQueueManager} The updated GuildQueueManager instance.
+     */
+    public addTracks(...tracks: RestOrArray<GuildQueueTrack>): this {
+        const normalizedTracks = normalizeArray(tracks);
+
+        if(this.tracks.length) this.tracks.push(...normalizedTracks);
+        else this.tracks = normalizedTracks;
 
         return this;
     }

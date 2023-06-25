@@ -2,7 +2,7 @@
  "meta": {
   "generator": "0.11.1",
   "format": 22,
-  "date": 1687721461057
+  "date": 1687724259907
  },
  "custom": {
   "general": {
@@ -249,7 +249,7 @@
       ]
      ],
      "meta": {
-      "line": 32,
+      "line": 35,
       "file": "GuildQueueManager.ts",
       "path": "src/managers"
      }
@@ -270,7 +270,7 @@
       ]
      ],
      "meta": {
-      "line": 39,
+      "line": 42,
       "file": "GuildQueueManager.ts",
       "path": "src/managers"
      }
@@ -286,7 +286,7 @@
       ]
      ],
      "meta": {
-      "line": 46,
+      "line": 49,
       "file": "GuildQueueManager.ts",
       "path": "src/managers"
      }
@@ -302,7 +302,7 @@
       ]
      ],
      "meta": {
-      "line": 53,
+      "line": 56,
       "file": "GuildQueueManager.ts",
       "path": "src/managers"
      }
@@ -318,7 +318,7 @@
       ]
      ],
      "meta": {
-      "line": 63,
+      "line": 66,
       "file": "GuildQueueManager.ts",
       "path": "src/managers"
      }
@@ -334,7 +334,7 @@
       ]
      ],
      "meta": {
-      "line": 74,
+      "line": 77,
       "file": "GuildQueueManager.ts",
       "path": "src/managers"
      }
@@ -350,7 +350,7 @@
       ]
      ],
      "meta": {
-      "line": 81,
+      "line": 84,
       "file": "GuildQueueManager.ts",
       "path": "src/managers"
      }
@@ -371,7 +371,7 @@
       ]
      ],
      "meta": {
-      "line": 88,
+      "line": 91,
       "file": "GuildQueueManager.ts",
       "path": "src/managers"
      }
@@ -387,7 +387,7 @@
       ]
      ],
      "meta": {
-      "line": 96,
+      "line": 99,
       "file": "GuildQueueManager.ts",
       "path": "src/managers"
      }
@@ -408,7 +408,7 @@
       ]
      ],
      "meta": {
-      "line": 105,
+      "line": 108,
       "file": "GuildQueueManager.ts",
       "path": "src/managers"
      }
@@ -454,7 +454,7 @@
       "description": "The GuildQueueManager instance."
      },
      "meta": {
-      "line": 114,
+      "line": 117,
       "file": "GuildQueueManager.ts",
       "path": "src/managers"
      }
@@ -488,7 +488,7 @@
       "description": "The GuildQueueManager instance."
      },
      "meta": {
-      "line": 128,
+      "line": 131,
       "file": "GuildQueueManager.ts",
       "path": "src/managers"
      }
@@ -536,7 +536,45 @@
       "description": "The GuildQueueManager instance."
      },
      "meta": {
-      "line": 141,
+      "line": 144,
+      "file": "GuildQueueManager.ts",
+      "path": "src/managers"
+     }
+    },
+    {
+     "name": "addTracks",
+     "description": "Adds tracks to the guild queue.",
+     "params": [
+      {
+       "name": "tracks",
+       "description": "The tracks to add. Accepts both array and variadic arguments.",
+       "variable": true,
+       "type": [
+        [
+         [
+          "RestOrArray",
+          "<"
+         ],
+         [
+          "GuildQueueTrack",
+          ">"
+         ]
+        ]
+       ]
+      }
+     ],
+     "returns": {
+      "types": [
+       [
+        [
+         "GuildQueueManager"
+        ]
+       ]
+      ],
+      "description": "The updated GuildQueueManager instance."
+     },
+     "meta": {
+      "line": 162,
       "file": "GuildQueueManager.ts",
       "path": "src/managers"
      }
@@ -555,7 +593,7 @@
       "description": "The GuildQueue object representation of the GuildQueueManager."
      },
      "meta": {
-      "line": 177,
+      "line": 199,
       "file": "GuildQueueManager.ts",
       "path": "src/managers"
      }
@@ -588,14 +626,14 @@
       "description": "The created GuildQueueManager instance."
      },
      "meta": {
-      "line": 156,
+      "line": 178,
       "file": "GuildQueueManager.ts",
       "path": "src/managers"
      }
     }
    ],
    "meta": {
-    "line": 7,
+    "line": 10,
     "file": "GuildQueueManager.ts",
     "path": "src/managers"
    }
@@ -1030,7 +1068,7 @@
     }
    ],
    "meta": {
-    "line": 199,
+    "line": 221,
     "file": "GuildQueueManager.ts",
     "path": "src/managers"
    }
@@ -1070,7 +1108,7 @@
     }
    ],
    "meta": {
-    "line": 214,
+    "line": 236,
     "file": "GuildQueueManager.ts",
     "path": "src/managers"
    }
@@ -1110,7 +1148,7 @@
     }
    ],
    "meta": {
-    "line": 227,
+    "line": 249,
     "file": "GuildQueueManager.ts",
     "path": "src/managers"
    }
@@ -1970,7 +2008,7 @@
       ]
      ]
     ],
-    "description": "- The normalized array."
+    "description": "The normalized array."
    },
    "meta": {
     "line": 1,
