@@ -9,7 +9,7 @@ import { PlayerError } from "./Error";
 
 // Import player managers
 import { VoiceManager } from "./managers/VoiceManager";
-import { GuildQueue } from "./managers/GuildQueueManager";
+import { GuildQueue, GuildQueueTrack, PlayerPlaylist } from "./managers/GuildQueueManager";
 
 declare class Player extends PlayerEmitter<PlayerEvents> {
     constructor(client: Client, options?: PlayerOptions);
@@ -51,6 +51,16 @@ declare class Player extends PlayerEmitter<PlayerEvents> {
      * @returns Array of track information.
      */
     public searchTracks(query: string, requestedUser?: User): Promise<GuildQueueTrack[]>;
+
+    /**
+     * Fetch tracks from a playlist specified by a URL.
+     *
+     * @param playlistURL - The URL of the playlist to fetch tracks from.
+     * @param requestedUser - The user who made the request.
+     * 
+     * @returns Object with information about playlist and array of track information.
+     */
+    public fetchPlaylist(playlistURL: string, requestedUser?: User): Promise<PlayerPlaylist>;
 
     /**
      * Initializes the package.

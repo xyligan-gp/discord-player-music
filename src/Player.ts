@@ -1,4 +1,5 @@
 // Import package requirements
+import ytpl from "ytpl";
 import ytdl from "ytdl-core";
 import ytsearch from "yt-search";
 import { Client, Collection, User } from "discord.js";
@@ -7,6 +8,7 @@ import { Client, Collection, User } from "discord.js";
 import { PlayerEmitter } from "./Emitter";
 
 // Import player utils
+import parseMs from "./util/parseMs.function";
 import formatNumber from "./util/formatNumber.function";
 import { checkOptions } from "./util/checkOptions.function";
 
@@ -15,7 +17,7 @@ import { VoiceManager } from "./managers/VoiceManager";
 
 // Import package interfaces
 import { PlayerEvents, PlayerOptions } from "../types/index";
-import { GuildQueue, GuildQueueTrack } from "../types/managers/GuildQueueManager";
+import { GuildQueue, GuildQueueTrack, PlayerPlaylist } from "../types/managers/GuildQueueManager";
 
 // Import package data
 import { author, homepage, version } from "../package.json";
@@ -197,6 +199,74 @@ class Player extends PlayerEmitter<PlayerEvents> {
     }
 
     /**
+     * Fetch tracks from a playlist specified by a URL.
+     *
+     * @param {string} playlistURL - The URL of the playlist to fetch tracks from.
+     * @param {User} [requestedUser=null] - The user who made the request.
+     * 
+     * @returns {Promise<PlayerPlaylist>} Object with information about playlist and array of track information.
+     */
+    public async fetchPlaylist(playlistURL: string, requestedUser: User = null): Promise<PlayerPlaylist> {
+        const playlistId = await ytpl.getPlaylistID(playlistURL);
+        const playlistInfo = await ytpl(playlistId);
+
+        const results: GuildQueueTrack[] = [];
+
+        for(const trackDetails of playlistInfo?.items) {
+            const trackDuration = parseMs(trackDetails.durationSec * 1000);
+
+            results.push(
+                {
+                    searchType: "search#playlist",
+
+                    url: trackDetails.shortUrl,
+                    title: trackDetails.title,
+                    thumbnail: trackDetails.thumbnails[0].url,
+
+                    author: {
+                        url: trackDetails.author.url,
+                        name: trackDetails.author.name
+                    },
+
+                    duration: {
+                        hours: formatNumber(trackDuration.hours),
+                        minutes: formatNumber(trackDuration.minutes),
+                        seconds: formatNumber(trackDuration.seconds)
+                    },
+
+                    requested: requestedUser
+                }
+            )
+        }
+
+        const playlistLength = playlistInfo.items.map(a => a.durationSec).reduce((a, b) => a + b);
+        const playlistDuration = parseMs(playlistLength * 1000);
+
+        const result = {
+            id: playlistInfo.id,
+            url: playlistInfo.url,
+            title: playlistInfo.title,
+            views: playlistInfo.views,
+            thumbnail: playlistInfo.thumbnails[0].url,
+
+            author: {
+                url: playlistInfo.author.url,
+                name: playlistInfo.author.name
+            },
+
+            duration: {
+                hours: formatNumber(playlistDuration.hours),
+                minutes: formatNumber(playlistDuration.minutes),
+                seconds: formatNumber(playlistDuration.seconds)
+            },
+
+            tracks: results
+        }
+
+        return result;
+    }
+
+    /**
      * Initializes the package.
      * 
      * @returns {void}
@@ -293,6 +363,21 @@ export { Player };
  * @event Player#error
  * 
  * @param {PlayerError} error The error object associated with the error event.
+ */
+
+/**
+ * Represents a player playlist with a collection of tracks.
+ * 
+ * @typedef {object} PlayerPlaylist
+ * 
+ * @prop {string} id The unique ID of the playlist.
+ * @prop {string} url The URL of the playlist.
+ * @prop {string} title The title of the playlist.
+ * @prop {number} views The number of views the playlist has.
+ * @prop {string} thumbnail The URL of the playlist's thumbnail image.
+ * @prop {GuildQueueTrackAuthor} author The author of the playlist.
+ * @prop {GuildQueueTrackDuration} duration The total duration of the playlist.
+ * @prop {GuildQueueTrack[]} tracks Array of tracks included in the playlist.
  */
 
 /**

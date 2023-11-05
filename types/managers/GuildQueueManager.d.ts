@@ -94,8 +94,21 @@ enum RepeatMode {
     QUEUE
 }
 
+interface PlayerPlaylist {
+    id: string;
+    url: string;
+    title: string;
+    views: number;
+    thumbnail: string;
+
+    author: GuildQueueTrackAuthor;
+    duration: GuildQueueTrackDuration;
+
+    tracks: GuildQueueTrack[];
+}
+
 interface GuildQueueTrack {
-    searchType: "search#url" | "search#title";
+    searchType: "search#url" | "search#title" | "search#playlist";
 
     url: string;
     title: string;
@@ -168,11 +181,14 @@ type SetChannelType<TChannelType extends ChannelType> = TChannelType extends Cha
 export {
     GuildQueueManager,
 
+    PlayerPlaylist,
+    
     GuildQueue,
     GuildQueueChannel,
     GuildQueuePlayback,
 
     GuildQueueTrack,
+    GuildQueueTrackAuthor,
     GuildQueueTrackDuration,
 
     SetChannelType,
