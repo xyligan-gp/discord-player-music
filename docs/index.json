@@ -2,7 +2,7 @@
  "meta": {
   "generator": "0.11.1",
   "format": 22,
-  "date": 1699217628368
+  "date": 1699224640549
  },
  "custom": {
   "general": {
@@ -821,7 +821,7 @@
       ]
      ],
      "meta": {
-      "line": 59,
+      "line": 61,
       "file": "Player.ts",
       "path": "src"
      }
@@ -837,7 +837,7 @@
       ]
      ],
      "meta": {
-      "line": 66,
+      "line": 68,
       "file": "Player.ts",
       "path": "src"
      }
@@ -853,7 +853,7 @@
       ]
      ],
      "meta": {
-      "line": 73,
+      "line": 75,
       "file": "Player.ts",
       "path": "src"
      }
@@ -878,7 +878,7 @@
       ]
      ],
      "meta": {
-      "line": 80,
+      "line": 82,
       "file": "Player.ts",
       "path": "src"
      }
@@ -894,7 +894,7 @@
       ]
      ],
      "meta": {
-      "line": 90,
+      "line": 92,
       "file": "Player.ts",
       "path": "src"
      }
@@ -910,7 +910,7 @@
       ]
      ],
      "meta": {
-      "line": 99,
+      "line": 101,
       "file": "Player.ts",
       "path": "src"
      }
@@ -926,7 +926,7 @@
       ]
      ],
      "meta": {
-      "line": 108,
+      "line": 110,
       "file": "Player.ts",
       "path": "src"
      }
@@ -942,7 +942,7 @@
       ]
      ],
      "meta": {
-      "line": 117,
+      "line": 119,
       "file": "Player.ts",
       "path": "src"
      }
@@ -999,7 +999,58 @@
       "description": "Array of track information."
      },
      "meta": {
-      "line": 126,
+      "line": 128,
+      "file": "Player.ts",
+      "path": "src"
+     }
+    },
+    {
+     "name": "fetchPlaylist",
+     "description": "Fetch tracks from a playlist specified by a URL.",
+     "params": [
+      {
+       "name": "playlistURL",
+       "description": "The URL of the playlist to fetch tracks from.",
+       "type": [
+        [
+         [
+          "string"
+         ]
+        ]
+       ]
+      },
+      {
+       "name": "requestedUser",
+       "description": "The user who made the request.",
+       "optional": true,
+       "default": null,
+       "type": [
+        [
+         [
+          "User"
+         ]
+        ]
+       ]
+      }
+     ],
+     "async": true,
+     "returns": {
+      "types": [
+       [
+        [
+         "Promise",
+         "<"
+        ],
+        [
+         "PlayerPlaylist",
+         ">"
+        ]
+       ]
+      ],
+      "description": "Object with information about playlist and array of track information."
+     },
+     "meta": {
+      "line": 201,
       "file": "Player.ts",
       "path": "src"
      }
@@ -1016,7 +1067,7 @@
       ]
      ],
      "meta": {
-      "line": 199,
+      "line": 269,
       "file": "Player.ts",
       "path": "src"
      }
@@ -1040,7 +1091,7 @@
       }
      ],
      "meta": {
-      "line": 282,
+      "line": 352,
       "file": "Player.ts",
       "path": "src"
      }
@@ -1062,14 +1113,14 @@
       }
      ],
      "meta": {
-      "line": 290,
+      "line": 360,
       "file": "Player.ts",
       "path": "src"
      }
     }
    ],
    "meta": {
-    "line": 23,
+    "line": 25,
     "file": "Player.ts",
     "path": "src"
    }
@@ -1272,7 +1323,7 @@
     }
    ],
    "meta": {
-    "line": 227,
+    "line": 297,
     "file": "Player.ts",
     "path": "src"
    }
@@ -1314,7 +1365,7 @@
     }
    ],
    "meta": {
-    "line": 238,
+    "line": 308,
     "file": "Player.ts",
     "path": "src"
    }
@@ -1371,7 +1422,7 @@
     }
    ],
    "meta": {
-    "line": 247,
+    "line": 317,
     "file": "Player.ts",
     "path": "src"
    }
@@ -1482,7 +1533,7 @@
     }
    ],
    "meta": {
-    "line": 257,
+    "line": 327,
     "file": "Player.ts",
     "path": "src"
    }
@@ -1522,7 +1573,118 @@
     }
    ],
    "meta": {
-    "line": 273,
+    "line": 343,
+    "file": "Player.ts",
+    "path": "src"
+   }
+  },
+  {
+   "name": "PlayerPlaylist",
+   "description": "Represents a player playlist with a collection of tracks.",
+   "type": [
+    [
+     [
+      "object"
+     ]
+    ]
+   ],
+   "props": [
+    {
+     "name": "id",
+     "description": "The unique ID of the playlist.",
+     "type": [
+      [
+       [
+        "string"
+       ]
+      ]
+     ]
+    },
+    {
+     "name": "url",
+     "description": "The URL of the playlist.",
+     "type": [
+      [
+       [
+        "string"
+       ]
+      ]
+     ]
+    },
+    {
+     "name": "title",
+     "description": "The title of the playlist.",
+     "type": [
+      [
+       [
+        "string"
+       ]
+      ]
+     ]
+    },
+    {
+     "name": "views",
+     "description": "The number of views the playlist has.",
+     "type": [
+      [
+       [
+        "number"
+       ]
+      ]
+     ]
+    },
+    {
+     "name": "thumbnail",
+     "description": "The URL of the playlist's thumbnail image.",
+     "type": [
+      [
+       [
+        "string"
+       ]
+      ]
+     ]
+    },
+    {
+     "name": "author",
+     "description": "The author of the playlist.",
+     "type": [
+      [
+       [
+        "GuildQueueTrackAuthor"
+       ]
+      ]
+     ]
+    },
+    {
+     "name": "duration",
+     "description": "The total duration of the playlist.",
+     "type": [
+      [
+       [
+        "GuildQueueTrackDuration"
+       ]
+      ]
+     ]
+    },
+    {
+     "name": "tracks",
+     "description": "Array of tracks included in the playlist.",
+     "type": [
+      [
+       [
+        "Array",
+        "<"
+       ],
+       [
+        "GuildQueueTrack",
+        ">"
+       ]
+      ]
+     ]
+    }
+   ],
+   "meta": {
+    "line": 368,
     "file": "Player.ts",
     "path": "src"
    }
@@ -1617,7 +1779,7 @@
     }
    ],
    "meta": {
-    "line": 298,
+    "line": 383,
     "file": "Player.ts",
     "path": "src"
    }
@@ -1657,7 +1819,7 @@
     }
    ],
    "meta": {
-    "line": 312,
+    "line": 397,
     "file": "Player.ts",
     "path": "src"
    }
@@ -1708,7 +1870,7 @@
     }
    ],
    "meta": {
-    "line": 321,
+    "line": 406,
     "file": "Player.ts",
     "path": "src"
    }
@@ -1819,7 +1981,7 @@
     }
    ],
    "meta": {
-    "line": 331,
+    "line": 416,
     "file": "Player.ts",
     "path": "src"
    }
@@ -1859,7 +2021,7 @@
     }
    ],
    "meta": {
-    "line": 346,
+    "line": 431,
     "file": "Player.ts",
     "path": "src"
    }
@@ -1910,7 +2072,7 @@
     }
    ],
    "meta": {
-    "line": 355,
+    "line": 440,
     "file": "Player.ts",
     "path": "src"
    }
@@ -1950,7 +2112,7 @@
     }
    ],
    "meta": {
-    "line": 365,
+    "line": 450,
     "file": "Player.ts",
     "path": "src"
    }
@@ -1996,7 +2158,7 @@
     ]
    ],
    "meta": {
-    "line": 374,
+    "line": 459,
     "file": "Player.ts",
     "path": "src"
    }
@@ -2017,7 +2179,7 @@
     ]
    ],
    "meta": {
-    "line": 380,
+    "line": 465,
     "file": "Player.ts",
     "path": "src"
    }
@@ -2168,6 +2330,117 @@
    "meta": {
     "line": 1,
     "file": "normalizeArray.function.ts",
+    "path": "src/util"
+   }
+  },
+  {
+   "name": "ITimeObject",
+   "type": [
+    [
+     [
+      "object"
+     ]
+    ]
+   ],
+   "props": [
+    {
+     "name": "days",
+     "description": "Amount of days until the cooldown ends.",
+     "type": [
+      [
+       [
+        "number"
+       ]
+      ]
+     ]
+    },
+    {
+     "name": "hours",
+     "description": "Amount of hours until the cooldown ends.",
+     "type": [
+      [
+       [
+        "number"
+       ]
+      ]
+     ]
+    },
+    {
+     "name": "minutes",
+     "description": "Amount of minutes until the cooldown ends.",
+     "type": [
+      [
+       [
+        "number"
+       ]
+      ]
+     ]
+    },
+    {
+     "name": "seconds",
+     "description": "Amount of seconds until the cooldown ends.",
+     "type": [
+      [
+       [
+        "number"
+       ]
+      ]
+     ]
+    },
+    {
+     "name": "milliseconds",
+     "description": "Amount of milliseconds until the cooldown ends.",
+     "type": [
+      [
+       [
+        "number"
+       ]
+      ]
+     ]
+    }
+   ],
+   "meta": {
+    "line": 28,
+    "file": "parseMs.function.ts",
+    "path": "src/util"
+   }
+  },
+  {
+   "name": "parseMs",
+   "description": "Parses the millisecond number and returns the time object with days, hours, minutes, seconds and milliseconds.",
+   "type": [
+    [
+     [
+      "function"
+     ]
+    ]
+   ],
+   "params": [
+    {
+     "name": "value",
+     "description": "Milliseconds number to convert.",
+     "type": [
+      [
+       [
+        "number"
+       ]
+      ]
+     ]
+    }
+   ],
+   "returns": {
+    "types": [
+     [
+      [
+       "ITimeObject"
+      ]
+     ]
+    ],
+    "description": "Time object."
+   },
+   "meta": {
+    "line": 1,
+    "file": "parseMs.function.ts",
     "path": "src/util"
    }
   }

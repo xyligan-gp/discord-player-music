@@ -1,6 +1,8 @@
 /**
  * Parses the millisecond number and returns the time object with days, hours, minutes, seconds and milliseconds.
  * 
+ * @callback parseMs
+ * 
  * @param {number} value Milliseconds number to convert.
  * 
  * @returns {ITimeObject} Time object.
