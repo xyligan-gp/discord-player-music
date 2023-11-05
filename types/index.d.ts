@@ -69,8 +69,8 @@ declare class Player extends PlayerEmitter<PlayerEvents> {
 }
 
 interface PlayerEvents {
-    ready: (player: Player) => void;
-    error: (error: PlayerError) => void;
+    ready: [player: Player];
+    error: [error: PlayerError];
 }
 
 interface PlayerOptions {

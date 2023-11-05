@@ -8,7 +8,7 @@ import { EventEmitter } from "events";
  * 
  * @private
  */
-class PlayerEmitter<V extends ListenerSignature<V> = IDefaultListener> {
+class PlayerEmitter<E extends Record<string, any>> {
     private _emitter = new EventEmitter();
 
     /**
@@ -19,9 +19,9 @@ class PlayerEmitter<V extends ListenerSignature<V> = IDefaultListener> {
      * 
      * @returns {PlayerEmitter} The current PlayerEmitter instance for method chaining.
      */
-    public on<U extends keyof V>(event: U, listener: V[U]): PlayerEmitter {
-        this._emitter.on(event as string, listener);
-        
+    public on<K extends Exclude<keyof E, number>>(event: K, listener: (...args: E[K]) => any): PlayerEmitter<E> {
+        this._emitter.on(event, listener);
+
         return this;
     }
 
@@ -34,8 +34,8 @@ class PlayerEmitter<V extends ListenerSignature<V> = IDefaultListener> {
      * 
      * @returns {PlayerEmitter} The current PlayerEmitter instance for method chaining.
      */
-    public once<U extends keyof V>(event: U, listener: V[U]): PlayerEmitter {
-        this._emitter.once(event as string, listener);
+    public once<K extends Exclude<keyof E, number>>(event: K, listener: (...args: E[K]) => any): PlayerEmitter<E> {
+        this._emitter.once(event, listener);
 
         return this;
     }
@@ -48,17 +48,9 @@ class PlayerEmitter<V extends ListenerSignature<V> = IDefaultListener> {
      * 
      * @returns {boolean} A flag indicating whether the event had listeners or not.
      */
-    public emit<U extends keyof V>(event: U, ...args: Parameters<V[U]>): boolean {
-        return this._emitter.emit(event as string, ...args);
+    public emit<K extends Exclude<keyof E, number>>(event: K, ...args: E[K]): boolean {
+        return this._emitter.emit(event, ...args as any[]);
     }
-}
-
-type ListenerSignature<L> = {
-    [E in keyof L]: (...args: any[]) => any;
-}
-
-interface IDefaultListener {
-    [k: string]: (...args: any[]) => any;
 }
 
 export { PlayerEmitter };

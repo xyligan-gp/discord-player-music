@@ -1,8 +1,8 @@
 // Import emitter requirements
 import { EventEmitter } from "events";
 
-declare class PlayerEmitter<V extends ListenerSignature<V> = IDefaultListener> {
-    private _emitter: EventEmitter;
+declare class PlayerEmitter<E extends Record<string, any>> {
+    private _emitter = new EventEmitter();
 
     /**
      * Registers an event listener for the specified event.
@@ -12,7 +12,7 @@ declare class PlayerEmitter<V extends ListenerSignature<V> = IDefaultListener> {
      * 
      * @returns The current PlayerEmitter instance for method chaining.
      */
-    public on<U extends keyof V>(event: U, listener: V[U]): this;
+    public on<K extends Exclude<keyof E, number>>(event: K, listener: (...args: E[K]) => any): PlayerEmitter<E>;
 
     /**
      * Registers a one-time event listener for the specified event.
@@ -23,7 +23,7 @@ declare class PlayerEmitter<V extends ListenerSignature<V> = IDefaultListener> {
      * 
      * @returns The current PlayerEmitter instance for method chaining.
      */
-    public once<U extends keyof V>(event: U, listener: V[U]): this;
+    public once<K extends Exclude<keyof E, number>>(event: K, listener: (...args: E[K]) => any): PlayerEmitter<E>;
 
     /**
      * Emits the specified event and passes all parameters to the listener.
@@ -33,15 +33,7 @@ declare class PlayerEmitter<V extends ListenerSignature<V> = IDefaultListener> {
      * 
      * @returns A flag indicating whether the event had listeners or not.
      */
-    public emit<U extends keyof V>(event: U, ...args: Parameters<V[U]>): boolean;
-}
-
-type ListenerSignature<L> = {
-    [E in keyof L]: (...args: any[]) => any;
-}
-
-interface IDefaultListener {
-    [k: string]: (...args: any[]) => any;
+    public emit<K extends Exclude<keyof E, number>>(event: K, ...args: E[K]): boolean;
 }
 
 export { PlayerEmitter };
