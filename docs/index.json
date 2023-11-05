@@ -2,7 +2,7 @@
  "meta": {
   "generator": "0.11.1",
   "format": 22,
-  "date": 1687724901913
+  "date": 1699217628368
  },
  "custom": {
   "general": {
@@ -574,7 +574,7 @@
       "description": "The updated GuildQueueManager instance."
      },
      "meta": {
-      "line": 162,
+      "line": 161,
       "file": "GuildQueueManager.ts",
       "path": "src/managers"
      }
@@ -593,7 +593,7 @@
       "description": "The GuildQueue object representation of the GuildQueueManager."
      },
      "meta": {
-      "line": 199,
+      "line": 198,
       "file": "GuildQueueManager.ts",
       "path": "src/managers"
      }
@@ -626,7 +626,7 @@
       "description": "The created GuildQueueManager instance."
      },
      "meta": {
-      "line": 178,
+      "line": 177,
       "file": "GuildQueueManager.ts",
       "path": "src/managers"
      }
@@ -797,7 +797,7 @@
      },
      {
       "name": "options",
-      "description": "Optional player options.",
+      "description": "Player options.",
       "optional": true,
       "type": [
        [
@@ -821,7 +821,7 @@
       ]
      ],
      "meta": {
-      "line": 57,
+      "line": 59,
       "file": "Player.ts",
       "path": "src"
      }
@@ -837,7 +837,7 @@
       ]
      ],
      "meta": {
-      "line": 64,
+      "line": 66,
       "file": "Player.ts",
       "path": "src"
      }
@@ -853,7 +853,7 @@
       ]
      ],
      "meta": {
-      "line": 71,
+      "line": 73,
       "file": "Player.ts",
       "path": "src"
      }
@@ -878,7 +878,7 @@
       ]
      ],
      "meta": {
-      "line": 78,
+      "line": 80,
       "file": "Player.ts",
       "path": "src"
      }
@@ -894,7 +894,7 @@
       ]
      ],
      "meta": {
-      "line": 88,
+      "line": 90,
       "file": "Player.ts",
       "path": "src"
      }
@@ -910,7 +910,7 @@
       ]
      ],
      "meta": {
-      "line": 97,
+      "line": 99,
       "file": "Player.ts",
       "path": "src"
      }
@@ -926,7 +926,7 @@
       ]
      ],
      "meta": {
-      "line": 106,
+      "line": 108,
       "file": "Player.ts",
       "path": "src"
      }
@@ -942,13 +942,68 @@
       ]
      ],
      "meta": {
-      "line": 115,
+      "line": 117,
       "file": "Player.ts",
       "path": "src"
      }
     }
    ],
    "methods": [
+    {
+     "name": "searchTracks",
+     "description": "Search for tracks based on a query.",
+     "params": [
+      {
+       "name": "query",
+       "description": "The query to search for.",
+       "type": [
+        [
+         [
+          "string"
+         ]
+        ]
+       ]
+      },
+      {
+       "name": "requestedUser",
+       "description": "The user who made the request.",
+       "optional": true,
+       "default": null,
+       "type": [
+        [
+         [
+          "User"
+         ]
+        ]
+       ]
+      }
+     ],
+     "async": true,
+     "returns": {
+      "types": [
+       [
+        [
+         "Promise",
+         "<"
+        ],
+        [
+         "Array",
+         "<"
+        ],
+        [
+         "GuildQueueTrack",
+         ">>"
+        ]
+       ]
+      ],
+      "description": "Array of track information."
+     },
+     "meta": {
+      "line": 126,
+      "file": "Player.ts",
+      "path": "src"
+     }
+    },
     {
      "name": "init",
      "description": "Initializes the package.",
@@ -961,7 +1016,7 @@
       ]
      ],
      "meta": {
-      "line": 124,
+      "line": 199,
       "file": "Player.ts",
       "path": "src"
      }
@@ -985,7 +1040,7 @@
       }
      ],
      "meta": {
-      "line": 207,
+      "line": 282,
       "file": "Player.ts",
       "path": "src"
      }
@@ -1007,14 +1062,14 @@
       }
      ],
      "meta": {
-      "line": 215,
+      "line": 290,
       "file": "Player.ts",
       "path": "src"
      }
     }
    ],
    "meta": {
-    "line": 20,
+    "line": 23,
     "file": "Player.ts",
     "path": "src"
    }
@@ -1068,7 +1123,7 @@
     }
    ],
    "meta": {
-    "line": 221,
+    "line": 220,
     "file": "GuildQueueManager.ts",
     "path": "src/managers"
    }
@@ -1108,7 +1163,7 @@
     }
    ],
    "meta": {
-    "line": 236,
+    "line": 235,
     "file": "GuildQueueManager.ts",
     "path": "src/managers"
    }
@@ -1148,7 +1203,7 @@
     }
    ],
    "meta": {
-    "line": 249,
+    "line": 248,
     "file": "GuildQueueManager.ts",
     "path": "src/managers"
    }
@@ -1217,7 +1272,7 @@
     }
    ],
    "meta": {
-    "line": 152,
+    "line": 227,
     "file": "Player.ts",
     "path": "src"
    }
@@ -1259,7 +1314,7 @@
     }
    ],
    "meta": {
-    "line": 163,
+    "line": 238,
     "file": "Player.ts",
     "path": "src"
    }
@@ -1316,7 +1371,7 @@
     }
    ],
    "meta": {
-    "line": 172,
+    "line": 247,
     "file": "Player.ts",
     "path": "src"
    }
@@ -1427,7 +1482,7 @@
     }
    ],
    "meta": {
-    "line": 182,
+    "line": 257,
     "file": "Player.ts",
     "path": "src"
    }
@@ -1467,7 +1522,7 @@
     }
    ],
    "meta": {
-    "line": 198,
+    "line": 273,
     "file": "Player.ts",
     "path": "src"
    }
@@ -1483,17 +1538,6 @@
     ]
    ],
    "props": [
-    {
-     "name": "index",
-     "description": "The index of the track.",
-     "type": [
-      [
-       [
-        "number"
-       ]
-      ]
-     ]
-    },
     {
      "name": "searchType",
      "description": "The type of search (\"search#url\" or \"search#title\").",
@@ -1539,6 +1583,17 @@
      ]
     },
     {
+     "name": "author",
+     "description": "The author of the track.",
+     "type": [
+      [
+       [
+        "GuildQueueTrackAuthor"
+       ]
+      ]
+     ]
+    },
+    {
      "name": "duration",
      "description": "The duration of the track.",
      "type": [
@@ -1562,7 +1617,47 @@
     }
    ],
    "meta": {
-    "line": 223,
+    "line": 298,
+    "file": "Player.ts",
+    "path": "src"
+   }
+  },
+  {
+   "name": "GuildQueueTrackAuthor",
+   "description": "Represents an author of a track in the guild queue.",
+   "type": [
+    [
+     [
+      "object"
+     ]
+    ]
+   ],
+   "props": [
+    {
+     "name": "url",
+     "description": "The URL of the author, such as a channel URL.",
+     "type": [
+      [
+       [
+        "string"
+       ]
+      ]
+     ]
+    },
+    {
+     "name": "name",
+     "description": "The name of the author.",
+     "type": [
+      [
+       [
+        "string"
+       ]
+      ]
+     ]
+    }
+   ],
+   "meta": {
+    "line": 312,
     "file": "Player.ts",
     "path": "src"
    }
@@ -1613,7 +1708,7 @@
     }
    ],
    "meta": {
-    "line": 237,
+    "line": 321,
     "file": "Player.ts",
     "path": "src"
    }
@@ -1724,7 +1819,7 @@
     }
    ],
    "meta": {
-    "line": 247,
+    "line": 331,
     "file": "Player.ts",
     "path": "src"
    }
@@ -1764,7 +1859,7 @@
     }
    ],
    "meta": {
-    "line": 262,
+    "line": 346,
     "file": "Player.ts",
     "path": "src"
    }
@@ -1815,7 +1910,7 @@
     }
    ],
    "meta": {
-    "line": 271,
+    "line": 355,
     "file": "Player.ts",
     "path": "src"
    }
@@ -1855,7 +1950,7 @@
     }
    ],
    "meta": {
-    "line": 281,
+    "line": 365,
     "file": "Player.ts",
     "path": "src"
    }
@@ -1901,7 +1996,7 @@
     ]
    ],
    "meta": {
-    "line": 290,
+    "line": 374,
     "file": "Player.ts",
     "path": "src"
    }
@@ -1922,7 +2017,7 @@
     ]
    ],
    "meta": {
-    "line": 296,
+    "line": 380,
     "file": "Player.ts",
     "path": "src"
    }
@@ -1963,7 +2058,46 @@
    },
    "meta": {
     "line": 4,
-    "file": "checkOptions.ts",
+    "file": "checkOptions.function.ts",
+    "path": "src/util"
+   }
+  },
+  {
+   "name": "formatNumber",
+   "description": "Format a number as a string with a leading zero if it's between 0 and 9 (inclusive).",
+   "type": [
+    [
+     [
+      "function"
+     ]
+    ]
+   ],
+   "params": [
+    {
+     "name": "value",
+     "description": "The number to format.",
+     "type": [
+      [
+       [
+        "number"
+       ]
+      ]
+     ]
+    }
+   ],
+   "returns": {
+    "types": [
+     [
+      [
+       "string"
+      ]
+     ]
+    ],
+    "description": "The formatted number as a string."
+   },
+   "meta": {
+    "line": 1,
+    "file": "formatNumber.function.ts",
     "path": "src/util"
    }
   },
@@ -1984,7 +2118,7 @@
    ],
    "meta": {
     "line": 28,
-    "file": "normalizeArray.ts",
+    "file": "normalizeArray.function.ts",
     "path": "src/util"
    }
   },
@@ -2033,7 +2167,7 @@
    },
    "meta": {
     "line": 1,
-    "file": "normalizeArray.ts",
+    "file": "normalizeArray.function.ts",
     "path": "src/util"
    }
   }
