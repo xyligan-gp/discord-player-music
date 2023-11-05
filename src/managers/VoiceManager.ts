@@ -22,7 +22,7 @@ class VoiceManager {
      * @throws {PlayerError} If there is an error or the guild data is not found.
      */
     public isConnected(guild: Guild): boolean {
-        if(!guild) throw new PlayerError(`Couldn't find the guild data!`);
+        if(!guild) throw new PlayerError("Couldn't find the guild data!");
 
         return getVoiceConnection(guild.id) != null;
     }

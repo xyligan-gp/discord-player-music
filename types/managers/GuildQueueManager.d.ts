@@ -3,7 +3,7 @@ import { AudioPlayer, VoiceConnection } from "@discordjs/voice";
 import { DMChannel, PartialDMChannel, StageChannel, TextBasedChannel, VoiceChannel, User } from "discord.js";
 
 // Import utils
-import { RestOrArray } from "../util/normalizeArray";
+import { RestOrArray } from "../util/normalizeArray.function";
 
 declare class GuildQueueManager {
     public startTimestamp: number;
@@ -95,15 +95,21 @@ enum RepeatMode {
 }
 
 interface GuildQueueTrack {
-    index: number;
     searchType: "search#url" | "search#title";
 
     url: string;
     title: string;
     thumbnail: string;
+
+    author: GuildQueueTrackAuthor;
     duration: GuildQueueTrackDuration;
 
     requested: User;
+}
+
+interface GuildQueueTrackAuthor {
+    url: string;
+    name: string;
 }
 
 interface GuildQueueTrackDuration {

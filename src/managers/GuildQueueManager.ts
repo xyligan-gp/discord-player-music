@@ -2,7 +2,7 @@
 import { AudioPlayer, VoiceConnection } from "@discordjs/voice";
 
 // Import utils
-import { RestOrArray, normalizeArray } from "../util/normalizeArray";
+import { RestOrArray, normalizeArray } from "../util/normalizeArray.function";
 
 // Import manager interfaces
 import { GuildQueue, GuildQueueChannel, GuildQueuePlayback, GuildQueueTrack, SetChannelType } from "../../types/managers/GuildQueueManager";
@@ -153,8 +153,7 @@ class GuildQueueManager implements GuildQueue {
         type: TChannelType,
         channel: SetChannelType<TChannelType>
     ): this {
-        // @ts-ignore
-        this.channel[type] = channel;
+        this.channel[type as string] = channel;
 
         return this;
     }

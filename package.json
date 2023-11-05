@@ -8,7 +8,8 @@
 		"build:old": "tsc -p tsconfig.json",
 		"build:docs": "docgen -s *.ts src/**/* -o docs/index.json -c docs/index.yml -g -S 1 -j .jsconfig.json",
 		"pub": "npm publish",
-		"pub:dev": "npm publish --tag dev"
+		"pub:dev": "npm publish --tag dev",
+		"test": "ts-node ./test/index.ts"
 	},
 	"bugs": {
 		"url": "https://github.com/xyligan-gp/discord-player-music/issues"
@@ -37,7 +38,9 @@
 	"types": "./types/index.d.ts",
 	"dependencies": {
 		"@discordjs/voice": "^0.16.0",
-		"discord.js": "^14.13.0"
+		"discord.js": "^14.13.0",
+		"yt-search": "^2.10.4",
+		"ytdl-core": "^4.11.5"
 	},
 	"devDependencies": {
 		"@babel/core": "^7.23.2",
@@ -46,8 +49,10 @@
 		"@babel/preset-env": "^7.23.2",
 		"@babel/preset-typescript": "^7.23.2",
 		"@distube/docgen": "github:distubejs/docgen",
+		"@types/yt-search": "^2.10.2",
 		"jsdoc-babel": "^0.5.0",
 		"rimraf": "^5.0.5",
+		"ts-node": "^10.9.1",
 		"typescript": "^5.2.2"
 	}
 }

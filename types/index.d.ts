@@ -9,7 +9,7 @@ import { PlayerError } from "./Error";
 
 // Import player managers
 import { VoiceManager } from "./managers/VoiceManager";
-import { GuildQueueTrackDuration } from "./managers/GuildQueueManager";
+import { GuildQueue } from "./managers/GuildQueueManager";
 
 declare class Player extends PlayerEmitter<PlayerEvents> {
     constructor(client: Client, options?: PlayerOptions);
@@ -20,7 +20,7 @@ declare class Player extends PlayerEmitter<PlayerEvents> {
 
     public voice: VoiceManager;
 
-    public queue: Collection<string, GuildQueueTrackDuration>;
+    public queue: Collection<string, GuildQueue>;
 
     /**
      * Player Ready State
@@ -41,6 +41,16 @@ declare class Player extends PlayerEmitter<PlayerEvents> {
      * Player Version
      */
     public get version(): string;
+
+    /**
+     * Search for tracks based on a query.
+     *
+     * @param query - The query to search for.
+     * @param requestedUser - The user who made the request.
+     * 
+     * @returns Array of track information.
+     */
+    public searchTracks(query: string, requestedUser?: User): Promise<GuildQueueTrack[]>;
 
     /**
      * Initializes the package.
@@ -171,8 +181,9 @@ export {
     PlayerProgressBarConfig
 }
 
-export * from "./util/checkOptions";
-export * from "./util/normalizeArray";
+export * from "./util/checkOptions.function";
+export * from "./util/formatNumber.function";
+export * from "./util/normalizeArray.function";
 
 export * from "./managers/GuildQueueManager";
 export * from "./managers/VoiceManager";

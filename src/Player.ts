@@ -1,18 +1,21 @@
 // Import package requirements
-import { Client, Collection } from "discord.js";
+import ytdl from "ytdl-core";
+import ytsearch from "yt-search";
+import { Client, Collection, User } from "discord.js";
 
 // Import player emitter
 import { PlayerEmitter } from "./Emitter";
 
 // Import player utils
-import { checkOptions } from "./util/checkOptions";
+import formatNumber from "./util/formatNumber.function";
+import { checkOptions } from "./util/checkOptions.function";
 
 // Import player managers
 import { VoiceManager } from "./managers/VoiceManager";
 
 // Import package interfaces
 import { PlayerEvents, PlayerOptions } from "../types/index";
-import { GuildQueue } from "../types/managers/GuildQueueManager";
+import { GuildQueue, GuildQueueTrack } from "../types/managers/GuildQueueManager";
 
 // Import package data
 import { author, homepage, version } from "../package.json";
@@ -24,7 +27,6 @@ import { author, homepage, version } from "../package.json";
  * @classdesc Class representing a Player.
  * 
  * @extends {PlayerEmitter<PlayerEvents>}
- * 
  */
 class Player extends PlayerEmitter<PlayerEvents> {
     public client: Client;
@@ -41,7 +43,7 @@ class Player extends PlayerEmitter<PlayerEvents> {
      * @constructor
      * 
      * @param {Client} client - The client instance associated with the player.
-     * @param {PlayerOptions} [options] - Optional player options.
+     * @param {PlayerOptions} [options] - Player options.
      */
     constructor(client: Client, options?: PlayerOptions) {
         super();
@@ -119,6 +121,79 @@ class Player extends PlayerEmitter<PlayerEvents> {
      */
     public get version(): string {
         return version;
+    }
+
+    /**
+     * Search for tracks based on a query.
+     *
+     * @param {string} query - The query to search for.
+     * @param {User} [requestedUser=null] - The user who made the request.
+     * 
+     * @returns {Promise<GuildQueueTrack[]>} Array of track information.
+     */
+    public async searchTracks(query: string, requestedUser: User = null): Promise<GuildQueueTrack[]> {
+        const isURL = (/((http[s]?:\/|http[s]?:\/\/|www\.)[^\s]+)/gi).test(query);
+
+        const results: GuildQueueTrack[] = [];
+
+        if(isURL) {
+            const track = await ytdl.getInfo(query);
+            const trackDetails = track.videoDetails;
+
+            results.push(
+                {
+                    searchType: "search#url",
+                        
+                    url: trackDetails.video_url,
+                    title: trackDetails.title,
+                    thumbnail: trackDetails.thumbnails[0].url,
+
+                    author: {
+                        url: trackDetails.author.channel_url,
+                        name: trackDetails.author.name
+                    },
+
+                    duration: {
+                        hours: formatNumber(Math.floor(parseInt(trackDetails.lengthSeconds) / 3600)),
+                        minutes: formatNumber(Math.floor(parseInt(trackDetails.lengthSeconds) / 60 % 60)),
+                        seconds: formatNumber(Math.floor(parseInt(trackDetails.lengthSeconds) % 60))
+                    },
+                    
+                    requested: requestedUser
+                }
+            )
+        }else{
+            const searchResults = await ytsearch(query);
+
+            for(let i = 0; i < this.options.searchResultsCount; i++) {
+                const trackDetails = searchResults.videos[i];
+
+                results.push(
+                    {
+                        searchType: "search#title",
+
+                        url: trackDetails.url,
+                        title: trackDetails.title,
+                        thumbnail: trackDetails.thumbnail,
+
+                        author: {
+                            url: trackDetails.author.url,
+                            name: trackDetails.author.name
+                        },
+
+                        duration: {
+                            hours: formatNumber(Math.floor(trackDetails.duration.seconds / 3600)),
+                            minutes: formatNumber(Math.floor(trackDetails.duration.seconds / 60 % 60)),
+                            seconds: formatNumber(Math.floor(trackDetails.duration.seconds % 60))
+                        },
+
+                        requested: requestedUser
+                    }
+                )
+            }
+        }
+
+        return results;
     }
 
     /**
@@ -225,13 +300,22 @@ export { Player };
  *
  * @typedef {object} GuildQueueTrack
  * 
- * @prop {number} index The index of the track.
  * @prop {string} searchType The type of search ("search#url" or "search#title").
  * @prop {string} url The URL of the track.
  * @prop {string} title The title of the track.
  * @prop {string} thumbnail The thumbnail URL of the track.
+ * @prop {GuildQueueTrackAuthor} author The author of the track.
  * @prop {GuildQueueTrackDuration} duration The duration of the track.
  * @prop {User} requested The user who requested the track.
+ */
+
+/**
+ * Represents an author of a track in the guild queue.
+ * 
+ * @typedef {object} GuildQueueTrackAuthor
+ * 
+ * @prop {string} url The URL of the author, such as a channel URL.
+ * @prop {string} name The name of the author.
  */
 
 /**
