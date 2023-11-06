@@ -2,7 +2,7 @@
  "meta": {
   "generator": "0.11.1",
   "format": 22,
-  "date": 1699224640549
+  "date": 1699229395554
  },
  "custom": {
   "general": {
@@ -821,7 +821,7 @@
       ]
      ],
      "meta": {
-      "line": 61,
+      "line": 62,
       "file": "Player.ts",
       "path": "src"
      }
@@ -837,7 +837,7 @@
       ]
      ],
      "meta": {
-      "line": 68,
+      "line": 69,
       "file": "Player.ts",
       "path": "src"
      }
@@ -853,7 +853,7 @@
       ]
      ],
      "meta": {
-      "line": 75,
+      "line": 76,
       "file": "Player.ts",
       "path": "src"
      }
@@ -878,7 +878,7 @@
       ]
      ],
      "meta": {
-      "line": 82,
+      "line": 83,
       "file": "Player.ts",
       "path": "src"
      }
@@ -894,7 +894,7 @@
       ]
      ],
      "meta": {
-      "line": 92,
+      "line": 93,
       "file": "Player.ts",
       "path": "src"
      }
@@ -910,7 +910,7 @@
       ]
      ],
      "meta": {
-      "line": 101,
+      "line": 102,
       "file": "Player.ts",
       "path": "src"
      }
@@ -926,7 +926,7 @@
       ]
      ],
      "meta": {
-      "line": 110,
+      "line": 111,
       "file": "Player.ts",
       "path": "src"
      }
@@ -942,7 +942,7 @@
       ]
      ],
      "meta": {
-      "line": 119,
+      "line": 120,
       "file": "Player.ts",
       "path": "src"
      }
@@ -999,7 +999,7 @@
       "description": "Array of track information."
      },
      "meta": {
-      "line": 128,
+      "line": 129,
       "file": "Player.ts",
       "path": "src"
      }
@@ -1050,7 +1050,45 @@
       "description": "Object with information about playlist and array of track information."
      },
      "meta": {
-      "line": 201,
+      "line": 202,
+      "file": "Player.ts",
+      "path": "src"
+     }
+    },
+    {
+     "name": "fetchLyrics",
+     "description": "Fetch lyrics for a track based on a query.",
+     "params": [
+      {
+       "name": "query",
+       "description": "The query for which to fetch lyrics.",
+       "type": [
+        [
+         [
+          "string"
+         ]
+        ]
+       ]
+      }
+     ],
+     "async": true,
+     "returns": {
+      "types": [
+       [
+        [
+         "Promise",
+         "<"
+        ],
+        [
+         "PlayerLyrics",
+         ">"
+        ]
+       ]
+      ],
+      "description": "Object representing the fetched lyrics."
+     },
+     "meta": {
+      "line": 270,
       "file": "Player.ts",
       "path": "src"
      }
@@ -1067,7 +1105,7 @@
       ]
      ],
      "meta": {
-      "line": 269,
+      "line": 315,
       "file": "Player.ts",
       "path": "src"
      }
@@ -1091,7 +1129,7 @@
       }
      ],
      "meta": {
-      "line": 352,
+      "line": 399,
       "file": "Player.ts",
       "path": "src"
      }
@@ -1113,14 +1151,14 @@
       }
      ],
      "meta": {
-      "line": 360,
+      "line": 407,
       "file": "Player.ts",
       "path": "src"
      }
     }
    ],
    "meta": {
-    "line": 25,
+    "line": 26,
     "file": "Player.ts",
     "path": "src"
    }
@@ -1310,6 +1348,19 @@
      ]
     },
     {
+     "name": "geniusApiKey",
+     "description": "The default Genius API Key (only for lyrics).",
+     "optional": true,
+     "default": "\"\"",
+     "type": [
+      [
+       [
+        "string"
+       ]
+      ]
+     ]
+    },
+    {
      "name": "configs",
      "description": "Additional player configurations.",
      "optional": true,
@@ -1323,7 +1374,7 @@
     }
    ],
    "meta": {
-    "line": 297,
+    "line": 343,
     "file": "Player.ts",
     "path": "src"
    }
@@ -1365,7 +1416,7 @@
     }
    ],
    "meta": {
-    "line": 308,
+    "line": 355,
     "file": "Player.ts",
     "path": "src"
    }
@@ -1422,7 +1473,7 @@
     }
    ],
    "meta": {
-    "line": 317,
+    "line": 364,
     "file": "Player.ts",
     "path": "src"
    }
@@ -1533,7 +1584,7 @@
     }
    ],
    "meta": {
-    "line": 327,
+    "line": 374,
     "file": "Player.ts",
     "path": "src"
    }
@@ -1573,7 +1624,7 @@
     }
    ],
    "meta": {
-    "line": 343,
+    "line": 390,
     "file": "Player.ts",
     "path": "src"
    }
@@ -1684,7 +1735,80 @@
     }
    ],
    "meta": {
-    "line": 368,
+    "line": 415,
+    "file": "Player.ts",
+    "path": "src"
+   }
+  },
+  {
+   "name": "PlayerLyrics",
+   "description": "Represents track lyrics with essential information.",
+   "type": [
+    [
+     [
+      "object"
+     ]
+    ]
+   ],
+   "props": [
+    {
+     "name": "id",
+     "description": "The unique ID of the lyrics.",
+     "type": [
+      [
+       [
+        "number"
+       ]
+      ]
+     ]
+    },
+    {
+     "name": "url",
+     "description": "The URL associated with the lyrics.",
+     "type": [
+      [
+       [
+        "string"
+       ]
+      ]
+     ]
+    },
+    {
+     "name": "title",
+     "description": "The title of the track.",
+     "type": [
+      [
+       [
+        "string"
+       ]
+      ]
+     ]
+    },
+    {
+     "name": "thumbnail",
+     "description": "The URL of the thumbnail image related to the lyrics.",
+     "type": [
+      [
+       [
+        "string"
+       ]
+      ]
+     ]
+    },
+    {
+     "name": "text",
+     "description": "The text of the song lyrics.",
+     "type": [
+      [
+       [
+        "string"
+       ]
+      ]
+     ]
+    }
+   ],
+   "meta": {
+    "line": 430,
     "file": "Player.ts",
     "path": "src"
    }
@@ -1779,7 +1903,7 @@
     }
    ],
    "meta": {
-    "line": 383,
+    "line": 442,
     "file": "Player.ts",
     "path": "src"
    }
@@ -1819,7 +1943,7 @@
     }
    ],
    "meta": {
-    "line": 397,
+    "line": 456,
     "file": "Player.ts",
     "path": "src"
    }
@@ -1870,7 +1994,7 @@
     }
    ],
    "meta": {
-    "line": 406,
+    "line": 465,
     "file": "Player.ts",
     "path": "src"
    }
@@ -1981,7 +2105,7 @@
     }
    ],
    "meta": {
-    "line": 416,
+    "line": 475,
     "file": "Player.ts",
     "path": "src"
    }
@@ -2021,7 +2145,7 @@
     }
    ],
    "meta": {
-    "line": 431,
+    "line": 490,
     "file": "Player.ts",
     "path": "src"
    }
@@ -2072,7 +2196,7 @@
     }
    ],
    "meta": {
-    "line": 440,
+    "line": 499,
     "file": "Player.ts",
     "path": "src"
    }
@@ -2112,7 +2236,7 @@
     }
    ],
    "meta": {
-    "line": 450,
+    "line": 509,
     "file": "Player.ts",
     "path": "src"
    }
@@ -2158,7 +2282,7 @@
     ]
    ],
    "meta": {
-    "line": 459,
+    "line": 518,
     "file": "Player.ts",
     "path": "src"
    }
@@ -2179,7 +2303,7 @@
     ]
    ],
    "meta": {
-    "line": 465,
+    "line": 524,
     "file": "Player.ts",
     "path": "src"
    }
