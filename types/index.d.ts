@@ -63,9 +63,27 @@ declare class Player extends PlayerEmitter<PlayerEvents> {
     public fetchPlaylist(playlistURL: string, requestedUser?: User): Promise<PlayerPlaylist>;
 
     /**
+     * Fetch lyrics for a track based on a query.
+     *
+     * @param query - The query for which to fetch lyrics.
+     * 
+     * @returns Object representing the fetched lyrics.
+     */
+    public fetchLyrics(query: string): Promise<PlayerLyrics>;
+
+    /**
      * Initializes the package.
      */
     private init(): void;
+}
+
+interface PlayerLyrics {
+    id: number;
+    url: string;
+    title: string;
+    thumbnail: string;
+
+    text: string;
 }
 
 interface PlayerEvents {
@@ -94,6 +112,13 @@ interface PlayerOptions {
      * @default 5
      */
     defaultVolume?: number;
+
+    /**
+     * The default Genius API Key (only for lyrics).
+     * 
+     * @default ""
+     */
+    geniusApiKey?: string;
 
     /**
      * Additional player configurations.
@@ -183,6 +208,7 @@ interface PlayerCollectorsConfig {
 
 export {
     Player,
+    PlayerLyrics,
     PlayerEvents,
     PlayerOptions,
 

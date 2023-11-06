@@ -39,6 +39,7 @@
 	"dependencies": {
 		"@discordjs/voice": "^0.16.0",
 		"discord.js": "^14.13.0",
+		"genius-lyrics-api": "^3.2.0",
 		"yt-search": "^2.10.4",
 		"ytdl-core": "^4.11.5",
 		"ytpl": "^2.3.0"

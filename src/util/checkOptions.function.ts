@@ -15,6 +15,7 @@ export function checkOptions(options?: PlayerOptions): PlayerOptions {
         addTracksToQueue: true,
         searchResultsCount: 10,
         defaultVolume: 5,
+        geniusApiKey: "fKX928YB81hRHWigdMYM-3c-aR618PTjvAzd8qCLwRQXMLUrVS_ZPkmdVg92iiBa",
 
         configs: {
             progressBar: {
@@ -41,6 +42,7 @@ export function checkOptions(options?: PlayerOptions): PlayerOptions {
     if(typeof options?.addTracksToQueue != "boolean") options.addTracksToQueue = true;
     if(!options.searchResultsCount || typeof options.searchResultsCount != "number") options.searchResultsCount = 10;
     if(!options.defaultVolume || typeof options.defaultVolume != "number") options.defaultVolume = 5;
+    if(!options.geniusApiKey || typeof options.geniusApiKey != "string") options.geniusApiKey = "fKX928YB81hRHWigdMYM-3c-aR618PTjvAzd8qCLwRQXMLUrVS_ZPkmdVg92iiBa";
 
     if(!options.configs.progressBar || typeof options.configs.progressBar != "object") {
         options.configs.progressBar = {

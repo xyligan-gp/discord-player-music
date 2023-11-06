@@ -2,6 +2,7 @@
 import ytpl from "ytpl";
 import ytdl from "ytdl-core";
 import ytsearch from "yt-search";
+import { getSong } from "genius-lyrics-api";
 import { Client, Collection, User } from "discord.js";
 
 // Import player emitter
@@ -16,7 +17,7 @@ import { checkOptions } from "./util/checkOptions.function";
 import { VoiceManager } from "./managers/VoiceManager";
 
 // Import package interfaces
-import { PlayerEvents, PlayerOptions } from "../types/index";
+import { PlayerEvents, PlayerLyrics, PlayerOptions } from "../types/index";
 import { GuildQueue, GuildQueueTrack, PlayerPlaylist } from "../types/managers/GuildQueueManager";
 
 // Import package data
@@ -267,6 +268,51 @@ class Player extends PlayerEmitter<PlayerEvents> {
     }
 
     /**
+     * Fetch lyrics for a track based on a query.
+     *
+     * @param {string} query - The query for which to fetch lyrics.
+     * 
+     * @returns {Promise<PlayerLyrics>} Object representing the fetched lyrics.
+     */
+    public async fetchLyrics(query: string): Promise<PlayerLyrics> {
+        const oddWords = [
+            'HQ', '(Lyrics)',
+            '(Official Music Video)', '(Official Video)',
+            '(Unfficial Video)', '(Unfficial Music Video)',
+            '(Video)', 'HD', '(lyrics)'
+        ]
+
+        for(const word of oddWords) {
+            query.replaceAll(word, "");
+        }
+
+        const trackArtist = query.split(" - ")[0];
+        const trackTitle = query.split(" - ").slice(1);
+
+        const lyricsInfo = await getSong(
+            {
+                apiKey: this.options.geniusApiKey,
+
+                title: trackTitle,
+                artist: trackArtist,
+
+                optimizeQuery: true
+            }
+        )
+
+        const result: PlayerLyrics = {
+            id: lyricsInfo.id,
+            url: lyricsInfo.url,
+            title: lyricsInfo.title,
+            thumbnail: lyricsInfo.albumArt,
+
+            text: lyricsInfo.lyrics
+        }
+
+        return result;
+    }
+
+    /**
      * Initializes the package.
      * 
      * @returns {void}
@@ -302,6 +348,7 @@ export { Player };
  * @prop {boolean} [addTracksToQueue=true] Determines whether to add tracks to the queue.
  * @prop {number} [searchResultsCount=10] The number of search results.
  * @prop {number} [defaultVolume=5] The default volume level.
+ * @prop {string} [geniusApiKey=""] The default Genius API Key (only for lyrics).
  * @prop {PlayerConfigs} [configs] Additional player configurations.
  */
 
@@ -378,6 +425,18 @@ export { Player };
  * @prop {GuildQueueTrackAuthor} author The author of the playlist.
  * @prop {GuildQueueTrackDuration} duration The total duration of the playlist.
  * @prop {GuildQueueTrack[]} tracks Array of tracks included in the playlist.
+ */
+
+/**
+ * Represents track lyrics with essential information.
+ * 
+ * @typedef {object} PlayerLyrics
+ * 
+ * @prop {number} id The unique ID of the lyrics.
+ * @prop {string} url The URL associated with the lyrics.
+ * @prop {string} title The title of the track.
+ * @prop {string} thumbnail The URL of the thumbnail image related to the lyrics.
+ * @prop {string} text The text of the song lyrics.
  */
 
 /**
