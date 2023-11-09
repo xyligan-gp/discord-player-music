@@ -72,6 +72,15 @@ declare class Player extends PlayerEmitter<PlayerEvents> {
     public fetchLyrics(query: string): Promise<PlayerLyrics>;
 
     /**
+     * Get the guild queue for a specific guild ID.
+     *
+     * @param guildId - The ID of the guild.
+     * 
+     * @returns The queue object for the specified guild, or null if not found.
+     */
+    public getQueue(guildId: string): GuildQueue;
+
+    /**
      * Initializes the package.
      */
     private init(): void;

@@ -313,6 +313,17 @@ class Player extends PlayerEmitter<PlayerEvents> {
     }
 
     /**
+     * Get the guild queue for a specific guild ID.
+     *
+     * @param {string} guildId - The ID of the guild.
+     * 
+     * @returns {GuildQueue|null} The queue object for the specified guild, or null if not found.
+     */
+    public getQueue(guildId: string): GuildQueue {
+        return this.queue.get(guildId) || null;
+    }
+
+    /**
      * Initializes the package.
      * 
      * @returns {void}
@@ -436,7 +447,7 @@ export { Player };
  * @prop {string} url The URL associated with the lyrics.
  * @prop {string} title The title of the track.
  * @prop {string} thumbnail The URL of the thumbnail image related to the lyrics.
- * @prop {string} text The text of the song lyrics.
+ * @prop {string} text The text of the track lyrics.
  */
 
 /**
