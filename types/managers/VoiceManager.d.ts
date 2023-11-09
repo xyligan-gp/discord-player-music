@@ -9,8 +9,6 @@ declare class VoiceManager {
      * @param guild - The guild to check.
      * 
      * @returns Returns true if the bot is connected to a voice channel in the guild, otherwise false.
-     * 
-     * @throws If there is an error or the guild data is not found.
      */
     public isConnected(guild: Guild): boolean;
 
@@ -19,22 +17,18 @@ declare class VoiceManager {
      *
      * @param channel - The voice channel to join.
      * 
-     * @returns A Promise that resolves to the VoiceConnection instance.
-     * 
-     * @throws If there is an error joining the voice channel.
+     * @returns A VoiceConnection if joining is successful, or null if not.
      */
-    public join(channel: VoiceBasedChannel): Promise<VoiceConnection>;
+    public join(channel: VoiceBasedChannel): VoiceConnection;
 
     /**
      * Leaves the voice channel.
      *
      * @param channel - The voice channel to leave.
      * 
-     * @returns A Promise that resolves when the voice channel is left.
-     * 
-     * @throws If there is an error leaving the voice channel.
+     * @returns True if leaving the channel is successful, or false if not.
      */
-    public leave(channel: VoiceBasedChannel): Promise<void>;
+    public leave(channel: VoiceBasedChannel): boolean;
 }
 
 export { VoiceManager };

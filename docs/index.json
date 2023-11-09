@@ -2,7 +2,7 @@
  "meta": {
   "generator": "0.11.1",
   "format": 22,
-  "date": 1699546595453
+  "date": 1699561510292
  },
  "custom": {
   "general": {
@@ -669,7 +669,7 @@
       "description": "Returns true if the bot is connected to a voice channel in the guild, otherwise false."
      },
      "meta": {
-      "line": 15,
+      "line": 12,
       "file": "VoiceManager.ts",
       "path": "src/managers"
      }
@@ -699,19 +699,19 @@
       "types": [
        [
         [
-         "Promise",
-         "<"
-        ],
+         "VoiceConnection"
+        ]
+       ],
+       [
         [
-         "VoiceConnection",
-         ">"
+         "null"
         ]
        ]
       ],
-      "description": "A Promise that resolves to the VoiceConnection instance."
+      "description": "A VoiceConnection if joining is successful, or null if not."
      },
      "meta": {
-      "line": 30,
+      "line": 23,
       "file": "VoiceManager.ts",
       "path": "src/managers"
      }
@@ -741,26 +741,21 @@
       "types": [
        [
         [
-         "Promise",
-         "<"
-        ],
-        [
-         "void",
-         ">"
+         "boolean"
         ]
        ]
       ],
-      "description": "A Promise that resolves when the voice channel is left."
+      "description": "True if leaving the channel is successful, or false if not."
      },
      "meta": {
-      "line": 61,
+      "line": 51,
       "file": "VoiceManager.ts",
       "path": "src/managers"
      }
     }
    ],
    "meta": {
-    "line": 8,
+    "line": 5,
     "file": "VoiceManager.ts",
     "path": "src/managers"
    }

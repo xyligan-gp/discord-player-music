@@ -2,9 +2,6 @@
 import { Guild, VoiceBasedChannel } from "discord.js";
 import { getVoiceConnection, joinVoiceChannel, VoiceConnection } from "@discordjs/voice";
 
-// Import player error class
-import { PlayerError } from "../Error";
-
 /**
  * Player Voice Manager Class
  * 
@@ -18,13 +15,9 @@ class VoiceManager {
      * @param {Guild} guild - The guild to check.
      * 
      * @returns {boolean} Returns true if the bot is connected to a voice channel in the guild, otherwise false.
-     * 
-     * @throws {PlayerError} If there is an error or the guild data is not found.
      */
     public isConnected(guild: Guild): boolean {
-        if(!guild) throw new PlayerError("Couldn't find the guild data!");
-
-        return getVoiceConnection(guild.id) != null;
+        return getVoiceConnection(guild?.id) != null;
     }
 
     /**
@@ -32,30 +25,27 @@ class VoiceManager {
      *
      * @param {(VoiceChannel|StageChannel)} channel - The voice channel to join.
      * 
-     * @returns {Promise<VoiceConnection>} A Promise that resolves to the VoiceConnection instance.
-     * 
-     * @throws {PlayerError} If there is an error joining the voice channel.
+     * @returns {VoiceConnection|null} A VoiceConnection if joining is successful, or null if not.
      */
-    public join(channel: VoiceBasedChannel): Promise<VoiceConnection> {
-        return new Promise(async (res, rej) => {
-            if(!channel) return rej(new PlayerError("Couldn't find the voice channel data!"));
+    public join(channel: VoiceBasedChannel): VoiceConnection {
+        const guildMember = channel?.guild?.members?.me;
 
-            const guildClient = channel.guild.members.me;
-            if(guildClient?.voice?.channel) return rej(new PlayerError(`The client is already in the voice channel with ID ${guildClient.voice.channel.id}!`));
+        if(!guildMember?.voice?.channel) {
+            const guild = channel.guild;
 
             const guildConnection = joinVoiceChannel(
                 {
-                    guildId: channel.guild.id,
+                    guildId: guild.id,
                     channelId: channel.id,
 
-                    adapterCreator: channel.guild.voiceAdapterCreator
+                    adapterCreator: guild.voiceAdapterCreator
                 }
             )
 
-            if(!guildConnection) return rej(new PlayerError(`Failed to join channel with ID ${channel.id}!`));
-            
-            return res(guildConnection);
-        })
+            if(guildConnection) return guildConnection;
+        }
+
+        return null;
     }
 
     /**
@@ -63,24 +53,23 @@ class VoiceManager {
      *
      * @param {(VoiceChannel|StageChannel)} channel - The voice channel to leave.
      * 
-     * @returns {Promise<void>} A Promise that resolves when the voice channel is left.
-     * 
-     * @throws {PlayerError} If there is an error leaving the voice channel.
+     * @returns {boolean} True if leaving the channel is successful, or false if not.
      */
-    public leave(channel: VoiceBasedChannel): Promise<void> {
-        return new Promise(async (res, rej) => {
-            if(!channel) return rej(new PlayerError("Couldn't find the voice channel data!"));
+    public leave(channel: VoiceBasedChannel): boolean {
+        const guild = channel?.guild;
+        const guildMember = guild?.members?.me;
 
-            const guildClient = channel.guild.members.me;
-            if(!guildClient?.voice?.channel) return rej(new PlayerError(`Could not find a client in the voice channel with ID ${channel.id}!`));
+        if(guildMember?.voice?.channel?.id === channel.id) {
+            const guildConnection = getVoiceConnection(guild.id);
 
-            const guildConnection = getVoiceConnection(channel.guild.id);
-            if(!guildConnection) return rej(new PlayerError(`Failed to disconnect the client from the voice channel with ID ${channel.id}!`));
+            if(guildConnection) {
+                guildConnection.destroy();
 
-            guildConnection.destroy();
+                return true;
+            }
+        }
 
-            return res();
-        })
+        return false;
     }
 }
 
