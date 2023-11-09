@@ -2,7 +2,7 @@
  "meta": {
   "generator": "0.11.1",
   "format": 22,
-  "date": 1699229395554
+  "date": 1699541473803
  },
  "custom": {
   "general": {
@@ -11,7 +11,7 @@
     "welcome": {
      "name": "Welcome",
      "type": "md",
-     "content": "<div align=\"center\">\r\n\t<h1>Welcome to the 'discord-player-music' page!</h1>\r\n\t<br />\r\n\t<p>\r\n\t\t<a href=\"https://dpm.js.org\"><img src=\"https://i.imgur.com/4Pk9WlS.gif\" width=\"546\" alt=\"DPM Main Image\" /></a>\r\n\t</p>\r\n\t<br/>\r\n\t<p>\r\n\t\t<a href=\"https://discord.gg/zzbkvCcu2r\"><img src=\"https://img.shields.io/discord/827221018879328298?color=5865F2&logo=discord&logoColor=white\" alt=\"Support Server\" /></a>\r\n\t\t<a href=\"https://www.npmjs.com/package/discord-player-music\"><img src=\"https://img.shields.io/npm/dt/discord-player-music.png?maxAge=3600\" alt=\"NPM downloads\" /></a>\r\n\t\t<a href=\"https://www.npmjs.com/package/discord-player-music\"><img src=\"https://img.shields.io/npm/v/discord-player-music.png?maxAge=3600\" alt=\"NPM page\" /></a>\r\n\t</p>\r\n</div>\r\n\r\n## About\r\n\r\n**Discord Player Music is a powerful [Node.js](https://nodejs.org) music module for your Discord.js bot that based on Promises and has a lot of features.**\r\n\r\n* 👍 Simple & easy to use\r\n* 😄 Beginner friendly\r\n* 🎸 Audio filters\r\n* 📃 Lyrics\r\n* 📂 Multiple servers\r\n\r\n## Installation\r\n\r\n**Node.js 16.9.0 or newer is required.**\r\n\r\n```sh-session\r\n$ npm install discord-player-music\r\n$ yarn add discord-player-music\r\n$ pnpm add discord-player-music\r\n```\r\n\r\n## Example Usage\r\n\r\n```js\r\nconst { Client, GatewayIntentBits, Partials } = require('discord.js');\r\nconst { Player } = require('discord-player-music');\r\n\r\nconst client = new Client({\r\n\tintents: [\r\n\t\tGatewayIntentBits.Guilds,\r\n\t\tGatewayIntentBits.MessageContent,\r\n\t\tGatewayIntentBits.GuildMembers,\r\n\t\tGatewayIntentBits.GuildMessages,\r\n\t\tGatewayIntentBits.GuildMessageReactions,\r\n\t\tGatewayIntentBits.GuildVoiceStates\r\n\t],\r\n    \r\n\tpartials: [\r\n\t\tPartials.Channel,\r\n\t\tPartials.GuildMember,\r\n\t\tPartials.Message,\r\n\t\tPartials.Reaction,\r\n\t\tPartials.User\r\n\t]\r\n});\r\n\r\nclient.player = new Player(client);\r\n\r\nclient.on('ready', async () => {\r\n  \treturn console.log('Client is ready!');\r\n})\r\n\r\nclient.player.on('ready', async () => {\r\n\treturn console.log('Player is ready!');\r\n})\r\n\r\nclient.login('YOUR_CLIENT_TOKEN_HERE');\r\n```\r\n\r\n## Links\r\n\r\n* NPM: [Open](https://www.npmjs.com/package/discord-player-music)\r\n* GitHub: [Open](https://github.com/xyligan-gp/discord-player-music)\r\n* Examples: [See](https://github.com/xyligan-gp/discord-player-music/tree/stable/examples)\r\n* Documentation: [Open](https://dpm.js.org)\r\n\r\n* Module Developer: [xyligan](https://github.com/xyligan-gp)\r\n* Developer Discord: [♡ xүℓ[ι]gαη4εg ♡#9457](https://discord.com/users/533347075463577640)\r\n* Support Server: [Join xyligan development](https://discord.gg/zzbkvCcu2r)\r\n\r\n<center><h1>♥ Thanks for using Discord Player Music ♥</h1></center>",
+     "content": "<div align=\"center\">\r\n\t<h1>Welcome to the 'discord-player-music' page!</h1>\r\n\t<br />\r\n\t<p>\r\n\t\t<a href=\"https://dpm.js.org\"><img src=\"https://i.imgur.com/4Pk9WlS.gif\" width=\"546\" alt=\"DPM Main Image\" /></a>\r\n\t</p>\r\n\t<br/>\r\n\t<p>\r\n\t\t<a href=\"https://discord.gg/zzbkvCcu2r\"><img src=\"https://img.shields.io/discord/827221018879328298?color=5865F2&logo=discord&logoColor=white\" alt=\"Support Server\" /></a>\r\n\t\t<a href=\"https://www.npmjs.com/package/discord-player-music\"><img src=\"https://img.shields.io/npm/dt/discord-player-music.png?maxAge=3600\" alt=\"NPM downloads\" /></a>\r\n\t\t<a href=\"https://www.npmjs.com/package/discord-player-music\"><img src=\"https://img.shields.io/npm/v/discord-player-music.png?maxAge=3600\" alt=\"NPM page\" /></a>\r\n\t</p>\r\n</div>\r\n\r\n## About\r\n\r\n**Discord Player Music is a powerful [Node.js](https://nodejs.org) music module for your Discord.js bot that based on Promises and has a lot of features.**\r\n\r\n* 👍 Simple & easy to use\r\n* 😄 Beginner friendly\r\n* 🎸 Audio filters\r\n* 📃 Lyrics\r\n* 📂 Multiple servers\r\n\r\n## Installation\r\n\r\n**Node.js 16.9.0 or newer is required.**\r\n\r\n```sh-session\r\n$ npm install discord-player-music\r\n$ yarn add discord-player-music\r\n$ pnpm add discord-player-music\r\n```\r\n\r\n## Example Usage\r\n\r\n```js\r\nconst { Client, GatewayIntentBits, Partials } = require('discord.js');\r\nconst { Player } = require('discord-player-music');\r\n\r\nconst client = new Client({\r\n\tintents: [\r\n\t\tGatewayIntentBits.Guilds,\r\n\t\tGatewayIntentBits.MessageContent,\r\n\t\tGatewayIntentBits.GuildMembers,\r\n\t\tGatewayIntentBits.GuildMessages,\r\n\t\tGatewayIntentBits.GuildMessageReactions,\r\n\t\tGatewayIntentBits.GuildVoiceStates\r\n\t],\r\n    \r\n\tpartials: [\r\n\t\tPartials.Channel,\r\n\t\tPartials.GuildMember,\r\n\t\tPartials.Message,\r\n\t\tPartials.Reaction,\r\n\t\tPartials.User\r\n\t]\r\n});\r\n\r\nclient.player = new Player(client);\r\n\r\nclient.on('ready', async () => {\r\n  \treturn console.log('Client is ready!');\r\n})\r\n\r\nclient.player.on('ready', async () => {\r\n\treturn console.log('Player is ready!');\r\n})\r\n\r\nclient.login('YOUR_CLIENT_TOKEN_HERE');\r\n```\r\n\r\n## Links\r\n\r\n* NPM: [Open](https://www.npmjs.com/package/discord-player-music)\r\n* GitHub: [Open](https://github.com/xyligan-gp/discord-player-music)\r\n* Examples: [See](https://github.com/xyligan-gp/discord-player-music/tree/stable/examples)\r\n* Documentation: [Open](https://dpm.js.org)\r\n\r\n* Module Developer: [xyligan](https://github.com/xyligan-gp)\r\n* Developer Discord: [xyligan9457](https://discord.com/users/533347075463577640)\r\n* Support Server: [Join xyligan development](https://discord.gg/zzbkvCcu2r)\r\n\r\n<center><h1>♥ Thanks for using Discord Player Music ♥</h1></center>",
      "path": "docs/general/welcome.md"
     },
     "faq": {
@@ -1094,6 +1094,43 @@
      }
     },
     {
+     "name": "getQueue",
+     "description": "Get the guild queue for a specific guild ID.",
+     "params": [
+      {
+       "name": "guildId",
+       "description": "The ID of the guild.",
+       "type": [
+        [
+         [
+          "string"
+         ]
+        ]
+       ]
+      }
+     ],
+     "returns": {
+      "types": [
+       [
+        [
+         "GuildQueue"
+        ]
+       ],
+       [
+        [
+         "null"
+        ]
+       ]
+      ],
+      "description": "The queue object for the specified guild, or null if not found."
+     },
+     "meta": {
+      "line": 315,
+      "file": "Player.ts",
+      "path": "src"
+     }
+    },
+    {
      "name": "init",
      "description": "Initializes the package.",
      "access": "private",
@@ -1105,7 +1142,7 @@
       ]
      ],
      "meta": {
-      "line": 315,
+      "line": 326,
       "file": "Player.ts",
       "path": "src"
      }
@@ -1129,7 +1166,7 @@
       }
      ],
      "meta": {
-      "line": 399,
+      "line": 410,
       "file": "Player.ts",
       "path": "src"
      }
@@ -1151,7 +1188,7 @@
       }
      ],
      "meta": {
-      "line": 407,
+      "line": 418,
       "file": "Player.ts",
       "path": "src"
      }
@@ -1374,7 +1411,7 @@
     }
    ],
    "meta": {
-    "line": 343,
+    "line": 354,
     "file": "Player.ts",
     "path": "src"
    }
@@ -1416,7 +1453,7 @@
     }
    ],
    "meta": {
-    "line": 355,
+    "line": 366,
     "file": "Player.ts",
     "path": "src"
    }
@@ -1473,7 +1510,7 @@
     }
    ],
    "meta": {
-    "line": 364,
+    "line": 375,
     "file": "Player.ts",
     "path": "src"
    }
@@ -1584,7 +1621,7 @@
     }
    ],
    "meta": {
-    "line": 374,
+    "line": 385,
     "file": "Player.ts",
     "path": "src"
    }
@@ -1624,7 +1661,7 @@
     }
    ],
    "meta": {
-    "line": 390,
+    "line": 401,
     "file": "Player.ts",
     "path": "src"
    }
@@ -1735,7 +1772,7 @@
     }
    ],
    "meta": {
-    "line": 415,
+    "line": 426,
     "file": "Player.ts",
     "path": "src"
    }
@@ -1797,7 +1834,7 @@
     },
     {
      "name": "text",
-     "description": "The text of the song lyrics.",
+     "description": "The text of the track lyrics.",
      "type": [
       [
        [
@@ -1808,7 +1845,7 @@
     }
    ],
    "meta": {
-    "line": 430,
+    "line": 441,
     "file": "Player.ts",
     "path": "src"
    }
@@ -1903,7 +1940,7 @@
     }
    ],
    "meta": {
-    "line": 442,
+    "line": 453,
     "file": "Player.ts",
     "path": "src"
    }
@@ -1943,7 +1980,7 @@
     }
    ],
    "meta": {
-    "line": 456,
+    "line": 467,
     "file": "Player.ts",
     "path": "src"
    }
@@ -1994,7 +2031,7 @@
     }
    ],
    "meta": {
-    "line": 465,
+    "line": 476,
     "file": "Player.ts",
     "path": "src"
    }
@@ -2105,7 +2142,7 @@
     }
    ],
    "meta": {
-    "line": 475,
+    "line": 486,
     "file": "Player.ts",
     "path": "src"
    }
@@ -2145,7 +2182,7 @@
     }
    ],
    "meta": {
-    "line": 490,
+    "line": 501,
     "file": "Player.ts",
     "path": "src"
    }
@@ -2196,7 +2233,7 @@
     }
    ],
    "meta": {
-    "line": 499,
+    "line": 510,
     "file": "Player.ts",
     "path": "src"
    }
@@ -2236,7 +2273,7 @@
     }
    ],
    "meta": {
-    "line": 509,
+    "line": 520,
     "file": "Player.ts",
     "path": "src"
    }
@@ -2282,7 +2319,7 @@
     ]
    ],
    "meta": {
-    "line": 518,
+    "line": 529,
     "file": "Player.ts",
     "path": "src"
    }
@@ -2303,7 +2340,7 @@
     ]
    ],
    "meta": {
-    "line": 524,
+    "line": 535,
     "file": "Player.ts",
     "path": "src"
    }

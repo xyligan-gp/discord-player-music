@@ -78,7 +78,7 @@ client.login('YOUR_CLIENT_TOKEN_HERE');
 * Documentation: [Open](https://dpm.js.org)
 
 * Module Developer: [xyligan](https://github.com/xyligan-gp)
-* Developer Discord: [♡ xүℓ[ι]gαη4εg ♡#9457](https://discord.com/users/533347075463577640)
+* Developer Discord: [xyligan9457](https://discord.com/users/533347075463577640)
 * Support Server: [Join xyligan development](https://discord.gg/zzbkvCcu2r)
 
 <center><h1>♥ Thanks for using Discord Player Music ♥</h1></center>
