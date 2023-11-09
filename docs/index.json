@@ -2,7 +2,7 @@
  "meta": {
   "generator": "0.11.1",
   "format": 22,
-  "date": 1699544138902
+  "date": 1699546595453
  },
  "custom": {
   "general": {
@@ -2421,6 +2421,50 @@
    "meta": {
     "line": 1,
     "file": "formatNumber.function.ts",
+    "path": "src/util"
+   }
+  },
+  {
+   "name": "getBestVideoFormat",
+   "description": "Get the best video format from an array of video formats.",
+   "type": [
+    [
+     [
+      "function"
+     ]
+    ]
+   ],
+   "params": [
+    {
+     "name": "formats",
+     "description": "An array of video format objects to choose from.",
+     "type": [
+      [
+       [
+        "Array",
+        "<"
+       ],
+       [
+        "videoFormat",
+        ">"
+       ]
+      ]
+     ]
+    }
+   ],
+   "returns": {
+    "types": [
+     [
+      [
+       "videoFormat"
+      ]
+     ]
+    ],
+    "description": "The best video format."
+   },
+   "meta": {
+    "line": 4,
+    "file": "getBestVideoFormat.function.ts",
     "path": "src/util"
    }
   },
