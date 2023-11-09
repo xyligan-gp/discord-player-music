@@ -7,7 +7,7 @@ export * from "./src/util/formatNumber.function";
 export * from "./src/util/normalizeArray.function";
 
 // Import player guild queue manager
-export * from "./src/managers/GuildQueueManager";
+export * from "./src/managers/QueueManager";
 
 // Import player voice manager
 export * from "./src/managers/VoiceManager";

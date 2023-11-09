@@ -5,7 +5,7 @@ import { DMChannel, PartialDMChannel, StageChannel, TextBasedChannel, VoiceChann
 // Import utils
 import { RestOrArray } from "../util/normalizeArray.function";
 
-declare class GuildQueueManager {
+declare class QueueManager {
     public startTimestamp: number;
     public endTimestamp: number;
 
@@ -36,7 +36,7 @@ declare class GuildQueueManager {
      * 
      * @returns The GuildQueueManager instance.
      */
-    public setTimestamp(type: TimestampType, value?: number): this;
+    public setTimestamp(type: TimestampType, value?: number): QueueManager;
 
     /**
      * Sets the repeat mode for the GuildQueueManager.
@@ -45,7 +45,7 @@ declare class GuildQueueManager {
      * 
      * @returns The GuildQueueManager instance.
      */
-    public setRepeatMode(type: RepeatMode = RepeatMode.DISABLED): this;
+    public setRepeatMode(type?: RepeatMode): QueueManager;
 
     /**
      * Sets the channel for the specified channel type in the GuildQueueManager.
@@ -69,7 +69,7 @@ declare class GuildQueueManager {
      * 
      * @returns The GuildQueueManager instance.
      */
-    public addTracks(...tracks: RestOrArray<GuildQueueTrack>): this;
+    public addTracks(...tracks: RestOrArray<GuildQueueTrack>): QueueManager;
 
     /**
      * Creates a GuildQueueManager instance from the provided GuildQueue data.
@@ -78,7 +78,7 @@ declare class GuildQueueManager {
      * 
      * @returns The created GuildQueueManager instance.
      */
-    public static from(data: GuildQueue): this;
+    public static from(data: GuildQueue): QueueManager;
 
     /**
      * Converts the GuildQueueManager instance to a plain object representation.
@@ -88,7 +88,7 @@ declare class GuildQueueManager {
     public toJSON(): GuildQueue;
 }
 
-enum RepeatMode {
+declare enum RepeatMode {
     DISABLED,
     TRACK,
     QUEUE
@@ -164,12 +164,12 @@ interface GuildQueueRepeat {
 type PlayerTextChannel = Exclude<TextBasedChannel, DMChannel | PartialDMChannel>;
 type PlayerVoiceChannel = StageChannel | VoiceChannel;
 
-enum ChannelType {
+declare enum ChannelType {
     TEXT = "text",
     VOICE = "voice"
 }
 
-enum TimestampType {
+declare enum TimestampType {
     END = "end",
     START = "start"
 }
@@ -179,7 +179,7 @@ type SetChannelType<TChannelType extends ChannelType> = TChannelType extends Cha
     : PlayerVoiceChannel
 
 export {
-    GuildQueueManager,
+    QueueManager,
 
     PlayerPlaylist,
     

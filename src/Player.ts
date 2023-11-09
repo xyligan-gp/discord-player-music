@@ -18,7 +18,7 @@ import { VoiceManager } from "./managers/VoiceManager";
 
 // Import package interfaces
 import { PlayerEvents, PlayerLyrics, PlayerOptions } from "../types/index";
-import { GuildQueue, GuildQueueTrack, PlayerPlaylist } from "../types/managers/GuildQueueManager";
+import { GuildQueue, GuildQueueTrack, PlayerPlaylist } from "../types/managers/QueueManager";
 
 // Import package data
 import { author, homepage, version } from "../package.json";

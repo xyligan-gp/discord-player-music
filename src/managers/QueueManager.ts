@@ -5,17 +5,17 @@ import { AudioPlayer, VoiceConnection } from "@discordjs/voice";
 import { RestOrArray, normalizeArray } from "../util/normalizeArray.function";
 
 // Import manager interfaces
-import { GuildQueue, GuildQueueChannel, GuildQueuePlayback, GuildQueueTrack, SetChannelType } from "../../types/managers/GuildQueueManager";
+import { GuildQueue, GuildQueueChannel, GuildQueuePlayback, GuildQueueTrack, SetChannelType } from "../../types/managers/QueueManager";
 
 /**
- * Player Guild Queue Manager
+ * Player Queue Manager
  * 
  * @class
- * @classdesc Class representing a Guild Queue Manager.
+ * @classdesc Class representing a Queue Manager.
  * 
  * @implements {GuildQueue}
  */
-class GuildQueueManager implements GuildQueue {
+class QueueManager implements GuildQueue {
     public startTimestamp: number;
     public endTimestamp: number;
 
@@ -29,7 +29,7 @@ class GuildQueueManager implements GuildQueue {
     public tracks: GuildQueueTrack[];
 
     /**
-     * Creates a new instance of the Player Guild Queue.
+     * Creates a new instance of the Player Queue.
      */
     constructor() {
         /**
@@ -181,10 +181,10 @@ class GuildQueueManager implements GuildQueue {
      * 
      * @param {GuildQueue} data - The GuildQueue data.
      * 
-     * @returns {GuildQueueManager} The created GuildQueueManager instance.
+     * @returns {QueueManager} The created GuildQueueManager instance.
      */
-    public static from(data: GuildQueue): GuildQueueManager {
-        const queue = new GuildQueueManager()
+    public static from(data: GuildQueue): QueueManager {
+        const queue = new QueueManager()
             .setRepeatMode(data.repeat)
             .setChannel(ChannelType.TEXT, data.channel.text)
             .setChannel(ChannelType.VOICE, data.channel.voice);
@@ -259,7 +259,7 @@ enum TimestampType {
 }
 
 export {
-    GuildQueueManager,
+    QueueManager,
 
     RepeatMode,
     ChannelType,

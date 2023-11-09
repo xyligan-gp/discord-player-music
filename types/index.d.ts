@@ -9,7 +9,7 @@ import { PlayerError } from "./Error";
 
 // Import player managers
 import { VoiceManager } from "./managers/VoiceManager";
-import { GuildQueue, GuildQueueTrack, PlayerPlaylist } from "./managers/GuildQueueManager";
+import { GuildQueue, GuildQueueTrack, PlayerPlaylist } from "./managers/QueueManager";
 
 declare class Player extends PlayerEmitter<PlayerEvents> {
     constructor(client: Client, options?: PlayerOptions);
@@ -230,5 +230,5 @@ export * from "./util/checkOptions.function";
 export * from "./util/formatNumber.function";
 export * from "./util/normalizeArray.function";
 
-export * from "./managers/GuildQueueManager";
+export * from "./managers/QueueManager";
 export * from "./managers/VoiceManager";
