@@ -228,6 +228,7 @@ export {
 
 export * from "./util/checkOptions.function";
 export * from "./util/formatNumber.function";
+export * from "./util/getBestVideoFormat.function";
 export * from "./util/normalizeArray.function";
 
 export * from "./managers/QueueManager";
