@@ -36,33 +36,33 @@ declare class QueueManager {
     public get nowPlaying(): GuildQueueTrack;
 
     /**
-     * Sets the timestamp value for the specified type in the GuildQueueManager.
+     * Sets the timestamp value for the specified type in the QueueManager.
      * 
      * @param type - The type of timestamp.
      * @param value - The timestamp value to set. If not provided, the current timestamp will be used.
      * 
-     * @returns The GuildQueueManager instance.
+     * @returns The QueueManager instance.
      */
     public setTimestamp(type: TimestampType, value?: number): QueueManager;
 
     /**
-     * Sets the repeat mode for the GuildQueueManager.
+     * Sets the repeat mode for the QueueManager.
      * 
      * @param type - The repeat mode to set.
      * 
-     * @returns The GuildQueueManager instance.
+     * @returns The QueueManager instance.
      */
     public setRepeatMode(type?: RepeatMode): QueueManager;
 
     /**
-     * Sets the channel for the specified channel type in the GuildQueueManager.
+     * Sets the channel for the specified channel type in the QueueManager.
      *
      * @template TChannelType - The channel type (ChannelType.TEXT or ChannelType.VOICE).
      * 
      * @param type - The channel type.
      * @param channel - The channel to set.
      * 
-     * @returns The GuildQueueManager instance.
+     * @returns The QueueManager instance.
      */
     public setChannel<TChannelType extends ChannelType>(
         type: TChannelType,
@@ -74,7 +74,7 @@ declare class QueueManager {
      *
      * @param value - The volume level to set (0 to 100).
      * 
-     * @returns The updated GuildQueueManager instance.
+     * @returns The updated QueueManager instance.
      */
     public setVolume(value: number): QueueManager;
 
@@ -83,23 +83,23 @@ declare class QueueManager {
      *
      * @param tracks - The tracks to add. Accepts both array and variadic arguments.
      * 
-     * @returns The GuildQueueManager instance.
+     * @returns The QueueManager instance.
      */
     public addTracks(...tracks: RestOrArray<GuildQueueTrack>): QueueManager;
 
     /**
-     * Creates a GuildQueueManager instance from the provided GuildQueue data.
+     * Creates a QueueManager instance from the provided GuildQueue data.
      * 
      * @param data - The GuildQueue data.
      * 
-     * @returns The created GuildQueueManager instance.
+     * @returns The created QueueManager instance.
      */
     public static from(data: GuildQueue): QueueManager;
 
     /**
-     * Converts the GuildQueueManager instance to a plain object representation.
+     * Converts the QueueManager instance to a plain object representation.
      *
-     * @returns The GuildQueue object representation of the GuildQueueManager.
+     * @returns The GuildQueue object representation of the QueueManager.
      */
     public toJSON(): GuildQueue;
 }

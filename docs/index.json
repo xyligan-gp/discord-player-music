@@ -2,7 +2,7 @@
  "meta": {
   "generator": "0.11.1",
   "format": 22,
-  "date": 1699627746388
+  "date": 1699628238909
  },
  "custom": {
   "general": {
@@ -450,7 +450,7 @@
    "methods": [
     {
      "name": "setTimestamp",
-     "description": "Sets the timestamp value for the specified type in the GuildQueueManager.",
+     "description": "Sets the timestamp value for the specified type in the QueueManager.",
      "params": [
       {
        "name": "type",
@@ -480,11 +480,11 @@
       "types": [
        [
         [
-         "GuildQueueManager"
+         "QueueManager"
         ]
        ]
       ],
-      "description": "The GuildQueueManager instance."
+      "description": "The QueueManager instance."
      },
      "meta": {
       "line": 136,
@@ -494,7 +494,7 @@
     },
     {
      "name": "setRepeatMode",
-     "description": "Sets the repeat mode for the GuildQueueManager.",
+     "description": "Sets the repeat mode for the QueueManager.",
      "params": [
       {
        "name": "type",
@@ -514,11 +514,11 @@
       "types": [
        [
         [
-         "GuildQueueManager"
+         "QueueManager"
         ]
        ]
       ],
-      "description": "The GuildQueueManager instance."
+      "description": "The QueueManager instance."
      },
      "meta": {
       "line": 150,
@@ -528,7 +528,7 @@
     },
     {
      "name": "setChannel",
-     "description": "Sets the channel for the specified channel type in the GuildQueueManager.",
+     "description": "Sets the channel for the specified channel type in the QueueManager.",
      "params": [
       {
        "name": "type",
@@ -562,11 +562,11 @@
       "types": [
        [
         [
-         "GuildQueueManager"
+         "QueueManager"
         ]
        ]
       ],
-      "description": "The GuildQueueManager instance."
+      "description": "The QueueManager instance."
      },
      "meta": {
       "line": 163,
@@ -594,11 +594,11 @@
       "types": [
        [
         [
-         "GuildQueueManager"
+         "QueueManager"
         ]
        ]
       ],
-      "description": "The updated GuildQueueManager instance."
+      "description": "The updated QueueManager instance."
      },
      "meta": {
       "line": 180,
@@ -632,11 +632,11 @@
       "types": [
        [
         [
-         "GuildQueueManager"
+         "QueueManager"
         ]
        ]
       ],
-      "description": "The updated GuildQueueManager instance."
+      "description": "The updated QueueManager instance."
      },
      "meta": {
       "line": 194,
@@ -646,7 +646,7 @@
     },
     {
      "name": "toJSON",
-     "description": "Converts the GuildQueueManager instance to a plain object representation.",
+     "description": "Converts the QueueManager instance to a plain object representation.",
      "returns": {
       "types": [
        [
@@ -655,7 +655,7 @@
         ]
        ]
       ],
-      "description": "The GuildQueue object representation of the GuildQueueManager."
+      "description": "The GuildQueue object representation of the QueueManager."
      },
      "meta": {
       "line": 239,
@@ -665,7 +665,7 @@
     },
     {
      "name": "from",
-     "description": "Creates a GuildQueueManager instance from the provided GuildQueue data.",
+     "description": "Creates a QueueManager instance from the provided GuildQueue data.",
      "scope": "static",
      "params": [
       {
@@ -688,7 +688,7 @@
         ]
        ]
       ],
-      "description": "The created GuildQueueManager instance."
+      "description": "The created QueueManager instance."
      },
      "meta": {
       "line": 210,

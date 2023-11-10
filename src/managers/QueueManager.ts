@@ -134,12 +134,12 @@ class QueueManager implements GuildQueue {
     }
 
     /**
-     * Sets the timestamp value for the specified type in the GuildQueueManager.
+     * Sets the timestamp value for the specified type in the QueueManager.
      * 
      * @param {TimestampType} type - The type of timestamp.
      * @param {number} [value] - The timestamp value to set. If not provided, the current timestamp will be used.
      * 
-     * @returns {GuildQueueManager} The GuildQueueManager instance.
+     * @returns {QueueManager} The QueueManager instance.
      */
     public setTimestamp(type: TimestampType, value?: number): this {
         this[`${type}Timestamp`] = value ? new Date(value).getTime() : Date.now();
@@ -148,11 +148,11 @@ class QueueManager implements GuildQueue {
     }
 
     /**
-     * Sets the repeat mode for the GuildQueueManager.
+     * Sets the repeat mode for the QueueManager.
      * 
      * @param {RepeatMode} [type=RepeatMode.DISABLED] - The repeat mode to set.
      * 
-     * @returns {GuildQueueManager} The GuildQueueManager instance.
+     * @returns {QueueManager} The QueueManager instance.
      */
     public setRepeatMode(type: RepeatMode = RepeatMode.DISABLED): this {
         this.repeat = type;
@@ -161,12 +161,12 @@ class QueueManager implements GuildQueue {
     }
 
     /**
-     * Sets the channel for the specified channel type in the GuildQueueManager.
+     * Sets the channel for the specified channel type in the QueueManager.
      * 
      * @param {ChannelType} type - The channel type.
      * @param {(PlayerTextChannel|PlayerVoiceChannel)} channel - The channel to set.
      * 
-     * @returns {GuildQueueManager} The GuildQueueManager instance.
+     * @returns {QueueManager} The QueueManager instance.
      */
     public setChannel<TChannelType extends ChannelType>(
         type: TChannelType,
@@ -182,7 +182,7 @@ class QueueManager implements GuildQueue {
      *
      * @param {number} value - The volume level to set (0 to 100).
      * 
-     * @returns {GuildQueueManager} The updated GuildQueueManager instance.
+     * @returns {QueueManager} The updated QueueManager instance.
      */
     public setVolume(value: number): this {
         this.playback.volume = value;
@@ -196,7 +196,7 @@ class QueueManager implements GuildQueue {
      *
      * @param {RestOrArray<GuildQueueTrack>} tracks - The tracks to add. Accepts both array and variadic arguments.
      * 
-     * @returns {GuildQueueManager} The updated GuildQueueManager instance.
+     * @returns {QueueManager} The updated QueueManager instance.
      */
     public addTracks(...tracks: RestOrArray<GuildQueueTrack>): this {
         const normalizedTracks = normalizeArray(tracks);
@@ -208,13 +208,13 @@ class QueueManager implements GuildQueue {
     }
 
     /**
-     * Creates a GuildQueueManager instance from the provided GuildQueue data.
+     * Creates a QueueManager instance from the provided GuildQueue data.
      *
      * @static
      * 
      * @param {GuildQueue} data - The GuildQueue data.
      * 
-     * @returns {QueueManager} The created GuildQueueManager instance.
+     * @returns {QueueManager} The created QueueManager instance.
      */
     public static from(data: GuildQueue): QueueManager {
         const queue = new QueueManager();
@@ -237,9 +237,9 @@ class QueueManager implements GuildQueue {
     }
 
     /**
-     * Converts the GuildQueueManager instance to a plain object representation.
+     * Converts the QueueManager instance to a plain object representation.
      *
-     * @returns {GuildQueue} The GuildQueue object representation of the GuildQueueManager.
+     * @returns {GuildQueue} The GuildQueue object representation of the QueueManager.
      */
     public toJSON(): GuildQueue {
         return {
