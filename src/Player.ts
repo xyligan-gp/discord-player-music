@@ -87,7 +87,7 @@ class Player extends PlayerEmitter<PlayerEvents> {
          */
         this.queue = null;
 
-        this.init();
+        this._init();
     }
 
     /**
@@ -330,7 +330,7 @@ class Player extends PlayerEmitter<PlayerEvents> {
      * 
      * @private
      */
-    private init(): void {
+    private _init(): void {
         const interval = setInterval(() => {
             if(this.client.isReady()) {
                 this.readyTimestamp = Date.now();

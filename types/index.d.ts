@@ -83,7 +83,7 @@ declare class Player extends PlayerEmitter<PlayerEvents> {
     /**
      * Initializes the package.
      */
-    private init(): void;
+    private _init(): void;
 }
 
 interface PlayerLyrics {

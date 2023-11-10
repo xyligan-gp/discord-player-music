@@ -1,5 +1,5 @@
 // Import manager requirements
-import { AudioPlayer, VoiceConnection } from "@discordjs/voice";
+import { AudioPlayer, AudioResource, VoiceConnection } from "@discordjs/voice";
 import { DMChannel, PartialDMChannel, StageChannel, TextBasedChannel, VoiceChannel, User } from "discord.js";
 
 // Import utils
@@ -18,10 +18,17 @@ declare class QueueManager {
 
     public tracks: GuildQueueTrack[];
 
+    private _resource: AudioResource;
+
     /**
      * Checks if the queue is empty.
      */
     public get isEmpty(): boolean;
+
+    /**
+     * Checks if the player is startable.
+     */
+    public get isStartable(): boolean;
 
     /**
      * Retrieves the currently playing track from the queue.

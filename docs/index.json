@@ -2,7 +2,7 @@
  "meta": {
   "generator": "0.11.1",
   "format": 22,
-  "date": 1699561510292
+  "date": 1699613757252
  },
  "custom": {
   "general": {
@@ -249,7 +249,7 @@
       ]
      ],
      "meta": {
-      "line": 35,
+      "line": 37,
       "file": "QueueManager.ts",
       "path": "src/managers"
      }
@@ -270,7 +270,7 @@
       ]
      ],
      "meta": {
-      "line": 42,
+      "line": 44,
       "file": "QueueManager.ts",
       "path": "src/managers"
      }
@@ -286,7 +286,7 @@
       ]
      ],
      "meta": {
-      "line": 49,
+      "line": 51,
       "file": "QueueManager.ts",
       "path": "src/managers"
      }
@@ -302,7 +302,7 @@
       ]
      ],
      "meta": {
-      "line": 56,
+      "line": 58,
       "file": "QueueManager.ts",
       "path": "src/managers"
      }
@@ -318,7 +318,7 @@
       ]
      ],
      "meta": {
-      "line": 66,
+      "line": 68,
       "file": "QueueManager.ts",
       "path": "src/managers"
      }
@@ -334,7 +334,7 @@
       ]
      ],
      "meta": {
-      "line": 77,
+      "line": 79,
       "file": "QueueManager.ts",
       "path": "src/managers"
      }
@@ -350,7 +350,7 @@
       ]
      ],
      "meta": {
-      "line": 84,
+      "line": 86,
       "file": "QueueManager.ts",
       "path": "src/managers"
      }
@@ -371,7 +371,23 @@
       ]
      ],
      "meta": {
-      "line": 91,
+      "line": 93,
+      "file": "QueueManager.ts",
+      "path": "src/managers"
+     }
+    },
+    {
+     "name": "_resource",
+     "description": "AudioPlayer Resource",
+     "type": [
+      [
+       [
+        "AudioResource"
+       ]
+      ]
+     ],
+     "meta": {
+      "line": 100,
       "file": "QueueManager.ts",
       "path": "src/managers"
      }
@@ -387,7 +403,23 @@
       ]
      ],
      "meta": {
-      "line": 99,
+      "line": 108,
+      "file": "QueueManager.ts",
+      "path": "src/managers"
+     }
+    },
+    {
+     "name": "isStartable",
+     "description": "Checks if the player is startable.",
+     "type": [
+      [
+       [
+        "boolean"
+       ]
+      ]
+     ],
+     "meta": {
+      "line": 117,
       "file": "QueueManager.ts",
       "path": "src/managers"
      }
@@ -408,7 +440,7 @@
       ]
      ],
      "meta": {
-      "line": 108,
+      "line": 126,
       "file": "QueueManager.ts",
       "path": "src/managers"
      }
@@ -454,7 +486,7 @@
       "description": "The GuildQueueManager instance."
      },
      "meta": {
-      "line": 117,
+      "line": 135,
       "file": "QueueManager.ts",
       "path": "src/managers"
      }
@@ -488,7 +520,7 @@
       "description": "The GuildQueueManager instance."
      },
      "meta": {
-      "line": 131,
+      "line": 149,
       "file": "QueueManager.ts",
       "path": "src/managers"
      }
@@ -536,7 +568,7 @@
       "description": "The GuildQueueManager instance."
      },
      "meta": {
-      "line": 144,
+      "line": 162,
       "file": "QueueManager.ts",
       "path": "src/managers"
      }
@@ -574,7 +606,7 @@
       "description": "The updated GuildQueueManager instance."
      },
      "meta": {
-      "line": 161,
+      "line": 179,
       "file": "QueueManager.ts",
       "path": "src/managers"
      }
@@ -593,7 +625,7 @@
       "description": "The GuildQueue object representation of the GuildQueueManager."
      },
      "meta": {
-      "line": 198,
+      "line": 223,
       "file": "QueueManager.ts",
       "path": "src/managers"
      }
@@ -626,7 +658,7 @@
       "description": "The created GuildQueueManager instance."
      },
      "meta": {
-      "line": 177,
+      "line": 195,
       "file": "QueueManager.ts",
       "path": "src/managers"
      }
@@ -1126,7 +1158,7 @@
      }
     },
     {
-     "name": "init",
+     "name": "_init",
      "description": "Initializes the package.",
      "access": "private",
      "returns": [
@@ -1244,7 +1276,7 @@
     }
    ],
    "meta": {
-    "line": 220,
+    "line": 245,
     "file": "QueueManager.ts",
     "path": "src/managers"
    }
@@ -1284,7 +1316,7 @@
     }
    ],
    "meta": {
-    "line": 235,
+    "line": 260,
     "file": "QueueManager.ts",
     "path": "src/managers"
    }
@@ -1324,7 +1356,7 @@
     }
    ],
    "meta": {
-    "line": 248,
+    "line": 273,
     "file": "QueueManager.ts",
     "path": "src/managers"
    }

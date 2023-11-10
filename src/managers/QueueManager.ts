@@ -1,5 +1,5 @@
 // Import manager requirements
-import { AudioPlayer, VoiceConnection } from "@discordjs/voice";
+import { AudioPlayer, AudioResource, VoiceConnection } from "@discordjs/voice";
 
 // Import utils
 import { RestOrArray, normalizeArray } from "../util/normalizeArray.function";
@@ -27,6 +27,8 @@ class QueueManager implements GuildQueue {
     public connection: VoiceConnection;
 
     public tracks: GuildQueueTrack[];
+
+    private _resource: AudioResource;
 
     /**
      * Creates a new instance of the Player Queue.
@@ -94,15 +96,31 @@ class QueueManager implements GuildQueue {
          * @type {GuildQueueTrack[]}
          */
         this.tracks = [];
+
+        /**
+         * AudioPlayer Resource
+         * 
+         * @type {AudioResource}
+         */
+        this._resource = null;
     }
 
     /**
      * Checks if the queue is empty.
      *
-     * @type {boolean} Returns true if the queue is empty, false otherwise.
+     * @type {boolean} True if the queue is empty, false otherwise.
      */
     public get isEmpty(): boolean {
         return !this.tracks?.length;
+    }
+
+    /**
+     * Checks if the player is startable.
+     *
+     * @type {boolean} True if the player is startable (dispatcher exists), otherwise false.
+     */
+    public get isStartable(): boolean {
+        return this.dispatcher != null;
     }
 
     /**
@@ -184,13 +202,20 @@ class QueueManager implements GuildQueue {
      * @returns {QueueManager} The created GuildQueueManager instance.
      */
     public static from(data: GuildQueue): QueueManager {
-        const queue = new QueueManager()
-            .setRepeatMode(data.repeat)
-            .setChannel(ChannelType.TEXT, data.channel.text)
-            .setChannel(ChannelType.VOICE, data.channel.voice);
-        
+        const queue = new QueueManager();
+
         if(data.endTimestamp) queue.setTimestamp(TimestampType.END, data.endTimestamp);
         if(data.startTimestamp) queue.setTimestamp(TimestampType.START, data.startTimestamp);
+
+        queue.setRepeatMode(data.repeat)
+        queue.setChannel(ChannelType.TEXT, data.channel.text)
+        queue.setChannel(ChannelType.VOICE, data.channel.voice);
+
+        queue.playback = data.playback;
+        queue.dispatcher = data.dispatcher;
+        queue.connection = data.connection;
+
+        queue.addTracks(data.tracks);
         
         return queue;
     }
