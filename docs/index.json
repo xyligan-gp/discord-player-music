@@ -2,7 +2,7 @@
  "meta": {
   "generator": "0.11.1",
   "format": 22,
-  "date": 1699628238909
+  "date": 1699629827000
  },
  "custom": {
   "general": {
@@ -704,6 +704,177 @@
    }
   },
   {
+   "name": "StreamManager",
+   "description": "Class representing a Stream Manager.",
+   "construct": {
+    "name": "StreamManager",
+    "description": "Creates a new instance of the Player Stream.",
+    "params": [
+     {
+      "name": "url",
+      "description": "FFmpeg Stream URL.",
+      "type": [
+       [
+        [
+         "string"
+        ]
+       ]
+      ]
+     },
+     {
+      "name": "options",
+      "description": "Player options.",
+      "optional": true,
+      "default": "{}",
+      "type": [
+       [
+        [
+         "StreamOptions"
+        ]
+       ]
+      ]
+     }
+    ]
+   },
+   "props": [
+    {
+     "name": "url",
+     "description": "Stream URL",
+     "type": [
+      [
+       [
+        "string"
+       ]
+      ]
+     ],
+     "meta": {
+      "line": 32,
+      "file": "StreamManager.ts",
+      "path": "src/managers"
+     }
+    },
+    {
+     "name": "type",
+     "description": "Stream Type",
+     "type": [
+      [
+       [
+        "DiscordVoice",
+        "."
+       ],
+       [
+        "StreamType"
+       ]
+      ]
+     ],
+     "meta": {
+      "line": 39,
+      "file": "StreamManager.ts",
+      "path": "src/managers"
+     }
+    },
+    {
+     "name": "_args",
+     "description": "Stream FFmpeg Args",
+     "access": "private",
+     "type": [
+      [
+       [
+        "Array",
+        "<"
+       ],
+       [
+        "string",
+        ">"
+       ]
+      ]
+     ],
+     "meta": {
+      "line": 46,
+      "file": "StreamManager.ts",
+      "path": "src/managers"
+     }
+    },
+    {
+     "name": "_options",
+     "description": "Stream Options",
+     "access": "private",
+     "type": [
+      [
+       [
+        "StreamOptions"
+       ]
+      ]
+     ],
+     "meta": {
+      "line": 54,
+      "file": "StreamManager.ts",
+      "path": "src/managers"
+     }
+    },
+    {
+     "name": "_stream",
+     "description": "FFmpeg Stream",
+     "access": "private",
+     "type": [
+      [
+       [
+        "FFmpeg"
+       ]
+      ]
+     ],
+     "meta": {
+      "line": 62,
+      "file": "StreamManager.ts",
+      "path": "src/managers"
+     }
+    }
+   ],
+   "methods": [
+    {
+     "name": "start",
+     "description": "Start the streaming process using FFmpeg.",
+     "returns": {
+      "types": [
+       [
+        [
+         "FFmpeg"
+        ]
+       ]
+      ],
+      "description": "The FFmpeg instance representing the streaming process."
+     },
+     "meta": {
+      "line": 73,
+      "file": "StreamManager.ts",
+      "path": "src/managers"
+     }
+    },
+    {
+     "name": "_init",
+     "description": "Initialize internal settings for streaming.",
+     "access": "private",
+     "returns": [
+      [
+       [
+        "void"
+       ]
+      ]
+     ],
+     "meta": {
+      "line": 86,
+      "file": "StreamManager.ts",
+      "path": "src/managers"
+     }
+    }
+   ],
+   "meta": {
+    "line": 8,
+    "file": "StreamManager.ts",
+    "path": "src/managers"
+   }
+  },
+  {
    "name": "VoiceManager",
    "description": "Class representing a Player Voice Manager.",
    "methods": [
@@ -1391,6 +1562,91 @@
    "meta": {
     "line": 289,
     "file": "QueueManager.ts",
+    "path": "src/managers"
+   }
+  },
+  {
+   "name": "StreamOptions",
+   "description": "Represents additional configurations for the Player Stream.",
+   "type": [
+    [
+     [
+      "object"
+     ]
+    ]
+   ],
+   "props": [
+    {
+     "name": "type",
+     "description": "The type of the stream (e.g., OPUS or RAW).",
+     "type": [
+      [
+       [
+        "StreamType"
+       ]
+      ]
+     ]
+    },
+    {
+     "name": "args",
+     "description": "Additional arguments for the stream.",
+     "type": [
+      [
+       [
+        "Array",
+        "<"
+       ],
+       [
+        "string",
+        ">"
+       ]
+      ]
+     ]
+    }
+   ],
+   "meta": {
+    "line": 141,
+    "file": "StreamManager.ts",
+    "path": "src/managers"
+   }
+  },
+  {
+   "name": "StreamType",
+   "description": "Enum representing different stream types.",
+   "type": [
+    [
+     [
+      "object"
+     ]
+    ]
+   ],
+   "props": [
+    {
+     "name": "OPUS",
+     "description": "Stream type for OPUS-encoded audio.",
+     "type": [
+      [
+       [
+        "string"
+       ]
+      ]
+     ]
+    },
+    {
+     "name": "RAW",
+     "description": "Stream type for raw audio data.",
+     "type": [
+      [
+       [
+        "string"
+       ]
+      ]
+     ]
+    }
+   ],
+   "meta": {
+    "line": 122,
+    "file": "StreamManager.ts",
     "path": "src/managers"
    }
   },
