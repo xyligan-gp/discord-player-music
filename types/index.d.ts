@@ -9,7 +9,7 @@ import { PlayerError } from "./Error";
 
 // Import player managers
 import { VoiceManager } from "./managers/VoiceManager";
-import { GuildQueue, GuildQueueTrack, PlayerPlaylist } from "./managers/QueueManager";
+import { GuildQueueTrack, PlayerPlaylist, QueueManager } from "./managers/QueueManager";
 
 declare class Player extends PlayerEmitter<PlayerEvents> {
     constructor(client: Client, options?: PlayerOptions);
@@ -20,7 +20,7 @@ declare class Player extends PlayerEmitter<PlayerEvents> {
 
     public voice: VoiceManager;
 
-    public queue: Collection<string, GuildQueue>;
+    public queue: Collection<string, QueueManager>;
 
     /**
      * Player Ready State
@@ -78,7 +78,7 @@ declare class Player extends PlayerEmitter<PlayerEvents> {
      * 
      * @returns The queue object for the specified guild, or null if not found.
      */
-    public getQueue(guildId: string): GuildQueue;
+    public getQueue(guildId: string): QueueManager;
 
     /**
      * Initializes the package.

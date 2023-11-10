@@ -101,6 +101,7 @@ class QueueManager implements GuildQueue {
          * AudioPlayer Resource
          * 
          * @type {AudioResource}
+         * @private
          */
         this._resource = null;
     }
@@ -177,6 +178,20 @@ class QueueManager implements GuildQueue {
     }
 
     /**
+     * Set the volume of the playback.
+     *
+     * @param {number} value - The volume level to set (0 to 100).
+     * 
+     * @returns {GuildQueueManager} The updated GuildQueueManager instance.
+     */
+    public setVolume(value: number): this {
+        this.playback.volume = value;
+        this._resource?.volume?.setVolume(Math.floor(value / 100));
+        
+        return this;
+    }
+
+    /**
      * Adds tracks to the guild queue.
      *
      * @param {RestOrArray<GuildQueueTrack>} tracks - The tracks to add. Accepts both array and variadic arguments.
@@ -210,6 +225,7 @@ class QueueManager implements GuildQueue {
         queue.setRepeatMode(data.repeat)
         queue.setChannel(ChannelType.TEXT, data.channel.text)
         queue.setChannel(ChannelType.VOICE, data.channel.voice);
+        queue.setVolume(data.playback.volume);
 
         queue.playback = data.playback;
         queue.dispatcher = data.dispatcher;

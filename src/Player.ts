@@ -15,10 +15,11 @@ import { checkOptions } from "./util/checkOptions.function";
 
 // Import player managers
 import { VoiceManager } from "./managers/VoiceManager";
+import { QueueManager } from "./managers/QueueManager";
 
 // Import package interfaces
 import { PlayerEvents, PlayerLyrics, PlayerOptions } from "../types/index";
-import { GuildQueue, GuildQueueTrack, PlayerPlaylist } from "../types/managers/QueueManager";
+import { GuildQueueTrack, PlayerPlaylist } from "../types/managers/QueueManager";
 
 // Import package data
 import { author, homepage, version } from "../package.json";
@@ -38,7 +39,7 @@ class Player extends PlayerEmitter<PlayerEvents> {
 
     public voice: VoiceManager;
 
-    public queue: Collection<string, GuildQueue>;
+    public queue: Collection<string, QueueManager>;
 
     /**
      * Creates a new instance of the Player.
@@ -83,7 +84,7 @@ class Player extends PlayerEmitter<PlayerEvents> {
         /**
          * Player Queue Storage
          * 
-         * @type {Collection<string, GuildQueue>}
+         * @type {Collection<string, QueueManager>}
          */
         this.queue = null;
 
@@ -319,7 +320,7 @@ class Player extends PlayerEmitter<PlayerEvents> {
      * 
      * @returns {GuildQueue|null} The queue object for the specified guild, or null if not found.
      */
-    public getQueue(guildId: string): GuildQueue {
+    public getQueue(guildId: string): QueueManager {
         return this.queue.get(guildId) || null;
     }
 

@@ -67,7 +67,16 @@ declare class QueueManager {
     public setChannel<TChannelType extends ChannelType>(
         type: TChannelType,
         channel: SetChannelType<TChannelType>
-    ): this;
+    ): QueueManager;
+
+    /**
+     * Set the volume of the playback.
+     *
+     * @param value - The volume level to set (0 to 100).
+     * 
+     * @returns The updated GuildQueueManager instance.
+     */
+    public setVolume(value: number): QueueManager;
 
     /**
      * Adds tracks to the guild queue.
