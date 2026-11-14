@@ -44,12 +44,12 @@ export interface TestPlayer {
 }
 
 /**
- * Creates a player with a fake provider and a temporary database. It is never logged in to Discord.
+ * Creates a player with a fake provider. It is never logged in to Discord.
  */
 export function createTestPlayer(options: PlayerOptions = {}): TestPlayer {
     const dir = mkdtempSync(join(tmpdir(), 'dpm-test-'));
     const provider = createFakeProvider();
-    const player = new Player(new Client({ intents: [] }), { sources: [provider], databaseConfig: { path: join(dir, 'db.json'), checkInterval: '1h' }, ...options });
+    const player = new Player(new Client({ intents: [] }), { sources: [provider], ...options });
     const events: Array<string> = [];
 
     for(const event of ['playingTrack', 'queueEnded', 'queueStarted', 'addedTrack'] as const) player.on(event, (data: unknown) => events.push(`${event} ${(data as { title?: string })?.title ?? ''}`.trim()));

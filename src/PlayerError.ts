@@ -14,10 +14,6 @@ import errors from './data/errors.json';
  * @prop {string} INVALID_STATE The queue can not be switched to the given playback state
  * @prop {string} FILTER_NOT_FOUND The filter is not registered
  * @prop {string} FILTER_EXISTS The filter is already registered
- * @prop {string} PLAYLIST_NOT_FOUND The playlist does not exist
- * @prop {string} GUILD_PLAYLISTS_NOT_FOUND The server has no playlists
- * @prop {string} PLAYLIST_TRACK_NOT_FOUND There is no track with the given index in the playlist
- * @prop {string} PLAYLIST_TRACK_EXISTS The track is already in the playlist
  * @prop {string} USER_NOT_IN_VOICE The user is not in a voice channel
  * @prop {string} ALREADY_CONNECTED The client is already connected to a voice channel
  * @prop {string} CONNECTION_FAILED The client can not connect to the voice channel
@@ -43,10 +39,6 @@ export enum PlayerErrorCode {
     INVALID_STATE = 'INVALID_STATE',
     FILTER_NOT_FOUND = 'FILTER_NOT_FOUND',
     FILTER_EXISTS = 'FILTER_EXISTS',
-    PLAYLIST_NOT_FOUND = 'PLAYLIST_NOT_FOUND',
-    GUILD_PLAYLISTS_NOT_FOUND = 'GUILD_PLAYLISTS_NOT_FOUND',
-    PLAYLIST_TRACK_NOT_FOUND = 'PLAYLIST_TRACK_NOT_FOUND',
-    PLAYLIST_TRACK_EXISTS = 'PLAYLIST_TRACK_EXISTS',
     USER_NOT_IN_VOICE = 'USER_NOT_IN_VOICE',
     ALREADY_CONNECTED = 'ALREADY_CONNECTED',
     CONNECTION_FAILED = 'CONNECTION_FAILED',
@@ -74,10 +66,6 @@ const definitions: Record<PlayerErrorCode, { status: number, message: string }> 
     [PlayerErrorCode.INVALID_STATE]:             { status: 409, message: errors.other.unknownState },
     [PlayerErrorCode.FILTER_NOT_FOUND]:          { status: 404, message: errors.filters.notFound },
     [PlayerErrorCode.FILTER_EXISTS]:             { status: 409, message: errors.filters.exists },
-    [PlayerErrorCode.PLAYLIST_NOT_FOUND]:        { status: 404, message: errors.playlists.notFound },
-    [PlayerErrorCode.GUILD_PLAYLISTS_NOT_FOUND]: { status: 404, message: errors.playlists.guildNotFound },
-    [PlayerErrorCode.PLAYLIST_TRACK_NOT_FOUND]:  { status: 404, message: errors.playlists.trackNotFound },
-    [PlayerErrorCode.PLAYLIST_TRACK_EXISTS]:     { status: 409, message: errors.playlists.existsTrack },
     [PlayerErrorCode.USER_NOT_IN_VOICE]:         { status: 404, message: errors.voice.notConnected },
     [PlayerErrorCode.ALREADY_CONNECTED]:         { status: 409, message: errors.voice.alreadyConnected },
     [PlayerErrorCode.CONNECTION_FAILED]:         { status: 503, message: errors.voice.failConnect },

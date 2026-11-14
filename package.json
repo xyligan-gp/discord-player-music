@@ -1,6 +1,6 @@
 {
   "name": "discord-player-music",
-  "version": "2.0.0-dev",
+  "version": "2.0.0-dev.1794696781885",
   "description": "A powerful music module for your Discord bot with lots of features",
   "main": "./dist/index.js",
   "scripts": {

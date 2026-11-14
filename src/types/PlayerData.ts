@@ -90,32 +90,13 @@ export interface LyricsData {
     source?: string;
 }
 
-export interface PlaylistTrack {
-    url: string;
-    title: string;
-}
 
-export interface CreatePlaylistData {
-    title?: string;
-    author: string;
-    track: PlaylistTrack;
-}
 
-export interface AddPlaylistData {
-    id?: string;
-    track: PlaylistTrack;
-}
 
-export interface GuildPlaylist {
-    id: string;
-    title: string;
-    author: string;
-    created: number;
-    updated: number | null;
-    duration: number;
-    lastPlaying: number | null;
-    tracks: Array<PlaylistTrack>;
-}
+
+
+
+
 
 export interface SkipData {
     current: PlayerTrack;
@@ -234,13 +215,3 @@ export interface StreamOptions {
     seek?: number;
     filter?: string;
 }
-
-export interface DatabaseManagerConfiguration {
-    path: string;
-    checkInterval: string;
-}
-
-/**
- * Contents of the JSON database
- */
-export type DatabaseStorage = Record<string, { playlists: Array<GuildPlaylist> }>;

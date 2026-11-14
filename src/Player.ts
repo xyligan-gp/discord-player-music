@@ -3,8 +3,6 @@ import { Client, Events as DiscordEvents, GuildMember, Message, MessageReaction,
 
 import errors from './data/errors.json';
 
-import { PlaylistsManager } from './managers/PlaylistsManager';
-import { DatabaseManager } from './managers/DatabaseManager';
 import { FiltersManager } from './managers/FiltersManager';
 import { QueueManager } from './managers/QueueManager';
 import { VoiceManager } from './managers/VoiceManager';
@@ -52,8 +50,6 @@ export class Player extends PlayerEmitter {
     public queue: QueueManager;
     public voice: VoiceManager;
     public utils: UtilsManager;
-    public database: DatabaseManager;
-    public playlists: PlaylistsManager;
     public sources: SourceRegistry;
     public lyricsProvider: LyricsProvider;
 
@@ -160,19 +156,7 @@ export class Player extends PlayerEmitter {
          */
         this.filters = new FiltersManager(this);
 
-        /**
-         * Player Database Manager
-         *
-         * @type {DatabaseManager}
-         */
-        this.database = new DatabaseManager(this);
 
-        /**
-         * Player Playlists Manager
-         *
-         * @type {PlaylistsManager}
-         */
-        this.playlists = new PlaylistsManager(this);
 
         /**
          * Player Source Registry. Providers are tried in order of priority.
@@ -594,9 +578,6 @@ export class Player extends PlayerEmitter {
  * @prop {Array<SourceProvider>} [sources] Track source providers in order of priority (YoutubeiProvider and YtDlpProvider by default)
  * @prop {boolean} [synchronLoop=true] Automatic synchronization of `loop.track` and `loop.queue` options
  * @prop {number} [defaultVolume=5] Default server queue playback volume
- * @prop {object} [databaseConfig] Database configuration object
- * @prop {string} [path=./dpm.playlists.json] Default path to module database file
- * @prop {string} [checkInterval=5s] Default interval for checking and updating the module database
  * @prop {object} [progressConfig] Progress bar configuration object
  * @prop {number} [size=11] Progress bar size
  * @prop {string} [line=▬] Progress bar line
@@ -703,34 +684,6 @@ export class Player extends PlayerEmitter {
  * @param {string} duration.hours Track duration in hours
  * @param {string} duration.minutes Track duration in minutes
  * @param {string} duration.seconds Track duration in seconds
- */
-
-/**
- * Emitted when a new server playlist is created
- * @event Player#createdPlaylist
- * 
- * @param {string} id Playlist ID
- * @param {string} title Playlist Title
- * @param {string} author Playlist Author ID
- * @param {number} created Playlist create timestamp
- * @param {number} updated Playlist update timestamp
- * @param {number} duration Playlist duration
- * @param {number} lastPlaying Playlist last playind timestamp
- * @param {Array<PlaylistTrack>} tracks Playlist tracks array
- */
-
-/**
- * Emitted when the server playlist is deleted
- * @event Player#deletedPlaylist
- * 
- * @param {string} id Playlist ID
- * @param {string} title Playlist Title
- * @param {string} author Playlist Author ID
- * @param {number} created Playlist create timestamp
- * @param {number} updated Playlist update timestamp
- * @param {number} duration Playlist duration
- * @param {number} lastPlaying Playlist last playind timestamp
- * @param {Array<PlaylistTrack>} tracks Playlist tracks array
  */
 
 /**
@@ -849,41 +802,6 @@ export class Player extends PlayerEmitter {
  */
 
 /**
- * @typedef {object} PlaylistTrack
- * 
- * @prop {string} url Track URL
- * @prop {string} title Track Title
- */
-
-/**
- * @typedef {object} CreatePlaylistData
- * 
- * @prop {string} [title] Playlist Title
- * @prop {string} author Playlist Author ID
- * @prop {PlaylistTrack} track Playlist track object
- */
-
-/**
- * @typedef {object} AddPlaylistData
- * 
- * @prop {string} [id] Playlist ID
- * @prop {PlaylistTrack} track Playlist track object
- */
-
-/**
- * @typedef {object} GuildPlaylist
- * 
- * @prop {string} id Playlist ID
- * @prop {string} title Playlist Title
- * @prop {string} author Playlist Author ID
- * @prop {number} created Playlist create timestamp
- * @prop {number} updated Playlist update timestamp
- * @prop {number} duration Playlist duration
- * @prop {number} lastPlaying Playlist last playind timestamp
- * @prop {Array<PlaylistTrack>} tracks Playlist tracks array
- */
-
-/**
  * @typedef {object} SkipData
  * 
  * @prop {PlayerTrack} current Current track object
@@ -959,13 +877,6 @@ export class Player extends PlayerEmitter {
  * 
  * @prop {number} [seek=0] Seek value
  * @prop {string} [filter] Filter value
- */
-
-/**
- * @typedef {object} DatabaseManagerConfiguration
- * 
- * @prop {string} path Default path to module database file
- * @prop {string} checkInterval Default interval for checking and updating the module database
  */
 
 /***********************************************************************************************************/

@@ -13,8 +13,6 @@ export { createOpusStream, createVolumeResource } from './src/sources/AudioPipel
 
 export { QueueManager } from './src/managers/QueueManager';
 export { FiltersManager } from './src/managers/FiltersManager';
-export { PlaylistsManager } from './src/managers/PlaylistsManager';
-export { DatabaseManager } from './src/managers/DatabaseManager';
 export { VoiceManager } from './src/managers/VoiceManager';
 export { UtilsManager } from './src/managers/UtilsManager';
 

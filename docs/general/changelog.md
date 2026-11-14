@@ -84,10 +84,10 @@
   * YouTube playlist links: all tracks are added to the queue and start playing (`playlistLimit` option, `Search.PLAYLIST`)
   * The next track is prepared in advance (`prefetchSeconds` option), no pause between tracks
   * Lyrics from LRCLIB (`lyrics-finder` stopped working), the `lyrics` option and `LyricsProvider` interface
-  * The JSON database is loaded when the player is created, written atomically, old data is normalized and a damaged file does not crash the bot
   * Tracks that can not be played are skipped, the queue no longer hangs
   * Every `Player` has its own event emitter, an `error` event without listeners no longer crashes the process
   * Collectors: the user can cancel a selection (the word `cancel` or the `❌` reaction, `COLLECTOR_CANCELLED`), wrong answers use up the attempts and the user can try again (a wrong answer ended with a timeout error before), emojis are compared without the invisible variation selector (a reaction could be ignored), the message of the small-number error showed `{max}` instead of the minimum; `createCollector()` is covered by tests
   * Fixed: removing the playing track skipped the next one; `synchronLoop: false` was ignored; `setVolume()` without a value; collectors never finished; leaking listeners on every track; the filter restarted the track from the beginning; `VoiceManager#join` crash
+  * Removed (breaking change, no deprecated aliases): server playlists from 1.x (`player.playlists`, the events `createdPlaylist` and `deletedPlaylist`, the related types and error codes) and the JSON database that kept them (`player.database`, `databaseConfig`). It is an extra feature that every bot can build for itself, see the [updating page](updating.md) for a short example. Playing a YouTube playlist link is not removed
   * Types are generated from the code, ESM and CommonJS builds, JSDoc for the whole public API
   * Added tests, linting, a JSDoc check and CI workflows

@@ -21,7 +21,6 @@
 * 🎶 Replaceable track sources: YouTube through `youtubei.js` with an automatic `yt-dlp` fallback
 * 📃 YouTube playlist links
 * 🎸 Audio filters
-* 📌 Guilds Playlists
 * 📝 Lyrics
 * 📂 Multiple servers
 * 🧩 Typed errors, JSDoc for the whole API, ESM and CommonJS

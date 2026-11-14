@@ -290,7 +290,6 @@ Error codes (`PlayerErrorCode`):
 | `SHUFFLE_UNAVAILABLE` | The queue has less than 3 tracks (the playing track is not shuffled) |
 | `INVALID_STATE` | The queue is already in the requested state (paused or playing) |
 | `FILTER_NOT_FOUND`, `FILTER_EXISTS` | Filters |
-| `PLAYLIST_NOT_FOUND`, `GUILD_PLAYLISTS_NOT_FOUND`, `PLAYLIST_TRACK_NOT_FOUND`, `PLAYLIST_TRACK_EXISTS` | Server playlists |
 | `USER_NOT_IN_VOICE`, `ALREADY_CONNECTED`, `CONNECTION_FAILED`, `GUILD_NOT_FOUND` | Voice channels and servers |
 | `TRACK_NOT_FOUND`, `LYRICS_NOT_FOUND` | Search and lyrics (`cause` has the reason, for example a source provider error) |
 | `SIGN_IN_REQUIRED` | YouTube asks to sign in to play the video (age-restricted, or the server was taken for a bot): the cookies of an account are needed, see the FAQ |
@@ -330,7 +329,7 @@ See the [Providers page](providers.md) for the source providers, the order of th
 + options.collectorsConfig.message.cancel, options.collectorsConfig.reaction.cancel // the cancel word (`cancel`) and the cancel reaction (`❌`), `false` turns them off
 * options.collectorsConfig.*.attempts // every message or reaction of the user is an attempt, the user can try again while there are attempts
 * options.synchronLoop       // `false` is not replaced with `true` any more
-* options.databaseConfig.checkInterval // the file is reloaded only when it was changed outside
+- options.databaseConfig                // removed together with the server playlists, see "Removed" below
 ```
 
 ### Methods
@@ -351,10 +350,6 @@ Names are the same as in 1.1.7. What changed:
 
 New enum value: `Search.PLAYLIST`.
 
-### Database
-
-The JSON file keeps the format of 1.x. It is loaded when the player is created (`player.database.get()` works right away), written atomically, old or damaged records are fixed on load, and a file that is not valid JSON is saved next to the original as `<file>.corrupt-<time>` and a new one is created (an `error` event is emitted).
-
 ### Types and imports
 
 Types are generated from the code and exported from the main package. The `discord-player-music/types/...` files do not exist any more.
@@ -370,3 +365,26 @@ The package has two builds, ESM (`import`) and CommonJS (`require`), both work.
 
 * `ytdl-core` and `yt-search` and everything that depended on them. If you used the `Status code: 403/404` errors of `ytdl-core`, check `providerFailed` and `error` events instead.
 * `lyrics-finder` (it stopped finding lyrics). Use the `lyrics` option for another service.
+* **Server playlists** (the playlists of a Discord server saved by the module) and the JSON database that kept them. They were in 1.x and are removed in 2.0 without deprecated aliases, so code that uses them stops working (breaking change): it is an extra feature that every bot can build for itself in a few lines.
+
+```diff
+- player.playlists.create / addTrack / play / removeTrack / delete
+- player.database.get / write / initGuild
+- options.databaseConfig, options.databaseConfig.path, options.databaseConfig.checkInterval
+- player#createdPlaylist, player#deletedPlaylist, Events.PLAYLIST_CREATED, Events.PLAYLIST_DELETED
+- GuildPlaylist, PlaylistTrack, CreatePlaylistData, AddPlaylistData, DatabaseManagerConfiguration, DatabaseStorage
+- PlayerErrorCode.PLAYLIST_NOT_FOUND, GUILD_PLAYLISTS_NOT_FOUND, PLAYLIST_TRACK_NOT_FOUND, PLAYLIST_TRACK_EXISTS
+- PlaylistsManager, DatabaseManager
+```
+
+  The module does not read or write the `dpm.playlists.json` file any more. You can delete it, or read it yourself (it is plain JSON: `{ "<guildID>": { "playlists": [{ "id", "title", "author", "tracks": [{ "url", "title" }], ... }] } }`) to move your old playlists to your own storage. Playing a **YouTube** playlist link is a different feature and stays (`player.search()` with a playlist link, `playlistLimit`).
+
+  To keep playlists yourself, store the links in any storage (a `Map`, a database, a JSON file) and add them one by one with `player.search()`, it keeps their order:
+
+```ts
+const playlists = new Map<string, Array<string>>(); // playlist name -> track links
+playlists.set('chill', ['https://www.youtube.com/watch?v=Vt2TeOptLxE', 'https://www.youtube.com/watch?v=1Qo35ldlvWo']);
+
+// Play the playlist: every link is added to the queue, the first one starts playing
+for(const url of playlists.get('chill') ?? []) await player.search(url, message.member, message.channel);
+```

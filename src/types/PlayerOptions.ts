@@ -14,11 +14,6 @@ export interface PlayerOptions {
     sources?: Array<SourceProvider>;
     lyrics?: LyricsProvider;
 
-    databaseConfig?: {
-        path?: string;
-        checkInterval?: string;
-    }
-
     progressConfig?: {
         size?: number;
         line?: string;
@@ -56,11 +51,6 @@ export interface ResolvedPlayerOptions {
     sourceCooldown: string;
     sources?: Array<SourceProvider>;
     lyrics?: LyricsProvider;
-
-    databaseConfig: {
-        path: string;
-        checkInterval: string;
-    }
 
     progressConfig: {
         size: number;

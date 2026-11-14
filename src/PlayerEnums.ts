@@ -16,8 +16,6 @@ export enum Collector {
  * @prop {string} ERROR Player error event
  * @prop {string} TRACK_ADD Player 'addedTrack' event
  * @prop {string} TRACK_PLAYING Player 'playingTrack' event
- * @prop {string} PLAYLIST_CREATED Player 'createdPlaylist' event
- * @prop {string} PLAYLIST_DELETED Player 'deletedPlaylist' event
  * @prop {string} QUEUE_STARTED Player 'queueStarted' event
  * @prop {string} QUEUE_ENDED Player 'queueEnded' event
  * @prop {string} QUEUE_STATE Player 'queueStateChange' event
@@ -31,8 +29,6 @@ export enum Events {
     ERROR = 'error',
     TRACK_ADD = 'addedTrack',
     TRACK_PLAYING = 'playingTrack',
-    PLAYLIST_CREATED = 'createdPlaylist',
-    PLAYLIST_DELETED = 'deletedPlaylist',
     QUEUE_STARTED = 'queueStarted',
     QUEUE_ENDED = 'queueEnded',
     QUEUE_STATE = 'queueStateChange',

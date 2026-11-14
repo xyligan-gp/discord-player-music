@@ -96,7 +96,6 @@ export class UtilsManager {
      * @returns {PlayerOptions} Correct module options
      */
     public checkOptions(options: PlayerOptions = {}): ResolvedPlayerOptions {
-        const database = options.databaseConfig ?? {};
         const progress = options.progressConfig ?? {};
         const message = options.collectorsConfig?.message ?? {};
         const reaction = options.collectorsConfig?.reaction ?? {};
@@ -113,11 +112,6 @@ export class UtilsManager {
             sourceCooldown: pick(options.sourceCooldown, '10m', value => value.length > 0),
             sources: Array.isArray(options.sources) && options.sources.length ? options.sources : undefined,
             lyrics: typeof options.lyrics?.search === 'function' ? options.lyrics : undefined,
-
-            databaseConfig: {
-                path: pick(database.path, './dpm.playlists.json', value => value.length > 0),
-                checkInterval: pick(database.checkInterval, '5s', value => value.length > 0)
-            },
 
             progressConfig: {
                 size: pick(progress.size, 11, value => value > 1),

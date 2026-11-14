@@ -17,12 +17,6 @@
         "notFound": "The filter named '{name}' is not registered in storage!",
         "exists": "The filter named '{name}' is already registered in storage!"
     },
-    "playlists": {
-        "notFound": "Playlist with ID '{id}' was not found in the server database with ID '{guildID}'!",
-        "guildNotFound": "Server with ID '{id}' has no added playlists!",
-        "trackNotFound": "Track with index '{index}' not found in playlist with ID '{id}'!",
-        "existsTrack": "The track at the link '{url}' has already been added to the playlist with ID '{id}'!"
-    },
     "voice": {
         "notConnected": "User with ID '{id}' was not found in the voice channel!",
         "failConnect": "Unable to connect to voice channel with ID '{id}'!",

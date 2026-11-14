@@ -156,17 +156,6 @@ const lyrics = await player.lyrics('Imagine Dragons Thunder');
 message.channel.send(`**${lyrics.artist} - ${lyrics.title}**\n\n${lyrics.result}`.slice(0, 1990));
 ```
 
-### Server playlists
-
-```ts
-// Create a playlist with the first track, add more tracks, play and delete it
-const playlist = await player.playlists.create(message.guild.id, { title: 'My playlist', author: message.author.id, track: { url, title } });
-
-await player.playlists.addTrack(message.guild.id, { id: playlist.id, track: { url: otherURL, title: otherTitle } });
-await player.playlists.play(message.guild.id, playlist.id, message.member, message.channel);
-await player.playlists.delete(message.guild.id, playlist.id);
-```
-
 ## Events
 
 ```ts

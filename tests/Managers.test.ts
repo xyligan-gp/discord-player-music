@@ -1,5 +1,3 @@
-import { existsSync, readdirSync, readFileSync, writeFileSync } from 'node:fs';
-import { join } from 'node:path';
 import { afterEach, beforeEach, describe, expect, it } from 'vitest';
 
 import { PlayerError, PlayerErrorCode } from '../src/PlayerError';
@@ -57,96 +55,6 @@ describe('UtilsManager', () => {
 
     it('reads the track duration from the providers', async () => {
         expect(await t.player.utils.getTrackDuration('https://youtu.be/x')).toBe(125);
-    })
-})
-
-describe('DatabaseManager', () => {
-    const path = () => join(t.dir, 'db.json');
-
-    it('creates the file and keeps data in memory', () => {
-        expect(existsSync(path())).toBe(true);
-
-        t.player.database.initGuild('G1');
-
-        expect(t.player.database.get()).toEqual({ G1: { playlists: [] } });
-        expect(JSON.parse(readFileSync(path(), 'utf-8'))).toEqual({ G1: { playlists: [] } });
-        expect(existsSync(`${path()}.tmp`)).toBe(false);
-    })
-
-    it('normalizes data written by earlier versions', () => {
-        const file = join(t.dir, 'legacy.json');
-
-        writeFileSync(file, JSON.stringify({ G2: { playlists: [{ id: '1', title: 'Old', author: 'x', created: 5, updated: null, duration: 10, lastPlaying: null, tracks: [{ url: 'u1', title: 't1' }] }, { id: '2', tracks: [{ url: 'u2' }, 5] }, 'junk'] }, G3: null }));
-
-        const other = createTestPlayer({ databaseConfig: { path: file } });
-        const storage = other.player.database.get();
-
-        expect(storage.G2.playlists).toHaveLength(2);
-        expect(storage.G2.playlists[0].title).toBe('Old');
-        expect(storage.G2.playlists[1]).toMatchObject({ id: '2', title: 'Playlist #2', duration: 0, updated: null, tracks: [{ url: 'u2', title: 'u2' }] });
-        expect(storage.G3).toEqual({ playlists: [] });
-
-        other.cleanup();
-    })
-
-    it('does not rewrite a valid file', () => {
-        const before = readFileSync(path(), 'utf-8');
-        const other = createTestPlayer({ databaseConfig: { path: path() } });
-
-        expect(readFileSync(path(), 'utf-8')).toBe(before);
-
-        other.cleanup();
-    })
-
-    it('moves a damaged file aside and reports it', async () => {
-        const file = join(t.dir, 'bad.json');
-
-        writeFileSync(file, '{ "G": [broken');
-
-        const other = createTestPlayer({ databaseConfig: { path: file } });
-
-        await Promise.resolve();
-
-        expect(other.player.database.get()).toEqual({});
-        expect(readdirSync(t.dir).some(name => name.startsWith('bad.json.corrupt-'))).toBe(true);
-        expect(other.events.some(event => event.includes('damaged'))).toBe(true);
-
-        other.cleanup();
-    })
-})
-
-describe('PlaylistsManager', () => {
-    const track = (id: string) => ({ url: `https://www.youtube.com/watch?v=${id}`, title: id });
-
-    it('creates playlists, adds and removes tracks', async () => {
-        const playlist = await t.player.playlists.create('G', { author: 'u', track: track('a') });
-
-        expect(playlist.duration).toBe(125);
-        expect(playlist.title).toBe(`Playlist #${playlist.id}`);
-
-        const updated = await t.player.playlists.addTrack('G', { id: playlist.id, track: track('b') });
-
-        expect(updated.tracks).toHaveLength(2);
-        expect(updated.duration).toBe(250);
-        expect(await code(t.player.playlists.addTrack('G', { id: playlist.id, track: track('b') }))).toBe(PlayerErrorCode.PLAYLIST_TRACK_EXISTS);
-        expect(await code(t.player.playlists.addTrack('G', { id: 'nope', track: track('c') }))).toBe(PlayerErrorCode.PLAYLIST_NOT_FOUND);
-
-        expect((await t.player.playlists.removeTrack('G', playlist.id, 0)).tracks.map(item => item.title)).toEqual(['b']);
-        expect(await code(t.player.playlists.removeTrack('G', playlist.id, 5))).toBe(PlayerErrorCode.PLAYLIST_TRACK_NOT_FOUND);
-    })
-
-    it('creates a playlist when the server has none and persists data', async () => {
-        const playlist = await t.player.playlists.addTrack('G', { track: track('a') });
-
-        expect(JSON.parse(readFileSync(join(t.dir, 'db.json'), 'utf-8')).G.playlists[0].id).toBe(playlist.id);
-    })
-
-    it('deletes playlists and reports unknown ones', async () => {
-        const playlist = await t.player.playlists.create('G', { author: 'u', track: track('a') });
-
-        expect((await t.player.playlists.delete('G', playlist.id)).id).toBe(playlist.id);
-        expect(await code(t.player.playlists.delete('G', playlist.id))).toBe(PlayerErrorCode.GUILD_PLAYLISTS_NOT_FOUND);
-        expect(await code(t.player.playlists.delete('other', 'x'))).toBe(PlayerErrorCode.GUILD_PLAYLISTS_NOT_FOUND);
     })
 })
 

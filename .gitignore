@@ -5,9 +5,9 @@ dist/
 .DS_Store
 .env
 ytdlp_py/
-dpm.playlists.json
 prototype/
 # Cookies of a YouTube account: never commit them
 cookies.txt
 *.cookies.txt
 .ytdlp/
+examples/docker/*.tgz
