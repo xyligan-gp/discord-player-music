@@ -4,6 +4,8 @@
       path: welcome.md
     - name: FAQ
       path: faq.md
+    - name: Providers
+      path: providers.md
     - name: Updating your code
       path: updating.md
     - name: Examples

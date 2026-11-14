@@ -1,0 +1,85 @@
+import { SourceProvider } from '../sources/SourceProvider';
+import { LyricsProvider } from '../lyrics/LyricsProvider';
+
+export interface PlayerOptions {
+    autoAddingTracks?: boolean;
+    searchResultsLimit?: number;
+    synchronLoop?: boolean;
+    defaultVolume?: number;
+    playlistLimit?: number;
+    prefetchSeconds?: number;
+    cookies?: string;
+    sourceFailureThreshold?: number;
+    sourceCooldown?: string;
+    sources?: Array<SourceProvider>;
+    lyrics?: LyricsProvider;
+
+    databaseConfig?: {
+        path?: string;
+        checkInterval?: string;
+    }
+
+    progressConfig?: {
+        size?: number;
+        line?: string;
+        slider?: string;
+    }
+
+    collectorsConfig?: {
+        message?: {
+            time?: string;
+            attempts?: number;
+            cancel?: string | false;
+        }
+
+        reaction?: {
+            time?: string;
+            attempts?: number;
+            reactions?: Array<string>;
+            cancel?: string | false;
+        }
+    }
+}
+
+/**
+ * Player options with all default values applied
+ */
+export interface ResolvedPlayerOptions {
+    autoAddingTracks: boolean;
+    searchResultsLimit: number;
+    synchronLoop: boolean;
+    defaultVolume: number;
+    playlistLimit: number;
+    prefetchSeconds: number;
+    cookies?: string;
+    sourceFailureThreshold: number;
+    sourceCooldown: string;
+    sources?: Array<SourceProvider>;
+    lyrics?: LyricsProvider;
+
+    databaseConfig: {
+        path: string;
+        checkInterval: string;
+    }
+
+    progressConfig: {
+        size: number;
+        line: string;
+        slider: string;
+    }
+
+    collectorsConfig: {
+        message: {
+            time: string;
+            attempts: number;
+            cancel: string | false;
+        }
+
+        reaction: {
+            time: string;
+            attempts: number;
+            reactions: Array<string>;
+            cancel: string | false;
+        }
+    }
+}

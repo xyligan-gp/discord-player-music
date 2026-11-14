@@ -1,61 +1,83 @@
 {
-	"name": "discord-player-music",
-	"version": "2.0.0-dev",
-	"description": "A powerful music module for your Discord bot with lots of features",
-	"main": "index.js",
-	"scripts": {
-		"build": "rimraf dist && tsc -p tsconfig.json",
-		"build:old": "tsc -p tsconfig.json",
-		"build:docs": "docgen -s *.ts src/**/* -o docs/index.json -c docs/index.yml -g -S 1 -j .jsconfig.json",
-		"pub": "npm publish",
-		"pub:dev": "npm publish --tag dev",
-		"test": "ts-node ./test/index.ts"
-	},
-	"bugs": {
-		"url": "https://github.com/xyligan-gp/discord-player-music/issues"
-	},
-	"repository": {
-		"type": "git",
-		"url": "git+https://github.com/xyligan-gp/discord-player-music.git"
-	},
-	"homepage": "https://dpm.js.org",
-	"keywords": [
-		"discord",
-		"discord-bot",
-		"sidcord-music",
-		"discord.js",
-		"discord-player",
-		"discord-player-music",
-		"ytdl-core",
-		"yt-search",
-		"xyligan"
-	],
-	"author": "xyligan",
-	"license": "MIT",
-	"engines": {
-		"node": ">=16.9.0"
-	},
-	"types": "./types/index.d.ts",
-	"dependencies": {
-		"@discordjs/voice": "^0.16.0",
-		"discord.js": "^14.13.0",
-		"genius-lyrics-api": "^3.2.0",
-		"prism-media": "^1.3.5",
-		"yt-search": "^2.10.4",
-		"ytdl-core": "^4.11.5",
-		"ytpl": "^2.3.0"
-	},
-	"devDependencies": {
-		"@babel/core": "^7.23.2",
-		"@babel/plugin-proposal-class-properties": "^7.18.6",
-		"@babel/plugin-proposal-object-rest-spread": "^7.20.7",
-		"@babel/preset-env": "^7.23.2",
-		"@babel/preset-typescript": "^7.23.2",
-		"@distube/docgen": "github:distubejs/docgen",
-		"@types/yt-search": "^2.10.2",
-		"jsdoc-babel": "^0.5.0",
-		"rimraf": "^5.0.5",
-		"ts-node": "^10.9.1",
-		"typescript": "^5.2.2"
-	}
+  "name": "discord-player-music",
+  "version": "2.0.0-dev",
+  "description": "A powerful music module for your Discord bot with lots of features",
+  "main": "./dist/index.js",
+  "scripts": {
+    "build": "node scripts/clean.mjs && tsc -p tsconfig.json",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "build:docs": "node --require ./scripts/node-compat.cjs ./node_modules/@distube/docgen/src/index.js -s src/*.ts src/**/*.ts -o docs/index.json -c docs/index.yml -g -S 1 -j .jsconfig.json",
+    "test": "vitest run",
+    "lint": "eslint .",
+    "check:jsdoc": "node scripts/check-jsdoc.mjs",
+    "check": "npm run typecheck && npm run lint && npm run check:jsdoc && npm test && npm run check:examples && npm run build:docs",
+    "test:integration": "vitest run --config vitest.integration.config.mts",
+    "check:examples": "npm run build && tsc -p examples/tsconfig.json",
+    "prepublishOnly": "npm run build && npm test",
+    "release": "npm publish"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/xyligan-gp/discord-player-music.git"
+  },
+  "author": "xyligan",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/xyligan-gp/discord-player-music/issues"
+  },
+  "homepage": "https://dpm.js.org",
+  "keywords": [
+    "discord",
+    "discord-bot",
+    "sidcord-music",
+    "discord.js",
+    "discord-player",
+    "discord-player-music",
+    "xyligan",
+    "youtubei.js",
+    "yt-dlp",
+    "lrclib"
+  ],
+  "dependencies": {
+    "@discordjs/voice": "^0.19.2",
+    "ffmpeg-static": "^5.3.0",
+    "opusscript": "^0.0.8",
+    "prism-media": "^1.3.5",
+    "youtubei.js": "^18.3.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.18.9",
+    "@babel/plugin-proposal-class-properties": "^7.18.6",
+    "@babel/plugin-proposal-object-rest-spread": "^7.18.9",
+    "@babel/preset-env": "^7.18.9",
+    "@babel/preset-typescript": "^7.18.6",
+    "@distube/docgen": "github:distubejs/docgen",
+    "@eslint/js": "^10.0.1",
+    "@types/node": "^22.0.0",
+    "discord.js": "^14.28.1",
+    "eslint": "^10.15.0",
+    "jsdoc-babel": "^0.5.0",
+    "typescript": "^5.9.0",
+    "typescript-eslint": "^8.72.2",
+    "vitest": "^5.1.0"
+  },
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "peerDependencies": {
+    "discord.js": "^14.28.0"
+  },
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ]
 }

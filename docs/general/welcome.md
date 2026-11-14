@@ -14,71 +14,87 @@
 
 ## About
 
-**Discord Player Music is a powerful [Node.js](https://nodejs.org) music module for your Discord.js bot that based on Promises and has a lot of features.**
+**Discord Player Music is a powerful [Node.js](https://nodejs.org) music module for your [discord.js](https://discord.js.org) bot. It is based on Promises, fully typed and has a lot of features.**
 
 * 👍 Simple & easy to use
 * 😄 Beginner friendly
+* 🎶 Replaceable track sources: YouTube through `youtubei.js` with an automatic `yt-dlp` fallback
+* 📃 YouTube playlist links
 * 🎸 Audio filters
-* 📃 Lyrics
+* 📌 Guilds Playlists
+* 📝 Lyrics
 * 📂 Multiple servers
+* 🧩 Typed errors, JSDoc for the whole API, ESM and CommonJS
 
 ## Installation
 
-**Node.js 16.9.0 or newer is required.**
+**Node.js 22.12.0 or newer and discord.js 14.28 or newer are required.**
 
 ```sh-session
-$ npm install discord-player-music
-$ yarn add discord-player-music
-$ pnpm add discord-player-music
+$ npm install discord-player-music discord.js
+$ yarn add discord-player-music discord.js
+$ pnpm add discord-player-music discord.js
 ```
+
+Audio is converted with FFmpeg, which comes with the `ffmpeg-static` package. Some package managers do not run install scripts by default (npm 12 and pnpm 10 ask you to allow them): if the FFmpeg binary is missing, allow the install script of `ffmpeg-static` (`npm install-scripts approve ffmpeg-static`) or install FFmpeg in your system, the module finds it in `PATH`.
+
+[yt-dlp](https://github.com/yt-dlp/yt-dlp) is used as a fallback source for YouTube. **You do not need to install it:** if it is not found in `PATH`, the module downloads the official binary from GitHub into `~/.cache/discord-player-music`, checks its checksum and updates it once a day. See the [Providers page](providers.md) to change or disable that.
 
 ## Example Usage
 
 ```js
-const { Client, GatewayIntentBits, Partials } = require('discord.js');
-const { Player } = require('discord-player-music');
+import { Client, GatewayIntentBits } from 'discord.js';
+import { Player, PlayerError } from 'discord-player-music';
 
 const client = new Client({
 	intents: [
 		GatewayIntentBits.Guilds,
-		GatewayIntentBits.MessageContent,
-		GatewayIntentBits.GuildMembers,
 		GatewayIntentBits.GuildMessages,
-		GatewayIntentBits.GuildMessageReactions,
-		GatewayIntentBits.GuildVoiceStates
-	],
-    
-	partials: [
-		Partials.Channel,
-		Partials.GuildMember,
-		Partials.Message,
-		Partials.Reaction,
-		Partials.User
+		GatewayIntentBits.GuildVoiceStates,
+		GatewayIntentBits.MessageContent
 	]
 });
 
-client.player = new Player(client);
+const player = new Player(client);
 
-client.on('ready', async () => {
-  	return console.log('Client is ready!');
-})
+player.on('ready', () => console.log('Player is ready!'));
+player.on('playingTrack', track => track.channel.text.send(`Now playing: **${track.title}**`));
+player.on('error', ({ error }) => console.error(error));
 
-client.player.on('ready', async () => {
-	return console.log('Player is ready!');
-})
+client.on('messageCreate', async message => {
+	if(!message.content.startsWith('!play ') || !message.member?.voice.channel) return;
+
+	try {
+		// A track title or a link to a video or a playlist
+		const tracks = await player.search(message.content.slice(6), message.member, message.channel);
+
+		// A link is added to the queue by itself, for a title the first result is taken
+		if(tracks[0].searchType.includes('title')) await player.initQueueTrack(1, tracks);
+	}catch(error) {
+		message.channel.send(error instanceof PlayerError ? error.message : 'Something went wrong!');
+	}
+});
 
 client.login('YOUR_CLIENT_TOKEN_HERE');
 ```
+
+More examples are in the [`examples`](https://github.com/xyligan-gp/discord-player-music/tree/stable/examples) folder.
+
+## Good to know
+
+* **Methods throw errors.** Every method rejects with a `PlayerError` that has a `code` (for example `QUEUE_NOT_FOUND`), so use `try/catch` (or `.catch()`).
+* **YouTube changes often.** Any YouTube library can stop working after a change on YouTube's side. That is why the module has several sources: when `youtubei.js` is refused, `yt-dlp` plays the track and the module remembers it for the next tracks. See the [FAQ](faq.md) if a track does not play, and the [Providers page](providers.md) to change the order of the sources or write your own.
+* **Respect the rules.** Downloading streams is against the YouTube Terms of Service, and some hosting providers are blocked by YouTube. Use the module at your own risk.
 
 ## Links
 
 * NPM: [Open](https://www.npmjs.com/package/discord-player-music)
 * GitHub: [Open](https://github.com/xyligan-gp/discord-player-music)
 * Examples: [See](https://github.com/xyligan-gp/discord-player-music/tree/stable/examples)
-* Documentation: [Open](https://dpm.js.org)
+* Documentation: [Open](https://dpm.js.org) ([Providers](providers.md), [FAQ](faq.md), [Updating from 1.x](updating.md), [Changelog](changelog.md)) ([Providers](providers.md), [FAQ](faq.md), [Updating from 1.x](updating.md), [Changelog](changelog.md))
 
 * Module Developer: [xyligan](https://github.com/xyligan-gp)
-* Developer Discord: [xyligan9457](https://discord.com/users/533347075463577640)
+* Developer Discord: [xyligan / @whatisgif](https://discord.com/users/533347075463577640)
 * Support Server: [Join xyligan development](https://discord.gg/zzbkvCcu2r)
 
 <center><h1>♥ Thanks for using Discord Player Music ♥</h1></center>

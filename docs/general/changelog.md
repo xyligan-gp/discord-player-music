@@ -72,3 +72,22 @@
   * Updated old and added new events
   * Partial transition to enumerated types (enum)
   * The rest of the changes can be seen more clearly on the updates page...
+
+* ***Version 2.0.0-dev***
+  * **Breaking:** Node.js 22.12.0 or newer and discord.js 14.28 or newer are required, `@discordjs/voice` was updated to 0.19
+  * **Breaking:** methods throw `PlayerError` (with `code`, `status` and `cause`) instead of returning `{ error }`, see the updating page
+  * Fixed YouTube playback: `ytdl-core` and `yt-search` were replaced with replaceable source providers (`SourceRegistry`, `YoutubeiProvider`, `YtDlpProvider`)
+  * Automatic fallback between providers, the `providerFailed`, `sourceUsed` (which source plays a track), `ytdlpStatus` (every step of finding, checking, downloading and updating yt-dlp) and `skippedTrack` (a track could not be played, the queue goes on with the next one) events and the `sources`, `sourceFailureThreshold` and `sourceCooldown` options
+  * `yt-dlp` is found in `PATH` or downloaded automatically when the player starts (the checksum is verified), and a newer release is installed at every start; the `cookies` option (one cookies file for both `youtubei.js` and yt-dlp: `youtubei.js` reads the information of age-restricted videos and private playlists with it, yt-dlp plays them) for servers where YouTube asks to sign in
+  * `SIGN_IN_REQUIRED` error for age-restricted videos and bot checks (the cookies are needed)
+  * yt-dlp errors are thrown before the stream starts (so the next provider is used) and explain the sign-in request
+  * YouTube playlist links: all tracks are added to the queue and start playing (`playlistLimit` option, `Search.PLAYLIST`)
+  * The next track is prepared in advance (`prefetchSeconds` option), no pause between tracks
+  * Lyrics from LRCLIB (`lyrics-finder` stopped working), the `lyrics` option and `LyricsProvider` interface
+  * The JSON database is loaded when the player is created, written atomically, old data is normalized and a damaged file does not crash the bot
+  * Tracks that can not be played are skipped, the queue no longer hangs
+  * Every `Player` has its own event emitter, an `error` event without listeners no longer crashes the process
+  * Collectors: the user can cancel a selection (the word `cancel` or the `❌` reaction, `COLLECTOR_CANCELLED`), wrong answers use up the attempts and the user can try again (a wrong answer ended with a timeout error before), emojis are compared without the invisible variation selector (a reaction could be ignored), the message of the small-number error showed `{max}` instead of the minimum; `createCollector()` is covered by tests
+  * Fixed: removing the playing track skipped the next one; `synchronLoop: false` was ignored; `setVolume()` without a value; collectors never finished; leaking listeners on every track; the filter restarted the track from the beginning; `VoiceManager#join` crash
+  * Types are generated from the code, ESM and CommonJS builds, JSDoc for the whole public API
+  * Added tests, linting, a JSDoc check and CI workflows
