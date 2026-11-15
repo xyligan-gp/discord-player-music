@@ -15,6 +15,8 @@ This is a small part of what can be done. A complete bot that you can run locall
 | Sources | `!sources [link]`, `!ytdlp`, `!prefetch [seconds]`, `!autoadd [on\|off]`, `!utils [warn]`, `!debug [on\|off]` | `player.sources.list`, `canHandle`, `isPlaylist`, the `ytdlpStatus` event, `prefetchSeconds`, `autoAddingTracks`, `player.utils`, the warnings of `checkOptions`, the technical events |
 | Collectors | `!search`, `!pick`, `!collector message\|reaction [tracks]` | `player.createCollector`, attempts, cancel, errors |
 
+The "Now playing" message of the bot moves by itself (no command): when a track starts, the bot sends a message with the track, the progress bar and `position / duration`, edits it on every `trackProgress` event, and deletes it when the next track starts or the queue is closed (there is exactly one message per track, the old announcement of the track is merged into it). The bot sets `progressInterval` from `PROGRESS_INTERVAL` in `examples/.env` (seconds, `5` by default, values below 3 are raised to 3, `0` turns the event off: the message is then sent once, with 0:00 progress, and not edited); Discord limits how often a message can be edited, so use 5 seconds or more.
+
 Times for `!seek` can be `90`, `1:30`, `1:02:03` or `1m30s`. The numbers in `!queue` are the indexes for `!remove` (0 is the playing track).
 
 Every event of the player is shown (including `autoplayAdded`): `ready`, `queueStarted`, `addedTrack`, `playingTrack`, `queueStateChange`, `queueEnded` (with the reason), `skippedTrack`, `error`, `providerFailed`, `ytdlpStatus` and `sourceUsed` (with `via`). The main ones are sent to the text channel, the technical ones (`providerFailed`, `ytdlpStatus`, `sourceUsed`) go to the channel only after `!debug on`.
@@ -188,6 +190,25 @@ await player.queue.setAutoplay(message.guild.id, true);
 
 player.on('autoplayAdded', (queue, tracks) => queue.channel.text.send(`Autoplay: ${tracks.map(track => track.title).join(', ')}`));
 ```
+
+## Live progress
+
+```ts
+// The event is off by default: ask for it with progressInterval (seconds). Discord limits how often a message can be edited, so use 5-10 seconds.
+const player = new Player(client, { progressInterval: 10 });
+
+const nowPlaying = new Map<string, Message>(); // guild ID -> the "now playing" message
+
+player.on('playingTrack', async track => nowPlaying.set(track.guild.id, await track.channel.text.send(`Now playing: **${track.title}**`)));
+
+player.on('trackProgress', (queue, { track, position, duration, bar, percents }) => {
+	const time = (seconds: number) => player.utils.formatDuration(seconds).replace(/^00:/, '');
+
+	nowPlaying.get(track.guild.id)?.edit(`Now playing: **${track.title}**\n${bar} ${percents} (${time(position)} / ${time(duration)})`).catch(() => { });
+});
+```
+
+The event is not emitted while the queue is paused, and the timer stops when the queue is closed.
 
 ## Events
 

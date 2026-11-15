@@ -72,6 +72,9 @@ Yes, give a link to a YouTube playlist (`https://www.youtube.com/playlist?list=.
 ## How do I make the bot play related tracks when the queue ends (autoplay)?
 Turn the autoplay on: `new Player(client, { autoplay: true })` for all new queues, or `player.queue.setAutoplay(guildID, true)` for one queue (it switches the status when you do not pass it). When the tracks are over and no loop is on, the module finds related tracks, adds them and goes on playing, until the autoplay is turned off. **`autoAddingTracks` is not the autoplay:** it only adds the result of `player.search()` to the queue. Details: the [Providers page](providers.md#autoplay-and-related-tracks).
 
+## How do I show a progress bar that moves in the "now playing" message?
+Turn the event on with the `progressInterval` option (seconds, for example `10`; `0`, the default, is off) and edit your message in the `trackProgress` event: it gives `{ track, position, duration, bar, percents }` while a track plays. Discord limits how often a message can be edited, so do not use less than 5 seconds. A full example is on the [Examples page](examples/index.md#live-progress).
+
 ## Is there a pause between tracks?
 The module prepares the next track in advance (20 seconds before the current one ends, see `prefetchSeconds`), so there should be none. The first track of a queue needs a moment to start (up to 5 seconds with yt-dlp).
 

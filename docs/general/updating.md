@@ -307,6 +307,10 @@ New in 2.0.0: when the tracks are over, the module can find tracks related to th
 
 **`autoAddingTracks` is not the autoplay.** It only tells whether `player.search()` (and a collector) adds the found track to the queue by itself; it does nothing when the queue ends. See the [Providers page](providers.md#autoplay-and-related-tracks) for how the related tracks are found.
 
+### Live progress
+
+New in 2.0.0: with the `progressInterval` option (seconds, `0` by default: off) the module emits `trackProgress` `(queue, { track, position, duration, bar, percents })` every `progressInterval` seconds while a track plays, so a "now playing" message can show a moving progress bar without a timer of your own. `position` and `duration` are seconds, `bar` and `percents` are the same as in `queue.progress()` (see `progressConfig`). There is no event while the queue is paused or has no track, and the timer stops when the queue is closed. **Discord limits how often a message can be edited:** use 5 seconds or more (the least value is 0.1 for tests). An error of a listener is reported with the `error` event (`method: 'trackProgress'`) and does not stop the playback.
+
 ### Tracks that can not be played
 
 A track that can not be played is reported with the `error` event and **skipped**, the queue continues with the next track (in 1.x the queue could hang). If the voice connection is lost, the queue is closed.
@@ -319,6 +323,7 @@ A track that can not be played is reported with the `error` event and **skipped*
 + player#ytdlpStatus
 + player#skippedTrack
 + player#autoplayAdded
++ player#trackProgress
 ```
 
 **`queueEnded` changed:** it now has a second argument `reason` and is emitted once every time a queue is closed, not only when the tracks are over: `reason` is `ended` (the tracks are over, the only case in 1.x), `stopped` (`queue.stop()`), `deleted` (`queue.delete()`), `skipped` (the last track was skipped) or `error` (the voice connection failed). Handlers of 1.x `(queue) => ...` keep working, but they now also run in the new cases: use `if(reason === 'ended')` to keep the old behaviour.
@@ -337,6 +342,7 @@ See the [Providers page](providers.md) for the source providers, the order of th
 + options.playlistLimit      // tracks taken from a playlist link, 100
 + options.prefetchSeconds    // the next track is prepared in advance, 20
 + options.autoplay, options.autoplayLimit, options.autoplayHistory, options.autoplayMaxDuration // the autoplay, see "Autoplay" below
++ options.progressInterval // seconds between the `trackProgress` events (0, off by default), see "Live progress" below
 + options.sourceFailureThreshold, options.sourceCooldown
 
 + options.collectorsConfig.message.cancel, options.collectorsConfig.reaction.cancel // the cancel word (`cancel`) and the cancel reaction (`❌`), `false` turns them off
