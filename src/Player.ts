@@ -15,7 +15,6 @@ import { Collector, Events, Search } from './PlayerEnums';
 import { PlayerOptions, ResolvedPlayerOptions } from './types/PlayerOptions';
 import { LyricsData, PlayerTrack, CollectorData } from './types/PlayerData';
 
-import { parseDuration } from './utils/duration';
 
 
 import { SourceRegistry } from './sources/SourceRegistry';
@@ -163,7 +162,7 @@ export class Player extends PlayerEmitter {
          *
          * @type {SourceRegistry}
          */
-        this.sources = new SourceRegistry(this.options.sources ?? [new YoutubeiProvider({ cookies: this.options.cookies }), new YtDlpProvider({ cookies: this.options.cookies })], { failureThreshold: this.options.sourceFailureThreshold, cooldown: parseDuration(this.options.sourceCooldown) });
+        this.sources = new SourceRegistry(this.options.sources ?? [new YoutubeiProvider({ cookies: this.options.cookies }), new YtDlpProvider({ cookies: this.options.cookies })], { failureThreshold: this.options.sourceFailureThreshold, cooldown: this.utils.parseDuration(this.options.sourceCooldown) });
         this.sources.onProviderFailed = (provider, method, error) => { this.emit(Events.PROVIDER_FAILED, { provider: provider.name, method, error }) };
 
         /**
@@ -495,7 +494,7 @@ export class Player extends PlayerEmitter {
                 const { time, attempts, cancel } = this.options.collectorsConfig.message;
 
                 const filter = (msg: Message) => msg.author.id === (userID || message.author.id);
-                const collector = (message.channel as TextChannel).createMessageCollector({ filter, time: parseDuration(time) });
+                const collector = (message.channel as TextChannel).createMessageCollector({ filter, time: this.utils.parseDuration(time) });
 
                 return run(collector, attempts, (collected: Message) => {
                     const text = collected.content.trim();
@@ -527,7 +526,7 @@ export class Player extends PlayerEmitter {
                 if(cancel) await message.react(cancel);
 
                 const filter = (reaction: MessageReaction, user: User) => reaction.message.id === message.id && user.id === userID;
-                const collector = message.createReactionCollector({ filter, time: parseDuration(time) });
+                const collector = message.createReactionCollector({ filter, time: this.utils.parseDuration(time) });
 
                 return run(collector, attempts, (reaction: MessageReaction) => {
                     const emoji = normalize(reaction.emoji.name ?? '');
@@ -706,7 +705,8 @@ export class Player extends PlayerEmitter {
  */
 
 /**
- * Emitted when the server queue finishes playing
+ * Emitted once every time a server queue is closed and removed, for any reason: the tracks are over, `queue.stop()`, `queue.delete()`, the last track was skipped
+ * or the voice connection failed. The second argument tells why. Use `reason === 'ended'` to react only when the queue finishes playing by itself (the only case in 1.x).
  * @event Player#queueEnded
  * 
  * @param {object} channel Queue active channels
@@ -722,6 +722,7 @@ export class Player extends PlayerEmitter {
  * @param {number} startStream Timestamp start playing server queue
  * @param {GuildQueueState} state Queue playback status
  * @param {PlayerFilter} filter Queue playback filter
+ * @param {string} reason Why the queue was closed: `ended` (the tracks are over), `stopped` (`queue.stop()`), `deleted` (`queue.delete()`), `skipped` (the last track was skipped) or `error` (the voice connection failed)
  */
 
 /**

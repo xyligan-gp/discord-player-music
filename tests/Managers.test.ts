@@ -38,9 +38,8 @@ describe('UtilsManager', () => {
         expect(t.player.utils.formatDuration(3725)).toBe('01:02:05');
     })
 
-    it('builds the empty progress bar and unique IDs', () => {
+    it('builds the empty progress bar', () => {
         expect(t.player.utils.createEmptyProgress()).toBe('🔘' + '▬'.repeat(10));
-        expect(t.player.utils.getUniqueID()).toMatch(/^\d{15}$/);
     })
 
     it('fills missing or invalid options with defaults', () => {
@@ -217,5 +216,99 @@ describe('PlayerError', () => {
         const cause = new Error('original');
 
         expect(new PlayerError(PlayerErrorCode.TRACK_NOT_FOUND, { data: 'x' }, cause).cause).toBe(cause);
+    })
+})
+
+describe('checkOptions warnings', () => {
+    const run = (options: Parameters<typeof t.player.utils.checkOptions>[0]) => {
+        const messages: Array<string> = [];
+        const original = console.warn;
+
+        console.warn = (...args: Array<unknown>) => { messages.push(args.join(' ')) };
+
+        try {
+            return { options: t.player.utils.checkOptions(options), messages };
+        }finally {
+            console.warn = original;
+        }
+    }
+
+    it('warns about an option that was passed but is invalid, and uses the default', () => {
+        const { options, messages } = run({ collectorsConfig: { message: { time: 60000 as never } }, searchResultsLimit: -3, defaultVolume: 'loud' as never });
+
+        expect(options.collectorsConfig.message.time).toBe('1m');
+        expect(options.searchResultsLimit).toBe(10);
+        expect(options.defaultVolume).toBe(5);
+        expect(messages).toHaveLength(3);
+        expect(messages.some(message => message.includes('Option "collectorsConfig.message.time" is invalid') && message.includes('60000') && message.includes('using "1m" instead'))).toBe(true);
+        expect(messages.some(message => message.includes('Option "searchResultsLimit" is invalid') && message.includes('-3'))).toBe(true);
+        expect(messages.every(message => message.startsWith('[discord-player-music]'))).toBe(true);
+    })
+
+    it('warns about invalid sources, lyrics, cookies and reactions', () => {
+        const { options, messages } = run({ sources: [] as never, lyrics: {} as never, cookies: '', collectorsConfig: { reaction: { reactions: 'x' as never } } });
+
+        expect(options.sources).toBeUndefined();
+        expect(options.lyrics).toBeUndefined();
+        expect(options.cookies).toBeUndefined();
+        expect(options.collectorsConfig.reaction.reactions).toHaveLength(10);
+        expect(messages).toHaveLength(4);
+    })
+
+    it('does not warn about missing options or valid values', () => {
+        expect(run({}).messages).toEqual([]);
+        expect(run(undefined).messages).toEqual([]);
+        expect(run({ searchResultsLimit: 5, synchronLoop: false, collectorsConfig: { message: { cancel: false, time: '2m' } }, prefetchSeconds: 0 }).messages).toEqual([]);
+    })
+})
+
+describe('UtilsManager#parseDuration', () => {
+    it('parses numbers with units', () => {
+        expect(t.player.utils.parseDuration('500')).toBe(500);
+        expect(t.player.utils.parseDuration('500ms')).toBe(500);
+        expect(t.player.utils.parseDuration('10s')).toBe(10_000);
+        expect(t.player.utils.parseDuration('5 secs')).toBe(5_000);
+        expect(t.player.utils.parseDuration('1m')).toBe(60_000);
+        expect(t.player.utils.parseDuration('1.5 hours')).toBe(5_400_000);
+        expect(t.player.utils.parseDuration('2d')).toBe(172_800_000);
+        expect(t.player.utils.parseDuration('1 week')).toBe(604_800_000);
+        expect(t.player.utils.parseDuration('1y')).toBe(31_557_600_000);
+        expect(t.player.utils.parseDuration('-1s')).toBe(-1000);
+        expect(t.player.utils.parseDuration('.5s')).toBe(500);
+        expect(t.player.utils.parseDuration('30 MINUTES')).toBe(1_800_000);
+        expect(t.player.utils.parseDuration('1      s')).toBe(1000);
+    })
+
+    it('throws for anything else', () => {
+        for(const value of ['', 'abc', '10 parsecs', '1m 30s', ' 10s', '10s ', 'x'.repeat(101), 10 as never, undefined as never, null as never]) expect(() => t.player.utils.parseDuration(value), String(value)).toThrow(/valid duration/);
+    })
+})
+
+describe('UtilsManager#formatMilliseconds', () => {
+    it('formats short', () => {
+        expect(t.player.utils.formatMilliseconds(0)).toBe('0ms');
+        expect(t.player.utils.formatMilliseconds(999)).toBe('999ms');
+        expect(t.player.utils.formatMilliseconds(1000)).toBe('1s');
+        expect(t.player.utils.formatMilliseconds(120_000)).toBe('2m');
+        expect(t.player.utils.formatMilliseconds(3_600_000)).toBe('1h');
+        expect(t.player.utils.formatMilliseconds(172_800_000)).toBe('2d');
+        expect(t.player.utils.formatMilliseconds(-60_000)).toBe('-1m');
+    })
+
+    it('formats long with the plural only from one and a half units', () => {
+        expect(t.player.utils.formatMilliseconds(500, { long: true })).toBe('500 ms');
+        expect(t.player.utils.formatMilliseconds(1000, { long: true })).toBe('1 second');
+        expect(t.player.utils.formatMilliseconds(1500, { long: true })).toBe('2 seconds');
+        expect(t.player.utils.formatMilliseconds(120_000, { long: true })).toBe('2 minutes');
+        expect(t.player.utils.formatMilliseconds(3_600_000, { long: true })).toBe('1 hour');
+        expect(t.player.utils.formatMilliseconds(172_800_000, { long: true })).toBe('2 days');
+    })
+
+    it('throws for values that are not finite numbers', () => {
+        for(const value of [NaN, Infinity, '10' as never, undefined as never]) expect(() => t.player.utils.formatMilliseconds(value)).toThrow(/valid number/);
+    })
+
+    it('parses what it formats', () => {
+        for(const value of [0, 1000, 60_000, 3_600_000, 86_400_000]) expect(t.player.utils.parseDuration(t.player.utils.formatMilliseconds(value))).toBe(value);
     })
 })
