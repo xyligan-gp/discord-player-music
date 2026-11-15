@@ -35,7 +35,7 @@ new Player(client, { sources: [new YtDlpProvider(), new YoutubeiProvider()] });
 new Player(client, { sources: [new YoutubeiProvider()] });
 ```
 
-The registry is available as `player.sources` (`register()`, `unregister()`, `list`, `search()`, `resolve()`, `resolvePlaylist()`, `stream()`).
+The registry is available as `player.sources` (`register()`, `unregister()`, `list`, `search()`, `resolve()`, `resolvePlaylist()`, `isPlaylist()`, `related()`, `stream()`, `open()`).
 
 ### yt-dlp
 
@@ -59,7 +59,7 @@ player.on('ytdlpStatus', ({ stage, message, version, latest }) => console.log(`[
 | `update-available` | A newer release exists (`version` is the old one, `latest` is the new one); for a yt-dlp from PATH the module only tells it, for the downloaded one it updates it |
 | `downloading`, `installed` | A download started / the binary was installed or updated |
 | `skipped` | The check did not run, see `reason`: `update-disabled`, `interval` (it ran recently), `offline` (GitHub can not be reached), `custom-command` (the `command` option is used) |
-| `error` | The update failed (the old binary is kept) | If the download or the update fails, the error event is emitted and the older binary keeps working.
+| `error` | The download or the update failed (the old binary is kept and keeps working) |
 
 ```js
 new YtDlpProvider({
@@ -187,7 +187,8 @@ A provider is an object (or a class) with these members. `isPlaylist` and `resol
 
 ```ts
 import { Readable } from 'node:stream';
-import { createOpusStream, Player, SourceProvider, SourceTrack } from 'discord-player-music';
+import { createOpusStream, Player, YoutubeiProvider, YtDlpProvider } from 'discord-player-music';
+import type { SourceProvider, SourceTrack } from 'discord-player-music';
 
 class RadioProvider implements SourceProvider {
 	readonly name = 'radio';
@@ -229,7 +230,8 @@ A provider must throw an error when it can not do the job: the registry then mov
 Lyrics come from `LrclibProvider` (the free [LRCLIB](https://lrclib.net) service, no API key). Use the `lyrics` option for another service:
 
 ```ts
-import { LyricsProvider, Player } from 'discord-player-music';
+import { Player } from 'discord-player-music';
+import type { LyricsProvider } from 'discord-player-music';
 
 const geniusLike: LyricsProvider = {
 	name: 'my-lyrics',

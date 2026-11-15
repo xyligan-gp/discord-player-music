@@ -23,7 +23,7 @@
 * 🎸 Audio filters
 * 📝 Lyrics
 * 📂 Multiple servers
-* 🧩 Typed errors, JSDoc for the whole API, ESM and CommonJS
+* 🧩 Typed errors, JSDoc for the whole API, works with `import` and `require`
 
 ## Installation
 
@@ -37,7 +37,7 @@ $ pnpm add discord-player-music discord.js
 
 Audio is converted with FFmpeg, which comes with the `ffmpeg-static` package. Some package managers do not run install scripts by default (npm 12 and pnpm 10 ask you to allow them): if the FFmpeg binary is missing, allow the install script of `ffmpeg-static` (`npm install-scripts approve ffmpeg-static`) or install FFmpeg in your system, the module finds it in `PATH`.
 
-[yt-dlp](https://github.com/yt-dlp/yt-dlp) is used as a fallback source for YouTube. **You do not need to install it:** if it is not found in `PATH`, the module downloads the official binary from GitHub into `~/.cache/discord-player-music`, checks its checksum and updates it once a day. See the [Providers page](https://dpm.js.org/#/docs/discord-player-music/stable/general/providers) to change or disable that.
+[yt-dlp](https://github.com/yt-dlp/yt-dlp) is used as a fallback source for YouTube. **You do not need to install it:** if it is not found in `PATH`, the module downloads the official binary from GitHub into `~/.cache/discord-player-music`, checks its checksum and looks for a newer release every time the player starts (at most once an hour). See the [Providers page](https://dpm.js.org/#/docs/discord-player-music/stable/general/providers) to change or disable that.
 
 ## Example Usage
 

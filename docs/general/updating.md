@@ -341,8 +341,8 @@ See the [Providers page](https://dpm.js.org/#/docs/discord-player-music/stable/g
 + options.lyrics             // lyrics provider, LrclibProvider by default
 + options.playlistLimit      // tracks taken from a playlist link, 100
 + options.prefetchSeconds    // the next track is prepared in advance, 20
-+ options.autoplay, options.autoplayLimit, options.autoplayHistory, options.autoplayMaxDuration // the autoplay, see "Autoplay" below
-+ options.progressInterval // seconds between the `trackProgress` events (0, off by default), see "Live progress" below
++ options.autoplay, options.autoplayLimit, options.autoplayHistory, options.autoplayMaxDuration // the autoplay, see "Autoplay" above
++ options.progressInterval // seconds between the `trackProgress` events (0, off by default), see "Live progress" above
 + options.sourceFailureThreshold, options.sourceCooldown
 
 + options.collectorsConfig.message.cancel, options.collectorsConfig.reaction.cancel // the cancel word (`cancel`) and the cancel reaction (`❌`), `false` turns them off
@@ -365,7 +365,7 @@ Names are the same as in 1.1.7. What changed:
 * player.queue.setVolume(guildID)             // without a value sets the default volume
 * player.queue.seek(guildID, seconds)         // validates the value
 + player.sources                              // SourceRegistry
-+ player.queue.setAutoplay(guildID, enabled?)   // turns the autoplay of a queue on or off, see "Autoplay" below
++ player.queue.setAutoplay(guildID, enabled?)   // turns the autoplay of a queue on or off, see "Autoplay" above
 + player.utils.parseDuration(text)             // '10m' -> milliseconds
 + player.utils.formatMilliseconds(ms, { long }) // milliseconds -> '2m' or '2 minutes'
 + player.utils.splitMilliseconds(ms)           // milliseconds -> { days, hours, minutes, seconds }
@@ -383,7 +383,7 @@ Types are generated from the code and exported from the main package. The `disco
 + import type { PlayerTrack } from 'discord-player-music';
 ```
 
-The package has two builds, ESM (`import`) and CommonJS (`require`), both work.
+The package is built as CommonJS, and it works with both `require` and `import` (ES modules).
 
 ### Removed
 

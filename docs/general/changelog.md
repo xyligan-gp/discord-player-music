@@ -96,5 +96,5 @@
   * `YoutubeiProvider` hides the parser warnings of `youtubei.js` (the `warnings` option shows them)
   * New helpers `player.utils.parseDuration()` (`'10m'` to milliseconds), `player.utils.formatMilliseconds()` (milliseconds to `2m` or `2 minutes`) and `player.utils.splitMilliseconds()` (milliseconds to days, hours, minutes and seconds)
   * **Changed:** `queueEnded` now has a second argument `reason` (`ended`, `stopped`, `deleted`, `skipped`, `error`) and is emitted once every time a queue is closed, not only when the tracks are over (check `reason === 'ended'` for the old behaviour). Invalid options are still replaced with the defaults, but the module now tells about them with `console.warn`
-  * Types are generated from the code, ESM and CommonJS builds, JSDoc for the whole public API
+  * Types are generated from the code, the package works with `import` and `require`, JSDoc for the whole public API
   * Added tests, linting, a JSDoc check and CI workflows
