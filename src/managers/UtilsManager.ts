@@ -291,6 +291,7 @@ export class UtilsManager {
             autoplayLimit: this.pick(options.autoplayLimit, 3, value => Number.isInteger(value) && value > 0, 'autoplayLimit'),
             autoplayHistory: this.pick(options.autoplayHistory, 50, value => Number.isInteger(value) && value >= 0, 'autoplayHistory'),
             autoplayMaxDuration: this.pick(options.autoplayMaxDuration, '15m', value => this.isDuration(value), 'autoplayMaxDuration'),
+            progressInterval: this.pick(options.progressInterval, 0, value => value === 0 || (Number.isFinite(value) && value >= 0.1), 'progressInterval'),
             searchResultsLimit: this.pick(options.searchResultsLimit, 10, value => value > 0, 'searchResultsLimit'),
             synchronLoop: this.pick(options.synchronLoop, true, undefined, 'synchronLoop'),
             defaultVolume: this.pick(options.defaultVolume, 5, value => value > 0, 'defaultVolume'),

@@ -571,6 +571,7 @@ export class Player extends PlayerEmitter {
  * @prop {number} [autoplayLimit=3] How many related tracks the autoplay adds at once (a few tracks let the next track be prepared in advance)
  * @prop {number} [autoplayHistory=50] How many played tracks are remembered, so the autoplay does not add them again
  * @prop {string} [autoplayMaxDuration=15m] The autoplay skips tracks that are longer (and live streams)
+ * @prop {number} [progressInterval=0] Every this many seconds the `trackProgress` event is emitted while a track plays (0 turns it off, the least value is 0.1). Discord limits how often a message can be edited, so use 5 seconds or more to update a message.
  * @prop {number} [searchResultsLimit=10] number of results to be returned when searching for tracks by title
  * @prop {LyricsProvider} [lyrics] Lyrics provider (LrclibProvider by default)
  * @prop {number} [playlistLimit=100] Maximum number of tracks that are taken from a playlist link
@@ -735,6 +736,20 @@ export class Player extends PlayerEmitter {
  *
  * @param {object} queue Server queue
  * @param {Array<PlayerTrack>} tracks Added tracks (`searchType` is `Search.AUTOPLAY`, `requested` and the channels are the ones of the track that played before)
+ */
+
+/**
+ * Emitted every `progressInterval` seconds (option, off by default) while a track plays: it is not emitted while the queue is paused or has no track. Use it to update a "now playing" message
+ * (Discord limits how often a message can be edited: not more often than every 5-10 seconds).
+ * @event Player#trackProgress
+ *
+ * @param {object} queue Server queue
+ * @param {object} data Progress of the playing track
+ * @param {PlayerTrack} data.track Playing track
+ * @param {number} data.position Played time in seconds
+ * @param {number} data.duration Duration of the track in seconds (0 for a live stream)
+ * @param {string} data.bar Progress bar (see `progressConfig`)
+ * @param {string} data.percents Played part, for example `32%`
  */
 
 /**

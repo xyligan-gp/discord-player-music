@@ -88,6 +88,11 @@ export interface PlayerQueue {
     autoplaying?: boolean;
 
     /**
+     * Internal: timer of the `trackProgress` event
+     */
+    progressTimer?: NodeJS.Timeout;
+
+    /**
      * Internal: how many times the autoplay worked since a track played successfully (a limit stops an endless chain of tracks that can not be played)
      */
     autoplayRounds?: number;
@@ -146,6 +151,17 @@ export interface CollectorData {
 }
 
 export interface ProgressData {
+    bar: string;
+    percents: string;
+}
+
+/**
+ * Data of the `trackProgress` event
+ */
+export interface TrackProgressData {
+    track: PlayerTrack;
+    position: number;
+    duration: number;
     bar: string;
     percents: string;
 }

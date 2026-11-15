@@ -20,6 +20,7 @@ export enum Collector {
  * @prop {string} QUEUE_ENDED Player 'queueEnded' event (a queue was closed for any reason, the second argument tells why)
  * @prop {string} QUEUE_STATE Player 'queueStateChange' event
  * @prop {string} AUTOPLAY_ADDED Player 'autoplayAdded' event (the autoplay added related tracks to the queue)
+ * @prop {string} TRACK_PROGRESS Player 'trackProgress' event (the progress of the playing track, every `progressInterval` seconds)
  * @prop {string} PROVIDER_FAILED Player 'providerFailed' event (a source provider failed, the next one is tried)
  * @prop {string} YTDLP_STATUS Player 'ytdlpStatus' event (a step of finding, checking, downloading or updating yt-dlp)
  * @prop {string} SOURCE_USED Player 'sourceUsed' event (which source provider gives the audio of a track)
@@ -34,6 +35,7 @@ export enum Events {
     QUEUE_ENDED = 'queueEnded',
     QUEUE_STATE = 'queueStateChange',
     AUTOPLAY_ADDED = 'autoplayAdded',
+    TRACK_PROGRESS = 'trackProgress',
     PROVIDER_FAILED = 'providerFailed',
     YTDLP_STATUS = 'ytdlpStatus',
     SOURCE_USED = 'sourceUsed',

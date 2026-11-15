@@ -7,6 +7,7 @@ export interface PlayerOptions {
     autoplayLimit?: number;
     autoplayHistory?: number;
     autoplayMaxDuration?: string;
+    progressInterval?: number;
     searchResultsLimit?: number;
     synchronLoop?: boolean;
     defaultVolume?: number;
@@ -49,6 +50,7 @@ export interface ResolvedPlayerOptions {
     autoplayLimit: number;
     autoplayHistory: number;
     autoplayMaxDuration: string;
+    progressInterval: number;
     searchResultsLimit: number;
     synchronLoop: boolean;
     defaultVolume: number;

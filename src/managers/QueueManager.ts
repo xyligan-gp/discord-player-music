@@ -174,6 +174,7 @@ export class QueueManager {
             if(await this.autoplay(guildID, guildQueue)) return;
 
             this.cancelPrefetch(guildQueue);
+            this.stopProgress(guildQueue);
 
             if(guildQueue.connection.state.status !== VoiceConnectionStatus.Destroyed) guildQueue.connection.destroy();
 
@@ -196,6 +197,7 @@ export class QueueManager {
             // The connection is lost: the queue can not continue
             if(error instanceof PlayerError && error.code === PlayerErrorCode.CONNECTION_FAILED) {
                 this.cancelPrefetch(guildQueue);
+                this.stopProgress(guildQueue);
                 this.storage.delete(guildID);
 
                 if(guildQueue.connection.state.status !== VoiceConnectionStatus.Destroyed) guildQueue.connection.destroy();
@@ -261,6 +263,8 @@ export class QueueManager {
 
         guildQueue.lastPlayed = track;
         guildQueue.autoplayRounds = 0;
+
+        if(guildQueue.state !== GuildQueueState.PAUSED) this.startProgress(track.guild.id, guildQueue);
 
         this.remember(guildQueue, track.url);
     }
@@ -355,6 +359,67 @@ export class QueueManager {
     }
 
     /**
+     * Starts the timer of the `trackProgress` event (one timer per queue, it replaces the old one). It does nothing when `progressInterval` is 0.
+     *
+     * @param {string} guildID Discord Guild ID
+     * @param {PlayerQueue} guildQueue Server queue
+     * @private
+     */
+    private startProgress(guildID: string, guildQueue: PlayerQueue): void {
+        this.stopProgress(guildQueue);
+
+        const seconds = this.player.options.progressInterval;
+
+        if(!(seconds > 0)) return;
+
+        guildQueue.progressTimer = setInterval(() => this.tickProgress(guildID, guildQueue), seconds * 1000);
+        guildQueue.progressTimer.unref();
+    }
+
+    /**
+     * Stops the timer of the `trackProgress` event
+     *
+     * @param {PlayerQueue} guildQueue Server queue
+     * @private
+     */
+    private stopProgress(guildQueue: PlayerQueue): void {
+        clearInterval(guildQueue.progressTimer);
+
+        guildQueue.progressTimer = undefined;
+    }
+
+    /**
+     * One step of the timer: emits `trackProgress` when a track really plays. An error of a listener is reported with the `error` event and does not stop the timer.
+     *
+     * @param {string} guildID Discord Guild ID
+     * @param {PlayerQueue} guildQueue Server queue
+     *
+     * @fires Player#trackProgress
+     * @private
+     */
+    private tickProgress(guildID: string, guildQueue: PlayerQueue): void {
+        // A timer never outlives its queue
+        if(this.storage.get(guildID) !== guildQueue) return this.stopProgress(guildQueue);
+
+        const track = guildQueue.tracks[0];
+
+        if(!track || guildQueue.state === GuildQueueState.PAUSED || guildQueue.dispatcher.state.status !== AudioPlayerStatus.Playing) return;
+
+        const duration = Number(track.duration.hours) * 3600 + Number(track.duration.minutes) * 60 + Number(track.duration.seconds);
+        const position = Math.floor(((guildQueue.dispatcher.state as { resource?: { playbackDuration?: number } }).resource?.playbackDuration ?? 0) / 1000);
+
+        try {
+            this.player.emit(Events.TRACK_PROGRESS, guildQueue, { track, position, duration, ...this.calculateProgress(guildQueue) });
+        }catch(error) {
+            try {
+                this.player.emit(Events.ERROR, { channel: { text: track.channel.text, voice: track.channel.voice }, requested: track.requested, method: 'trackProgress', error: error as Error });
+            }catch {
+                // A broken error listener must not stop the timer either
+            }
+        }
+    }
+
+    /**
      * Called when the audio player became idle: the current track has ended (or was skipped), so the next one is played
      *
      * @param {string} guildID Discord Guild ID
@@ -429,8 +494,15 @@ export class QueueManager {
         }else if(oldState === GuildQueueState.PAUSED) newState = GuildQueueState.PLAYING;
 
         if(newState) {
-            if(newState === GuildQueueState.PAUSED) guildQueue.dispatcher.pause();
-            else guildQueue.dispatcher.unpause();
+            if(newState === GuildQueueState.PAUSED) {
+                guildQueue.dispatcher.pause();
+
+                this.stopProgress(guildQueue);
+            }else {
+                guildQueue.dispatcher.unpause();
+
+                this.startProgress(guildID, guildQueue);
+            }
 
             guildQueue.state = newState;
 
@@ -478,7 +550,18 @@ export class QueueManager {
     public async progress(guildID: string): Promise<ProgressData> {
         requireParam(guildID, 'guildID', '<QueueManager>.progress');
 
-        const guildQueue = this.find(guildID);
+        return this.calculateProgress(this.find(guildID));
+    }
+
+    /**
+     * Calculates the progress bar and the percents of the current track of a queue
+     *
+     * @param {PlayerQueue} guildQueue Server queue
+     *
+     * @returns {ProgressData} Progress bar and percents
+     * @private
+     */
+    private calculateProgress(guildQueue: PlayerQueue): ProgressData {
         const { size, line, slider } = this.player.options.progressConfig;
 
         const emptyProgress: ProgressData = { bar: this.player.utils.createEmptyProgress(), percents: '0%' };
@@ -677,6 +760,7 @@ export class QueueManager {
             if(guildQueue.connection.state.status !== VoiceConnectionStatus.Destroyed) guildQueue.connection.destroy();
 
             this.cancelPrefetch(guildQueue);
+            this.stopProgress(guildQueue);
             this.storage.delete(guildID);
             guildQueue.dispatcher.stop(true);
 
@@ -815,6 +899,7 @@ export class QueueManager {
         const guildQueue = this.find(guildID);
 
         this.cancelPrefetch(guildQueue);
+        this.stopProgress(guildQueue);
         this.storage.delete(guildID);
         guildQueue.dispatcher.stop(true);
 
@@ -845,6 +930,7 @@ export class QueueManager {
         const guildQueue = this.find(guildID);
 
         this.cancelPrefetch(guildQueue);
+        this.stopProgress(guildQueue);
         this.storage.delete(guildID);
         guildQueue.dispatcher.stop(true);
 

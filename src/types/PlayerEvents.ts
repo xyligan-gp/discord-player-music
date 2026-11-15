@@ -1,7 +1,7 @@
 import type { Player } from '../Player';
 import { GuildQueueState } from '../PlayerEnums';
 
-import { PlayerErrorEvent, PlayerQueue, PlayerTrack, QueueEndReason, ProviderFailedEvent, SourceUsedEvent, TrackSkippedEvent, YtDlpStatusEvent } from './PlayerData';
+import { PlayerErrorEvent, PlayerQueue, PlayerTrack, QueueEndReason, ProviderFailedEvent, SourceUsedEvent, TrackProgressData, TrackSkippedEvent, YtDlpStatusEvent } from './PlayerData';
 
 /**
  * Events of the player and their arguments
@@ -19,6 +19,7 @@ export interface PlayerEvents {
 
     queueStateChange: [queue: PlayerQueue, oldState: GuildQueueState, newState: GuildQueueState];
     autoplayAdded: [queue: PlayerQueue, tracks: Array<PlayerTrack>];
+    trackProgress: [queue: PlayerQueue, data: TrackProgressData];
     providerFailed: [data: ProviderFailedEvent];
     sourceUsed: [data: SourceUsedEvent];
     ytdlpStatus: [data: YtDlpStatusEvent];

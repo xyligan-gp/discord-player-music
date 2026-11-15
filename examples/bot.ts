@@ -15,6 +15,7 @@
 // * filters: filters, filter (set, add, remove, info)
 // * sources: sources, ytdlp, prefetch, autoadd, utils
 // * every event of the player is written to the console, and the main ones are also sent to the text channel (`!debug on` sends the technical ones too)
+// * the "Now playing" message with a progress bar that moves (the `trackProgress` event): sent when a track starts, edited every PROGRESS_INTERVAL seconds, deleted when the next track starts
 // * collectors: search, pick and the tests `!collector message|reaction`
 import { existsSync } from 'node:fs';
 import { ActionRowBuilder, ButtonBuilder, ButtonStyle, Client, ComponentType, EmbedBuilder, GatewayIntentBits, Message, TextChannel } from 'discord.js';
@@ -35,7 +36,11 @@ const prefix = '!';
 // `cookies` (the path of a cookies.txt file of a YouTube account) is only needed when YouTube asks your server to sign in or for age-restricted
 // videos, see the FAQ. The file is taken from the COOKIES_FILE variable, or from examples/cookies.txt if it exists. Never commit it to git!
 const cookies = process.env.COOKIES_FILE ?? (existsSync('examples/cookies.txt') ? 'examples/cookies.txt' : undefined);
-const player = new Player(client, { cookies, sourceFailureThreshold: 3 });
+// `progressInterval` makes the player emit the `trackProgress` event every this many seconds while a track plays (the "Now playing" message is edited with it). It comes from PROGRESS_INTERVAL
+// (seconds, 5 by default, 0 turns the event off).
+const requestedInterval = Number(process.env.PROGRESS_INTERVAL ?? 5);
+const progressInterval = !Number.isFinite(requestedInterval) || requestedInterval < 0 ? 5 : requestedInterval === 0 ? 0 : Math.max(3, requestedInterval);
+const player = new Player(client, { cookies, sourceFailureThreshold: 3, progressInterval });
 
 if(cookies) console.log(`Using the cookies from ${cookies}`);
 
@@ -104,6 +109,87 @@ function say(channel: TextChannel | undefined, content: string | { embeds: Array
     channel?.send(content).catch(() => { });
 }
 
+// ---- The "Now playing" message (the trackProgress event) -------------------------------------------------------------------------------------
+//
+// When a track starts to play, the bot sends the "Now playing" message and keeps it up to date: the player emits `trackProgress` every `progressInterval` seconds
+// (PROGRESS_INTERVAL in examples/.env, 5 by default, 3 at least; with 0 the event is off and the message stays as it was sent), and the bot edits the message.
+// When the next track starts or the queue is closed, the old message is deleted. Discord limits how often a message can be edited, so use 5 seconds or more.
+
+interface NowPlaying {
+    message: Message | null;
+    version: number;
+}
+
+const nowPlaying = new Map<string, NowPlaying>();
+
+/**
+ * Time as `m:ss` (or `h:mm:ss`)
+ */
+function clock(seconds: number): string {
+    return player.utils.formatDuration(seconds).replace(/^00:/, '');
+}
+
+/**
+ * Embed of the "Now playing" message: the track, the progress bar and `position / duration`
+ */
+function liveEmbed(track: PlayerTrack, position: number, duration: number, bar: string, percents: string): EmbedBuilder {
+    const embed = new EmbedBuilder()
+        .setColor(colors.good)
+        .setTitle('Now playing')
+        .setDescription(`[${track.title.replace(/[[\]]/g, '')}](${track.url})`)
+        .addFields(
+            { name: 'Progress', value: `${bar} ${percents}` },
+            { name: 'Time', value: duration ? `${clock(position)} / ${clock(duration)}` : clock(position), inline: true },
+            { name: 'Requested by', value: `${track.requested}`, inline: true }
+        );
+
+    if(track.thumbnail) embed.setThumbnail(track.thumbnail);
+    if(track.author.name) embed.setAuthor({ name: track.author.name, url: track.author.url || undefined });
+
+    return embed;
+}
+
+/**
+ * A track starts to play: the "Now playing" message of the previous track is deleted and a new message is sent
+ */
+async function startNowPlaying(track: PlayerTrack): Promise<void> {
+    const guildID = track.guild.id;
+    const state = nowPlaying.get(guildID) ?? { message: null, version: 0 };
+
+    nowPlaying.set(guildID, state);
+
+    const version = ++state.version;
+    const previous = state.message;
+
+    state.message = null;
+
+    await previous?.delete().catch(() => { });
+
+    const duration = Number(track.duration.hours) * 3600 + Number(track.duration.minutes) * 60 + Number(track.duration.seconds);
+
+    const sent = await track.channel.text.send({ embeds: [liveEmbed(track, 0, duration, player.utils.createEmptyProgress(), '0%')] }).catch(() => null);
+
+    // Another track started while the message was sent: the newer message wins
+    if(state.version !== version) return void sent?.delete().catch(() => { });
+
+    state.message = sent;
+}
+
+/**
+ * The queue was closed: the "Now playing" message is deleted and forgotten
+ */
+async function endNowPlaying(guildID: string): Promise<void> {
+    const state = nowPlaying.get(guildID);
+    const message = state?.message;
+
+    if(!state || !message) return;
+
+    state.version++;
+    state.message = null;
+
+    await message.delete().catch(() => { });
+}
+
 // ---- Events of the player --------------------------------------------------------------------------------------------------------------------
 //
 // Every event is written to the console. The main ones are also sent to the text channel. The technical ones (which source gives the audio, a failed
@@ -136,7 +222,20 @@ player.on('addedTrack', track => {
 player.on('playingTrack', track => {
     console.log(`[queue] playing "${track.title}"`);
 
-    say(track.channel.text, { embeds: [trackEmbed(track, 'Now playing')] });
+    // The "Now playing" message (the old one is deleted)
+    void startNowPlaying(track);
+});
+
+// The progress of the playing track (every progressInterval seconds, not while the queue is paused): the "Now playing" message is edited
+player.on('trackProgress', (queue, data) => {
+    const state = nowPlaying.get(data.track.guild.id);
+
+    console.log(`[progress] ${data.track.title}: ${data.position}s / ${data.duration}s ${data.bar} ${data.percents}`);
+
+    if(!state?.message) return;
+
+    // A message that was deleted by a user is forgotten
+    state.message.edit({ embeds: [liveEmbed(data.track, data.position, data.duration, data.bar, data.percents)] }).catch(() => { state.message = null });
 });
 
 player.on('queueStateChange', (queue, oldState, newState) => {
@@ -159,6 +258,9 @@ player.on('queueEnded', (queue, reason) => {
     console.log(`[queue] ended in ${queue.channel.voice.guild.name}: ${reason}`);
 
     say(queue.channel.text, reason === 'ended' ? 'The queue has ended.' : `The queue was closed: \`${reason}\``);
+
+    // The "Now playing" message is deleted
+    void endNowPlaying(queue.channel.voice.guild.id);
 });
 
 // A track that could not be played is skipped and the queue goes on with the next one
@@ -596,7 +698,7 @@ const commands: Record<string, Command> = {
         run({ channel }) {
             const { options } = player;
             const text = JSON.stringify({
-                autoAddingTracks: options.autoAddingTracks, autoplay: options.autoplay, autoplayLimit: options.autoplayLimit, autoplayHistory: options.autoplayHistory, autoplayMaxDuration: options.autoplayMaxDuration, searchResultsLimit: options.searchResultsLimit, synchronLoop: options.synchronLoop, defaultVolume: options.defaultVolume,
+                autoAddingTracks: options.autoAddingTracks, autoplay: options.autoplay, autoplayLimit: options.autoplayLimit, autoplayHistory: options.autoplayHistory, autoplayMaxDuration: options.autoplayMaxDuration, progressInterval: options.progressInterval, searchResultsLimit: options.searchResultsLimit, synchronLoop: options.synchronLoop, defaultVolume: options.defaultVolume,
                 playlistLimit: options.playlistLimit, prefetchSeconds: options.prefetchSeconds, sourceFailureThreshold: options.sourceFailureThreshold, sourceCooldown: options.sourceCooldown,
                 cookies: options.cookies ? 'set' : 'not set', progressConfig: options.progressConfig, collectorsConfig: options.collectorsConfig
             }, null, 2);
