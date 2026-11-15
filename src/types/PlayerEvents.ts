@@ -18,6 +18,7 @@ export interface PlayerEvents {
     queueEnded: [queue: PlayerQueue, reason: QueueEndReason];
 
     queueStateChange: [queue: PlayerQueue, oldState: GuildQueueState, newState: GuildQueueState];
+    autoplayAdded: [queue: PlayerQueue, tracks: Array<PlayerTrack>];
     providerFailed: [data: ProviderFailedEvent];
     sourceUsed: [data: SourceUsedEvent];
     ytdlpStatus: [data: YtDlpStatusEvent];

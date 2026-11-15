@@ -19,7 +19,8 @@ vi.mock('youtubei.js', () => ({
             return { getBasicInfo: async () => options.cookie ? { playability_status: { status: 'OK' }, basic_info: { title: 'Age restricted', duration: 5, author: 'Author', channel_id: 'C' } } : { playability_status: { status: 'LOGIN_REQUIRED' } } }
         })
     },
-    UniversalCache: class { }
+    UniversalCache: class { },
+    Log: { Level: { ERROR: 1 }, setLevel: () => { } }
 }));
 
 import { cookieHeader, parseCookies, readYouTubeCookies } from '../src/sources/cookies';

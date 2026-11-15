@@ -3,6 +3,10 @@ import { LyricsProvider } from '../lyrics/LyricsProvider';
 
 export interface PlayerOptions {
     autoAddingTracks?: boolean;
+    autoplay?: boolean;
+    autoplayLimit?: number;
+    autoplayHistory?: number;
+    autoplayMaxDuration?: string;
     searchResultsLimit?: number;
     synchronLoop?: boolean;
     defaultVolume?: number;
@@ -41,6 +45,10 @@ export interface PlayerOptions {
  */
 export interface ResolvedPlayerOptions {
     autoAddingTracks: boolean;
+    autoplay: boolean;
+    autoplayLimit: number;
+    autoplayHistory: number;
+    autoplayMaxDuration: string;
     searchResultsLimit: number;
     synchronLoop: boolean;
     defaultVolume: number;

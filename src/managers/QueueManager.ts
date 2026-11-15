@@ -4,12 +4,13 @@ import { Collection } from 'discord.js';
 import { AudioPlayerStatus, createAudioPlayer, entersState, getVoiceConnection, joinVoiceChannel, VoiceConnectionStatus } from '@discordjs/voice';
 
 import type { Player } from '../Player';
-import { Events, GuildQueueState, Loop } from '../PlayerEnums';
+import { Events, GuildQueueState, Loop, Search } from '../PlayerEnums';
 import { PlayerError, PlayerErrorCode, requireParam } from '../PlayerError';
 
 import { createVolumeResource } from '../sources/AudioPipeline';
+import { SourceTrack } from '../sources/SourceProvider';
 
-import { DefaultData, Filter, LoopData, PlayerFilter, PlayerQueue, PlayerTrack, ProgressData, RemoveTrackData, SkipData, StreamData } from '../types/PlayerData';
+import { AutoplayData, DefaultData, Filter, LoopData, PlayerFilter, PlayerQueue, PlayerTrack, ProgressData, RemoveTrackData, SkipData, StreamData } from '../types/PlayerData';
 
 /**
  * Class that controls Player Queue Manager
@@ -130,7 +131,10 @@ export class QueueManager {
             volume: this.player.options.defaultVolume,
             startStream: Date.now(),
             state: GuildQueueState.PLAYING,
-            filter: { name: null, value: null }
+            filter: { name: null, value: null },
+
+            autoplay: this.player.options.autoplay,
+            history: []
         }
 
         // The listeners are added once per queue (not once per track)
@@ -166,6 +170,9 @@ export class QueueManager {
         if(!guildQueue) return;
 
         if(!track) {
+            // With the autoplay the queue goes on with related tracks instead of ending
+            if(await this.autoplay(guildID, guildQueue)) return;
+
             this.cancelPrefetch(guildQueue);
 
             if(guildQueue.connection.state.status !== VoiceConnectionStatus.Destroyed) guildQueue.connection.destroy();
@@ -183,6 +190,8 @@ export class QueueManager {
             this.player.emit(Events.TRACK_PLAYING, track);
         }catch(error) {
             this.player.emit(Events.ERROR, { channel: { text: track.channel.text, voice: track.channel.voice }, requested: track.requested, method: 'initGuildTrack', error: error as Error });
+
+            this.remember(guildQueue, track.url);
 
             // The connection is lost: the queue can not continue
             if(error instanceof PlayerError && error.code === PlayerErrorCode.CONNECTION_FAILED) {
@@ -249,6 +258,11 @@ export class QueueManager {
         this.player.emit(Events.SOURCE_USED, { provider: opened.provider.name, via: opened.provider.audioProvider?.(track.url), track, seek, prefetched: early !== null });
 
         this.schedulePrefetch(guildQueue, track, seek ?? 0);
+
+        guildQueue.lastPlayed = track;
+        guildQueue.autoplayRounds = 0;
+
+        this.remember(guildQueue, track.url);
     }
 
     /**
@@ -507,7 +521,7 @@ export class QueueManager {
 
         const guildQueue = this.find(guildID);
 
-        return { loop: { track: guildQueue.loop.track, queue: guildQueue.loop.queue }, filter: guildQueue.filter, state: guildQueue.state, volume: guildQueue.volume, streamTime: this.player.utils.splitMilliseconds(Date.now() - guildQueue.startStream) };
+        return { loop: { track: guildQueue.loop.track, queue: guildQueue.loop.queue }, autoplay: guildQueue.autoplay, filter: guildQueue.filter, state: guildQueue.state, volume: guildQueue.volume, streamTime: this.player.utils.splitMilliseconds(Date.now() - guildQueue.startStream) };
     }
 
     /**
@@ -651,6 +665,13 @@ export class QueueManager {
 
         const guildQueue = this.find(guildID);
         const current = guildQueue.tracks[0];
+
+        // With the autoplay the queue goes on with related tracks after the last track is skipped
+        if(guildQueue.tracks.length === 1 && this.isAutoplaying(guildQueue)) {
+            guildQueue.dispatcher.stop();
+
+            return { current, next: null };
+        }
 
         if(guildQueue.tracks.length === 1) {
             if(guildQueue.connection.state.status !== VoiceConnectionStatus.Destroyed) guildQueue.connection.destroy();
@@ -830,5 +851,202 @@ export class QueueManager {
         this.player.emit(Events.QUEUE_ENDED, guildQueue, 'deleted');
 
         return { status: true };
+    }
+
+    /**
+     * Allows you to turn the autoplay of the server queue on or off. With the autoplay, when the tracks are over (and no loop is on, and after the last
+     * track is skipped or removed), the module finds tracks related to the track that played last, adds them to the queue and plays them, again and again,
+     * until the autoplay is turned off or the queue is stopped. Without it the queue ends (`queueEnded` with the reason `ended`).
+     *
+     * @param {string} guildID Discord Guild ID
+     * @param {boolean} [enabled] New status (the status is switched when it is not passed)
+     *
+     * @fires Player#autoplayAdded
+     *
+     * @example
+     * const autoplayData = await client.player.queue.setAutoplay('GuildID', true);
+     *
+     * console.log(autoplayData.autoplay);
+     *
+     * @throws {PlayerError} `QUEUE_NOT_FOUND` if the server has no queue, `INVALID_TYPE` if `enabled` is not a boolean
+     *
+     * @returns {Promise<AutoplayData>} Autoplay status of the queue
+     */
+    public async setAutoplay(guildID: string, enabled?: boolean): Promise<AutoplayData> {
+        requireParam(guildID, 'guildID', '<QueueManager>.setAutoplay');
+
+        if(enabled !== undefined && typeof enabled !== 'boolean') throw new PlayerError(PlayerErrorCode.INVALID_TYPE, { value: 'enabled', data: 'boolean' });
+
+        const guildQueue = this.find(guildID);
+
+        guildQueue.autoplay = enabled ?? !guildQueue.autoplay;
+
+        return { autoplay: guildQueue.autoplay };
+    }
+
+    /**
+     * Checks that the autoplay may add tracks now: it is on and neither the track loop nor the queue loop is on
+     *
+     * @param {PlayerQueue} guildQueue Server queue
+     *
+     * @returns {boolean} `true` if the autoplay works for the queue
+     * @private
+     */
+    private isAutoplaying(guildQueue: PlayerQueue): boolean {
+        return guildQueue.autoplay && !guildQueue.loop.track && !guildQueue.loop.queue;
+    }
+
+    /**
+     * Remembers a played (or failed) track, so the autoplay does not add it again. The oldest tracks are forgotten (see `autoplayHistory`).
+     *
+     * @param {PlayerQueue} guildQueue Server queue
+     * @param {string} url Track URL
+     * @private
+     */
+    private remember(guildQueue: PlayerQueue, url: string): void {
+        const history = guildQueue.history ??= [];
+        const index = history.indexOf(url);
+
+        if(index >= 0) history.splice(index, 1);
+
+        history.push(url);
+
+        while(history.length > this.player.options.autoplayHistory) history.shift();
+    }
+
+    /**
+     * Autoplay: when the queue has no more tracks, it looks for tracks related to the track that played last, adds them and goes on playing.
+     * Nothing is added (and the queue ends) when the autoplay is off, a loop is on, nothing suitable was found or the lookup failed (`error` event).
+     * Live streams, tracks longer than `autoplayMaxDuration` and the tracks that already played are skipped.
+     *
+     * @param {string} guildID Discord Guild ID
+     * @param {PlayerQueue} guildQueue Server queue
+     *
+     * @fires Player#autoplayAdded
+     * @fires Player#error
+     *
+     * @returns {Promise<boolean>} `true` if the queue must not be closed (the playback went on, or the queue was closed meanwhile)
+     * @private
+     */
+    private async autoplay(guildID: string, guildQueue: PlayerQueue): Promise<boolean> {
+        const seed = guildQueue.lastPlayed;
+
+        if(!seed || guildQueue.autoplaying || !this.isAutoplaying(guildQueue)) return false;
+
+        // The counter is reset when a track plays: a limit stops an endless chain of tracks that can not be played
+        guildQueue.autoplayRounds = (guildQueue.autoplayRounds ?? 0) + 1;
+
+        if(guildQueue.autoplayRounds > 3) return false;
+
+        const { options } = this.player;
+        let related: Array<SourceTrack>;
+
+        guildQueue.autoplaying = true;
+
+        try {
+            const exclude = [...(guildQueue.history ?? []), seed.url, ...guildQueue.tracks.map(track => track.url)];
+
+            // More tracks than needed are asked for, some of them are skipped below (live streams, too long tracks)
+            related = await this.player.sources.related(this.toSourceTrack(seed), { limit: options.autoplayLimit * 4, exclude });
+        }catch(error) {
+            guildQueue.autoplaying = false;
+
+            this.player.emit(Events.ERROR, { channel: { text: seed.channel.text, voice: seed.channel.voice }, requested: seed.requested, method: 'autoplay', error: error as Error });
+
+            return false;
+        }
+
+        guildQueue.autoplaying = false;
+
+        // The queue was stopped or deleted while the tracks were searched
+        if(this.storage.get(guildID) !== guildQueue) return true;
+
+        // A track was added meanwhile: it is played, the autoplay works at the next end
+        if(guildQueue.tracks.length) {
+            await this.startTrack(guildID, guildQueue.tracks[0]);
+
+            return true;
+        }
+
+        // The autoplay was turned off (or a loop was switched on) meanwhile
+        if(!this.isAutoplaying(guildQueue)) return false;
+
+        const maxSeconds = this.player.utils.parseDuration(options.autoplayMaxDuration) / 1000;
+        const seedSeconds = this.toSourceTrack(seed).seconds;
+        const suitable = related.filter(track => track.seconds > 0 && track.seconds <= maxSeconds && !track.url.includes('/shorts/'));
+
+        // The feed of related videos is mixed (news, long mixes, children's videos), so the tracks of a similar length go first (the order of the feed is kept)
+        const similar = (track: SourceTrack) => seedSeconds > 0 && track.seconds >= seedSeconds * 0.3 && track.seconds <= seedSeconds * 3;
+        const tracks = [...suitable.filter(similar), ...suitable.filter(track => !similar(track))]
+            .slice(0, options.autoplayLimit)
+            .map(track => this.createAutoplayTrack(track, seed));
+
+        if(!tracks.length) return false;
+
+        guildQueue.tracks.push(...tracks);
+
+        this.player.emit(Events.AUTOPLAY_ADDED, guildQueue, tracks);
+
+        await this.startTrack(guildID, guildQueue.tracks[0]);
+
+        return true;
+    }
+
+    /**
+     * Converts a track of the queue to the track of a source provider (the providers use its `url`)
+     *
+     * @param {PlayerTrack} track Track of the queue
+     *
+     * @returns {SourceTrack} Track of a source provider
+     * @private
+     */
+    private toSourceTrack(track: PlayerTrack): SourceTrack {
+        const { hours, minutes, seconds } = track.duration;
+
+        return {
+            id: track.url,
+            title: track.title,
+            url: track.url,
+            thumbnail: track.thumbnail,
+            seconds: Number(hours) * 3600 + Number(minutes) * 60 + Number(seconds),
+            author: { name: track.author.name, url: track.author.url },
+            source: track.source ?? ''
+        }
+    }
+
+    /**
+     * Creates a track of the queue from a related track: the requester and the channels are the ones of the track that played before
+     *
+     * @param {SourceTrack} item Related track
+     * @param {PlayerTrack} seed Track that played before
+     *
+     * @returns {PlayerTrack} Track of the queue
+     * @private
+     */
+    private createAutoplayTrack(item: SourceTrack, seed: PlayerTrack): PlayerTrack {
+        const [hours, minutes, seconds] = this.player.utils.formatnumbers([Math.floor(item.seconds / 3600), Math.floor(item.seconds / 60 % 60), Math.floor(item.seconds % 60)]);
+
+        return {
+            searchType: Search.AUTOPLAY,
+            title: item.title,
+            url: item.url,
+            thumbnail: item.thumbnail,
+
+            author: {
+                name: item.author.name,
+                url: item.author.url
+            },
+
+            channel: {
+                text: seed.channel.text,
+                voice: seed.channel.voice
+            },
+
+            guild: seed.guild,
+            requested: seed.requested,
+
+            duration: { hours, minutes, seconds },
+            source: item.source
+        }
     }
 }

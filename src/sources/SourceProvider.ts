@@ -63,6 +63,19 @@ export interface SourceStreamOptions {
 }
 
 /**
+ * Options of a search for related tracks
+ *
+ * @typedef {object} SourceRelatedOptions
+ *
+ * @prop {number} limit How many tracks are wanted at most
+ * @prop {Array<string>} [exclude] URLs that must not be returned (the tracks that were already played)
+ */
+export interface SourceRelatedOptions {
+    limit: number;
+    exclude?: Array<string>;
+}
+
+/**
  * Interface that every track source must implement.
  * Providers can be passed to the `sources` player option or added with `SourceRegistry#register`.
  *
@@ -75,6 +88,7 @@ export interface SourceStreamOptions {
  * @prop {function(string, SourceStreamOptions): Promise<Readable>} stream Creates an Ogg Opus stream for a track URL
  * @prop {function(string): boolean} [isPlaylist] Returns `true` if the URL is a playlist link that the provider can load (optional)
  * @prop {function(string, number): Promise<SourcePlaylist>} [resolvePlaylist] Gets the tracks of a playlist, no more than the given limit (optional)
+ * @prop {function(SourceTrack, SourceRelatedOptions): Promise<Array<SourceTrack>>} [related] Finds tracks related to the given one, for the autoplay: at most `options.limit` tracks, without the URLs of `options.exclude`. The URL of the track is `track.url` (optional).
  * @prop {function(): Promise<void>} [prepare] Prepares the provider ahead of time, for example connects to a service or downloads a program. The player calls it when it is created (optional).
  * @prop {function(function(): Array<SourceProvider>): void} [attach] Receives a function that returns the other providers of the registry, so a provider can use them (for example to find the audio of a track that it only knows by its information). The registry calls it when the provider is added (optional).
  * @prop {function(string): (string | undefined)} [audioProvider] Name of the provider that actually gives the audio of the track with the given URL, for providers that play the audio of other sources (optional). It is shown in the `via` field of the `sourceUsed` event.
@@ -89,6 +103,7 @@ export interface SourceProvider {
     isPlaylist?(url: string): boolean;
     resolvePlaylist?(url: string, limit: number): Promise<SourcePlaylist>;
     prepare?(): Promise<void>;
+    related?(track: SourceTrack, options: SourceRelatedOptions): Promise<Array<SourceTrack>>;
     attach?(others: () => Array<SourceProvider>): void;
     audioProvider?(url: string): string | undefined;
 }

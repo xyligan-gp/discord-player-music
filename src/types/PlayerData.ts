@@ -68,6 +68,31 @@ export interface PlayerQueue {
     filter: PlayerFilter;
 
     /**
+     * The autoplay of this queue: when the tracks are over (and no loop is on), related tracks are found, added and played (`queue.setAutoplay()` switches it)
+     */
+    autoplay: boolean;
+
+    /**
+     * Internal: the track that played last (the autoplay looks for the tracks related to it)
+     */
+    lastPlayed?: PlayerTrack;
+
+    /**
+     * Internal: URLs of the tracks that played or failed lately (the autoplay does not add them again)
+     */
+    history?: Array<string>;
+
+    /**
+     * Internal: the autoplay is looking for tracks now
+     */
+    autoplaying?: boolean;
+
+    /**
+     * Internal: how many times the autoplay worked since a track played successfully (a limit stops an endless chain of tracks that can not be played)
+     */
+    autoplayRounds?: number;
+
+    /**
      * Internal flag: the current track was removed from the queue and the next one must be played without removing anything else
      */
     currentRemoved?: boolean;
@@ -125,11 +150,17 @@ export interface ProgressData {
     percents: string;
 }
 
+export interface AutoplayData {
+    autoplay: boolean;
+}
+
 export interface StreamData {
     loop: {
         track: boolean;
         queue: boolean;
     }
+
+    autoplay: boolean;
 
     filter: PlayerFilter;
     state: GuildQueueState;
@@ -215,7 +246,7 @@ export interface TrackSkippedEvent {
  */
 export interface ProviderFailedEvent {
     provider: string;
-    method: 'search' | 'resolve' | 'stream' | 'resolvePlaylist';
+    method: 'search' | 'resolve' | 'stream' | 'resolvePlaylist' | 'related';
     error: Error;
 }
 

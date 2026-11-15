@@ -1,7 +1,7 @@
 import { Readable } from 'node:stream';
-import { Innertube, UniversalCache } from 'youtubei.js';
+import { Innertube, Log, UniversalCache } from 'youtubei.js';
 
-import { SourcePlaylist, SourceProvider, SourceStreamOptions, SourceTrack } from './SourceProvider';
+import { SourcePlaylist, SourceProvider, SourceRelatedOptions, SourceStreamOptions, SourceTrack } from './SourceProvider';
 import { parsePlaylistID } from './youtube';
 import { readYouTubeCookies } from './cookies';
 import { createOpusStream } from './AudioPipeline';
@@ -14,9 +14,11 @@ const IOS_USER_AGENT = 'com.google.ios.youtube/20.11.6 (iPhone16,2; U; CPU iOS 1
  *
  * @typedef {object} YoutubeiProviderOptions
  *
+ * @prop {boolean} [warnings=false] Show the parser warnings of `youtubei.js` in the console. YouTube changes its pages often and the library reports what it does not know yet (a page of a video has many such reports), they are not errors. `false` shows only the errors of the library (the log level of `youtubei.js` is global).
  * @prop {string} [cookies] Path of a cookies file (Netscape format) with the cookies of a signed-in YouTube account. With it the provider can read information about age-restricted videos and load private playlists (the audio of such videos is played by the next provider, yt-dlp). The same file can be used by `YtDlpProvider`, see the FAQ about the cookies.
  */
 export interface YoutubeiProviderOptions {
+    warnings?: boolean;
     cookies?: string;
 }
 
@@ -49,6 +51,8 @@ export class YoutubeiProvider implements SourceProvider {
      */
     constructor(options: YoutubeiProviderOptions = {}) {
         this.options = options;
+
+        if(!options.warnings) Log.setLevel(Log.Level.ERROR);
     }
 
     /**
@@ -191,7 +195,7 @@ export class YoutubeiProvider implements SourceProvider {
      * @private
      */
     private toPlaylistTrack(item: Record<string, any>): SourceTrack | null {
-        const id: string | undefined = item.content_type === 'VIDEO' || item.type === 'PlaylistVideo' ? (item.content_id ?? item.id) : undefined;
+        const id: string | undefined = item.content_type === 'VIDEO' || item.type === 'PlaylistVideo' || item.type === 'CompactVideo' || item.type === 'Video' ? (item.content_id ?? item.id) : undefined;
         if(!id || item.is_playable === false) return null;
 
         // PlaylistVideo has the duration in seconds, LockupView has it as a text badge like `1:02:03`
@@ -219,6 +223,42 @@ export class YoutubeiProvider implements SourceProvider {
 
             source: this.name
         }
+    }
+
+    /**
+     * Finds videos related to a video: the "up next" feed of the watch page (`getInfo` of the WEB client; the IOS client that gives the audio has no such
+     * feed, and its basic information does not include it). Live streams and the excluded videos are skipped.
+     *
+     * @param {SourceTrack} track Track to find the related videos for (its URL is used)
+     * @param {SourceRelatedOptions} options How many videos are wanted and which URLs must not be returned
+     *
+     * @throws {Error} If the URL is not a YouTube video link, YouTube fails or the feed has no videos
+     *
+     * @returns {Promise<Array<SourceTrack>>} Related videos
+     */
+    public async related(track: SourceTrack, options: SourceRelatedOptions): Promise<Array<SourceTrack>> {
+        const id = this.parseID(track.url);
+        if(!id) throw new Error(`Not a YouTube video URL: ${track.url}`);
+
+        const client = await this.client();
+        const info = await client.getInfo(id);
+        const feed = (info as unknown as { watch_next_feed?: Array<Record<string, any>> }).watch_next_feed ?? [];
+        const exclude = new Set(options.exclude ?? []);
+        const tracks: Array<SourceTrack> = [];
+
+        for(const item of feed) {
+            const found = this.toPlaylistTrack(item);
+
+            if(!found || found.id === id || found.seconds <= 0 || exclude.has(found.url)) continue;
+
+            tracks.push(found);
+
+            if(tracks.length >= options.limit) break;
+        }
+
+        if(!tracks.length) throw new Error(`YouTube gave no related videos for ${id}`);
+
+        return tracks;
     }
 
     /**

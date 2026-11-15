@@ -135,3 +135,48 @@ describe('YoutubeiProvider', () => {
         expect(provider.canHandle('not a url')).toBe(false);
     })
 })
+
+describe('YoutubeiProvider#related', () => {
+    const seed = { id: 'seedvideo01', title: 'Seed', url: 'https://www.youtube.com/watch?v=seedvideo01', thumbnail: '', seconds: 200, author: { name: 'Author', url: '' }, source: 'youtubei' };
+
+    // The "up next" feed has several kinds of items: videos, a LockupView, a live stream, a channel, the video itself
+    const feed = [
+        { type: 'CompactVideo', id: 'video000001', title: { text: 'First' }, duration: { seconds: 180 }, author: { name: 'Channel', url: 'https://youtube.com/c/x' }, thumbnails: [{ url: 'https://i.ytimg.com/1.jpg' }] },
+        { type: 'CompactChannel', id: 'channel0001' },
+        { type: 'CompactVideo', id: 'seedvideo01', title: { text: 'Seed' }, duration: { seconds: 200 } },
+        { type: 'CompactVideo', id: 'livevideo01', title: { text: 'Live' }, duration: { seconds: 0 } },
+        { content_type: 'VIDEO', content_id: 'video000002', title: undefined, metadata: { title: { text: 'Second' } }, content_image: { overlays: [{ badges: [{ text: '3:21' }] }] } },
+        { type: 'CompactVideo', id: 'video000003', title: { text: 'Excluded' }, duration: { seconds: 100 } },
+        { type: 'CompactVideo', id: 'video000004', title: { text: 'Fourth' }, duration: { seconds: 240 } }
+    ];
+
+    const provider = (items: Array<unknown>) => {
+        const instance = new YoutubeiProvider();
+        const getInfo = vi.fn(async () => ({ watch_next_feed: items }));
+
+        vi.spyOn(instance as unknown as { client(): Promise<unknown> }, 'client').mockResolvedValue({ getInfo });
+
+        return { instance, getInfo };
+    };
+
+    it('takes videos from the up next feed and skips what can not be played next', async () => {
+        const { instance, getInfo } = provider(feed);
+        const found = await instance.related(seed, { limit: 5, exclude: ['https://www.youtube.com/watch?v=video000003'] });
+
+        expect(getInfo).toHaveBeenCalledWith('seedvideo01');
+        expect(found.map(track => [track.id, track.seconds])).toEqual([['video000001', 180], ['video000002', 201], ['video000004', 240]]);
+        expect(found[0]).toMatchObject({ title: 'First', url: 'https://www.youtube.com/watch?v=video000001', source: 'youtubei', author: { name: 'Channel' } });
+    })
+
+    it('respects the limit', async () => {
+        const { instance } = provider(feed);
+
+        expect(await instance.related(seed, { limit: 1 })).toHaveLength(1);
+    })
+
+    it('fails when the feed has no videos or the link is not a YouTube video, so the next provider is used', async () => {
+        await expect(provider([{ type: 'CompactChannel', id: 'x' }]).instance.related(seed, { limit: 3 })).rejects.toThrow(/no related videos/);
+        await expect(provider([]).instance.related(seed, { limit: 3 })).rejects.toThrow(/no related videos/);
+        await expect(provider(feed).instance.related({ ...seed, url: 'https://example.com/x' }, { limit: 3 })).rejects.toThrow(/Not a YouTube video URL/);
+    })
+})

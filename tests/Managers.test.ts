@@ -327,3 +327,40 @@ describe('UtilsManager#splitMilliseconds', () => {
         expect(split(3 * 86_400_000 + 4 * 3_600_000 + 5 * 60_000 + 6_000 + 789)).toEqual({ days: 3, hours: 4, minutes: 5, seconds: 6 });
     })
 })
+
+describe('checkOptions: the autoplay options', () => {
+    const run = (options: Parameters<typeof t.player.utils.checkOptions>[0]) => {
+        const messages: Array<string> = [];
+        const original = console.warn;
+
+        console.warn = (...args: Array<unknown>) => { messages.push(args.join(' ')) };
+
+        try {
+            return { options: t.player.utils.checkOptions(options), messages };
+        }finally {
+            console.warn = original;
+        }
+    }
+
+    it('has the defaults: the autoplay is off, 3 tracks at once, 50 remembered, 15 minutes at most', () => {
+        const { options, messages } = run({});
+
+        expect([options.autoplay, options.autoplayLimit, options.autoplayHistory, options.autoplayMaxDuration]).toEqual([false, 3, 50, '15m']);
+        expect(messages).toEqual([]);
+    })
+
+    it('takes valid values (the history can be turned off with 0)', () => {
+        const { options, messages } = run({ autoplay: true, autoplayLimit: 1, autoplayHistory: 0, autoplayMaxDuration: '90s' });
+
+        expect([options.autoplay, options.autoplayLimit, options.autoplayHistory, options.autoplayMaxDuration]).toEqual([true, 1, 0, '90s']);
+        expect(messages).toEqual([]);
+    })
+
+    it('warns about invalid values and uses the defaults', () => {
+        const { options, messages } = run({ autoplay: 'yes' as never, autoplayLimit: 0, autoplayHistory: -1, autoplayMaxDuration: 'long' });
+
+        expect([options.autoplay, options.autoplayLimit, options.autoplayHistory, options.autoplayMaxDuration]).toEqual([false, 3, 50, '15m']);
+        expect(messages).toHaveLength(4);
+        expect(messages.some(message => message.includes('Option "autoplayMaxDuration" is invalid') && message.includes('"long"'))).toBe(true);
+    })
+})

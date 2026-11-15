@@ -287,6 +287,10 @@ export class UtilsManager {
 
         return {
             autoAddingTracks: this.pick(options.autoAddingTracks, true, undefined, 'autoAddingTracks'),
+            autoplay: this.pick(options.autoplay, false, undefined, 'autoplay'),
+            autoplayLimit: this.pick(options.autoplayLimit, 3, value => Number.isInteger(value) && value > 0, 'autoplayLimit'),
+            autoplayHistory: this.pick(options.autoplayHistory, 50, value => Number.isInteger(value) && value >= 0, 'autoplayHistory'),
+            autoplayMaxDuration: this.pick(options.autoplayMaxDuration, '15m', value => this.isDuration(value), 'autoplayMaxDuration'),
             searchResultsLimit: this.pick(options.searchResultsLimit, 10, value => value > 0, 'searchResultsLimit'),
             synchronLoop: this.pick(options.synchronLoop, true, undefined, 'synchronLoop'),
             defaultVolume: this.pick(options.defaultVolume, 5, value => value > 0, 'defaultVolume'),
@@ -359,6 +363,22 @@ export class UtilsManager {
         }
 
         console.warn(`[discord-player-music] Option "${name}" is invalid (received ${received}), using ${JSON.stringify(fallback)} instead.`);
+    }
+
+    /**
+     * Checks that a text is a valid duration (see `parseDuration`)
+     *
+     * @param {string} value Text
+     *
+     * @returns {boolean} `true` if the text can be read as a duration
+     * @private
+     */
+    private isDuration(value: string): boolean {
+        try {
+            return this.parseDuration(value) > 0;
+        }catch {
+            return false;
+        }
     }
 
     /**

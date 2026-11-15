@@ -1,6 +1,6 @@
 import { Readable } from 'node:stream';
 
-import { SourcePlaylist, SourceProvider, SourceStreamOptions, SourceTrack } from './SourceProvider';
+import { SourcePlaylist, SourceProvider, SourceRelatedOptions, SourceStreamOptions, SourceTrack } from './SourceProvider';
 
 /**
  * Callback that is called when a provider fails and the registry moves on to the next one
@@ -11,7 +11,7 @@ import { SourcePlaylist, SourceProvider, SourceStreamOptions, SourceTrack } from
  * @param {string} method Failed method (`search`, `resolve` or `stream`)
  * @param {Error} error Error thrown by the provider
  */
-export type ProviderFailedCallback = (provider: SourceProvider, method: 'search' | 'resolve' | 'stream' | 'resolvePlaylist', error: Error) => void;
+export type ProviderFailedCallback = (provider: SourceProvider, method: 'search' | 'resolve' | 'stream' | 'resolvePlaylist' | 'related', error: Error) => void;
 
 /**
  * Options of the source registry
@@ -132,7 +132,7 @@ export class SourceRegistry {
      * @returns {Promise<T>} Result of the first successful provider
      * @private
      */
-    private async attempt<T>(providers: Array<SourceProvider>, method: 'search' | 'resolve' | 'stream' | 'resolvePlaylist', action: (provider: SourceProvider) => Promise<T>): Promise<T> {
+    private async attempt<T>(providers: Array<SourceProvider>, method: 'search' | 'resolve' | 'stream' | 'resolvePlaylist' | 'related', action: (provider: SourceProvider) => Promise<T>): Promise<T> {
         if(!providers.length) throw new Error(`No source provider can handle '${method}'`);
 
         const failures: Array<string> = [];
@@ -230,6 +230,42 @@ export class SourceRegistry {
      */
     public resolvePlaylist(url: string, limit: number = 100): Promise<SourcePlaylist> {
         return this.attempt(this.providers.filter(provider => provider.resolvePlaylist && provider.isPlaylist?.(url)), 'resolvePlaylist', provider => (provider.resolvePlaylist as NonNullable<SourceProvider['resolvePlaylist']>)(url, limit));
+    }
+
+    /**
+     * Finds tracks related to a track (for the autoplay). The providers that can find related tracks (`related`) are tried in order, with the same
+     * failure counter as the other operations. When none of them gives tracks, the tracks are searched by the author and the title of the given track.
+     *
+     * @param {SourceTrack} track Track to find the related tracks for (its URL is used)
+     * @param {SourceRelatedOptions} options How many tracks are wanted and which URLs must not be returned
+     *
+     * @throws {Error} If no provider found related tracks and the search fails too
+     *
+     * @returns {Promise<Array<SourceTrack>>} Related tracks without the track itself, the excluded URLs and duplicates (empty if nothing was found)
+     */
+    public async related(track: SourceTrack, options: SourceRelatedOptions): Promise<Array<SourceTrack>> {
+        const exclude = new Set([track.url, ...(options.exclude ?? [])]);
+
+        const clean = (items: Array<SourceTrack>): Array<SourceTrack> => items.filter(item => {
+            if(exclude.has(item.url)) return false;
+
+            exclude.add(item.url);
+
+            return true;
+        });
+
+        const providers = this.providers.filter(provider => provider.related && provider.canHandle(track.url));
+
+        if(providers.length) {
+            // A failure is already reported by `attempt` (providerFailed), the search below is the fallback
+            const found = await this.attempt(providers, 'related', provider => (provider.related as NonNullable<SourceProvider['related']>)(track, options)).then(clean, () => []);
+
+            if(found.length) return found;
+        }
+
+        const query = `${track.author.name} ${track.title}`.trim();
+
+        return clean(await this.search(query, Math.max(options.limit, 5)));
     }
 
     /**

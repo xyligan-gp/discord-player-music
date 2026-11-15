@@ -566,7 +566,11 @@ export class Player extends PlayerEmitter {
  * 
  * @typedef {object} PlayerOptions
  * 
- * @prop {boolean} [autoAddingTracks=true] Automatic addition of tracks to the queue (excluding playlists)
+ * @prop {boolean} [autoAddingTracks=true] Whether `player.search()` (and a collector) adds the found track to the queue by itself. It is **not** the autoplay: it does nothing when the queue ends, see `autoplay`
+ * @prop {boolean} [autoplay=false] The autoplay of new queues: when the tracks are over and no loop is on, related tracks are found, added to the queue and played, again and again (`queue.setAutoplay()` switches it for a server)
+ * @prop {number} [autoplayLimit=3] How many related tracks the autoplay adds at once (a few tracks let the next track be prepared in advance)
+ * @prop {number} [autoplayHistory=50] How many played tracks are remembered, so the autoplay does not add them again
+ * @prop {string} [autoplayMaxDuration=15m] The autoplay skips tracks that are longer (and live streams)
  * @prop {number} [searchResultsLimit=10] number of results to be returned when searching for tracks by title
  * @prop {LyricsProvider} [lyrics] Lyrics provider (LrclibProvider by default)
  * @prop {number} [playlistLimit=100] Maximum number of tracks that are taken from a playlist link
@@ -726,6 +730,14 @@ export class Player extends PlayerEmitter {
  */
 
 /**
+ * Emitted when the autoplay found related tracks and added them to the end of the queue (the tracks are played right after; `addedTrack` is not emitted for them)
+ * @event Player#autoplayAdded
+ *
+ * @param {object} queue Server queue
+ * @param {Array<PlayerTrack>} tracks Added tracks (`searchType` is `Search.AUTOPLAY`, `requested` and the channels are the ones of the track that played before)
+ */
+
+/**
  * Emitted when the playback state of the server queue changes.
  * @event Player#queueStateChange
  * 
@@ -783,6 +795,7 @@ export class Player extends PlayerEmitter {
  * @prop {number} startStream Timestamp start playing server queue
  * @prop {GuildQueueState} state Queue playback status
  * @prop {PlayerFilter} filter Queue playback filter
+ * @prop {boolean} autoplay Autoplay status of the queue
  */
 
 /**

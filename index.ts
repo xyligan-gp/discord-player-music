@@ -16,7 +16,7 @@ export { FiltersManager } from './src/managers/FiltersManager';
 export { VoiceManager } from './src/managers/VoiceManager';
 export { UtilsManager } from './src/managers/UtilsManager';
 
-export type { SourcePlaylist, SourceProvider, SourceStreamOptions, SourceTrack } from './src/sources/SourceProvider';
+export type { SourcePlaylist, SourceProvider, SourceRelatedOptions, SourceStreamOptions, SourceTrack } from './src/sources/SourceProvider';
 export type { LyricsProvider, LyricsResult } from './src/lyrics/LyricsProvider';
 export type { LrclibProviderOptions } from './src/lyrics/LrclibProvider';
 export type { YtDlpProviderOptions } from './src/sources/YtDlpProvider';

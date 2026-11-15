@@ -9,7 +9,7 @@
 // In your own project install the module (`npm install discord-player-music discord.js`) and import it in the same way.
 //
 // What the bot shows:
-// * playback: play, search, pick, pause, resume, toggle, stop, delete, skip, replay, seek, volume, loop, shuffle, remove, clear
+// * playback: play, search, pick, pause, resume, toggle, stop, delete, skip, replay, seek, volume, loop, autoplay, shuffle, remove, clear
 // * information (embeds): nowplaying, queue (pages with buttons), state, lyrics, stats, config
 // * voice: join, leave
 // * filters: filters, filter (set, add, remove, info)
@@ -143,6 +143,13 @@ player.on('queueStateChange', (queue, oldState, newState) => {
     console.log(`[queue] state ${oldState} -> ${newState}`);
 
     say(queue.channel.text, `Queue state: ${oldState} → **${newState}**`);
+});
+
+// The autoplay found related tracks and added them to the end of the queue (they play right after; `addedTrack` is not emitted for them)
+player.on('autoplayAdded', (queue, tracks) => {
+    console.log(`[autoplay] added ${tracks.length} track(s) in ${queue.channel.voice.guild.name}: ${tracks.map(track => track.title).join(' | ')}`);
+
+    say(queue.channel.text, { embeds: [new EmbedBuilder().setColor(colors.good).setTitle('Autoplay: related tracks added').setDescription(tracks.map((track, index) => trackLine(track, index + 1)).join('\n'))] });
 });
 
 // A queue was closed. The event comes for every reason: 'ended' (the tracks are over), 'stopped' (queue.stop()), 'deleted' (queue.delete()),
@@ -379,6 +386,7 @@ async function showNowPlaying({ channel, guildID }: Context): Promise<void> {
         { name: 'Volume', value: `${info.volume} (default ${player.options.defaultVolume})`, inline: true },
         { name: 'Filter', value: info.filter.name ?? 'none', inline: true },
         { name: 'Loop', value: `track: ${info.loop.track}, queue: ${info.loop.queue}`, inline: true },
+        { name: 'Autoplay', value: `${info.autoplay}`, inline: true },
         { name: 'Queue is playing for', value: `${time.days}d ${time.hours}h ${time.minutes}m ${time.seconds}s`, inline: true }
     );
 
@@ -492,6 +500,15 @@ const commands: Record<string, Command> = {
         }
     },
 
+    autoplay: {
+        category: 'Playback', usage: 'autoplay [on|off]', description: 'Turns the autoplay of this queue on or off (no argument: switches it). When the tracks are over and no loop is on, the module finds related tracks, adds them and goes on playing, until it is turned off',
+        async run({ channel, guildID, args }) {
+            const { autoplay } = await player.queue.setAutoplay(guildID, args[0] === 'on' ? true : args[0] === 'off' ? false : undefined);
+
+            channel.send(`Autoplay: **${autoplay}**${autoplay ? ' (it does not work while the loop of the track or the queue is on)' : ''}`);
+        }
+    },
+
     shuffle: {
         category: 'Playback', usage: 'shuffle', description: 'Shuffles the queue (the playing track stays, at least 3 tracks are needed)',
         async run({ channel, guildID }) {
@@ -539,6 +556,7 @@ const commands: Record<string, Command> = {
                 `Volume: **${queue.volume}**`,
                 `Filter: **${queue.filter.name ?? 'none'}**`,
                 `Loop: track **${queue.loop.track}**, queue **${queue.loop.queue}**`,
+                `Autoplay: **${queue.autoplay}**`,
                 `Voice channel: **${queue.channel.voice.name}**, text channel: ${queue.channel.text}`,
                 `Started: <t:${Math.round(queue.startStream / 1000)}:R>`,
                 `Active queues of the player: **${player.queue.size}**`
@@ -578,7 +596,7 @@ const commands: Record<string, Command> = {
         run({ channel }) {
             const { options } = player;
             const text = JSON.stringify({
-                autoAddingTracks: options.autoAddingTracks, searchResultsLimit: options.searchResultsLimit, synchronLoop: options.synchronLoop, defaultVolume: options.defaultVolume,
+                autoAddingTracks: options.autoAddingTracks, autoplay: options.autoplay, autoplayLimit: options.autoplayLimit, autoplayHistory: options.autoplayHistory, autoplayMaxDuration: options.autoplayMaxDuration, searchResultsLimit: options.searchResultsLimit, synchronLoop: options.synchronLoop, defaultVolume: options.defaultVolume,
                 playlistLimit: options.playlistLimit, prefetchSeconds: options.prefetchSeconds, sourceFailureThreshold: options.sourceFailureThreshold, sourceCooldown: options.sourceCooldown,
                 cookies: options.cookies ? 'set' : 'not set', progressConfig: options.progressConfig, collectorsConfig: options.collectorsConfig
             }, null, 2);

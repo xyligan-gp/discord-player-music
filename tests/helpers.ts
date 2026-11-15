@@ -88,7 +88,9 @@ export function createQueue(player: Player, tracks: Array<PlayerTrack>): { queue
         volume: player.options.defaultVolume,
         startStream: Date.now(),
         state: GuildQueueState.PLAYING,
-        filter: { name: null, value: null }
+        filter: { name: null, value: null },
+        autoplay: player.options.autoplay,
+        history: []
     }
 
     queue.dispatcher.on(AudioPlayerStatus.Idle, () => manager.handleIdle('G'));

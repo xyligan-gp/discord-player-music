@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 
 import { SourceRegistry } from '../src/sources/SourceRegistry';
-import { SourceProvider } from '../src/sources/SourceProvider';
+import { SourceProvider, SourceTrack } from '../src/sources/SourceProvider';
 
 import { createFakeProvider } from './helpers';
 
@@ -117,5 +117,73 @@ describe('SourceRegistry and providers that use other providers', () => {
         const opened = await registry.open('https://www.youtube.com/watch?v=x');
 
         expect(opened.provider.audioProvider).toBeUndefined();
+    })
+})
+
+describe('SourceRegistry#related', () => {
+    const track = (id: string): SourceTrack => ({ id, title: id.toUpperCase(), url: `https://www.youtube.com/watch?v=${id}`, thumbnail: 't', seconds: 100, author: { name: 'Author', url: 'u' }, source: 'x' });
+    const seed = track('seed');
+
+    // Provider that finds related tracks (it can handle the link only when `handles` is true)
+    const finder = (name: string, related: SourceProvider['related'], handles = true): SourceProvider => ({ ...createFakeProvider(), name, canHandle: () => handles, related });
+
+    it('asks the providers that can find related tracks in order and moves on when one fails', async () => {
+        const calls: Array<string> = [];
+        const failures: Array<string> = [];
+        const registry = new SourceRegistry([
+            { ...createFakeProvider(), name: 'plain', canHandle: () => true },
+            finder('broken', async () => { calls.push('broken'); throw new Error('boom') }),
+            finder('works', async (item, options) => { calls.push(`works ${item.url.split('=')[1]} limit=${options.limit}`); return [track('r1'), track('r2')] })
+        ]);
+
+        registry.onProviderFailed = (provider, method) => { failures.push(`${provider.name}:${method}`) };
+
+        const found = await registry.related(seed, { limit: 5 });
+
+        expect(found.map(item => item.id)).toEqual(['r1', 'r2']);
+        expect(calls).toEqual(['broken', 'works seed limit=5']);
+        expect(failures).toEqual(['broken:related']);
+    })
+
+    it('removes the track itself, the excluded URLs and duplicates', async () => {
+        const registry = new SourceRegistry([finder('one', async () => [track('seed'), track('old'), track('r1'), track('r1'), track('r2')])]);
+        const found = await registry.related(seed, { limit: 5, exclude: ['https://www.youtube.com/watch?v=old'] });
+
+        expect(found.map(item => item.id)).toEqual(['r1', 'r2']);
+    })
+
+    it('puts a provider that keeps failing last, like the other operations', async () => {
+        const calls: Array<string> = [];
+        const registry = new SourceRegistry([
+            finder('flaky', async () => { calls.push('flaky'); throw new Error('boom') }),
+            finder('steady', async () => { calls.push('steady'); return [track('r1')] })
+        ]);
+
+        await registry.related(seed, { limit: 3 });
+        await registry.related(seed, { limit: 3 });
+
+        expect(calls).toEqual(['flaky', 'steady', 'steady']);
+    })
+
+    it('searches by the author and the title when no provider finds related tracks', async () => {
+        const queries: Array<string> = [];
+        const search = async (query: string, limit: number) => { queries.push(`${query} (${limit})`); return [track('seed'), track('s1')] };
+
+        // A provider that can not handle the link, and one that has nothing
+        const registry = new SourceRegistry([
+            { ...finder('other site', async () => [track('never')], false), search },
+            finder('empty', async () => [])
+        ]);
+
+        const found = await registry.related(seed, { limit: 2 });
+
+        expect(found.map(item => item.id)).toEqual(['s1']);
+        expect(queries).toEqual(['Author SEED (5)']);
+    })
+
+    it('throws when the search fails too', async () => {
+        const registry = new SourceRegistry([{ ...finder('bad', async () => { throw new Error('no related') }), search: async () => { throw new Error('no search') } }]);
+
+        await expect(registry.related(seed, { limit: 2 })).rejects.toThrow(/no search/);
     })
 })
