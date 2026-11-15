@@ -220,7 +220,7 @@ new Player(client, { sources: [new RadioProvider(), new YoutubeiProvider(), new 
 
 A provider can have an optional `prepare()` method: the player calls it in the background when it is created (a connection, a login, a download). A failure is reported with the `error` event.
 
-The optional `related(track, { limit, exclude })` method finds tracks related to a track (for the [autoplay](#autoplay-and-related-tracks)): it returns at most `limit` tracks without the URLs of `exclude`, and the URL of the track is `track.url`. Two more optional members help providers that play the audio of other sources: `attach(others)` receives a function that returns the other providers of the registry (the registry calls it when the provider is added), and `audioProvider(url)` returns the name of the provider that gave the audio of a track (it is shown in the `via` field of the `sourceUsed` event).
+The optional `related(track, { limit, exclude })` method finds tracks related to a track (for the [autoplay](https://dpm.js.org/#/docs/discord-player-music/stable/general/providers)): it returns at most `limit` tracks without the URLs of `exclude`, and the URL of the track is `track.url`. Two more optional members help providers that play the audio of other sources: `attach(others)` receives a function that returns the other providers of the registry (the registry calls it when the provider is added), and `audioProvider(url)` returns the name of the provider that gave the audio of a track (it is shown in the `via` field of the `sourceUsed` event).
 
 A provider must throw an error when it can not do the job: the registry then moves on to the next provider and emits the `providerFailed` event.
 

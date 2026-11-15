@@ -11,7 +11,7 @@ These questions are some of the most frequently asked.
 The FFmpeg binary is downloaded by the install script of the `ffmpeg-static` package. Some package managers do not run install scripts by default (npm 12, pnpm 10). Allow the script (for example `npm install-scripts approve ffmpeg-static`, then `npm rebuild ffmpeg-static`) or install FFmpeg in your system: the module uses `ffmpeg` from `PATH` when the downloaded binary does not exist.
 
 ## A track does not play / I see `YouTube does not allow to download the whole audio (status 403)`
-YouTube does not give the audio of some videos to the main source (`youtubei.js`) without a *PO token*, a proof that the request comes from a real client. In that case the module uses the next provider, **yt-dlp**, and you will see this line in the log of `providerFailed` events. After one such failure the module sends the next tracks (any videos) to yt-dlp first for 10 minutes, then tries the main source again. This is normal. The order of the sources and the other options are described on the [Providers page](providers.md).
+YouTube does not give the audio of some videos to the main source (`youtubei.js`) without a *PO token*, a proof that the request comes from a real client. In that case the module uses the next provider, **yt-dlp**, and you will see this line in the log of `providerFailed` events. After one such failure the module sends the next tracks (any videos) to yt-dlp first for 10 minutes, then tries the main source again. This is normal. The order of the sources and the other options are described on the [Providers page](https://dpm.js.org/#/docs/discord-player-music/stable/general/providers).
 
 If the track still does not play (the `error` event says that all providers failed):
 1. Check that yt-dlp works: `new YtDlpProvider()` finds `yt-dlp` in `PATH` or downloads it, and needs access to GitHub. Without internet access to GitHub install it yourself (`pip install yt-dlp`, `winget install yt-dlp.yt-dlp`, a package of your system) or give the path with the `command` option.
@@ -70,16 +70,16 @@ Every track has a `source` field with the name of the provider that found it (`y
 Yes, give a link to a YouTube playlist (`https://www.youtube.com/playlist?list=...` or a video link with `list=...`) to `player.search()`: all its tracks (up to `playlistLimit`, 100 by default) are added to the queue and playback starts from the first one. Automatic mixes (`list=RD...`), *Liked videos* and *Watch later* cannot be loaded.
 
 ## How do I make the bot play related tracks when the queue ends (autoplay)?
-Turn the autoplay on: `new Player(client, { autoplay: true })` for all new queues, or `player.queue.setAutoplay(guildID, true)` for one queue (it switches the status when you do not pass it). When the tracks are over and no loop is on, the module finds related tracks, adds them and goes on playing, until the autoplay is turned off. **`autoAddingTracks` is not the autoplay:** it only adds the result of `player.search()` to the queue. Details: the [Providers page](providers.md#autoplay-and-related-tracks).
+Turn the autoplay on: `new Player(client, { autoplay: true })` for all new queues, or `player.queue.setAutoplay(guildID, true)` for one queue (it switches the status when you do not pass it). When the tracks are over and no loop is on, the module finds related tracks, adds them and goes on playing, until the autoplay is turned off. **`autoAddingTracks` is not the autoplay:** it only adds the result of `player.search()` to the queue. Details: the [Providers page](https://dpm.js.org/#/docs/discord-player-music/stable/general/providers).
 
 ## How do I show a progress bar that moves in the "now playing" message?
-Turn the event on with the `progressInterval` option (seconds, for example `10`; `0`, the default, is off) and edit your message in the `trackProgress` event: it gives `{ track, position, duration, bar, percents }` while a track plays. Discord limits how often a message can be edited, so do not use less than 5 seconds. A full example is on the [Examples page](examples/index.md#live-progress).
+Turn the event on with the `progressInterval` option (seconds, for example `10`; `0`, the default, is off) and edit your message in the `trackProgress` event: it gives `{ track, position, duration, bar, percents }` while a track plays. Discord limits how often a message can be edited, so do not use less than 5 seconds. A full example is on the [Examples page](https://dpm.js.org/#/docs/discord-player-music/stable/general/index).
 
 ## Is there a pause between tracks?
 The module prepares the next track in advance (20 seconds before the current one ends, see `prefetchSeconds`), so there should be none. The first track of a queue needs a moment to start (up to 5 seconds with yt-dlp).
 
 ## Why do I get `PlayerError` instead of an object with `error`?
-Starting with version 2.0 methods throw errors instead of returning `{ error: { code, message } }`. See the [updating page](updating.md) for the full list of changes.
+Starting with version 2.0 methods throw errors instead of returning `{ error: { code, message } }`. See the [updating page](https://dpm.js.org/#/docs/discord-player-music/stable/general/updating) for the full list of changes.
 
 ```js
 try {

@@ -82,7 +82,7 @@ More examples are in the [`examples`](https://github.com/xyligan-gp/discord-play
 ## Good to know
 
 * **Methods throw errors.** Every method rejects with a `PlayerError` that has a `code` (for example `QUEUE_NOT_FOUND`), so use `try/catch` (or `.catch()`).
-* **YouTube changes often.** Any YouTube library can stop working after a change on YouTube's side. That is why the module has several sources: when `youtubei.js` is refused, `yt-dlp` plays the track and the module remembers it for the next tracks. See the [FAQ](https://dpm.js.org/#/docs/discord-player-music/stable/general/faq) if a track does not play, and the [Providers page](dhttps://dpm.js.org/#/docs/discord-player-music/stable/general/providers) to change the order of the sources or write your own.
+* **YouTube changes often.** Any YouTube library can stop working after a change on YouTube's side. That is why the module has several sources: when `youtubei.js` is refused, `yt-dlp` plays the track and the module remembers it for the next tracks. See the [FAQ](https://dpm.js.org/#/docs/discord-player-music/stable/general/faq) if a track does not play, and the [Providers page](https://dpm.js.org/#/docs/discord-player-music/stable/general/providers) to change the order of the sources or write your own.
 * **Respect the rules.** Downloading streams is against the YouTube Terms of Service, and some hosting providers are blocked by YouTube. Use the module at your own risk.
 
 ## Links

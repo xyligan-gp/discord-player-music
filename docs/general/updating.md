@@ -305,7 +305,7 @@ The `error` event is emitted for errors that happen in the background (a track t
 
 New in 2.0.0: when the tracks are over, the module can find tracks related to the track that played last, add them to the queue and go on playing them, again and again, until the autoplay is turned off. It works only when neither the track loop nor the queue loop is on, and it is off by default: use the `autoplay` option (the default for new queues) or `player.queue.setAutoplay(guildID, enabled?)` (one queue, switches the status when `enabled` is not passed). The tracks that were added are announced with the `autoplayAdded` event `(queue, tracks)`. Without the autoplay nothing changed: the queue ends with `queueEnded` (`ended`).
 
-**`autoAddingTracks` is not the autoplay.** It only tells whether `player.search()` (and a collector) adds the found track to the queue by itself; it does nothing when the queue ends. See the [Providers page](providers.md#autoplay-and-related-tracks) for how the related tracks are found.
+**`autoAddingTracks` is not the autoplay.** It only tells whether `player.search()` (and a collector) adds the found track to the queue by itself; it does nothing when the queue ends. See the [Providers page](https://dpm.js.org/#/docs/discord-player-music/stable/general/providers) for how the related tracks are found.
 
 ### Live progress
 
@@ -334,7 +334,7 @@ A track that can not be played is reported with the `error` event and **skipped*
 
 ### New and changed options
 
-See the [Providers page](providers.md) for the source providers, the order of the sources and writing your own provider.
+See the [Providers page](https://dpm.js.org/#/docs/discord-player-music/stable/general/providers) for the source providers, the order of the sources and writing your own provider.
 
 ```diff
 + options.sources            // source providers, [YoutubeiProvider, YtDlpProvider] by default

@@ -238,4 +238,4 @@ player.on('skippedTrack', ({ track, next, error }) => track.channel.text.send(`I
 
 ## Providers
 
-See the [Providers page](../providers.md) for changing the order of the sources, yt-dlp options (cookies, proxy), and writing your own source or lyrics provider.
+See the [Providers page](https://dpm.js.org/#/docs/discord-player-music/stable/general/providers) for changing the order of the sources, yt-dlp options (cookies, proxy), and writing your own source or lyrics provider.
