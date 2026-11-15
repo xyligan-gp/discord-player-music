@@ -91,7 +91,7 @@
   * `SourceProvider` is extended for external packages: the optional `attach` and `audioProvider` members, the `via` field of the `sourceUsed` event, the error codes `SOURCE_RATE_LIMITED`, `SOURCE_UNAUTHORIZED` and `AUDIO_NOT_FOUND`, and `SourcePlaylist` is exported.
   * Removed (breaking change, no deprecated aliases): server playlists from 1.x (`player.playlists`, the events `createdPlaylist` and `deletedPlaylist`, the related types and error codes) and the JSON database that kept them (`player.database`, `databaseConfig`). It is an extra feature that every bot can build for itself, see the [updating page](updating.md) for a short example. Playing a YouTube playlist link is not removed
   * Removed `player.utils.getUniqueID()` and two unused error texts; `player.utils.getTrackDuration()` is deprecated
-  * New helpers `player.utils.parseDuration()` (`'10m'` to milliseconds) and `player.utils.formatMilliseconds()` (milliseconds to `2m` or `2 minutes`)
+  * New helpers `player.utils.parseDuration()` (`'10m'` to milliseconds), `player.utils.formatMilliseconds()` (milliseconds to `2m` or `2 minutes`) and `player.utils.splitMilliseconds()` (milliseconds to days, hours, minutes and seconds)
   * **Changed:** `queueEnded` now has a second argument `reason` (`ended`, `stopped`, `deleted`, `skipped`, `error`) and is emitted once every time a queue is closed, not only when the tracks are over (check `reason === 'ended'` for the old behaviour). Invalid options are still replaced with the defaults, but the module now tells about them with `console.warn`
   * Types are generated from the code, ESM and CommonJS builds, JSDoc for the whole public API
   * Added tests, linting, a JSDoc check and CI workflows

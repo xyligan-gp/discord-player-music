@@ -2,7 +2,7 @@
  "meta": {
   "generator": "0.11.1",
   "format": 22,
-  "date": 1794762589170
+  "date": 1794767400596
  },
  "custom": {
   "general": {
@@ -29,7 +29,7 @@
     "updating": {
      "name": "Updating your code",
      "type": "md",
-     "content": "# Updating page\n\nThis documentation page is a short list of changes to your code that will have to be done when switching to a specific version of discord-player-music!\n\n## 1.1.5\nIn version 1.1.5, `discord-player-music` was completely rewritten for the manager system.\n\n### Player Constructor\n\n```diff\n+ options.searchResultsLimit\n+ options.synchronLoop\n+ options.defaultVolume\n\n+ options.collectorsConfig.autoAddingSongs\n+ options.collectorsConfig.maxAttempts\n+ options.collectorsConfig.time\n```\n\n### Player Methods Update\n#### CollectorsManager\n\n```diff\n+ player.collectors.message\n```\n\n#### VoiceManager\n\n```diff\n- player.joinVoiceChannel\n+ player.voice.join\n\n- player.leaveVoiceChannel\n+ player.voice.leave\n```\n\n#### UtilsManager\n\n```diff\n- player.createStream\n+ player.utils.checkNode\n+ player.utils.checkOptions\n+ player.utils.checkPermissions\n+ player.utils.createCollector\n```\n\n#### Main Player\n\n```diff\n- player.getSongIndex\n\n- player.skipSong\n+ player.skip\n\n- player.stopPlaying\n+ player.stop\n\n- player.pausePlaying\n+ player.pause\n\n- player.resumePlaying\n+ player.resume\n\n- player.getCurrentSongInfo\n+ player.getSongInfo\n\n- player.initPlayer\n+ player.init\n```\n\n## 1.1.7\nIn version 1.1.7, `discord-player-music` was completely rewritten on TypeScript language.\n\n### Module Constructor\n\n```diff\n- options.collectorsConfig.autoAddingSongs\n- options.collectorsConfig.maxAttempts\n- options.collectorsConfig.time\n+ options.autoAddingTracks\n\n+ options.databaseConfig\n+ options.databaseConfig.path\n+ options.databaseConfig.checkInterval\n\n+ options.progressConfig\n+ options.progressConfig.size\n+ options.progressConfig.line\n+ options.progressConfig.slider\n\n+ options.collectorsConfig.message\n+ options.collectorsConfig.message.time\n+ options.collectorsConfig.message.attempts\n\n+ options.collectorsConfig.reaction\n+ options.collectorsConfig.reaction.time\n+ options.collectorsConfig.reaction.attempts\n+ options.collectorsConfig.reaction.reactions\n```\n\n### Player Events Update\n\n```diff\n+ player#ready\n+ player#queueStarted\n+ player#createdPlaylist\n+ player#deletedPlaylist\n+ player#queueStateChange\n\n- player#playerError\n+ player#error\n\n- player#songsAdded\n+ player#addedTrack\n\n- player#playingSong\n+ player#playingTrack\n```\n\n### Player Methods Update\n\n#### Main Player Class\n\n```diff\n- player.collectors.message\n+ player.createCollector\n\n- player.play\n+ player.initGuildTrack\n\n- player.searchSong\n+ player.search\n\n- player.addSong\n+ player.initQueueTrack\n\n- player.pause\n- player.resume\n+ player.queue.setState\n\n- player.setLoopSong\n- player.setLoopQeue\n+ player.queue.setLoop\n\n- player.skip\n+ player.queue.skipTrack\n\n- player.setFilter\n+ player.queue.setFilter\n\n- player.shuffle\n+ player.queue.shuffle\n\n- player.getGuildMap\n- player.getQueue\n+ player.queue.get\n\n- player.getSongInfo\n+ player.queue.trackInfo\n+ player.queue.streamInfo\n\n- player.getLyrics\n+ player.lyrics\n\n- player.getFilters\n+ player.filters.list\n\n- player.createProgressBar\n+ player.queue.progress\n\n- player.setVolume\n+ player.queue.setVolume\n\n- player.stop\n+ player.queue.stop\n\n- player.removeSong\n+ player.queue.removeTrack\n```\n\n#### DatabaseManager\n\n```diff\n+ player.database.get\n+ player.database.write\n+ player.database.initGuild\n+ private player.database.init\n```\n\n#### FiltersManager\n\n```diff\n+ player.filters.add\n+ player.filters.isExists\n+ player.filters.get\n+ player.filters.list\n+ player.filters.delete\n+ private player.filters.init\n```\n\n#### PlaylistsManager\n\n```diff\n+ player.playlists.create\n+ player.playlists.addTrack\n+ player.playlists.play\n+ player.playlists.removeTrack\n+ player.playlists.delete\n```\n\n#### QueueManager\n\n```diff\n+ player.queue.add\n+ player.queue.get\n+ player.queue.progress\n+ player.queue.streamInfo\n+ player.queue.trackInfo\n+ player.queue.setFilter\n+ player.queue.setLoop\n+ player.queue.setState\n+ player.queue.setVolume\n+ player.queue.skipTrack\n+ player.queue.removeTrack\n+ player.queue.seek\n+ player.queue.shuffle\n+ player.queue.stop\n+ player.queue.delete\n```\n\n#### UtilsManager\n\n```diff\n- player.utils.checkNode\n- player.utils.checkPermissions\n- player.utils.getPlayerMode\n+ player.utils.formatDuration\n+ player.utils.createEmptyProgress\n+ player.utils.getUniqueID\n+ player.utils.getTrackDuration\n```\n\n## 2.0.0\nVersion 2.0.0 fixes the playback of YouTube tracks: the old `ytdl-core` and `yt-search` libraries stopped working, so the source layer was rewritten. **All method and event names of 1.1.7 are kept**, but errors work in a different way and some requirements changed.\n\n### Requirements\n\n```diff\n- Node.js 16.9.0\n+ Node.js 22.12.0\n- discord.js 14 (any)\n+ discord.js 14.28\n\n- @discordjs/voice 0.11\n+ @discordjs/voice 0.19 (installed with the module)\n\n- ytdl-core, yt-search\n+ youtubei.js, yt-dlp (downloaded automatically)\n\n- @discordjs/opus (required)\n+ opusscript (installed with the module, @discordjs/opus is optional)\n```\n\n### Errors are thrown, not returned (breaking)\n\nIn 1.x many methods returned `{ error: { code, message } }`. Now every method **rejects with a `PlayerError`**. It has `code` (`PlayerErrorCode`), `status` (a number like HTTP: `404`, `400`, `409`, `502`...), `message` and `cause` (the original error, for example of a source provider).\n\n```diff\n- const skipData = await player.queue.skipTrack(guildID);\n- if(skipData?.error) return message.channel.send({ content: skipData.error.message });\n-\n- message.channel.send({ content: `Skipped: ${skipData.current.title}` });\n+ try {\n+     const skipData = await player.queue.skipTrack(guildID);\n+\n+     message.channel.send({ content: `Skipped: ${skipData.current.title}` });\n+ }catch(error) {\n+     if(error instanceof PlayerError) return message.channel.send({ content: error.message });\n+\n+     throw error;\n+ }\n```\n\nError codes (`PlayerErrorCode`):\n\n| Code | When |\n| --- | --- |\n| `MISSING_PARAMETER`, `INVALID_TYPE`, `INVALID_VALUE` | A parameter is missing or invalid (this was a thrown `PlayerError` in 1.x too) |\n| `QUEUE_NOT_FOUND`, `QUEUE_TRACK_NOT_FOUND` | The server has no queue, or the queue has no track with that index |\n| `SHUFFLE_UNAVAILABLE` | The queue has less than 3 tracks (the playing track is not shuffled) |\n| `INVALID_STATE` | The queue is already in the requested state (paused or playing) |\n| `FILTER_NOT_FOUND`, `FILTER_EXISTS` | Filters |\n| `USER_NOT_IN_VOICE`, `ALREADY_CONNECTED`, `CONNECTION_FAILED`, `GUILD_NOT_FOUND` | Voice channels and servers |\n| `TRACK_NOT_FOUND`, `LYRICS_NOT_FOUND` | Search and lyrics (`cause` has the reason, for example a source provider error) |\n| `SIGN_IN_REQUIRED` | YouTube asks to sign in to play the video (age-restricted, or the server was taken for a bot): the cookies of an account are needed, see the FAQ |\n| `COLLECTOR_NO_RESULTS`, `COLLECTOR_UNKNOWN`, `COLLECTOR_SMALL_VALUE`, `COLLECTOR_LARGE_VALUE`, `COLLECTOR_TIMEOUT`, `COLLECTOR_CANCELLED` | Collectors (`createCollector()` now rejects with `COLLECTOR_TIMEOUT` when nothing is selected in time, in 1.x it never finished; `COLLECTOR_CANCELLED` when the user cancels; the attempts used up by wrong answers end with `INVALID_VALUE`, `COLLECTOR_SMALL_VALUE` or `COLLECTOR_LARGE_VALUE`) |\n| `SOURCES_FAILED` | Every source provider failed |\n| `SOURCE_RATE_LIMITED`, `SOURCE_UNAUTHORIZED`, `AUDIO_NOT_FOUND` | A service limits the requests / did not accept the credentials / the audio of a track was not found in the other sources |\n\nThe type `ErrorData` and the `PlayerError` typedef with `{ channel, requested, method, error }` (it described the `error` event) were renamed to `PlayerErrorEvent`. The messages are the same as before (`player.errors` still exists).\n\nThe `error` event is emitted for errors that happen in the background (a track that can not be played, a lost voice connection) and now has the same data as before: `{ channel, requested, method, error }`. An `error` event without listeners is printed to the console and no longer crashes the process.\n\n### Tracks that can not be played\n\nA track that can not be played is reported with the `error` event and **skipped**, the queue continues with the next track (in 1.x the queue could hang). If the voice connection is lost, the queue is closed.\n\n### New and changed events\n\n```diff\n+ player#providerFailed\n+ player#sourceUsed\n+ player#ytdlpStatus\n+ player#skippedTrack\n```\n\n**`queueEnded` changed:** it now has a second argument `reason` and is emitted once every time a queue is closed, not only when the tracks are over: `reason` is `ended` (the tracks are over, the only case in 1.x), `stopped` (`queue.stop()`), `deleted` (`queue.delete()`), `skipped` (the last track was skipped) or `error` (the voice connection failed). Handlers of 1.x `(queue) => ...` keep working, but they now also run in the new cases: use `if(reason === 'ended')` to keep the old behaviour.\n\n`sourceUsed` also has `via` (the provider that gave the audio, when a provider plays the audio of another one).\n\n`providerFailed` has `{ provider, method, error }` and is emitted when a source provider fails and the next one is used. `sourceUsed` has `{ provider, track, seek, prefetched }` and tells which provider gives the audio of a track (a debugging event). `ytdlpStatus` has `{ stage, message, origin, path, version, latest, reason }` and reports every step of finding, checking, downloading and updating yt-dlp (`stage` is `found`, `checking`, `up-to-date`, `update-available`, `downloading`, `installed`, `skipped` (see `reason`: `update-disabled`, `interval`, `offline`, `custom-command`) or `error`). `skippedTrack` has `{ track, next, error }` and is emitted when a track could not be played and the queue goes on with the next one. Every `Player` now has its own event emitter (in 1.x all players shared one).\n\n### New and changed options\n\nSee the [Providers page](providers.md) for the source providers, the order of the sources and writing your own provider.\n\n```diff\n+ options.sources            // source providers, [YoutubeiProvider, YtDlpProvider] by default\n+ options.lyrics             // lyrics provider, LrclibProvider by default\n+ options.playlistLimit      // tracks taken from a playlist link, 100\n+ options.prefetchSeconds    // the next track is prepared in advance, 20\n+ options.sourceFailureThreshold, options.sourceCooldown\n\n+ options.collectorsConfig.message.cancel, options.collectorsConfig.reaction.cancel // the cancel word (`cancel`) and the cancel reaction (`❌`), `false` turns them off\n* options.collectorsConfig.*.attempts // every message or reaction of the user is an attempt, the user can try again while there are attempts\n* options.synchronLoop       // `false` is not replaced with `true` any more\n* invalid options          // an option that is passed but is wrong (for example `time: 60000` instead of `'1m'`) is still replaced with the default value, but the module tells about it with `console.warn`\n- options.databaseConfig                // removed together with the server playlists, see \"Removed\" below\n```\n\n### Methods\n\nNames are the same as in 1.1.7. What changed:\n\n```diff\n* player.search(query, member, channel)       // a playlist link adds all its tracks and starts playing, returns an array of tracks; throws TRACK_NOT_FOUND\n* player.lyrics(query)                        // LRCLIB; returns { query, result, title, artist, source }; throws LYRICS_NOT_FOUND\n* player.createCollector(...)                 // rejects with COLLECTOR_TIMEOUT or COLLECTOR_CANCELLED, the reaction collector adds a cancel reaction\n* player.queue.setFilter(guildID, filter)     // continues from the current position\n* player.queue.removeTrack(guildID, 0)        // removing the playing track skips it\n* player.queue.setVolume(guildID)             // without a value sets the default volume\n* player.queue.seek(guildID, seconds)         // validates the value\n+ player.sources                              // SourceRegistry\n+ player.utils.parseDuration(text)             // '10m' -> milliseconds\n+ player.utils.formatMilliseconds(ms, { long }) // milliseconds -> '2m' or '2 minutes'\n+ player.lyricsProvider\n```\n\nNew enum value: `Search.PLAYLIST`.\n\n### Types and imports\n\nTypes are generated from the code and exported from the main package. The `discord-player-music/types/...` files do not exist any more.\n\n```diff\n- import { PlayerTrack } from 'discord-player-music/types/PlayerData';\n+ import type { PlayerTrack } from 'discord-player-music';\n```\n\nThe package has two builds, ESM (`import`) and CommonJS (`require`), both work.\n\n### Removed\n\n* `ytdl-core` and `yt-search` and everything that depended on them. If you used the `Status code: 403/404` errors of `ytdl-core`, check `providerFailed` and `error` events instead.\n* `lyrics-finder` (it stopped finding lyrics). Use the `lyrics` option for another service.\n* `player.utils.getUniqueID()` (it was only needed by the server playlists; use `crypto.randomUUID()` if you need an ID) and the unused error texts `playingPaused` and `playingResumed` of `player.errors` (an already paused or already playing queue gives the `INVALID_STATE` error). `player.utils.getTrackDuration(url)` is **deprecated**: it still works, but the duration is in the tracks that `player.search()` returns (`track.duration`) and `player.sources.resolve(url)` gives `seconds`.\n* **Server playlists** (the playlists of a Discord server saved by the module) and the JSON database that kept them. They were in 1.x and are removed in 2.0 without deprecated aliases, so code that uses them stops working (breaking change): it is an extra feature that every bot can build for itself in a few lines.\n\n```diff\n- player.playlists.create / addTrack / play / removeTrack / delete\n- player.database.get / write / initGuild\n- options.databaseConfig, options.databaseConfig.path, options.databaseConfig.checkInterval\n- player#createdPlaylist, player#deletedPlaylist, Events.PLAYLIST_CREATED, Events.PLAYLIST_DELETED\n- GuildPlaylist, PlaylistTrack, CreatePlaylistData, AddPlaylistData, DatabaseManagerConfiguration, DatabaseStorage\n- PlayerErrorCode.PLAYLIST_NOT_FOUND, GUILD_PLAYLISTS_NOT_FOUND, PLAYLIST_TRACK_NOT_FOUND, PLAYLIST_TRACK_EXISTS\n- PlaylistsManager, DatabaseManager\n```\n\n  The module does not read or write the `dpm.playlists.json` file any more. You can delete it, or read it yourself (it is plain JSON: `{ \"<guildID>\": { \"playlists\": [{ \"id\", \"title\", \"author\", \"tracks\": [{ \"url\", \"title\" }], ... }] } }`) to move your old playlists to your own storage. Playing a **YouTube** playlist link is a different feature and stays (`player.search()` with a playlist link, `playlistLimit`).\n\n  To keep playlists yourself, store the links in any storage (a `Map`, a database, a JSON file) and add them one by one with `player.search()`, it keeps their order:\n\n```ts\nconst playlists = new Map<string, Array<string>>(); // playlist name -> track links\nplaylists.set('chill', ['https://www.youtube.com/watch?v=Vt2TeOptLxE', 'https://www.youtube.com/watch?v=1Qo35ldlvWo']);\n\n// Play the playlist: every link is added to the queue, the first one starts playing\nfor(const url of playlists.get('chill') ?? []) await player.search(url, message.member, message.channel);\n```\n",
+     "content": "# Updating page\n\nThis documentation page is a short list of changes to your code that will have to be done when switching to a specific version of discord-player-music!\n\n## 1.1.5\nIn version 1.1.5, `discord-player-music` was completely rewritten for the manager system.\n\n### Player Constructor\n\n```diff\n+ options.searchResultsLimit\n+ options.synchronLoop\n+ options.defaultVolume\n\n+ options.collectorsConfig.autoAddingSongs\n+ options.collectorsConfig.maxAttempts\n+ options.collectorsConfig.time\n```\n\n### Player Methods Update\n#### CollectorsManager\n\n```diff\n+ player.collectors.message\n```\n\n#### VoiceManager\n\n```diff\n- player.joinVoiceChannel\n+ player.voice.join\n\n- player.leaveVoiceChannel\n+ player.voice.leave\n```\n\n#### UtilsManager\n\n```diff\n- player.createStream\n+ player.utils.checkNode\n+ player.utils.checkOptions\n+ player.utils.checkPermissions\n+ player.utils.createCollector\n```\n\n#### Main Player\n\n```diff\n- player.getSongIndex\n\n- player.skipSong\n+ player.skip\n\n- player.stopPlaying\n+ player.stop\n\n- player.pausePlaying\n+ player.pause\n\n- player.resumePlaying\n+ player.resume\n\n- player.getCurrentSongInfo\n+ player.getSongInfo\n\n- player.initPlayer\n+ player.init\n```\n\n## 1.1.7\nIn version 1.1.7, `discord-player-music` was completely rewritten on TypeScript language.\n\n### Module Constructor\n\n```diff\n- options.collectorsConfig.autoAddingSongs\n- options.collectorsConfig.maxAttempts\n- options.collectorsConfig.time\n+ options.autoAddingTracks\n\n+ options.databaseConfig\n+ options.databaseConfig.path\n+ options.databaseConfig.checkInterval\n\n+ options.progressConfig\n+ options.progressConfig.size\n+ options.progressConfig.line\n+ options.progressConfig.slider\n\n+ options.collectorsConfig.message\n+ options.collectorsConfig.message.time\n+ options.collectorsConfig.message.attempts\n\n+ options.collectorsConfig.reaction\n+ options.collectorsConfig.reaction.time\n+ options.collectorsConfig.reaction.attempts\n+ options.collectorsConfig.reaction.reactions\n```\n\n### Player Events Update\n\n```diff\n+ player#ready\n+ player#queueStarted\n+ player#createdPlaylist\n+ player#deletedPlaylist\n+ player#queueStateChange\n\n- player#playerError\n+ player#error\n\n- player#songsAdded\n+ player#addedTrack\n\n- player#playingSong\n+ player#playingTrack\n```\n\n### Player Methods Update\n\n#### Main Player Class\n\n```diff\n- player.collectors.message\n+ player.createCollector\n\n- player.play\n+ player.initGuildTrack\n\n- player.searchSong\n+ player.search\n\n- player.addSong\n+ player.initQueueTrack\n\n- player.pause\n- player.resume\n+ player.queue.setState\n\n- player.setLoopSong\n- player.setLoopQeue\n+ player.queue.setLoop\n\n- player.skip\n+ player.queue.skipTrack\n\n- player.setFilter\n+ player.queue.setFilter\n\n- player.shuffle\n+ player.queue.shuffle\n\n- player.getGuildMap\n- player.getQueue\n+ player.queue.get\n\n- player.getSongInfo\n+ player.queue.trackInfo\n+ player.queue.streamInfo\n\n- player.getLyrics\n+ player.lyrics\n\n- player.getFilters\n+ player.filters.list\n\n- player.createProgressBar\n+ player.queue.progress\n\n- player.setVolume\n+ player.queue.setVolume\n\n- player.stop\n+ player.queue.stop\n\n- player.removeSong\n+ player.queue.removeTrack\n```\n\n#### DatabaseManager\n\n```diff\n+ player.database.get\n+ player.database.write\n+ player.database.initGuild\n+ private player.database.init\n```\n\n#### FiltersManager\n\n```diff\n+ player.filters.add\n+ player.filters.isExists\n+ player.filters.get\n+ player.filters.list\n+ player.filters.delete\n+ private player.filters.init\n```\n\n#### PlaylistsManager\n\n```diff\n+ player.playlists.create\n+ player.playlists.addTrack\n+ player.playlists.play\n+ player.playlists.removeTrack\n+ player.playlists.delete\n```\n\n#### QueueManager\n\n```diff\n+ player.queue.add\n+ player.queue.get\n+ player.queue.progress\n+ player.queue.streamInfo\n+ player.queue.trackInfo\n+ player.queue.setFilter\n+ player.queue.setLoop\n+ player.queue.setState\n+ player.queue.setVolume\n+ player.queue.skipTrack\n+ player.queue.removeTrack\n+ player.queue.seek\n+ player.queue.shuffle\n+ player.queue.stop\n+ player.queue.delete\n```\n\n#### UtilsManager\n\n```diff\n- player.utils.checkNode\n- player.utils.checkPermissions\n- player.utils.getPlayerMode\n+ player.utils.formatDuration\n+ player.utils.createEmptyProgress\n+ player.utils.getUniqueID\n+ player.utils.getTrackDuration\n```\n\n## 2.0.0\nVersion 2.0.0 fixes the playback of YouTube tracks: the old `ytdl-core` and `yt-search` libraries stopped working, so the source layer was rewritten. **All method and event names of 1.1.7 are kept**, but errors work in a different way and some requirements changed.\n\n### Requirements\n\n```diff\n- Node.js 16.9.0\n+ Node.js 22.12.0\n- discord.js 14 (any)\n+ discord.js 14.28\n\n- @discordjs/voice 0.11\n+ @discordjs/voice 0.19 (installed with the module)\n\n- ytdl-core, yt-search\n+ youtubei.js, yt-dlp (downloaded automatically)\n\n- @discordjs/opus (required)\n+ opusscript (installed with the module, @discordjs/opus is optional)\n```\n\n### Errors are thrown, not returned (breaking)\n\nIn 1.x many methods returned `{ error: { code, message } }`. Now every method **rejects with a `PlayerError`**. It has `code` (`PlayerErrorCode`), `status` (a number like HTTP: `404`, `400`, `409`, `502`...), `message` and `cause` (the original error, for example of a source provider).\n\n```diff\n- const skipData = await player.queue.skipTrack(guildID);\n- if(skipData?.error) return message.channel.send({ content: skipData.error.message });\n-\n- message.channel.send({ content: `Skipped: ${skipData.current.title}` });\n+ try {\n+     const skipData = await player.queue.skipTrack(guildID);\n+\n+     message.channel.send({ content: `Skipped: ${skipData.current.title}` });\n+ }catch(error) {\n+     if(error instanceof PlayerError) return message.channel.send({ content: error.message });\n+\n+     throw error;\n+ }\n```\n\nError codes (`PlayerErrorCode`):\n\n| Code | When |\n| --- | --- |\n| `MISSING_PARAMETER`, `INVALID_TYPE`, `INVALID_VALUE` | A parameter is missing or invalid (this was a thrown `PlayerError` in 1.x too) |\n| `QUEUE_NOT_FOUND`, `QUEUE_TRACK_NOT_FOUND` | The server has no queue, or the queue has no track with that index |\n| `SHUFFLE_UNAVAILABLE` | The queue has less than 3 tracks (the playing track is not shuffled) |\n| `INVALID_STATE` | The queue is already in the requested state (paused or playing) |\n| `FILTER_NOT_FOUND`, `FILTER_EXISTS` | Filters |\n| `USER_NOT_IN_VOICE`, `ALREADY_CONNECTED`, `CONNECTION_FAILED`, `GUILD_NOT_FOUND` | Voice channels and servers |\n| `TRACK_NOT_FOUND`, `LYRICS_NOT_FOUND` | Search and lyrics (`cause` has the reason, for example a source provider error) |\n| `SIGN_IN_REQUIRED` | YouTube asks to sign in to play the video (age-restricted, or the server was taken for a bot): the cookies of an account are needed, see the FAQ |\n| `COLLECTOR_NO_RESULTS`, `COLLECTOR_UNKNOWN`, `COLLECTOR_SMALL_VALUE`, `COLLECTOR_LARGE_VALUE`, `COLLECTOR_TIMEOUT`, `COLLECTOR_CANCELLED` | Collectors (`createCollector()` now rejects with `COLLECTOR_TIMEOUT` when nothing is selected in time, in 1.x it never finished; `COLLECTOR_CANCELLED` when the user cancels; the attempts used up by wrong answers end with `INVALID_VALUE`, `COLLECTOR_SMALL_VALUE` or `COLLECTOR_LARGE_VALUE`) |\n| `SOURCES_FAILED` | Every source provider failed |\n| `SOURCE_RATE_LIMITED`, `SOURCE_UNAUTHORIZED`, `AUDIO_NOT_FOUND` | A service limits the requests / did not accept the credentials / the audio of a track was not found in the other sources |\n\nThe type `ErrorData` and the `PlayerError` typedef with `{ channel, requested, method, error }` (it described the `error` event) were renamed to `PlayerErrorEvent`. The messages are the same as before (`player.errors` still exists).\n\nThe `error` event is emitted for errors that happen in the background (a track that can not be played, a lost voice connection) and now has the same data as before: `{ channel, requested, method, error }`. An `error` event without listeners is printed to the console and no longer crashes the process.\n\n### Tracks that can not be played\n\nA track that can not be played is reported with the `error` event and **skipped**, the queue continues with the next track (in 1.x the queue could hang). If the voice connection is lost, the queue is closed.\n\n### New and changed events\n\n```diff\n+ player#providerFailed\n+ player#sourceUsed\n+ player#ytdlpStatus\n+ player#skippedTrack\n```\n\n**`queueEnded` changed:** it now has a second argument `reason` and is emitted once every time a queue is closed, not only when the tracks are over: `reason` is `ended` (the tracks are over, the only case in 1.x), `stopped` (`queue.stop()`), `deleted` (`queue.delete()`), `skipped` (the last track was skipped) or `error` (the voice connection failed). Handlers of 1.x `(queue) => ...` keep working, but they now also run in the new cases: use `if(reason === 'ended')` to keep the old behaviour.\n\n`sourceUsed` also has `via` (the provider that gave the audio, when a provider plays the audio of another one).\n\n`providerFailed` has `{ provider, method, error }` and is emitted when a source provider fails and the next one is used. `sourceUsed` has `{ provider, track, seek, prefetched }` and tells which provider gives the audio of a track (a debugging event). `ytdlpStatus` has `{ stage, message, origin, path, version, latest, reason }` and reports every step of finding, checking, downloading and updating yt-dlp (`stage` is `found`, `checking`, `up-to-date`, `update-available`, `downloading`, `installed`, `skipped` (see `reason`: `update-disabled`, `interval`, `offline`, `custom-command`) or `error`). `skippedTrack` has `{ track, next, error }` and is emitted when a track could not be played and the queue goes on with the next one. Every `Player` now has its own event emitter (in 1.x all players shared one).\n\n### New and changed options\n\nSee the [Providers page](providers.md) for the source providers, the order of the sources and writing your own provider.\n\n```diff\n+ options.sources            // source providers, [YoutubeiProvider, YtDlpProvider] by default\n+ options.lyrics             // lyrics provider, LrclibProvider by default\n+ options.playlistLimit      // tracks taken from a playlist link, 100\n+ options.prefetchSeconds    // the next track is prepared in advance, 20\n+ options.sourceFailureThreshold, options.sourceCooldown\n\n+ options.collectorsConfig.message.cancel, options.collectorsConfig.reaction.cancel // the cancel word (`cancel`) and the cancel reaction (`❌`), `false` turns them off\n* options.collectorsConfig.*.attempts // every message or reaction of the user is an attempt, the user can try again while there are attempts\n* options.synchronLoop       // `false` is not replaced with `true` any more\n* invalid options          // an option that is passed but is wrong (for example `time: 60000` instead of `'1m'`) is still replaced with the default value, but the module tells about it with `console.warn`\n- options.databaseConfig                // removed together with the server playlists, see \"Removed\" below\n```\n\n### Methods\n\nNames are the same as in 1.1.7. What changed:\n\n```diff\n* player.search(query, member, channel)       // a playlist link adds all its tracks and starts playing, returns an array of tracks; throws TRACK_NOT_FOUND\n* player.lyrics(query)                        // LRCLIB; returns { query, result, title, artist, source }; throws LYRICS_NOT_FOUND\n* player.createCollector(...)                 // rejects with COLLECTOR_TIMEOUT or COLLECTOR_CANCELLED, the reaction collector adds a cancel reaction\n* player.queue.setFilter(guildID, filter)     // continues from the current position\n* player.queue.removeTrack(guildID, 0)        // removing the playing track skips it\n* player.queue.setVolume(guildID)             // without a value sets the default volume\n* player.queue.seek(guildID, seconds)         // validates the value\n+ player.sources                              // SourceRegistry\n+ player.utils.parseDuration(text)             // '10m' -> milliseconds\n+ player.utils.formatMilliseconds(ms, { long }) // milliseconds -> '2m' or '2 minutes'\n+ player.utils.splitMilliseconds(ms)           // milliseconds -> { days, hours, minutes, seconds }\n+ player.lyricsProvider\n```\n\nNew enum value: `Search.PLAYLIST`.\n\n### Types and imports\n\nTypes are generated from the code and exported from the main package. The `discord-player-music/types/...` files do not exist any more.\n\n```diff\n- import { PlayerTrack } from 'discord-player-music/types/PlayerData';\n+ import type { PlayerTrack } from 'discord-player-music';\n```\n\nThe package has two builds, ESM (`import`) and CommonJS (`require`), both work.\n\n### Removed\n\n* `ytdl-core` and `yt-search` and everything that depended on them. If you used the `Status code: 403/404` errors of `ytdl-core`, check `providerFailed` and `error` events instead.\n* `lyrics-finder` (it stopped finding lyrics). Use the `lyrics` option for another service.\n* `player.utils.getUniqueID()` (it was only needed by the server playlists; use `crypto.randomUUID()` if you need an ID) and the unused error texts `playingPaused` and `playingResumed` of `player.errors` (an already paused or already playing queue gives the `INVALID_STATE` error). `player.utils.getTrackDuration(url)` is **deprecated**: it still works, but the duration is in the tracks that `player.search()` returns (`track.duration`) and `player.sources.resolve(url)` gives `seconds`.\n* **Server playlists** (the playlists of a Discord server saved by the module) and the JSON database that kept them. They were in 1.x and are removed in 2.0 without deprecated aliases, so code that uses them stops working (breaking change): it is an extra feature that every bot can build for itself in a few lines.\n\n```diff\n- player.playlists.create / addTrack / play / removeTrack / delete\n- player.database.get / write / initGuild\n- options.databaseConfig, options.databaseConfig.path, options.databaseConfig.checkInterval\n- player#createdPlaylist, player#deletedPlaylist, Events.PLAYLIST_CREATED, Events.PLAYLIST_DELETED\n- GuildPlaylist, PlaylistTrack, CreatePlaylistData, AddPlaylistData, DatabaseManagerConfiguration, DatabaseStorage\n- PlayerErrorCode.PLAYLIST_NOT_FOUND, GUILD_PLAYLISTS_NOT_FOUND, PLAYLIST_TRACK_NOT_FOUND, PLAYLIST_TRACK_EXISTS\n- PlaylistsManager, DatabaseManager\n```\n\n  The module does not read or write the `dpm.playlists.json` file any more. You can delete it, or read it yourself (it is plain JSON: `{ \"<guildID>\": { \"playlists\": [{ \"id\", \"title\", \"author\", \"tracks\": [{ \"url\", \"title\" }], ... }] } }`) to move your old playlists to your own storage. Playing a **YouTube** playlist link is a different feature and stays (`player.search()` with a playlist link, `playlistLimit`).\n\n  To keep playlists yourself, store the links in any storage (a `Map`, a database, a JSON file) and add them one by one with `player.search()`, it keeps their order:\n\n```ts\nconst playlists = new Map<string, Array<string>>(); // playlist name -> track links\nplaylists.set('chill', ['https://www.youtube.com/watch?v=Vt2TeOptLxE', 'https://www.youtube.com/watch?v=1Qo35ldlvWo']);\n\n// Play the playlist: every link is added to the queue, the first one starts playing\nfor(const url of playlists.get('chill') ?? []) await player.search(url, message.member, message.channel);\n```\n",
      "path": "docs/general/updating.md"
     },
     "index": {
@@ -41,7 +41,7 @@
     "changelog": {
      "name": "Changelog",
      "type": "md",
-     "content": "# Module Changelog\n* ***Version 1.0.0***\n  * Release module\n* ***Version 1.0.1***\n  * Code optimization\n  * Fix methods `joinVoiceChannel()` and `leaveVoiceChannel()`\n  * Added the `formatNumbers()` method for formatting numbers\n  * Fix bugs\n  * Fix `README.md`\n* ***Version 1.0.2***\n  * Code optimization\n  * Fixed bug with repeating song/queue\n  * Improving the quality of playing songs\n  * Added filter system. Method `setFilter()`\n  * Changing the returned data by some methods and events\n  * Added the `getGuildMap()` method to get the server queue object\n* ***Version 1.0.3***\n  * Code optimization\n  * Fix caught some bugs\n  * Fixed minor bugs\n  * Rewrite `README.md`\n  * Fixed events\n* ***Versions 1.0.4 - 1.0.5***\n  * Update versions all dependencies\n  * Fix `README.md`\n* ***Version 1.0.6***\n  * Fix module typings\n  * Fix minor bugs\n  * Added the `getFilters()` method to get arrays with player filters\n  * Fix `README.md`\n* ***Version 1.0.7***\n  * Update versions all dependencies\n* ***Version 1.0.8***\n  * Fix method `searchVideo()`\n  * Added the `getLyrics()` method to get lyrics for current song\n* ***Version 1.1.0***\n  * Fix filter system\n  * Added the `shuffle()` method for shuffling songs in queue\n* ***Version 1.1.1***\n  * The `playerError` event has started to catch more errors about which users can be warned\n  * When receiving an error `Status code: 403`, the module will restart the stream (previously, the stream simply ended)\n  * Add the `removeSong()` method for removing songs from the queue\n  * Completely rewritten `README.md`\n  * Release of module documentation. Link: [dpm-docs](https://dpm-docs.tk)\n* ***Version 1.1.2***\n  * Updating the documentation for the new design style\n  * The module structure has been completely rewritten\n  * Added class `Utils`, some methods have been moved to it and marked as `public`\n* ***Version 1.1.3***\n  * Remove dependency on `<Discord.Message>` completely\n  * The `searchVideo()` method has been replaced with `searchSong()`\n  * Completely rewritten TypeScript code\n  * The `getSongIndex()` and `addSong()` methods have been changed\n  * The `playerError` event have been changed\n* ***Version 1.1.5***\n  * The module structure has been completely rewritten on managers\n  * Completely rewritten `README.md`\n  * Rewritten TypeScript code\n  * Correction of bugs and errors\n  * Adding support for `discord.js v13`\n  * and many other changes...\n* ***Version 1.1.6***\n  * Fix Voice Manager\n* ***Version 1.1.7***\n  * The module has been completely rewritten to the new structure and the TypeScript language\n  * Replaced old domain [dpm-docs](https://dpm-docs.tk) with new one [dpm-website](https://dpm.js.org)\n  * Added new managers, simplified work with old ones\n  * Optimization of module algorithms\n  * Added server playlist functionality\n  * Removed support for `discord.js v12` and added support for the current `discord.js v14`\n  * Updated dependency versions to the latest ones\n  * Updated old and added new events\n  * Partial transition to enumerated types (enum)\n  * The rest of the changes can be seen more clearly on the updates page...\n\n* ***Version 2.0.0***\n  * **Breaking:** Node.js 22.12.0 or newer and discord.js 14.28 or newer are required, `@discordjs/voice` was updated to 0.19\n  * **Breaking:** methods throw `PlayerError` (with `code`, `status` and `cause`) instead of returning `{ error }`, see the updating page\n  * Fixed YouTube playback: `ytdl-core` and `yt-search` were replaced with replaceable source providers (`SourceRegistry`, `YoutubeiProvider`, `YtDlpProvider`)\n  * Automatic fallback between providers, the `providerFailed`, `sourceUsed` (which source plays a track), `ytdlpStatus` (every step of finding, checking, downloading and updating yt-dlp) and `skippedTrack` (a track could not be played, the queue goes on with the next one) events and the `sources`, `sourceFailureThreshold` and `sourceCooldown` options\n  * `yt-dlp` is found in `PATH` or downloaded automatically when the player starts (the checksum is verified), and a newer release is installed at every start; the `cookies` option (one cookies file for both `youtubei.js` and yt-dlp: `youtubei.js` reads the information of age-restricted videos and private playlists with it, yt-dlp plays them) for servers where YouTube asks to sign in\n  * `SIGN_IN_REQUIRED` error for age-restricted videos and bot checks (the cookies are needed)\n  * yt-dlp errors are thrown before the stream starts (so the next provider is used) and explain the sign-in request\n  * YouTube playlist links: all tracks are added to the queue and start playing (`playlistLimit` option, `Search.PLAYLIST`)\n  * The next track is prepared in advance (`prefetchSeconds` option), no pause between tracks\n  * Lyrics from LRCLIB (`lyrics-finder` stopped working), the `lyrics` option and `LyricsProvider` interface\n  * Tracks that can not be played are skipped, the queue no longer hangs\n  * Every `Player` has its own event emitter, an `error` event without listeners no longer crashes the process\n  * Collectors: the user can cancel a selection (the word `cancel` or the `❌` reaction, `COLLECTOR_CANCELLED`), wrong answers use up the attempts and the user can try again (a wrong answer ended with a timeout error before), emojis are compared without the invisible variation selector (a reaction could be ignored), the message of the small-number error showed `{max}` instead of the minimum; `createCollector()` is covered by tests\n  * Fixed: removing the playing track skipped the next one; `synchronLoop: false` was ignored; `setVolume()` without a value; collectors never finished; leaking listeners on every track; the filter restarted the track from the beginning; `VoiceManager#join` crash\n  * `SourceProvider` is extended for external packages: the optional `attach` and `audioProvider` members, the `via` field of the `sourceUsed` event, the error codes `SOURCE_RATE_LIMITED`, `SOURCE_UNAUTHORIZED` and `AUDIO_NOT_FOUND`, and `SourcePlaylist` is exported.\n  * Removed (breaking change, no deprecated aliases): server playlists from 1.x (`player.playlists`, the events `createdPlaylist` and `deletedPlaylist`, the related types and error codes) and the JSON database that kept them (`player.database`, `databaseConfig`). It is an extra feature that every bot can build for itself, see the [updating page](updating.md) for a short example. Playing a YouTube playlist link is not removed\n  * Removed `player.utils.getUniqueID()` and two unused error texts; `player.utils.getTrackDuration()` is deprecated\n  * New helpers `player.utils.parseDuration()` (`'10m'` to milliseconds) and `player.utils.formatMilliseconds()` (milliseconds to `2m` or `2 minutes`)\n  * **Changed:** `queueEnded` now has a second argument `reason` (`ended`, `stopped`, `deleted`, `skipped`, `error`) and is emitted once every time a queue is closed, not only when the tracks are over (check `reason === 'ended'` for the old behaviour). Invalid options are still replaced with the defaults, but the module now tells about them with `console.warn`\n  * Types are generated from the code, ESM and CommonJS builds, JSDoc for the whole public API\n  * Added tests, linting, a JSDoc check and CI workflows\n",
+     "content": "# Module Changelog\n* ***Version 1.0.0***\n  * Release module\n* ***Version 1.0.1***\n  * Code optimization\n  * Fix methods `joinVoiceChannel()` and `leaveVoiceChannel()`\n  * Added the `formatNumbers()` method for formatting numbers\n  * Fix bugs\n  * Fix `README.md`\n* ***Version 1.0.2***\n  * Code optimization\n  * Fixed bug with repeating song/queue\n  * Improving the quality of playing songs\n  * Added filter system. Method `setFilter()`\n  * Changing the returned data by some methods and events\n  * Added the `getGuildMap()` method to get the server queue object\n* ***Version 1.0.3***\n  * Code optimization\n  * Fix caught some bugs\n  * Fixed minor bugs\n  * Rewrite `README.md`\n  * Fixed events\n* ***Versions 1.0.4 - 1.0.5***\n  * Update versions all dependencies\n  * Fix `README.md`\n* ***Version 1.0.6***\n  * Fix module typings\n  * Fix minor bugs\n  * Added the `getFilters()` method to get arrays with player filters\n  * Fix `README.md`\n* ***Version 1.0.7***\n  * Update versions all dependencies\n* ***Version 1.0.8***\n  * Fix method `searchVideo()`\n  * Added the `getLyrics()` method to get lyrics for current song\n* ***Version 1.1.0***\n  * Fix filter system\n  * Added the `shuffle()` method for shuffling songs in queue\n* ***Version 1.1.1***\n  * The `playerError` event has started to catch more errors about which users can be warned\n  * When receiving an error `Status code: 403`, the module will restart the stream (previously, the stream simply ended)\n  * Add the `removeSong()` method for removing songs from the queue\n  * Completely rewritten `README.md`\n  * Release of module documentation. Link: [dpm-docs](https://dpm-docs.tk)\n* ***Version 1.1.2***\n  * Updating the documentation for the new design style\n  * The module structure has been completely rewritten\n  * Added class `Utils`, some methods have been moved to it and marked as `public`\n* ***Version 1.1.3***\n  * Remove dependency on `<Discord.Message>` completely\n  * The `searchVideo()` method has been replaced with `searchSong()`\n  * Completely rewritten TypeScript code\n  * The `getSongIndex()` and `addSong()` methods have been changed\n  * The `playerError` event have been changed\n* ***Version 1.1.5***\n  * The module structure has been completely rewritten on managers\n  * Completely rewritten `README.md`\n  * Rewritten TypeScript code\n  * Correction of bugs and errors\n  * Adding support for `discord.js v13`\n  * and many other changes...\n* ***Version 1.1.6***\n  * Fix Voice Manager\n* ***Version 1.1.7***\n  * The module has been completely rewritten to the new structure and the TypeScript language\n  * Replaced old domain [dpm-docs](https://dpm-docs.tk) with new one [dpm-website](https://dpm.js.org)\n  * Added new managers, simplified work with old ones\n  * Optimization of module algorithms\n  * Added server playlist functionality\n  * Removed support for `discord.js v12` and added support for the current `discord.js v14`\n  * Updated dependency versions to the latest ones\n  * Updated old and added new events\n  * Partial transition to enumerated types (enum)\n  * The rest of the changes can be seen more clearly on the updates page...\n\n* ***Version 2.0.0***\n  * **Breaking:** Node.js 22.12.0 or newer and discord.js 14.28 or newer are required, `@discordjs/voice` was updated to 0.19\n  * **Breaking:** methods throw `PlayerError` (with `code`, `status` and `cause`) instead of returning `{ error }`, see the updating page\n  * Fixed YouTube playback: `ytdl-core` and `yt-search` were replaced with replaceable source providers (`SourceRegistry`, `YoutubeiProvider`, `YtDlpProvider`)\n  * Automatic fallback between providers, the `providerFailed`, `sourceUsed` (which source plays a track), `ytdlpStatus` (every step of finding, checking, downloading and updating yt-dlp) and `skippedTrack` (a track could not be played, the queue goes on with the next one) events and the `sources`, `sourceFailureThreshold` and `sourceCooldown` options\n  * `yt-dlp` is found in `PATH` or downloaded automatically when the player starts (the checksum is verified), and a newer release is installed at every start; the `cookies` option (one cookies file for both `youtubei.js` and yt-dlp: `youtubei.js` reads the information of age-restricted videos and private playlists with it, yt-dlp plays them) for servers where YouTube asks to sign in\n  * `SIGN_IN_REQUIRED` error for age-restricted videos and bot checks (the cookies are needed)\n  * yt-dlp errors are thrown before the stream starts (so the next provider is used) and explain the sign-in request\n  * YouTube playlist links: all tracks are added to the queue and start playing (`playlistLimit` option, `Search.PLAYLIST`)\n  * The next track is prepared in advance (`prefetchSeconds` option), no pause between tracks\n  * Lyrics from LRCLIB (`lyrics-finder` stopped working), the `lyrics` option and `LyricsProvider` interface\n  * Tracks that can not be played are skipped, the queue no longer hangs\n  * Every `Player` has its own event emitter, an `error` event without listeners no longer crashes the process\n  * Collectors: the user can cancel a selection (the word `cancel` or the `❌` reaction, `COLLECTOR_CANCELLED`), wrong answers use up the attempts and the user can try again (a wrong answer ended with a timeout error before), emojis are compared without the invisible variation selector (a reaction could be ignored), the message of the small-number error showed `{max}` instead of the minimum; `createCollector()` is covered by tests\n  * Fixed: removing the playing track skipped the next one; `synchronLoop: false` was ignored; `setVolume()` without a value; collectors never finished; leaking listeners on every track; the filter restarted the track from the beginning; `VoiceManager#join` crash\n  * `SourceProvider` is extended for external packages: the optional `attach` and `audioProvider` members, the `via` field of the `sourceUsed` event, the error codes `SOURCE_RATE_LIMITED`, `SOURCE_UNAUTHORIZED` and `AUDIO_NOT_FOUND`, and `SourcePlaylist` is exported.\n  * Removed (breaking change, no deprecated aliases): server playlists from 1.x (`player.playlists`, the events `createdPlaylist` and `deletedPlaylist`, the related types and error codes) and the JSON database that kept them (`player.database`, `databaseConfig`). It is an extra feature that every bot can build for itself, see the [updating page](updating.md) for a short example. Playing a YouTube playlist link is not removed\n  * Removed `player.utils.getUniqueID()` and two unused error texts; `player.utils.getTrackDuration()` is deprecated\n  * New helpers `player.utils.parseDuration()` (`'10m'` to milliseconds), `player.utils.formatMilliseconds()` (milliseconds to `2m` or `2 minutes`) and `player.utils.splitMilliseconds()` (milliseconds to days, hours, minutes and seconds)\n  * **Changed:** `queueEnded` now has a second argument `reason` (`ended`, `stopped`, `deleted`, `skipped`, `error`) and is emitted once every time a queue is closed, not only when the tracks are over (check `reason === 'ended'` for the old behaviour). Invalid options are still replaced with the defaults, but the module now tells about them with `console.warn`\n  * Types are generated from the code, ESM and CommonJS builds, JSDoc for the whole public API\n  * Added tests, linting, a JSDoc check and CI workflows\n",
      "path": "docs/general/changelog.md"
     }
    }
@@ -2024,23 +2024,6 @@
    },
    "props": [
     {
-     "name": "player",
-     "description": "Player Class",
-     "access": "private",
-     "type": [
-      [
-       [
-        "Player"
-       ]
-      ]
-     ],
-     "meta": {
-      "line": 31,
-      "file": "FiltersManager.ts",
-      "path": "src/managers"
-     }
-    },
-    {
      "name": "storage",
      "description": "Player Filters Storage",
      "access": "private",
@@ -2061,7 +2044,7 @@
       ]
      ],
      "meta": {
-      "line": 39,
+      "line": 26,
       "file": "FiltersManager.ts",
       "path": "src/managers"
      }
@@ -2115,7 +2098,7 @@
       "description": "Registration status"
      },
      "meta": {
-      "line": 50,
+      "line": 37,
       "file": "FiltersManager.ts",
       "path": "src/managers"
      }
@@ -2156,7 +2139,7 @@
       "description": "`true` if the filter is registered"
      },
      "meta": {
-      "line": 75,
+      "line": 62,
       "file": "FiltersManager.ts",
       "path": "src/managers"
      }
@@ -2197,7 +2180,7 @@
       "description": "Filter name and value"
      },
      "meta": {
-      "line": 93,
+      "line": 80,
       "file": "FiltersManager.ts",
       "path": "src/managers"
      }
@@ -2233,7 +2216,7 @@
       "description": "Filters by name"
      },
      "meta": {
-      "line": 116,
+      "line": 103,
       "file": "FiltersManager.ts",
       "path": "src/managers"
      }
@@ -2274,14 +2257,14 @@
       "description": "Deletion status"
      },
      "meta": {
-      "line": 130,
+      "line": 117,
       "file": "FiltersManager.ts",
       "path": "src/managers"
      }
     }
    ],
    "meta": {
-    "line": 10,
+    "line": 9,
     "file": "FiltersManager.ts",
     "path": "src/managers"
    }
@@ -2318,7 +2301,7 @@
       ]
      ],
      "meta": {
-      "line": 50,
+      "line": 35,
       "file": "QueueManager.ts",
       "path": "src/managers"
      }
@@ -2344,7 +2327,7 @@
       ]
      ],
      "meta": {
-      "line": 58,
+      "line": 43,
       "file": "QueueManager.ts",
       "path": "src/managers"
      }
@@ -2360,7 +2343,7 @@
       ]
      ],
      "meta": {
-      "line": 67,
+      "line": 52,
       "file": "QueueManager.ts",
       "path": "src/managers"
      }
@@ -2395,7 +2378,7 @@
       "description": "Server queue"
      },
      "meta": {
-      "line": 81,
+      "line": 66,
       "file": "QueueManager.ts",
       "path": "src/managers"
      }
@@ -2440,7 +2423,7 @@
       "description": "`true` if the track was added"
      },
      "meta": {
-      "line": 98,
+      "line": 83,
       "file": "QueueManager.ts",
       "path": "src/managers"
      }
@@ -2496,7 +2479,7 @@
       "description": "Resolves when the track has started (or the queue has ended)"
      },
      "meta": {
-      "line": 165,
+      "line": 150,
       "file": "QueueManager.ts",
       "path": "src/managers"
      }
@@ -2558,7 +2541,7 @@
       "description": "Resolves when the playback has started"
      },
      "meta": {
-      "line": 223,
+      "line": 208,
       "file": "QueueManager.ts",
       "path": "src/managers"
      }
@@ -2596,7 +2579,7 @@
       "description": "Next track (the same track when the track loop is enabled)"
      },
      "meta": {
-      "line": 269,
+      "line": 254,
       "file": "QueueManager.ts",
       "path": "src/managers"
      }
@@ -2641,7 +2624,7 @@
       }
      ],
      "meta": {
-      "line": 284,
+      "line": 269,
       "file": "QueueManager.ts",
       "path": "src/managers"
      }
@@ -2664,7 +2647,7 @@
       }
      ],
      "meta": {
-      "line": 306,
+      "line": 291,
       "file": "QueueManager.ts",
       "path": "src/managers"
      }
@@ -2687,7 +2670,7 @@
       }
      ],
      "meta": {
-      "line": 327,
+      "line": 312,
       "file": "QueueManager.ts",
       "path": "src/managers"
      }
@@ -2710,7 +2693,7 @@
       }
      ],
      "meta": {
-      "line": 345,
+      "line": 330,
       "file": "QueueManager.ts",
       "path": "src/managers"
      }
@@ -2749,7 +2732,7 @@
       "description": "Resolves when the next track has started"
      },
      "meta": {
-      "line": 358,
+      "line": 343,
       "file": "QueueManager.ts",
       "path": "src/managers"
      }
@@ -2786,7 +2769,7 @@
       }
      ],
      "meta": {
-      "line": 377,
+      "line": 362,
       "file": "QueueManager.ts",
       "path": "src/managers"
      }
@@ -2842,7 +2825,7 @@
       "description": "State change status"
      },
      "meta": {
-      "line": 402,
+      "line": 387,
       "file": "QueueManager.ts",
       "path": "src/managers"
      }
@@ -2883,7 +2866,7 @@
       "description": "Server queue"
      },
      "meta": {
-      "line": 444,
+      "line": 429,
       "file": "QueueManager.ts",
       "path": "src/managers"
      }
@@ -2924,7 +2907,7 @@
       "description": "Progress bar and percents"
      },
      "meta": {
-      "line": 464,
+      "line": 449,
       "file": "QueueManager.ts",
       "path": "src/managers"
      }
@@ -2965,7 +2948,7 @@
       "description": "Loop, filter, state, volume and the time since the queue started"
      },
      "meta": {
-      "line": 506,
+      "line": 491,
       "file": "QueueManager.ts",
       "path": "src/managers"
      }
@@ -3019,7 +3002,7 @@
       "description": "Track (the current one if there is no track with that index)"
      },
      "meta": {
-      "line": 528,
+      "line": 513,
       "file": "QueueManager.ts",
       "path": "src/managers"
      }
@@ -3073,7 +3056,7 @@
       "description": "Set filter"
      },
      "meta": {
-      "line": 551,
+      "line": 536,
       "file": "QueueManager.ts",
       "path": "src/managers"
      }
@@ -3126,7 +3109,7 @@
       "description": "Loop status of the track and the queue"
      },
      "meta": {
-      "line": 588,
+      "line": 573,
       "file": "QueueManager.ts",
       "path": "src/managers"
      }
@@ -3179,7 +3162,7 @@
       "description": "Change status"
      },
      "meta": {
-      "line": 619,
+      "line": 604,
       "file": "QueueManager.ts",
       "path": "src/managers"
      }
@@ -3223,7 +3206,7 @@
       "description": "Skipped and next track (`null` if the queue has ended)"
      },
      "meta": {
-      "line": 648,
+      "line": 633,
       "file": "QueueManager.ts",
       "path": "src/managers"
      }
@@ -3277,7 +3260,7 @@
       "description": "Removed track and the updated track list"
      },
      "meta": {
-      "line": 693,
+      "line": 678,
       "file": "QueueManager.ts",
       "path": "src/managers"
      }
@@ -3331,7 +3314,7 @@
       "description": "Rewind status"
      },
      "meta": {
-      "line": 729,
+      "line": 714,
       "file": "QueueManager.ts",
       "path": "src/managers"
      }
@@ -3376,7 +3359,7 @@
       "description": "Shuffled track list"
      },
      "meta": {
-      "line": 756,
+      "line": 741,
       "file": "QueueManager.ts",
       "path": "src/managers"
      }
@@ -3420,7 +3403,7 @@
       "description": "Deletion status"
      },
      "meta": {
-      "line": 791,
+      "line": 776,
       "file": "QueueManager.ts",
       "path": "src/managers"
      }
@@ -3464,14 +3447,14 @@
       "description": "Deletion status"
      },
      "meta": {
-      "line": 822,
+      "line": 807,
       "file": "QueueManager.ts",
       "path": "src/managers"
      }
     }
    ],
    "meta": {
-    "line": 29,
+    "line": 14,
     "file": "QueueManager.ts",
     "path": "src/managers"
    }
@@ -3631,6 +3614,41 @@
      }
     },
     {
+     "name": "splitMilliseconds",
+     "description": "Allows you to split milliseconds into days, hours, minutes and seconds (every part is a whole number, the hours, minutes and seconds are\rthe remainders: `90061000` is 1 day, 1 hour, 1 minute and 1 second)",
+     "examples": [
+      "const time = client.player.utils.splitMilliseconds(90061000);\r\r// Result: { days: 1, hours: 1, minutes: 1, seconds: 1 }\rconsole.log(time);"
+     ],
+     "params": [
+      {
+       "name": "value",
+       "description": "Milliseconds",
+       "type": [
+        [
+         [
+          "number"
+         ]
+        ]
+       ]
+      }
+     ],
+     "returns": {
+      "types": [
+       [
+        [
+         "Object"
+        ]
+       ]
+      ],
+      "description": "Time parts"
+     },
+     "meta": {
+      "line": 106,
+      "file": "UtilsManager.ts",
+      "path": "src/managers"
+     }
+    },
+    {
      "name": "formatMilliseconds",
      "description": "Allows you to write milliseconds as a short or a long text",
      "examples": [
@@ -3685,7 +3703,7 @@
       "description": "Text"
      },
      "meta": {
-      "line": 106,
+      "line": 129,
       "file": "UtilsManager.ts",
       "path": "src/managers"
      }
@@ -3723,7 +3741,7 @@
       "description": "Milliseconds, or `undefined` if the text is not a duration"
      },
      "meta": {
-      "line": 129,
+      "line": 152,
       "file": "UtilsManager.ts",
       "path": "src/managers"
      }
@@ -3756,7 +3774,7 @@
       "description": "Text"
      },
      "meta": {
-      "line": 196,
+      "line": 219,
       "file": "UtilsManager.ts",
       "path": "src/managers"
      }
@@ -3789,7 +3807,7 @@
       "description": "Text"
      },
      "meta": {
-      "line": 215,
+      "line": 238,
       "file": "UtilsManager.ts",
       "path": "src/managers"
      }
@@ -3855,7 +3873,7 @@
       "description": "Text"
      },
      "meta": {
-      "line": 234,
+      "line": 257,
       "file": "UtilsManager.ts",
       "path": "src/managers"
      }
@@ -3891,7 +3909,7 @@
       "description": "Correct module options"
      },
      "meta": {
-      "line": 249,
+      "line": 272,
       "file": "UtilsManager.ts",
       "path": "src/managers"
      }
@@ -3959,7 +3977,7 @@
       "description": "Correct value"
      },
      "meta": {
-      "line": 301,
+      "line": 324,
       "file": "UtilsManager.ts",
       "path": "src/managers"
      }
@@ -4004,7 +4022,7 @@
       }
      ],
      "meta": {
-      "line": 321,
+      "line": 344,
       "file": "UtilsManager.ts",
       "path": "src/managers"
      }
@@ -4069,7 +4087,7 @@
       "description": "The value or `undefined`"
      },
      "meta": {
-      "line": 341,
+      "line": 364,
       "file": "UtilsManager.ts",
       "path": "src/managers"
      }
@@ -4091,7 +4109,7 @@
       "description": "Empty progress bar"
      },
      "meta": {
-      "line": 360,
+      "line": 383,
       "file": "UtilsManager.ts",
       "path": "src/managers"
      }
@@ -4133,7 +4151,7 @@
       "description": "Track duration in seconds (0 if it can not be received)"
      },
      "meta": {
-      "line": 377,
+      "line": 400,
       "file": "UtilsManager.ts",
       "path": "src/managers"
      }

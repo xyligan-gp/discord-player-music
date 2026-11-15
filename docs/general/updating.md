@@ -353,6 +353,7 @@ Names are the same as in 1.1.7. What changed:
 + player.sources                              // SourceRegistry
 + player.utils.parseDuration(text)             // '10m' -> milliseconds
 + player.utils.formatMilliseconds(ms, { long }) // milliseconds -> '2m' or '2 minutes'
++ player.utils.splitMilliseconds(ms)           // milliseconds -> { days, hours, minutes, seconds }
 + player.lyricsProvider
 ```
 
