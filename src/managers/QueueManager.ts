@@ -187,7 +187,7 @@ export class QueueManager {
 
             this.storage.delete(guildID);
 
-            this.player.emit(Events.QUEUE_ENDED, guildQueue);
+            this.player.emit(Events.QUEUE_ENDED, guildQueue, 'ended');
 
             return;
         }
@@ -205,6 +205,8 @@ export class QueueManager {
                 this.storage.delete(guildID);
 
                 if(guildQueue.connection.state.status !== VoiceConnectionStatus.Destroyed) guildQueue.connection.destroy();
+
+                this.player.emit(Events.QUEUE_ENDED, guildQueue, 'error');
 
                 return;
             }
@@ -648,6 +650,8 @@ export class QueueManager {
      *
      * @param {string} guildID Discord Guild ID
      *
+     * @fires Player#queueEnded
+     *
      * @example
      * const skipData = await client.player.queue.skipTrack('GuildID');
      *
@@ -669,6 +673,8 @@ export class QueueManager {
             this.cancelPrefetch(guildQueue);
             this.storage.delete(guildID);
             guildQueue.dispatcher.stop(true);
+
+            this.player.emit(Events.QUEUE_ENDED, guildQueue, 'skipped');
 
             return { current, next: null };
         }
@@ -787,6 +793,8 @@ export class QueueManager {
      *
      * @param {string} guildID Discord Guild ID
      *
+     * @fires Player#queueEnded
+     *
      * @example
      * const stopData = await client.player.queue.stop('GuildID');
      * if(stopData.status) return message.channel.send({ content: 'Playback has been stopped!' });
@@ -806,6 +814,8 @@ export class QueueManager {
 
         if(guildQueue.connection.state.status !== VoiceConnectionStatus.Destroyed) guildQueue.connection.destroy();
 
+        this.player.emit(Events.QUEUE_ENDED, guildQueue, 'stopped');
+
         return { status: true };
     }
 
@@ -813,6 +823,8 @@ export class QueueManager {
      * Allows you to delete the queue of the server without leaving the voice channel
      *
      * @param {string} guildID Discord Guild ID
+     *
+     * @fires Player#queueEnded
      *
      * @example
      * const deleteData = await client.player.queue.delete('GuildID');
@@ -829,6 +841,8 @@ export class QueueManager {
         this.cancelPrefetch(guildQueue);
         this.storage.delete(guildID);
         guildQueue.dispatcher.stop(true);
+
+        this.player.emit(Events.QUEUE_ENDED, guildQueue, 'deleted');
 
         return { status: true };
     }

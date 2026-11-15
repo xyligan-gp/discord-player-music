@@ -99,6 +99,12 @@ export interface LyricsData {
 
 
 
+/**
+ * Why a queue was closed (the second argument of the `queueEnded` event): `ended` (the tracks are over), `stopped` (`queue.stop()`),
+ * `deleted` (`queue.delete()`), `skipped` (the last track was skipped) or `error` (a fatal error: the voice connection of the queue failed)
+ */
+export type QueueEndReason = 'ended' | 'stopped' | 'deleted' | 'skipped' | 'error';
+
 export interface SkipData {
     current: PlayerTrack;
     next: PlayerTrack | null;

@@ -17,7 +17,7 @@ export enum Collector {
  * @prop {string} TRACK_ADD Player 'addedTrack' event
  * @prop {string} TRACK_PLAYING Player 'playingTrack' event
  * @prop {string} QUEUE_STARTED Player 'queueStarted' event
- * @prop {string} QUEUE_ENDED Player 'queueEnded' event
+ * @prop {string} QUEUE_ENDED Player 'queueEnded' event (a queue was closed for any reason, the second argument tells why)
  * @prop {string} QUEUE_STATE Player 'queueStateChange' event
  * @prop {string} PROVIDER_FAILED Player 'providerFailed' event (a source provider failed, the next one is tried)
  * @prop {string} YTDLP_STATUS Player 'ytdlpStatus' event (a step of finding, checking, downloading or updating yt-dlp)

@@ -272,3 +272,91 @@ describe('QueueManager events of providers that play the audio of other sources'
         expect(used).toEqual([undefined]);
     })
 })
+
+describe('QueueManager queueEnded event (every closed queue)', () => {
+    // Collects `reason:number of tracks left` of every queueEnded event
+    const watch = () => {
+        const ended: Array<string> = [];
+
+        t.player.on('queueEnded', (queue, reason) => ended.push(`${reason}:${queue.tracks.length}`));
+
+        return ended;
+    }
+
+    it('tells that the tracks are over (the only case of 1.x)', async () => {
+        const ended = watch();
+        const { queue } = createQueue(t.player, [fakeTrack('a')]);
+
+        await t.player.queue.startTrack('G', queue.tracks[0]);
+        await waitFor(() => ended.length > 0, 10_000);
+
+        expect(ended).toEqual(['ended:0']);
+        expect(t.events.filter(event => event === 'queueEnded')).toHaveLength(1);
+    })
+
+    it('tells that the queue was stopped', async () => {
+        const ended = watch();
+        const { queue } = createQueue(t.player, [fakeTrack('a'), fakeTrack('b')]);
+
+        await t.player.queue.startTrack('G', queue.tracks[0]);
+        await t.player.queue.stop('G');
+
+        expect(ended).toEqual(['stopped:2']);
+    })
+
+    it('tells that the queue was deleted', async () => {
+        const ended = watch();
+        const { queue } = createQueue(t.player, [fakeTrack('a')]);
+
+        await t.player.queue.startTrack('G', queue.tracks[0]);
+        await t.player.queue.delete('G');
+
+        expect(ended).toEqual(['deleted:1']);
+    })
+
+    it('tells that the last track was skipped, but not when other tracks are left', async () => {
+        const ended = watch();
+        const { queue } = createQueue(t.player, [fakeTrack('a'), fakeTrack('b')]);
+
+        await t.player.queue.startTrack('G', queue.tracks[0]);
+        await t.player.queue.skipTrack('G');
+
+        expect(ended).toEqual([]);
+
+        // The skipped track is removed when the audio player becomes idle
+        await waitFor(() => queue.tracks.length === 1);
+        await t.player.queue.skipTrack('G');
+
+        expect(ended).toEqual(['skipped:1']);
+    })
+
+    it('is emitted once for a closed queue, and the queue is already removed then', async () => {
+        const sizes: Array<number> = [];
+
+        t.player.on('queueEnded', () => sizes.push(t.player.queue.size));
+
+        const { queue } = createQueue(t.player, [fakeTrack('a')]);
+
+        await t.player.queue.startTrack('G', queue.tracks[0]);
+        await t.player.queue.stop('G');
+
+        // The queue is closed already: nothing more is emitted when the audio player becomes idle
+        await sleep(300);
+
+        expect(sizes).toEqual([0]);
+        expect(t.events.filter(event => event === 'queueEnded')).toHaveLength(1);
+    })
+
+    it('keeps working for a handler of 1.x that takes only the queue', async () => {
+        const queues: Array<number> = [];
+
+        t.player.on('queueEnded', queue => queues.push(queue.tracks.length));
+
+        const { queue } = createQueue(t.player, [fakeTrack('a')]);
+
+        await t.player.queue.startTrack('G', queue.tracks[0]);
+        await t.player.queue.stop('G');
+
+        expect(queues).toEqual([1]);
+    })
+})
