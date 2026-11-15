@@ -8,7 +8,7 @@ This is a small part of what can be done. A complete bot that you can run locall
 
 | Group | Commands | What they show |
 | --- | --- | --- |
-| Playback | `!play <title or link>`, `!search`, `!pick`, `!pause`, `!resume`, `!toggle`, `!skip`, `!replay`, `!stop`, `!delete`, `!seek <time>`, `!volume [n]`, `!loop [track\|queue\|off\|status]`, `!shuffle`, `!remove <index>`, `!clear` | `player.search`, `initQueueTrack`, `initGuildTrack`, `queue.add`, `setState`, `skipTrack`, `stop`, `delete`, `seek`, `setVolume`, `setLoop`, `shuffle`, `removeTrack`; video and playlist links; the collectors |
+| Playback | `!play <title or link>`, `!search`, `!pick`, `!pause`, `!resume`, `!toggle`, `!skip`, `!replay`, `!stop`, `!delete`, `!seek <time>`, `!volume [n]`, `!loop [track\|queue\|off\|status]`, `!autoplay [on\|off]`, `!shuffle`, `!remove <index>`, `!clear` | `player.search`, `initQueueTrack`, `initGuildTrack`, `queue.add`, `setState`, `skipTrack`, `stop`, `delete`, `seek`, `setVolume`, `setLoop`, `setAutoplay`, `shuffle`, `removeTrack`; video and playlist links; the collectors |
 | Information | `!nowplaying`, `!queue [page]`, `!state`, `!lyrics [query]`, `!stats`, `!config`, `!help` | `queue.trackInfo`, `progress`, `streamInfo`, `get`, `player.lyrics`, `version`, `readyAt`, `isReady`, `queue.size`, the resolved options; embeds, buttons for the pages of the queue |
 | Voice | `!join`, `!leave` | `player.voice.join`, `player.voice.leave` |
 | Filters | `!filters`, `!filter <name\|clear>`, `!filter add <name> <value>`, `!filter remove <name>`, `!filter info <name>` | `queue.setFilter`, `player.filters` (`list`, `add`, `delete`, `isExists`, `get`) |
@@ -17,7 +17,7 @@ This is a small part of what can be done. A complete bot that you can run locall
 
 Times for `!seek` can be `90`, `1:30`, `1:02:03` or `1m30s`. The numbers in `!queue` are the indexes for `!remove` (0 is the playing track).
 
-Every event of the player is shown: `ready`, `queueStarted`, `addedTrack`, `playingTrack`, `queueStateChange`, `queueEnded` (with the reason), `skippedTrack`, `error`, `providerFailed`, `ytdlpStatus` and `sourceUsed` (with `via`). The main ones are sent to the text channel, the technical ones (`providerFailed`, `ytdlpStatus`, `sourceUsed`) go to the channel only after `!debug on`.
+Every event of the player is shown (including `autoplayAdded`): `ready`, `queueStarted`, `addedTrack`, `playingTrack`, `queueStateChange`, `queueEnded` (with the reason), `skippedTrack`, `error`, `providerFailed`, `ytdlpStatus` and `sourceUsed` (with `via`). The main ones are sent to the text channel, the technical ones (`providerFailed`, `ytdlpStatus`, `sourceUsed`) go to the channel only after `!debug on`.
 
 Errors of the module (`PlayerError`) are shown in an embed with the `code` and the `status`, so wrong commands do not crash the bot: for example `!resume` on a queue that is not paused gives `INVALID_STATE`, `!queue` without a queue gives `QUEUE_NOT_FOUND`.
 
@@ -175,6 +175,18 @@ The track continues from the current position when the filter is changed.
 const lyrics = await player.lyrics('Imagine Dragons Thunder');
 
 message.channel.send(`**${lyrics.artist} - ${lyrics.title}**\n\n${lyrics.result}`.slice(0, 1990));
+```
+
+## Autoplay
+
+```ts
+// Related tracks are added and played when the tracks are over (and no loop is on), until the autoplay is turned off
+const player = new Player(client, { autoplay: true });
+
+// The autoplay of one server: on, off, or switched when nothing is passed
+await player.queue.setAutoplay(message.guild.id, true);
+
+player.on('autoplayAdded', (queue, tracks) => queue.channel.text.send(`Autoplay: ${tracks.map(track => track.title).join(', ')}`));
 ```
 
 ## Events

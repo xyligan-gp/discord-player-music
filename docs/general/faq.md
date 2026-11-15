@@ -69,6 +69,9 @@ Every track has a `source` field with the name of the provider that found it (`y
 ## Can I play a playlist?
 Yes, give a link to a YouTube playlist (`https://www.youtube.com/playlist?list=...` or a video link with `list=...`) to `player.search()`: all its tracks (up to `playlistLimit`, 100 by default) are added to the queue and playback starts from the first one. Automatic mixes (`list=RD...`), *Liked videos* and *Watch later* cannot be loaded.
 
+## How do I make the bot play related tracks when the queue ends (autoplay)?
+Turn the autoplay on: `new Player(client, { autoplay: true })` for all new queues, or `player.queue.setAutoplay(guildID, true)` for one queue (it switches the status when you do not pass it). When the tracks are over and no loop is on, the module finds related tracks, adds them and goes on playing, until the autoplay is turned off. **`autoAddingTracks` is not the autoplay:** it only adds the result of `player.search()` to the queue. Details: the [Providers page](providers.md#autoplay-and-related-tracks).
+
 ## Is there a pause between tracks?
 The module prepares the next track in advance (20 seconds before the current one ends, see `prefetchSeconds`), so there should be none. The first track of a queue needs a moment to start (up to 5 seconds with yt-dlp).
 

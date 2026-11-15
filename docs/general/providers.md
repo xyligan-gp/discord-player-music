@@ -143,6 +143,36 @@ class AudioFromAnotherSource implements SourceProvider {
 new Player(client, { sources: [new YoutubeiProvider(), new YtDlpProvider(), new AudioFromAnotherSource()] });
 ```
 
+## Autoplay and related tracks
+
+With the `autoplay` option (or `player.queue.setAutoplay(guildID, true)` for one queue) the module does not end the queue when the tracks are over: it looks for tracks related to the track that played last, adds them (`autoplayLimit`, 3 by default) and plays them, again and again, until the autoplay is turned off or the queue is stopped. It does not work while the loop of the track or the queue is on, and it is off by default. `autoAddingTracks` is a different option: it only tells whether `player.search()` adds the found track to the queue.
+
+How the related tracks are found (`SourceRegistry#related`):
+
+1. the providers that have the optional `related()` method and can handle the link are tried in order, with the same failure counter and cooldown as the other operations (`providerFailed` with `related`). `YoutubeiProvider` takes the videos of the "up next" feed of the watch page;
+2. when none of them gives tracks (`YtDlpProvider` has no such method), the tracks are searched by the author and the title of the track.
+
+What is skipped: the tracks that already played (the last `autoplayHistory` ones, 50 by default), live streams, shorts and the tracks longer than `autoplayMaxDuration` (`15m`). The tracks of a similar length to the last track go first, because the feed of YouTube is mixed. The added tracks have `searchType` `Search.AUTOPLAY`, the requester and the channels of the track that played before, and the `autoplayAdded` event `(queue, tracks)` tells about them (`addedTrack` is not emitted for them). If nothing suitable is found or the lookup fails, the queue ends as usual (`queueEnded`, reason `ended`; a failed lookup is also reported with the `error` event, method `autoplay`). A chain of tracks that can not be played is stopped after a few rounds.
+
+```js
+const player = new Player(client, { autoplay: true });
+
+player.on('autoplayAdded', (queue, tracks) => queue.channel.text.send(`Autoplay: ${tracks.map(track => track.title).join(', ')}`));
+
+// One server: switch the autoplay (it is switched when the status is not passed)
+await player.queue.setAutoplay(message.guild.id, false);
+```
+
+A provider of yours can find related tracks too:
+
+```ts
+async related(track: SourceTrack, options: { limit: number, exclude?: Array<string> }): Promise<Array<SourceTrack>> {
+	const found = await myService.similarTo(track.url, options.limit);
+
+	return found.filter(item => !options.exclude?.includes(item.url));
+}
+```
+
 ## Playlists
 
 `YoutubeiProvider` and `YtDlpProvider` can load YouTube playlists (`isPlaylist()` and `resolvePlaylist()`). `player.search()` uses them when you pass a playlist link, see the FAQ.
@@ -190,7 +220,7 @@ new Player(client, { sources: [new RadioProvider(), new YoutubeiProvider(), new 
 
 A provider can have an optional `prepare()` method: the player calls it in the background when it is created (a connection, a login, a download). A failure is reported with the `error` event.
 
-Two more optional members help providers that play the audio of other sources: `attach(others)` receives a function that returns the other providers of the registry (the registry calls it when the provider is added), and `audioProvider(url)` returns the name of the provider that gave the audio of a track (it is shown in the `via` field of the `sourceUsed` event).
+The optional `related(track, { limit, exclude })` method finds tracks related to a track (for the [autoplay](#autoplay-and-related-tracks)): it returns at most `limit` tracks without the URLs of `exclude`, and the URL of the track is `track.url`. Two more optional members help providers that play the audio of other sources: `attach(others)` receives a function that returns the other providers of the registry (the registry calls it when the provider is added), and `audioProvider(url)` returns the name of the provider that gave the audio of a track (it is shown in the `via` field of the `sourceUsed` event).
 
 A provider must throw an error when it can not do the job: the registry then moves on to the next provider and emits the `providerFailed` event.
 

@@ -301,6 +301,12 @@ The type `ErrorData` and the `PlayerError` typedef with `{ channel, requested, m
 
 The `error` event is emitted for errors that happen in the background (a track that can not be played, a lost voice connection) and now has the same data as before: `{ channel, requested, method, error }`. An `error` event without listeners is printed to the console and no longer crashes the process.
 
+### Autoplay
+
+New in 2.0.0: when the tracks are over, the module can find tracks related to the track that played last, add them to the queue and go on playing them, again and again, until the autoplay is turned off. It works only when neither the track loop nor the queue loop is on, and it is off by default: use the `autoplay` option (the default for new queues) or `player.queue.setAutoplay(guildID, enabled?)` (one queue, switches the status when `enabled` is not passed). The tracks that were added are announced with the `autoplayAdded` event `(queue, tracks)`. Without the autoplay nothing changed: the queue ends with `queueEnded` (`ended`).
+
+**`autoAddingTracks` is not the autoplay.** It only tells whether `player.search()` (and a collector) adds the found track to the queue by itself; it does nothing when the queue ends. See the [Providers page](providers.md#autoplay-and-related-tracks) for how the related tracks are found.
+
 ### Tracks that can not be played
 
 A track that can not be played is reported with the `error` event and **skipped**, the queue continues with the next track (in 1.x the queue could hang). If the voice connection is lost, the queue is closed.
@@ -312,6 +318,7 @@ A track that can not be played is reported with the `error` event and **skipped*
 + player#sourceUsed
 + player#ytdlpStatus
 + player#skippedTrack
++ player#autoplayAdded
 ```
 
 **`queueEnded` changed:** it now has a second argument `reason` and is emitted once every time a queue is closed, not only when the tracks are over: `reason` is `ended` (the tracks are over, the only case in 1.x), `stopped` (`queue.stop()`), `deleted` (`queue.delete()`), `skipped` (the last track was skipped) or `error` (the voice connection failed). Handlers of 1.x `(queue) => ...` keep working, but they now also run in the new cases: use `if(reason === 'ended')` to keep the old behaviour.
@@ -329,6 +336,7 @@ See the [Providers page](providers.md) for the source providers, the order of th
 + options.lyrics             // lyrics provider, LrclibProvider by default
 + options.playlistLimit      // tracks taken from a playlist link, 100
 + options.prefetchSeconds    // the next track is prepared in advance, 20
++ options.autoplay, options.autoplayLimit, options.autoplayHistory, options.autoplayMaxDuration // the autoplay, see "Autoplay" below
 + options.sourceFailureThreshold, options.sourceCooldown
 
 + options.collectorsConfig.message.cancel, options.collectorsConfig.reaction.cancel // the cancel word (`cancel`) and the cancel reaction (`❌`), `false` turns them off
@@ -351,6 +359,7 @@ Names are the same as in 1.1.7. What changed:
 * player.queue.setVolume(guildID)             // without a value sets the default volume
 * player.queue.seek(guildID, seconds)         // validates the value
 + player.sources                              // SourceRegistry
++ player.queue.setAutoplay(guildID, enabled?)   // turns the autoplay of a queue on or off, see "Autoplay" below
 + player.utils.parseDuration(text)             // '10m' -> milliseconds
 + player.utils.formatMilliseconds(ms, { long }) // milliseconds -> '2m' or '2 minutes'
 + player.utils.splitMilliseconds(ms)           // milliseconds -> { days, hours, minutes, seconds }
