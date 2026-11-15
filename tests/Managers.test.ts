@@ -312,3 +312,18 @@ describe('UtilsManager#formatMilliseconds', () => {
         for(const value of [0, 1000, 60_000, 3_600_000, 86_400_000]) expect(t.player.utils.parseDuration(t.player.utils.formatMilliseconds(value))).toBe(value);
     })
 })
+
+describe('UtilsManager#splitMilliseconds', () => {
+    it('splits milliseconds into days, hours, minutes and seconds', () => {
+        const split = (value: number) => t.player.utils.splitMilliseconds(value);
+
+        expect(split(0)).toEqual({ days: 0, hours: 0, minutes: 0, seconds: 0 });
+        expect(split(999)).toEqual({ days: 0, hours: 0, minutes: 0, seconds: 0 });
+        expect(split(59_999)).toEqual({ days: 0, hours: 0, minutes: 0, seconds: 59 });
+        expect(split(60_000)).toEqual({ days: 0, hours: 0, minutes: 1, seconds: 0 });
+        expect(split(3_600_000)).toEqual({ days: 0, hours: 1, minutes: 0, seconds: 0 });
+        expect(split(86_400_000)).toEqual({ days: 1, hours: 0, minutes: 0, seconds: 0 });
+        expect(split(90_061_000)).toEqual({ days: 1, hours: 1, minutes: 1, seconds: 1 });
+        expect(split(3 * 86_400_000 + 4 * 3_600_000 + 5 * 60_000 + 6_000 + 789)).toEqual({ days: 3, hours: 4, minutes: 5, seconds: 6 });
+    })
+})

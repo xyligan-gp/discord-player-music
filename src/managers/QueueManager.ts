@@ -12,21 +12,6 @@ import { createVolumeResource } from '../sources/AudioPipeline';
 import { DefaultData, Filter, LoopData, PlayerFilter, PlayerQueue, PlayerTrack, ProgressData, RemoveTrackData, SkipData, StreamData } from '../types/PlayerData';
 
 /**
- * Splits milliseconds into days, hours, minutes and seconds
- *
- * @param {number} ms Milliseconds
- *
- * @returns {{ days: number, hours: number, minutes: number, seconds: number }} Parsed time
- * @private
- */
-const parse = (ms: number) => ({
-    days: Math.floor(ms / 86400000),
-    hours: Math.floor(ms / 3600000 % 24),
-    minutes: Math.floor(ms / 60000 % 60),
-    seconds: Math.floor(ms / 1000 % 60)
-});
-
-/**
  * Class that controls Player Queue Manager
  *
  * @class
@@ -522,7 +507,7 @@ export class QueueManager {
 
         const guildQueue = this.find(guildID);
 
-        return { loop: { track: guildQueue.loop.track, queue: guildQueue.loop.queue }, filter: guildQueue.filter, state: guildQueue.state, volume: guildQueue.volume, streamTime: parse(Date.now() - guildQueue.startStream) };
+        return { loop: { track: guildQueue.loop.track, queue: guildQueue.loop.queue }, filter: guildQueue.filter, state: guildQueue.state, volume: guildQueue.volume, streamTime: this.player.utils.splitMilliseconds(Date.now() - guildQueue.startStream) };
     }
 
     /**

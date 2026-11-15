@@ -104,6 +104,29 @@ export class UtilsManager {
     }
 
     /**
+     * Allows you to split milliseconds into days, hours, minutes and seconds (every part is a whole number, the hours, minutes and seconds are
+     * the remainders: `90061000` is 1 day, 1 hour, 1 minute and 1 second)
+     *
+     * @param {number} value Milliseconds
+     *
+     * @example
+     * const time = client.player.utils.splitMilliseconds(90061000);
+     *
+     * // Result: { days: 1, hours: 1, minutes: 1, seconds: 1 }
+     * console.log(time);
+     *
+     * @returns {{ days: number, hours: number, minutes: number, seconds: number }} Time parts
+     */
+    public splitMilliseconds(value: number): { days: number, hours: number, minutes: number, seconds: number } {
+        return {
+            days: Math.floor(value / UtilsManager.DAY),
+            hours: Math.floor(value / UtilsManager.HOUR % 24),
+            minutes: Math.floor(value / UtilsManager.MINUTE % 60),
+            seconds: Math.floor(value / UtilsManager.SECOND % 60)
+        };
+    }
+
+    /**
      * Allows you to write milliseconds as a short or a long text
      *
      * @param {number} value Milliseconds
