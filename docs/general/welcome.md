@@ -90,7 +90,6 @@ More examples are in the [`examples`](https://github.com/xyligan-gp/discord-play
 * NPM: [Open](https://www.npmjs.com/package/discord-player-music)
 * GitHub: [Open](https://github.com/xyligan-gp/discord-player-music)
 * Examples: [See](https://github.com/xyligan-gp/discord-player-music/tree/stable/examples)
-* Documentation: [Open](https://dpm.js.org) ([Providers](providers.md), [FAQ](faq.md), [Updating from 1.x](updating.md), [Changelog](changelog.md)) ([Providers](providers.md), [FAQ](faq.md), [Updating from 1.x](updating.md), [Changelog](changelog.md))
 
 * Module Developer: [xyligan](https://github.com/xyligan-gp)
 * Developer Discord: [xyligan / @whatisgif](https://discord.com/users/533347075463577640)

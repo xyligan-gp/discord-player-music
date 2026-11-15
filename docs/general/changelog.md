@@ -73,7 +73,7 @@
   * Partial transition to enumerated types (enum)
   * The rest of the changes can be seen more clearly on the updates page...
 
-* ***Version 2.0.0-dev***
+* ***Version 2.0.0***
   * **Breaking:** Node.js 22.12.0 or newer and discord.js 14.28 or newer are required, `@discordjs/voice` was updated to 0.19
   * **Breaking:** methods throw `PlayerError` (with `code`, `status` and `cause`) instead of returning `{ error }`, see the updating page
   * Fixed YouTube playback: `ytdl-core` and `yt-search` were replaced with replaceable source providers (`SourceRegistry`, `YoutubeiProvider`, `YtDlpProvider`)
@@ -90,5 +90,8 @@
   * Fixed: removing the playing track skipped the next one; `synchronLoop: false` was ignored; `setVolume()` without a value; collectors never finished; leaking listeners on every track; the filter restarted the track from the beginning; `VoiceManager#join` crash
   * `SourceProvider` is extended for external packages: the optional `attach` and `audioProvider` members, the `via` field of the `sourceUsed` event, the error codes `SOURCE_RATE_LIMITED`, `SOURCE_UNAUTHORIZED` and `AUDIO_NOT_FOUND`, and `SourcePlaylist` is exported.
   * Removed (breaking change, no deprecated aliases): server playlists from 1.x (`player.playlists`, the events `createdPlaylist` and `deletedPlaylist`, the related types and error codes) and the JSON database that kept them (`player.database`, `databaseConfig`). It is an extra feature that every bot can build for itself, see the [updating page](updating.md) for a short example. Playing a YouTube playlist link is not removed
+  * Removed `player.utils.getUniqueID()` and two unused error texts; `player.utils.getTrackDuration()` is deprecated
+  * New helpers `player.utils.parseDuration()` (`'10m'` to milliseconds) and `player.utils.formatMilliseconds()` (milliseconds to `2m` or `2 minutes`)
+  * **Changed:** `queueEnded` now has a second argument `reason` (`ended`, `stopped`, `deleted`, `skipped`, `error`) and is emitted once every time a queue is closed, not only when the tracks are over (check `reason === 'ended'` for the old behaviour). Invalid options are still replaced with the defaults, but the module now tells about them with `console.warn`
   * Types are generated from the code, ESM and CommonJS builds, JSDoc for the whole public API
   * Added tests, linting, a JSDoc check and CI workflows

@@ -240,8 +240,8 @@ In version 1.1.7, `discord-player-music` was completely rewritten on TypeScript 
 + player.utils.getTrackDuration
 ```
 
-## 2.0.0-dev
-Version 2.0.0-dev fixes the playback of YouTube tracks: the old `ytdl-core` and `yt-search` libraries stopped working, so the source layer was rewritten. **All method and event names of 1.1.7 are kept**, but errors work in a different way and some requirements changed.
+## 2.0.0
+Version 2.0.0 fixes the playback of YouTube tracks: the old `ytdl-core` and `yt-search` libraries stopped working, so the source layer was rewritten. **All method and event names of 1.1.7 are kept**, but errors work in a different way and some requirements changed.
 
 ### Requirements
 
@@ -314,6 +314,8 @@ A track that can not be played is reported with the `error` event and **skipped*
 + player#skippedTrack
 ```
 
+**`queueEnded` changed:** it now has a second argument `reason` and is emitted once every time a queue is closed, not only when the tracks are over: `reason` is `ended` (the tracks are over, the only case in 1.x), `stopped` (`queue.stop()`), `deleted` (`queue.delete()`), `skipped` (the last track was skipped) or `error` (the voice connection failed). Handlers of 1.x `(queue) => ...` keep working, but they now also run in the new cases: use `if(reason === 'ended')` to keep the old behaviour.
+
 `sourceUsed` also has `via` (the provider that gave the audio, when a provider plays the audio of another one).
 
 `providerFailed` has `{ provider, method, error }` and is emitted when a source provider fails and the next one is used. `sourceUsed` has `{ provider, track, seek, prefetched }` and tells which provider gives the audio of a track (a debugging event). `ytdlpStatus` has `{ stage, message, origin, path, version, latest, reason }` and reports every step of finding, checking, downloading and updating yt-dlp (`stage` is `found`, `checking`, `up-to-date`, `update-available`, `downloading`, `installed`, `skipped` (see `reason`: `update-disabled`, `interval`, `offline`, `custom-command`) or `error`). `skippedTrack` has `{ track, next, error }` and is emitted when a track could not be played and the queue goes on with the next one. Every `Player` now has its own event emitter (in 1.x all players shared one).
@@ -332,6 +334,7 @@ See the [Providers page](providers.md) for the source providers, the order of th
 + options.collectorsConfig.message.cancel, options.collectorsConfig.reaction.cancel // the cancel word (`cancel`) and the cancel reaction (`❌`), `false` turns them off
 * options.collectorsConfig.*.attempts // every message or reaction of the user is an attempt, the user can try again while there are attempts
 * options.synchronLoop       // `false` is not replaced with `true` any more
+* invalid options          // an option that is passed but is wrong (for example `time: 60000` instead of `'1m'`) is still replaced with the default value, but the module tells about it with `console.warn`
 - options.databaseConfig                // removed together with the server playlists, see "Removed" below
 ```
 
@@ -348,6 +351,8 @@ Names are the same as in 1.1.7. What changed:
 * player.queue.setVolume(guildID)             // without a value sets the default volume
 * player.queue.seek(guildID, seconds)         // validates the value
 + player.sources                              // SourceRegistry
++ player.utils.parseDuration(text)             // '10m' -> milliseconds
++ player.utils.formatMilliseconds(ms, { long }) // milliseconds -> '2m' or '2 minutes'
 + player.lyricsProvider
 ```
 
@@ -368,6 +373,7 @@ The package has two builds, ESM (`import`) and CommonJS (`require`), both work.
 
 * `ytdl-core` and `yt-search` and everything that depended on them. If you used the `Status code: 403/404` errors of `ytdl-core`, check `providerFailed` and `error` events instead.
 * `lyrics-finder` (it stopped finding lyrics). Use the `lyrics` option for another service.
+* `player.utils.getUniqueID()` (it was only needed by the server playlists; use `crypto.randomUUID()` if you need an ID) and the unused error texts `playingPaused` and `playingResumed` of `player.errors` (an already paused or already playing queue gives the `INVALID_STATE` error). `player.utils.getTrackDuration(url)` is **deprecated**: it still works, but the duration is in the tracks that `player.search()` returns (`track.duration`) and `player.sources.resolve(url)` gives `seconds`.
 * **Server playlists** (the playlists of a Discord server saved by the module) and the JSON database that kept them. They were in 1.x and are removed in 2.0 without deprecated aliases, so code that uses them stops working (breaking change): it is an extra feature that every bot can build for itself in a few lines.
 
 ```diff

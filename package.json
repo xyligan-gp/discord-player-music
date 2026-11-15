@@ -1,20 +1,21 @@
 {
   "name": "discord-player-music",
-  "version": "2.0.0-dev.1794696781885",
+  "version": "2.0.0-dev.1794761700741",
   "description": "A powerful music module for your Discord bot with lots of features",
   "main": "./dist/index.js",
   "scripts": {
     "build": "node scripts/clean.mjs && tsc -p tsconfig.json",
     "typecheck": "tsc -p tsconfig.json --noEmit",
     "build:docs": "node --require ./scripts/node-compat.cjs ./node_modules/@distube/docgen/src/index.js -s src/*.ts src/**/*.ts -o docs/index.json -c docs/index.yml -g -S 1 -j .jsconfig.json",
+    "pub": "npm publish",
+    "pub:dev": "npm publish --tag dev",
     "test": "vitest run",
     "lint": "eslint .",
     "check:jsdoc": "node scripts/check-jsdoc.mjs",
     "check": "npm run typecheck && npm run lint && npm run check:jsdoc && npm test && npm run check:examples && npm run build:docs",
     "test:integration": "vitest run --config vitest.integration.config.mts",
     "check:examples": "npm run build && tsc -p examples/tsconfig.json",
-    "prepublishOnly": "npm run build && npm test",
-    "release": "npm publish"
+    "prepublishOnly": "npm run build && npm test"
   },
   "repository": {
     "type": "git",

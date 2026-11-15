@@ -37,7 +37,7 @@ $ pnpm add discord-player-music discord.js
 
 Audio is converted with FFmpeg, which comes with the `ffmpeg-static` package. Some package managers do not run install scripts by default (npm 12 and pnpm 10 ask you to allow them): if the FFmpeg binary is missing, allow the install script of `ffmpeg-static` (`npm install-scripts approve ffmpeg-static`) or install FFmpeg in your system, the module finds it in `PATH`.
 
-[yt-dlp](https://github.com/yt-dlp/yt-dlp) is used as a fallback source for YouTube. **You do not need to install it:** if it is not found in `PATH`, the module downloads the official binary from GitHub into `~/.cache/discord-player-music`, checks its checksum and updates it once a day. See the [Providers page](docs/general/providers.md) to change or disable that.
+[yt-dlp](https://github.com/yt-dlp/yt-dlp) is used as a fallback source for YouTube. **You do not need to install it:** if it is not found in `PATH`, the module downloads the official binary from GitHub into `~/.cache/discord-player-music`, checks its checksum and updates it once a day. See the [Providers page](https://dpm.js.org/#/docs/discord-player-music/stable/general/providers) to change or disable that.
 
 ## Example Usage
 
@@ -82,7 +82,7 @@ More examples are in the [`examples`](https://github.com/xyligan-gp/discord-play
 ## Good to know
 
 * **Methods throw errors.** Every method rejects with a `PlayerError` that has a `code` (for example `QUEUE_NOT_FOUND`), so use `try/catch` (or `.catch()`).
-* **YouTube changes often.** Any YouTube library can stop working after a change on YouTube's side. That is why the module has several sources: when `youtubei.js` is refused, `yt-dlp` plays the track and the module remembers it for the next tracks. See the [FAQ](docs/general/faq.md) if a track does not play, and the [Providers page](docs/general/providers.md) to change the order of the sources or write your own.
+* **YouTube changes often.** Any YouTube library can stop working after a change on YouTube's side. That is why the module has several sources: when `youtubei.js` is refused, `yt-dlp` plays the track and the module remembers it for the next tracks. See the [FAQ](https://dpm.js.org/#/docs/discord-player-music/stable/general/faq) if a track does not play, and the [Providers page](dhttps://dpm.js.org/#/docs/discord-player-music/stable/general/providers) to change the order of the sources or write your own.
 * **Respect the rules.** Downloading streams is against the YouTube Terms of Service, and some hosting providers are blocked by YouTube. Use the module at your own risk.
 
 ## Links
@@ -90,7 +90,7 @@ More examples are in the [`examples`](https://github.com/xyligan-gp/discord-play
 * NPM: [Open](https://www.npmjs.com/package/discord-player-music)
 * GitHub: [Open](https://github.com/xyligan-gp/discord-player-music)
 * Examples: [See](https://github.com/xyligan-gp/discord-player-music/tree/stable/examples)
-* Documentation: [Open](https://dpm.js.org) ([Providers](docs/general/providers.md), [FAQ](docs/general/faq.md), [Updating from 1.x](docs/general/updating.md), [Changelog](docs/general/changelog.md))
+* Documentation: [Open](https://dpm.js.org)
 
 * Module Developer: [xyligan](https://github.com/xyligan-gp)
 * Developer Discord: [xyligan / @whatisgif](https://discord.com/users/533347075463577640)
