@@ -1,6 +1,5 @@
 import { Collection } from 'discord.js';
 
-import type { Player } from '../Player';
 import { PlayerError, PlayerErrorCode, requireParam } from '../PlayerError';
 
 import { DefaultData, PlayerFilter } from '../types/PlayerData';
@@ -14,8 +13,6 @@ import filters from '../data/filters.json';
  * @classdesc Player Filters Manager Class
  */
 export class FiltersManager {
-    private player: Player;
-
     private storage: Collection<string, string>;
 
     /**
@@ -25,17 +22,7 @@ export class FiltersManager {
      *
      * @throws {PlayerError} If the player is not passed
      */
-    constructor(player: Player) {
-        requireParam(player, 'player', '<FiltersManager>');
-
-        /**
-         * Player Class
-         *
-         * @type {Player}
-         * @private
-         */
-        this.player = player;
-
+    constructor() {
         /**
          * Player Filters Storage
          *

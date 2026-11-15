@@ -153,7 +153,7 @@ export class Player extends PlayerEmitter {
          *
          * @type {FiltersManager}
          */
-        this.filters = new FiltersManager(this);
+        this.filters = new FiltersManager();
 
 
 
