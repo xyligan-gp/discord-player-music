@@ -2,6 +2,27 @@
 
 This is a small part of what can be done. A complete bot that you can run locally is in the [examples folder](https://github.com/xyligan-gp/discord-player-music/tree/stable/examples): [`bot.ts`](https://github.com/xyligan-gp/discord-player-music/blob/stable/examples/bot.ts), a bot with all the main commands. It is written in TypeScript and checked by the compiler on every change of the module, so it always matches the API. In a JavaScript project remove the types; the module works with `import` and `require` the same way.
 
+## The test bot
+
+[`bot.ts`](https://github.com/xyligan-gp/discord-player-music/blob/stable/examples/bot.ts) is made for checking the whole module by hand: it has a command for every feature, shows embeds and plain messages, and writes every event of the player to the console. Run it as written in the first lines of the file, then send `!help` to get the list in an embed. The bot needs the **Embed Links** permission for the embeds.
+
+| Group | Commands | What they show |
+| --- | --- | --- |
+| Playback | `!play <title or link>`, `!search`, `!pick`, `!pause`, `!resume`, `!toggle`, `!skip`, `!replay`, `!stop`, `!delete`, `!seek <time>`, `!volume [n]`, `!loop [track\|queue\|off\|status]`, `!shuffle`, `!remove <index>`, `!clear` | `player.search`, `initQueueTrack`, `initGuildTrack`, `queue.add`, `setState`, `skipTrack`, `stop`, `delete`, `seek`, `setVolume`, `setLoop`, `shuffle`, `removeTrack`; video and playlist links; the collectors |
+| Information | `!nowplaying`, `!queue [page]`, `!state`, `!lyrics [query]`, `!stats`, `!config`, `!help` | `queue.trackInfo`, `progress`, `streamInfo`, `get`, `player.lyrics`, `version`, `readyAt`, `isReady`, `queue.size`, the resolved options; embeds, buttons for the pages of the queue |
+| Voice | `!join`, `!leave` | `player.voice.join`, `player.voice.leave` |
+| Filters | `!filters`, `!filter <name\|clear>`, `!filter add <name> <value>`, `!filter remove <name>`, `!filter info <name>` | `queue.setFilter`, `player.filters` (`list`, `add`, `delete`, `isExists`, `get`) |
+| Sources | `!sources [link]`, `!ytdlp`, `!prefetch [seconds]`, `!autoadd [on\|off]`, `!utils [warn]`, `!debug [on\|off]` | `player.sources.list`, `canHandle`, `isPlaylist`, the `ytdlpStatus` event, `prefetchSeconds`, `autoAddingTracks`, `player.utils`, the warnings of `checkOptions`, the technical events |
+| Collectors | `!search`, `!pick`, `!collector message\|reaction [tracks]` | `player.createCollector`, attempts, cancel, errors |
+
+Times for `!seek` can be `90`, `1:30`, `1:02:03` or `1m30s`. The numbers in `!queue` are the indexes for `!remove` (0 is the playing track).
+
+Every event of the player is shown: `ready`, `queueStarted`, `addedTrack`, `playingTrack`, `queueStateChange`, `queueEnded` (with the reason), `skippedTrack`, `error`, `providerFailed`, `ytdlpStatus` and `sourceUsed` (with `via`). The main ones are sent to the text channel, the technical ones (`providerFailed`, `ytdlpStatus`, `sourceUsed`) go to the channel only after `!debug on`.
+
+Errors of the module (`PlayerError`) are shown in an embed with the `code` and the `status`, so wrong commands do not crash the bot: for example `!resume` on a queue that is not paused gives `INVALID_STATE`, `!queue` without a queue gives `QUEUE_NOT_FOUND`.
+
+What the bot does not show: the failure counters of the source registry (they are internal), a manual update of yt-dlp (it updates when the player starts), and the commands "previous track" and "jump to a track" (the module does not have them; `!clear` is made with `removeTrack`).
+
 ## Client and module initialization
 
 ```ts
@@ -162,7 +183,11 @@ message.channel.send(`**${lyrics.artist} - ${lyrics.title}**\n\n${lyrics.result}
 player.on('playingTrack', track => track.channel.text.send(`Now playing: **${track.title}**`));
 player.on('addedTrack', track => track.channel.text.send(`Added to the queue: **${track.title}**`));
 player.on('queueStarted', queue => console.log('Queue started on', queue.channel.voice.guild.name));
-player.on('queueEnded', queue => queue.channel.text.send('The queue has ended.'));
+// A queue was closed: reason is 'ended' (the tracks are over), 'stopped' (queue.stop()), 'deleted' (queue.delete()), 'skipped' (the last track was skipped) or 'error' (the voice connection failed)
+player.on('queueEnded', (queue, reason) => {
+	if(reason === 'ended') queue.channel.text.send('The queue has ended.');
+	else console.log(`Queue of ${queue.channel.voice.guild.name} closed: ${reason}`);
+});
 player.on('queueStateChange', (queue, oldState, newState) => console.log(oldState, '->', newState));
 
 // A track that can not be played is skipped, you only need to tell the users
