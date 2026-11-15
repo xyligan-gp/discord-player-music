@@ -15,7 +15,7 @@ import { Collector, Events, Search } from './PlayerEnums';
 import { PlayerOptions, ResolvedPlayerOptions } from './types/PlayerOptions';
 import { LyricsData, PlayerTrack, CollectorData } from './types/PlayerData';
 
-import ms from './modules/ms';
+import { parseDuration } from './utils/duration';
 
 
 import { SourceRegistry } from './sources/SourceRegistry';
@@ -163,7 +163,7 @@ export class Player extends PlayerEmitter {
          *
          * @type {SourceRegistry}
          */
-        this.sources = new SourceRegistry(this.options.sources ?? [new YoutubeiProvider({ cookies: this.options.cookies }), new YtDlpProvider({ cookies: this.options.cookies })], { failureThreshold: this.options.sourceFailureThreshold, cooldown: ms(this.options.sourceCooldown) as number });
+        this.sources = new SourceRegistry(this.options.sources ?? [new YoutubeiProvider({ cookies: this.options.cookies }), new YtDlpProvider({ cookies: this.options.cookies })], { failureThreshold: this.options.sourceFailureThreshold, cooldown: parseDuration(this.options.sourceCooldown) });
         this.sources.onProviderFailed = (provider, method, error) => { this.emit(Events.PROVIDER_FAILED, { provider: provider.name, method, error }) };
 
         /**
@@ -495,7 +495,7 @@ export class Player extends PlayerEmitter {
                 const { time, attempts, cancel } = this.options.collectorsConfig.message;
 
                 const filter = (msg: Message) => msg.author.id === (userID || message.author.id);
-                const collector = (message.channel as TextChannel).createMessageCollector({ filter, time: ms(time) as number });
+                const collector = (message.channel as TextChannel).createMessageCollector({ filter, time: parseDuration(time) });
 
                 return run(collector, attempts, (collected: Message) => {
                     const text = collected.content.trim();
@@ -527,7 +527,7 @@ export class Player extends PlayerEmitter {
                 if(cancel) await message.react(cancel);
 
                 const filter = (reaction: MessageReaction, user: User) => reaction.message.id === message.id && user.id === userID;
-                const collector = message.createReactionCollector({ filter, time: ms(time) as number });
+                const collector = message.createReactionCollector({ filter, time: parseDuration(time) });
 
                 return run(collector, attempts, (reaction: MessageReaction) => {
                     const emoji = normalize(reaction.emoji.name ?? '');
