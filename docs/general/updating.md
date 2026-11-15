@@ -295,6 +295,7 @@ Error codes (`PlayerErrorCode`):
 | `SIGN_IN_REQUIRED` | YouTube asks to sign in to play the video (age-restricted, or the server was taken for a bot): the cookies of an account are needed, see the FAQ |
 | `COLLECTOR_NO_RESULTS`, `COLLECTOR_UNKNOWN`, `COLLECTOR_SMALL_VALUE`, `COLLECTOR_LARGE_VALUE`, `COLLECTOR_TIMEOUT`, `COLLECTOR_CANCELLED` | Collectors (`createCollector()` now rejects with `COLLECTOR_TIMEOUT` when nothing is selected in time, in 1.x it never finished; `COLLECTOR_CANCELLED` when the user cancels; the attempts used up by wrong answers end with `INVALID_VALUE`, `COLLECTOR_SMALL_VALUE` or `COLLECTOR_LARGE_VALUE`) |
 | `SOURCES_FAILED` | Every source provider failed |
+| `SOURCE_RATE_LIMITED`, `SOURCE_UNAUTHORIZED`, `AUDIO_NOT_FOUND` | A service limits the requests / did not accept the credentials / the audio of a track was not found in the other sources |
 
 The type `ErrorData` and the `PlayerError` typedef with `{ channel, requested, method, error }` (it described the `error` event) were renamed to `PlayerErrorEvent`. The messages are the same as before (`player.errors` still exists).
 
@@ -312,6 +313,8 @@ A track that can not be played is reported with the `error` event and **skipped*
 + player#ytdlpStatus
 + player#skippedTrack
 ```
+
+`sourceUsed` also has `via` (the provider that gave the audio, when a provider plays the audio of another one).
 
 `providerFailed` has `{ provider, method, error }` and is emitted when a source provider fails and the next one is used. `sourceUsed` has `{ provider, track, seek, prefetched }` and tells which provider gives the audio of a track (a debugging event). `ytdlpStatus` has `{ stage, message, origin, path, version, latest, reason }` and reports every step of finding, checking, downloading and updating yt-dlp (`stage` is `found`, `checking`, `up-to-date`, `update-available`, `downloading`, `installed`, `skipped` (see `reason`: `update-disabled`, `interval`, `offline`, `custom-command`) or `error`). `skippedTrack` has `{ track, next, error }` and is emitted when a track could not be played and the queue goes on with the next one. Every `Player` now has its own event emitter (in 1.x all players shared one).
 

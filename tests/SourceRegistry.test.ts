@@ -82,3 +82,40 @@ describe('SourceRegistry', () => {
         expect(registry.list).toHaveLength(1);
     })
 })
+
+describe('SourceRegistry and providers that use other providers', () => {
+    const translator = (log: Array<() => Array<SourceProvider>> = [], name = 'translator'): SourceProvider => ({
+        ...createFakeProvider(),
+        name,
+        attach: others => { log.push(others) }
+    });
+
+    it('gives a provider access to the other providers when the registry is created and when the provider is added', () => {
+        const log: Array<() => Array<SourceProvider>> = [];
+        const registry = new SourceRegistry([failing('a'), translator(log)]);
+
+        expect(log).toHaveLength(1);
+        expect(log[0]().map(provider => provider.name)).toEqual(['a']);
+
+        registry.register(failing('late'));
+
+        // The function always returns the current providers, without the provider itself
+        expect(log[0]().map(provider => provider.name)).toEqual(['a', 'late']);
+
+        registry.register(translator(log, 'second'), 0);
+
+        expect(log).toHaveLength(2);
+        expect(log[1]().map(provider => provider.name)).toEqual(['second', 'a', 'translator', 'late'].slice(1));
+
+        registry.unregister('a');
+
+        expect(log[0]().map(provider => provider.name)).toEqual(['second', 'late']);
+    })
+
+    it('does not need attach and audioProvider', async () => {
+        const registry = new SourceRegistry([failing('a'), createFakeProvider()]);
+        const opened = await registry.open('https://www.youtube.com/watch?v=x');
+
+        expect(opened.provider.audioProvider).toBeUndefined();
+    })
+})

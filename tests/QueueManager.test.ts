@@ -3,7 +3,7 @@ import { afterEach, beforeEach, describe, expect, it } from 'vitest';
 import { GuildQueueState, Loop } from '../src/PlayerEnums';
 import { PlayerError, PlayerErrorCode } from '../src/PlayerError';
 
-import { createQueue, createTestPlayer, fakeTrack, sleep, TestPlayer, waitFor } from './helpers';
+import { createFakeProvider, createQueue, createTestPlayer, fakeTrack, sleep, TestPlayer, waitFor } from './helpers';
 
 let t: TestPlayer;
 
@@ -238,5 +238,37 @@ describe('QueueManager.add', () => {
         await waitFor(() => t.player.queue.size === 0, 10_000);
 
         expect(t.events.some(event => event.startsWith('error'))).toBe(true);
+    })
+})
+
+describe('QueueManager events of providers that play the audio of other sources', () => {
+    it('tells the provider that gave the audio in the via field of sourceUsed', async () => {
+        const wrapper = { ...createFakeProvider(), name: 'wrapper', audioProvider: (url: string) => url.endsWith('=b') ? 'inner-b' : 'inner' };
+
+        t.cleanup();
+        t = createTestPlayer({ sources: [wrapper] });
+
+        const used: Array<string> = [];
+
+        t.player.on('sourceUsed', data => used.push(`${data.provider}:${data.track.title}:${data.via}:${data.prefetched}`));
+
+        const { queue } = createQueue(t.player, [fakeTrack('a'), fakeTrack('b')]);
+
+        await t.player.queue.startTrack('G', queue.tracks[0]);
+        await waitFor(() => t.events.includes('queueEnded'), 10_000);
+
+        expect(used).toEqual(['wrapper:a:inner:false', 'wrapper:b:inner-b:true']);
+    })
+
+    it('has no via for providers that give the audio themselves', async () => {
+        const used: Array<string | undefined> = [];
+
+        t.player.on('sourceUsed', data => used.push(data.via));
+
+        const { queue } = createQueue(t.player, [fakeTrack('a')]);
+
+        await t.player.queue.startTrack('G', queue.tracks[0]);
+
+        expect(used).toEqual([undefined]);
     })
 })

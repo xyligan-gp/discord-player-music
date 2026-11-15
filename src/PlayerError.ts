@@ -28,6 +28,9 @@ import errors from './data/errors.json';
  * @prop {string} COLLECTOR_TIMEOUT The user did not select a track in time
  * @prop {string} COLLECTOR_CANCELLED The user cancelled the selection (or the list message was deleted)
  * @prop {string} SOURCES_FAILED Every source provider failed
+ * @prop {string} SOURCE_RATE_LIMITED A service limits the requests, `Retry-After` tells when to try again
+ * @prop {string} SOURCE_UNAUTHORIZED A service did not accept the credentials of the provider
+ * @prop {string} AUDIO_NOT_FOUND A provider that only knows the information of a track did not find its audio in the other sources
  */
 export enum PlayerErrorCode {
     MISSING_PARAMETER = 'MISSING_PARAMETER',
@@ -52,7 +55,10 @@ export enum PlayerErrorCode {
     COLLECTOR_LARGE_VALUE = 'COLLECTOR_LARGE_VALUE',
     COLLECTOR_TIMEOUT = 'COLLECTOR_TIMEOUT',
     COLLECTOR_CANCELLED = 'COLLECTOR_CANCELLED',
-    SOURCES_FAILED = 'SOURCES_FAILED'
+    SOURCES_FAILED = 'SOURCES_FAILED',
+    SOURCE_RATE_LIMITED = 'SOURCE_RATE_LIMITED',
+    SOURCE_UNAUTHORIZED = 'SOURCE_UNAUTHORIZED',
+    AUDIO_NOT_FOUND = 'AUDIO_NOT_FOUND'
 }
 
 // Message templates and statuses of the errors
@@ -79,7 +85,10 @@ const definitions: Record<PlayerErrorCode, { status: number, message: string }> 
     [PlayerErrorCode.COLLECTOR_LARGE_VALUE]:     { status: 400, message: errors.collectors.largeValue },
     [PlayerErrorCode.COLLECTOR_TIMEOUT]:         { status: 408, message: errors.collectors.timeout },
     [PlayerErrorCode.COLLECTOR_CANCELLED]:       { status: 499, message: errors.collectors.cancelled },
-    [PlayerErrorCode.SOURCES_FAILED]:            { status: 502, message: errors.other.sourcesFailed }
+    [PlayerErrorCode.SOURCES_FAILED]:            { status: 502, message: errors.other.sourcesFailed },
+    [PlayerErrorCode.SOURCE_RATE_LIMITED]:       { status: 429, message: errors.other.sourceRateLimited },
+    [PlayerErrorCode.SOURCE_UNAUTHORIZED]:       { status: 401, message: errors.other.sourceUnauthorized },
+    [PlayerErrorCode.AUDIO_NOT_FOUND]:           { status: 404, message: errors.other.audioNotFound }
 };
 
 /**

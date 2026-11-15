@@ -3,6 +3,7 @@ import { Guild, TextChannel, User, VoiceChannel } from 'discord.js';
 import { AudioPlayer, VoiceConnection } from '@discordjs/voice';
 
 import { GuildQueueState } from '../PlayerEnums';
+import { SourceProvider } from '../sources/SourceProvider';
 
 /**
  * Names of the built-in audio filters
@@ -74,7 +75,7 @@ export interface PlayerQueue {
     /**
      * Internal: the stream of the next track that is prepared in advance
      */
-    prefetch?: { track: PlayerTrack, filter: string | null, stream: Promise<{ stream: Readable, provider: { name: string } }> };
+    prefetch?: { track: PlayerTrack, filter: string | null, stream: Promise<{ stream: Readable, provider: SourceProvider }> };
 
     /**
      * Internal: timer that starts preparing the next track
@@ -188,6 +189,7 @@ export interface YtDlpStatusEvent {
  */
 export interface SourceUsedEvent {
     provider: string;
+    via?: string;
     track: PlayerTrack;
     seek?: number;
     prefetched: boolean;

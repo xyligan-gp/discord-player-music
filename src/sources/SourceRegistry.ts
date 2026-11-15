@@ -58,6 +58,18 @@ export class SourceRegistry {
     constructor(providers: Array<SourceProvider> = [], options: SourceRegistryOptions = {}) {
         this.providers = [...providers];
         this.options = { failureThreshold: options.failureThreshold ?? 1, cooldown: options.cooldown ?? 600_000 };
+
+        for(const provider of this.providers) this.attach(provider);
+    }
+
+    /**
+     * Gives the provider access to the other providers of the registry (the optional `attach` method of the provider)
+     *
+     * @param {SourceProvider} provider Provider
+     * @private
+     */
+    private attach(provider: SourceProvider): void {
+        provider.attach?.(() => this.providers.filter(item => item !== provider));
     }
 
     /**
@@ -86,6 +98,8 @@ export class SourceRegistry {
 
         if(index === undefined) this.providers.push(provider);
         else this.providers.splice(index, 0, provider);
+
+        this.attach(provider);
 
         return this;
     }

@@ -90,6 +90,59 @@ The downloaded binary solves YouTube challenges with the Node.js that runs the b
 
 > The module downloads and runs a program from the internet only when `command` is not set, yt-dlp is not installed and `autoInstall` is not `false`. Set `autoInstall: false` on hostings where this is not allowed.
 
+## Extending with modules
+
+Sources that need more than a link parser can be separate packages. A package gives a provider (a class that implements `SourceProvider`) and the player uses it like the built-in ones: `new Player(client, { sources: [..., new MyProvider()] })`, or `player.sources.register(provider)` (then call `provider.prepare()` yourself if it has one).
+
+The core has what such packages need:
+
+* the `SourceProvider` interface with the optional `attach(others)` and `audioProvider(url)` members (see below), and the types `SourceProvider`, `SourceTrack`, `SourcePlaylist` and `SourceStreamOptions`;
+* `SourceRegistry`, `PlayerError` and `PlayerErrorCode` to use in a package: the codes `SOURCE_UNAUTHORIZED` (a service did not accept the credentials), `SOURCE_RATE_LIMITED` (too many requests, the message tells the time to wait) and `AUDIO_NOT_FOUND` (the audio of a track was not found in the other sources) are meant for such providers;
+* the `via` field of the `sourceUsed` event: the provider that really gave the audio when a provider plays the audio of another one.
+
+A provider that only knows the **information** of a track (for example a service that gives no audio) uses the other providers for the audio: it receives them in `attach(others)` (a function that returns the other providers of the registry, without the provider itself), creates a `SourceRegistry` from them, finds the audio there (`search()`), plays it (`open()`) and returns the name of the provider that gave the audio from `audioProvider(url)`.
+
+```ts
+import { Player, SourceRegistry, YoutubeiProvider, YtDlpProvider } from 'discord-player-music';
+import type { SourceProvider, SourceStreamOptions, SourceTrack } from 'discord-player-music';
+
+class AudioFromAnotherSource implements SourceProvider {
+	readonly name = 'audio-from-another-source';
+
+	private others: () => Array<SourceProvider> = () => [];
+	private audio: SourceRegistry | null = null;
+	private used = new Map<string, string>();
+
+	// The registry calls it when the provider is added: `others()` returns the other providers (without this one)
+	attach(others: () => Array<SourceProvider>): void {
+		this.others = others;
+	}
+
+	canHandle(url: string): boolean { return url.startsWith('https://info.example.com/track/'); }
+	async search(query: string, limit: number): Promise<Array<SourceTrack>> { return []; /* ask your service */ }
+	async resolve(url: string): Promise<SourceTrack> { throw new Error('ask your service'); }
+
+	async stream(url: string, options?: SourceStreamOptions) {
+		this.audio ??= new SourceRegistry(this.others());                                 // the other providers give the audio
+
+		const info = await this.resolve(url);
+		const [found] = await this.audio.search(`${info.author.name} ${info.title}`, 1);  // find the same track there
+		if(!found) throw new Error(`No audio for ${info.title}`);                         // the player skips the track and emits `skippedTrack`
+
+		const opened = await this.audio.open(found.url, options);                         // the stream and the provider that gave it
+
+		this.used.set(url, opened.provider.name);
+
+		return opened.stream;
+	}
+
+	// Shown in the `via` field of the `sourceUsed` event
+	audioProvider(url: string): string | undefined { return this.used.get(url); }
+}
+
+new Player(client, { sources: [new YoutubeiProvider(), new YtDlpProvider(), new AudioFromAnotherSource()] });
+```
+
 ## Playlists
 
 `YoutubeiProvider` and `YtDlpProvider` can load YouTube playlists (`isPlaylist()` and `resolvePlaylist()`). `player.search()` uses them when you pass a playlist link, see the FAQ.
@@ -136,6 +189,8 @@ new Player(client, { sources: [new RadioProvider(), new YoutubeiProvider(), new 
 ```
 
 A provider can have an optional `prepare()` method: the player calls it in the background when it is created (a connection, a login, a download). A failure is reported with the `error` event.
+
+Two more optional members help providers that play the audio of other sources: `attach(others)` receives a function that returns the other providers of the registry (the registry calls it when the provider is added), and `audioProvider(url)` returns the name of the provider that gave the audio of a track (it is shown in the `via` field of the `sourceUsed` event).
 
 A provider must throw an error when it can not do the job: the registry then moves on to the next provider and emits the `providerFailed` event.
 

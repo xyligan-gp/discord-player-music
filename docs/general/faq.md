@@ -48,8 +48,9 @@ The module reads the file and uses the cookies of `youtube.com` only for request
 Listen to these events (they are meant for debugging and for telling the users what happens):
 
 ```js
-// Which source gives the audio of a track, and whether it was prepared in advance (the next track is prepared before the current one ends)
-player.on('sourceUsed', ({ provider, track, seek, prefetched }) => console.log(`${provider} plays ${track.title}`));
+// Which source gives the audio of a track, and whether it was prepared in advance (the next track is prepared before the current one ends).
+// `via` is set when a provider plays the audio of another one (for example a provider that finds the audio of a track in another source)
+player.on('sourceUsed', ({ provider, via, track, seek, prefetched }) => console.log(`${provider}${via ? ` (${via})` : ''} plays ${track.title}`));
 
 // Every step of finding, checking, downloading and updating yt-dlp (it starts when the player is created)
 player.on('ytdlpStatus', ({ stage, message, version, latest }) => console.log(`[yt-dlp] ${stage}: ${message}`));

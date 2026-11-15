@@ -259,7 +259,7 @@ export class QueueManager {
 
         if(guildQueue.state === GuildQueueState.PAUSED) guildQueue.dispatcher.pause();
 
-        this.player.emit(Events.SOURCE_USED, { provider: opened.provider.name, track, seek, prefetched: early !== null });
+        this.player.emit(Events.SOURCE_USED, { provider: opened.provider.name, via: opened.provider.audioProvider?.(track.url), track, seek, prefetched: early !== null });
 
         this.schedulePrefetch(guildQueue, track, seek ?? 0);
     }

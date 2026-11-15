@@ -32,6 +32,9 @@
         "playingResumed": "Queue playback for server with ID '{id}' has not been paused before!",
         "unknownState": "The specified state '{state}' cannot be set for the server queue with ID '{id}'!",
         "sourcesFailed": "All source providers failed: {reason}",
+        "sourceRateLimited": "{source} limits the requests, try again in {seconds} seconds!",
+        "sourceUnauthorized": "{source} did not accept the credentials ({reason})! Check the client ID and the client secret.",
+        "audioNotFound": "The audio of '{data}' was not found in the audio sources!",
         "signInRequired": "YouTube asks to sign in to play '{data}' (the video is age-restricted or the server was taken for a bot). Pass the cookies of an account in the 'cookies' option, see the FAQ."
     }
 }
