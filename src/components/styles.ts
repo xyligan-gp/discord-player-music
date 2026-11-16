@@ -3,7 +3,7 @@ export function cx(...classes: (string | false | null | undefined)[]) {
 }
 
 export const iconButton =
-	'inline-flex size-9 shrink-0 items-center justify-center rounded-full bg-neutral-900 text-white transition-colors hover:bg-neutral-700 dark:bg-neutral-100 dark:text-neutral-900 dark:hover:bg-neutral-300';
+	'inline-flex size-9 shrink-0 items-center justify-center rounded-full bg-accent text-accent-fg transition-colors hover:bg-accent-hover';
 
 export const field =
 	'flex h-11 w-full items-center justify-between gap-2 rounded-md border border-neutral-300 bg-surface px-3 text-left text-[15px] transition-colors hover:border-neutral-400 dark:border-neutral-700 dark:bg-transparent dark:hover:border-neutral-500';

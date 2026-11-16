@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { GitHubIcon } from '@/components/GitHubIcon';
 import { ThemeSwitch } from '@/components/ThemeSwitch';
 import { CodeExample } from '@/components/DocParts';
+import { iconButton } from '@/components/styles';
 import { getDefaultVersion, REPOSITORY } from '@/lib/docs';
 
 const FEATURES = [
@@ -35,7 +36,7 @@ export default function HomePage() {
 					</Link>
 					<a
 						aria-label="GitHub"
-						className="inline-flex size-9 items-center justify-center rounded-full bg-neutral-900 text-white hover:bg-neutral-700 dark:bg-neutral-100 dark:text-neutral-900 dark:hover:bg-neutral-300"
+						className={iconButton}
 						href={`https://github.com/${REPOSITORY}`}
 						rel="noopener noreferrer"
 						target="_blank"

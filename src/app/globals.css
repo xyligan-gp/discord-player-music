@@ -11,6 +11,11 @@
 	--color-blurple: #5865f2;
 	--color-blurple-light: #7782fa;
 
+	/* Round buttons of the header (menu, search, theme, GitHub): the classic Discord blurple */
+	--color-accent: #7289da;
+	--color-accent-hover: #5b6eae;
+	--color-accent-fg: #ffffff;
+
 	--color-surface: #ffffff;
 	--color-sidebar: #f3f3f4;
 	--color-panel: #fafafa;
@@ -42,6 +47,9 @@
 		--color-muted: #83838b;
 		--color-hover: #1d1d1e;
 		--color-active: #323235;
+		--color-accent: #7289da;
+		--color-accent-hover: #8ea1e1;
+		--color-accent-fg: #ffffff;
 	}
 
 	html {
