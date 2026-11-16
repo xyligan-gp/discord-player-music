@@ -75,11 +75,11 @@ client.login('YOUR_CLIENT_TOKEN_HERE');
 
 * NPM: [Open](https://www.npmjs.com/package/discord-player-music)
 * GitHub: [Open](https://github.com/xyligan-gp/discord-player-music)
-* Examples: [See](https://github.com/xyligan-gp/discord-player-music/tree/stable/examples)
+* Examples: [See](https://dpm.js.org/docs/1.1.7/general/index/)
 * Documentation: [Open](https://dpm.js.org)
 
 * Module Developer: [xyligan](https://github.com/xyligan-gp)
-* Developer Discord: [♡ xүℓ[ι]gαη4εg ♡#9457](https://discord.com/users/533347075463577640)
+* Developer Discord: [xyligan / @whatisgif](https://discord.com/users/533347075463577640)
 * Support Server: [Join xyligan development](https://discord.gg/zzbkvCcu2r)
 
 <center><h1>♥ Thanks for using Discord Player Music ♥</h1></center>

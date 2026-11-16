@@ -1,6 +1,6 @@
 # A small example of writing a music bot using module
 
-This is just the smallest part of what can be done. More examples can be found here: **[discord-player-music/examples](https://github.com/xyligan-gp/discord-player-music/tree/stable/examples)**
+This is just the smallest part of what can be done.
 
 ## Client and module initialization
 
