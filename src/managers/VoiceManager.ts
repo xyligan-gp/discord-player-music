@@ -1,16 +1,12 @@
-import { Player } from '../Player';
-import { PlayerError } from '../PlayerError';
+import type { Player } from '../Player';
+import { PlayerError, PlayerErrorCode, requireParam } from '../PlayerError';
 
-import errors from '../data/errors.json';
-
-import { ErrorData } from '../../types/PlayerData';
-
-import { VoiceChannel } from 'discord.js';
+import { VoiceBasedChannel } from 'discord.js';
 import { getVoiceConnection, joinVoiceChannel, VoiceConnection } from '@discordjs/voice';
 
 /**
  * Class that controls Player Voice Manager
- * 
+ *
  * @class
  * @classdesc Player Voice Manager Class
  */
@@ -21,13 +17,15 @@ export class VoiceManager {
      * @constructor
      *
      * @param {Player} player Player Class
+     *
+     * @throws {PlayerError} If the player is not passed
      */
     constructor(player: Player) {
-        if(!player) throw new PlayerError(errors.default.requireParam.replace('{param}', 'player').replace('{data}', '<VoiceManager>'));
-        
+        requireParam(player, 'player', '<VoiceManager>');
+
         /**
          * Player Class
-         * 
+         *
          * @type {Player}
          * @private
          */
@@ -36,56 +34,57 @@ export class VoiceManager {
 
     /**
      * Allows the bot to join a voice channel on the server
-     * 
-     * @param {VoiceChannel} channel Discord Guild Voice Channel ID
-     * 
+     *
+     * @param {VoiceBasedChannel} channel Discord Guild Voice Channel
+     *
      * @example
      * const channel = message.guild?.channels.cache.get('ChannelID');
      * if(channel && channel.isVoiceBased()) await client.player.voice.join(channel);
-     * 
-     * @returns {Promise<VoiceConnection | ErrorData>} Voice connection or error object
+     *
+     * @throws {PlayerError} `MISSING_PARAMETER` if the channel is not passed, `ALREADY_CONNECTED` if the bot is already in a voice channel of the server
+     *
+     * @returns {Promise<VoiceConnection>} Voice connection
      */
-    public join(channel: VoiceChannel): Promise<VoiceConnection | ErrorData> {
-        return new Promise(async (res, rej) => {
-            if(!channel) throw new PlayerError(this.player.errors.default.requireParam.replace('{param}', 'channel').replace('{data}', '<VoiceManager>.join'));
+    public async join(channel: VoiceBasedChannel): Promise<VoiceConnection> {
+        requireParam(channel, 'channel', '<VoiceManager>.join');
 
-            const guildClientMember = channel.guild.members.cache.get(this.player.client.user.id);
-            if(guildClientMember?.voice?.channel) return res({ error: { code: 404, message: this.player.errors.voice.alreadyConnected.replace('{id}', this.player.client.user.id).replace('{channelID}', guildClientMember.voice.channel.id) } });
+        const clientID = this.player.client.user?.id ?? '';
+        const currentChannel = channel.guild.members.cache.get(clientID)?.voice?.channel;
 
-            const connection = joinVoiceChannel({ guildId: channel.guild.id, channelId: channel.id, adapterCreator: channel.guild.voiceAdapterCreator });
+        if(currentChannel) throw new PlayerError(PlayerErrorCode.ALREADY_CONNECTED, { id: clientID, channelID: currentChannel.id });
 
-            if(connection) return res(connection);
-            else return res({ error: { code: 503, message: this.player.errors.voice.failConnect.replace('{id}', guildClientMember.voice.channel.id) } });
-        })
+        return joinVoiceChannel({ guildId: channel.guild.id, channelId: channel.id, adapterCreator: channel.guild.voiceAdapterCreator });
     }
 
     /**
      * Allows the bot to leave the server's voice channel
-     * 
+     *
      * @param {string} guildID Discord Guild ID
-     * 
+     *
      * @example
      * const guildConnection = await client.player.voice.leave('GuildID');
-     * if(guildConnection?.joinConfig) return message.channel.send({ content: `Client leave from ${message.guild.channels.cache.get(guildConnection.joinConfig.channelId)} channel!` });
-     * 
-     * @returns {Promise<VoiceConnection | ErrorData>} Connection or error object
+     * return message.channel.send({ content: `Client leave from ${message.guild.channels.cache.get(guildConnection.joinConfig.channelId)} channel!` });
+     *
+     * @throws {PlayerError} `GUILD_NOT_FOUND` if the server is not known to the client, `USER_NOT_IN_VOICE` or `CONNECTION_FAILED` if the bot is not in a voice channel
+     *
+     * @returns {Promise<VoiceConnection>} The connection that was destroyed
      */
-    public leave(guildID: string): Promise<VoiceConnection | ErrorData> {
-        return new Promise(async (res, rej) => {
-            if(!guildID) throw new PlayerError(this.player.errors.default.requireParam.replace('{param}', 'guildID').replace('{data}', '<VoiceManager>.leave'));
+    public async leave(guildID: string): Promise<VoiceConnection> {
+        requireParam(guildID, 'guildID', '<VoiceManager>.leave');
 
-            const guild = this.player.client.guilds.cache.get(guildID);
-            if(!guild) return res({ error: { code: 404, message: this.player.errors.other.unknownGuild.replace('{id}', guildID).replace('{clientID}', this.player.client.user.id) } });
+        const clientID = this.player.client.user?.id ?? '';
 
-            const guildClientMember = guild.members.cache.get(this.player.client.user.id);
-            if(!guildClientMember?.voice?.channel) return res({ error: { code: 404, message: this.player.errors.voice.notConnected.replace('{id}', this.player.client.user.id) } });
+        const guild = this.player.client.guilds.cache.get(guildID);
+        if(!guild) throw new PlayerError(PlayerErrorCode.GUILD_NOT_FOUND, { id: guildID, clientID });
 
-            const connection = getVoiceConnection(guild.id);
-            if(!connection) return res({ error: { code: 404, message: this.player.errors.voice.failConnect.replace('{id}', guildClientMember.voice.channel.id) } });
+        const channel = guild.members.cache.get(clientID)?.voice?.channel;
+        if(!channel) throw new PlayerError(PlayerErrorCode.USER_NOT_IN_VOICE, { id: clientID });
 
-            connection.destroy();
+        const connection = getVoiceConnection(guild.id);
+        if(!connection) throw new PlayerError(PlayerErrorCode.CONNECTION_FAILED, { id: channel.id });
 
-            return res(connection);
-        })
+        connection.destroy();
+
+        return connection;
     }
 }

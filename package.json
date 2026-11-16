@@ -1,13 +1,21 @@
 {
   "name": "discord-player-music",
-  "version": "1.1.7",
+  "version": "2.0.0",
   "description": "A powerful music module for your Discord bot with lots of features",
-  "main": "index.js",
+  "main": "./dist/index.js",
   "scripts": {
-    "build": "rimraf build && tsc -p tsconfig.json",
-    "build:docs": "docgen -s src/*.ts src/**/*.ts -o docs/index.json -c docs/index.yml -g -S 1 -j .jsconfig.json",
-    "publish": "npm publish",
-    "publish:dev": "npm publish --tag dev"
+    "build": "node scripts/clean.mjs && tsc -p tsconfig.json",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "build:docs": "node --require ./scripts/node-compat.cjs ./node_modules/@distube/docgen/src/index.js -s src/*.ts src/**/*.ts -o docs/index.json -c docs/index.yml -g -S 1 -j .jsconfig.json",
+    "pub": "npm publish",
+    "pub:dev": "npm publish --tag dev",
+    "test": "vitest run",
+    "lint": "eslint .",
+    "check:jsdoc": "node scripts/check-jsdoc.mjs",
+    "check": "npm run typecheck && npm run lint && npm run check:jsdoc && npm test && npm run check:examples && npm run build:docs",
+    "test:integration": "vitest run --config vitest.integration.config.mts",
+    "check:examples": "npm run build && tsc -p examples/tsconfig.json",
+    "prepublishOnly": "npm run build && npm test"
   },
   "repository": {
     "type": "git",
@@ -26,20 +34,17 @@
     "discord.js",
     "discord-player",
     "discord-player-music",
-    "ytdl-core",
-    "yt-search",
-    "xyligan"
+    "xyligan",
+    "youtubei.js",
+    "yt-dlp",
+    "lrclib"
   ],
   "dependencies": {
-    "@discordjs/opus": "^0.8.0",
-    "@discordjs/voice": "^0.11.0",
-    "discord.js": "^14.0.3",
-    "ffmpeg-static": "^5.0.2",
-    "libsodium-wrappers": "^0.7.10",
-    "lyrics-finder": "^21.7.0",
-    "prism-media": "^1.3.4",
-    "yt-search": "^2.10.3",
-    "ytdl-core": "^4.11.0"
+    "@discordjs/voice": "^0.19.2",
+    "ffmpeg-static": "^5.3.0",
+    "opusscript": "^0.0.8",
+    "prism-media": "^1.3.5",
+    "youtubei.js": "^18.3.0"
   },
   "devDependencies": {
     "@babel/core": "^7.18.9",
@@ -48,16 +53,32 @@
     "@babel/preset-env": "^7.18.9",
     "@babel/preset-typescript": "^7.18.6",
     "@distube/docgen": "github:distubejs/docgen",
-    "@types/yt-search": "^2.3.2",
+    "@eslint/js": "^10.0.1",
+    "@types/node": "^22.0.0",
+    "discord.js": "^14.28.1",
+    "eslint": "^10.15.0",
     "jsdoc-babel": "^0.5.0",
-    "rimraf": "^3.0.2",
-    "typescript": "^4.7.4"
+    "typescript": "^5.9.0",
+    "typescript-eslint": "^8.72.2",
+    "vitest": "^5.1.0"
   },
   "engines": {
-    "node": ">=16.9.0"
+    "node": ">=22.12.0"
   },
   "peerDependencies": {
-    "discord.js": "14"
+    "discord.js": "^14.28.0"
   },
-  "types": "./types/Player.d.ts"
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ]
 }

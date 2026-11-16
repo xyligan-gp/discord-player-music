@@ -1,17 +1,18 @@
 {
 	"compilerOptions": {
-		"lib": ["ESNext"],
-		"module": "commonjs",
-		"moduleResolution": "node",
-		"target": "ESNext",
-		"outDir": "build",
+		"lib": ["ES2023"],
+		"module": "nodenext",
+		"moduleResolution": "nodenext",
+		"target": "ES2023",
+		"outDir": "dist",
+		"rootDir": ".",
+		"declaration": true,
 		"sourceMap": false,
 		"esModuleInterop": true,
-		"experimentalDecorators": true,
-		"emitDecoratorMetadata": true,
-		"allowSyntheticDefaultImports": true,
 		"skipLibCheck": true,
-		"skipDefaultLibCheck": true,
-		"resolveJsonModule": true
-	}
+		"resolveJsonModule": true,
+		"types": ["node"],
+		"strict": true
+	},
+	"include": ["index.ts", "src/**/*"]
 }

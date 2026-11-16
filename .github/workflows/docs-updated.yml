@@ -1,0 +1,26 @@
+name: Docs updated
+
+# The documentation site lives in the `website` branch and shows docs/index.json of every branch.
+# When the docs of a branch change, or a branch is created or deleted, this starts its Deploy workflow
+# so https://dpm.js.org shows the new docs.
+
+on:
+  push:
+    branches-ignore: [website]
+    paths:
+      - 'docs/index.json'
+  create:
+  delete:
+
+permissions:
+  actions: write
+
+jobs:
+  rebuild-site:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Start the Deploy workflow of the website branch
+        run: gh workflow run deploy.yml --repo "$GITHUB_REPOSITORY" --ref website
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
