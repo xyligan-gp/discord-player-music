@@ -1,0 +1,316 @@
+@import 'tailwindcss';
+@plugin '@tailwindcss/typography';
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* Palette of discord.js.org */
+@theme {
+	--font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+	--font-mono: var(--font-geist-mono), ui-monospace, monospace;
+
+	--color-blurple: #5865f2;
+	--color-blurple-light: #7782fa;
+
+	--color-surface: #ffffff;
+	--color-sidebar: #f3f3f4;
+	--color-panel: #fafafa;
+	--color-line: #e4e4e7;
+	--color-muted: #676771;
+	--color-hover: #e7e7e9;
+	--color-active: #d9d9dc;
+
+	--color-badge-class: #16a34a;
+	--color-badge-typedef: #ca8a04;
+	--color-badge-enum: #2563eb;
+	--color-badge-guide: #5865f2;
+	--color-badge-method: #9333ea;
+	--color-badge-property: #0891b2;
+	--color-badge-event: #e11d48;
+}
+
+@layer base {
+	:root {
+		color-scheme: light;
+	}
+
+	.dark {
+		color-scheme: dark;
+		--color-surface: #121214;
+		--color-sidebar: #121214;
+		--color-panel: #1c1c1e;
+		--color-line: #2c2c30;
+		--color-muted: #83838b;
+		--color-hover: #1d1d1e;
+		--color-active: #323235;
+	}
+
+	html {
+		scroll-padding-top: 1.5rem;
+	}
+
+	body {
+		@apply bg-sidebar text-neutral-900 antialiased dark:text-neutral-100;
+	}
+
+	::selection {
+		background: color-mix(in srgb, var(--color-blurple) 35%, transparent);
+	}
+}
+
+/* Code blocks from shiki: light colors by default, dark colors in the dark theme */
+.shiki {
+	@apply my-4 overflow-x-auto rounded-md border border-line p-4 text-sm leading-6;
+}
+
+.dark .shiki,
+.dark .shiki span {
+	color: var(--shiki-dark) !important;
+	background-color: var(--shiki-dark-bg) !important;
+}
+
+.shiki code {
+	@apply bg-transparent p-0 font-mono text-[0.875rem];
+}
+
+/* Markdown pages */
+.docs-prose {
+	@apply prose max-w-none prose-neutral;
+	@apply prose-a:text-blurple prose-a:no-underline hover:prose-a:underline dark:prose-a:text-blurple-light;
+	@apply prose-headings:scroll-mt-6 prose-h1:text-3xl prose-h2:mt-10 prose-h2:text-2xl;
+	@apply prose-code:rounded prose-code:bg-black/5 prose-code:px-1 prose-code:py-0.5 prose-code:font-mono prose-code:text-[0.875em] prose-code:font-normal;
+	@apply prose-code:before:content-none prose-code:after:content-none;
+	@apply prose-pre:m-0 prose-pre:bg-transparent prose-pre:p-0;
+	@apply prose-table:text-sm prose-th:border prose-th:border-line prose-th:px-3 prose-th:py-2 prose-td:border prose-td:border-line prose-td:px-3 prose-td:py-2;
+	@apply prose-img:inline prose-img:my-0;
+}
+
+.docs-prose pre.shiki {
+	@apply my-4 p-4;
+}
+
+.docs-prose .heading-anchor {
+	@apply text-inherit no-underline hover:underline;
+}
+
+.docs-prose div[align='center'],
+.docs-prose p[align='center'] {
+	text-align: center;
+}
+
+/* Colors of the dark theme (prose-invert does not work inside @apply with a class based dark mode) */
+.dark .docs-prose {
+	--tw-prose-body: #d4d4d8;
+	--tw-prose-headings: #fafafa;
+	--tw-prose-lead: #a1a1aa;
+	--tw-prose-links: var(--color-blurple-light);
+	--tw-prose-bold: #fafafa;
+	--tw-prose-counters: #a1a1aa;
+	--tw-prose-bullets: #52525b;
+	--tw-prose-hr: var(--color-line);
+	--tw-prose-quotes: #e4e4e7;
+	--tw-prose-quote-borders: #3f3f46;
+	--tw-prose-captions: #a1a1aa;
+	--tw-prose-kbd: #fafafa;
+	--tw-prose-code: #e4e4e7;
+	--tw-prose-pre-code: #e4e4e7;
+	--tw-prose-pre-bg: transparent;
+	--tw-prose-th-borders: var(--color-line);
+	--tw-prose-td-borders: var(--color-line);
+}
+
+.dark .docs-prose :not(pre) > code {
+	background-color: rgb(255 255 255 / 0.1);
+}
+
+/* Short JSDoc descriptions inside lists of members */
+.docs-description {
+	@apply prose-p:my-1;
+}
+
+.docs-description > :first-child {
+	margin-top: 0;
+}
+
+.docs-description > :last-child {
+	margin-bottom: 0;
+}
+
+/* ---------- Animations ---------- */
+
+/* Theme change: ThemeSwitch animates the new theme as a growing circle */
+::view-transition-old(root),
+::view-transition-new(root) {
+	animation: none;
+	mix-blend-mode: normal;
+}
+
+::view-transition-new(root) {
+	z-index: 1;
+}
+
+.theme-icon {
+	transition:
+		transform 400ms cubic-bezier(0.4, 0, 0.2, 1),
+		opacity 300ms ease;
+}
+
+.theme-icon-in {
+	transform: rotate(0deg) scale(1);
+	opacity: 1;
+}
+
+.theme-icon-out {
+	transform: rotate(-90deg) scale(0.4);
+	opacity: 0;
+}
+
+/* Every page appears with a short fade and lift (app/docs/[version]/template.tsx) */
+@keyframes page-enter {
+	from {
+		opacity: 0;
+		transform: translateY(6px);
+	}
+	to {
+		opacity: 1;
+		transform: none;
+	}
+}
+
+.page-enter {
+	animation: page-enter 260ms cubic-bezier(0.2, 0, 0, 1) both;
+}
+
+/* Search dialog: the window comes down out of a blur, the results appear one after another.
+   The dialog is centered with the `translate` property (Tailwind), so the keyframes use `transform` only. */
+@keyframes overlay-in {
+	from {
+		opacity: 0;
+		backdrop-filter: blur(0);
+	}
+}
+
+@keyframes overlay-out {
+	to {
+		opacity: 0;
+		backdrop-filter: blur(0);
+	}
+}
+
+@keyframes dialog-in {
+	from {
+		opacity: 0;
+		filter: blur(6px);
+		transform: translateY(-16px) scale(0.95);
+	}
+	to {
+		opacity: 1;
+		filter: blur(0);
+		transform: none;
+	}
+}
+
+@keyframes dialog-out {
+	to {
+		opacity: 0;
+		filter: blur(4px);
+		transform: translateY(-8px) scale(0.97);
+	}
+}
+
+@keyframes item-in {
+	from {
+		opacity: 0;
+		transform: translateY(6px);
+	}
+	to {
+		opacity: 1;
+		transform: none;
+	}
+}
+
+.search-overlay[data-state='open'] {
+	animation: overlay-in 220ms ease-out;
+}
+
+.search-overlay[data-state='closed'] {
+	animation: overlay-out 160ms ease-in forwards;
+}
+
+.search-content[data-state='open'] {
+	animation: dialog-in 340ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.search-content[data-state='closed'] {
+	animation: dialog-out 160ms ease-in forwards;
+}
+
+.search-item {
+	animation: item-in 280ms cubic-bezier(0.16, 1, 0.3, 1) both;
+	animation-delay: calc(min(var(--i, 0), 14) * 22ms);
+}
+
+.search-item[data-selected='true'] .search-item-arrow {
+	opacity: 1;
+	transform: none;
+}
+
+.search-item-arrow {
+	opacity: 0;
+	transform: translateX(-4px);
+	transition:
+		opacity 150ms ease,
+		transform 150ms ease;
+}
+
+/* Version select */
+.version-menu {
+	opacity: 0;
+	transform: translateY(-6px) scaleY(0.92);
+	transition:
+		opacity 160ms ease,
+		transform 220ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.version-menu-open {
+	opacity: 1;
+	transform: none;
+}
+
+.version-menu-open .version-option {
+	animation: item-in 260ms cubic-bezier(0.16, 1, 0.3, 1) both;
+	animation-delay: calc(min(var(--i, 0), 10) * 30ms);
+}
+
+/* Highlight of the member a link points to (#method) */
+@keyframes target-flash {
+	from {
+		background-color: color-mix(in srgb, var(--color-blurple) 14%, transparent);
+	}
+	to {
+		background-color: transparent;
+	}
+}
+
+section:target {
+	animation: target-flash 1.6s ease-out;
+	border-radius: 0.5rem;
+}
+
+/* Smooth scrolling for links inside a page. Not on the first load (Providers adds the class after it),
+   so a link to #member opens right at the member. Next.js turns it off for a moment when it changes the page. */
+html.smooth-scroll[data-scroll-behavior='smooth'] {
+	scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	*,
+	*::before,
+	*::after {
+		animation-duration: 1ms !important;
+		transition-duration: 1ms !important;
+	}
+
+	html.smooth-scroll[data-scroll-behavior='smooth'] {
+		scroll-behavior: auto;
+	}
+}
