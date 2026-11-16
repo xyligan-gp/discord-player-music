@@ -1,5 +1,6 @@
 import { ArrowRight, BookOpen } from 'lucide-react';
 import Link from 'next/link';
+import { Footer } from '@/components/Footer';
 import { GitHubIcon } from '@/components/GitHubIcon';
 import { ThemeSwitch } from '@/components/ThemeSwitch';
 import { CodeExample } from '@/components/DocParts';
@@ -89,6 +90,8 @@ export default function HomePage() {
 					))}
 				</section>
 			</main>
+
+			<Footer minimal />
 		</div>
 	);
 }
