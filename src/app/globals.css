@@ -92,6 +92,18 @@
 	@apply prose-img:inline prose-img:my-0;
 }
 
+.docs-prose .table-scroll {
+	@apply my-6 max-w-full overflow-x-auto;
+}
+
+.docs-prose .table-scroll > table {
+	@apply my-0 min-w-full;
+}
+
+.docs-prose :not(pre) > code {
+	overflow-wrap: break-word;
+}
+
 .docs-prose pre.shiki {
 	@apply my-4 p-4;
 }

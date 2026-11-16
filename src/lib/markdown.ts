@@ -102,6 +102,24 @@ function rehypeDocsLinks(options: { version: string; guideSlugs: Set<string> }) 
 	};
 }
 
+/** Wraps tables in a block that scrolls sideways, so a wide table does not stretch the whole page on a phone. */
+function rehypeScrollableTables() {
+	return (tree: Root) => {
+		visit(tree, 'element', (node: Element, index, parent) => {
+			if (node.tagName !== 'table' || !parent || index === undefined) return;
+
+			parent.children[index] = {
+				type: 'element',
+				tagName: 'div',
+				properties: { className: ['table-scroll'] },
+				children: [node],
+			};
+
+			return 'skip';
+		});
+	};
+}
+
 function guideSlugs(version: string) {
 	return new Set(getGuides(version).flatMap((category) => category.files.map((file) => file.slug)));
 }
@@ -126,6 +144,7 @@ async function createProcessor(version: string) {
 		.use(remarkRehype, { allowDangerousHtml: true })
 		.use(rehypeRaw)
 		.use(rehypeSlug)
+		.use(rehypeScrollableTables)
 		.use(rehypeDocsLinks, { version, guideSlugs: guideSlugs(version) })
 		.use(rehypeShikiFromHighlighter, instance as unknown as Parameters<typeof rehypeShikiFromHighlighter>[0], {
 			themes: SHIKI_THEMES,
