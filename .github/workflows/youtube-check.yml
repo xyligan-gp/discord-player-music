@@ -33,7 +33,7 @@ jobs:
 
       - name: Report the failure
         if: failure()
-        uses: actions/github-script@v7
+        uses: actions/github-script@v9
         with:
           script: |
             const title = 'YouTube playback check failed';
