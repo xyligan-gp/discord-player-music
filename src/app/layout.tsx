@@ -12,7 +12,7 @@ export const metadata: Metadata = {
 		default: 'discord-player-music',
 		template: '%s | discord-player-music',
 	},
-	description: 'A powerful music module for your discord.js bot with lots of features.',
+	description: 'Play music in your discord.js bot in a few lines of code: YouTube search and playback, queues, loops, audio filters, lyrics and autoplay, with a fully typed, promise based API.',
 	icons: {
 		icon: '/icon-192.png',
 		apple: '/apple-touch-icon.png',
@@ -20,6 +20,15 @@ export const metadata: Metadata = {
 	openGraph: {
 		siteName: 'discord-player-music',
 		type: 'website',
+		url: 'https://dpm.js.org',
+		title: '🎶 Discord Player Music',
+		description: 'Play music in your discord.js bot in a few lines of code: YouTube search and playback, queues, loops, audio filters, lyrics and autoplay, with a fully typed, promise based API.',
+		images: [{ url: '/icon-192.png', width: 192, height: 192, alt: 'Discord Player Music' }],
+	},
+	twitter: {
+		card: 'summary',
+		title: '🎶 Discord Player Music',
+		images: ['/icon-192.png'],
 	},
 };
 
