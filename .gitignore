@@ -1,0 +1,9 @@
+node_modules/
+.next/
+out/
+next-env.d.ts
+*.tsbuildinfo
+# docs/index.json of each branch, downloaded by scripts/fetch-docs.ts
+data/
+# HTML made by scripts/prerender.ts
+.cache/
