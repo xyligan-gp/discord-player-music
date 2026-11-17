@@ -115,27 +115,70 @@ function formatDefault(value: unknown) {
 	return typeof value === 'string' ? value : JSON.stringify(value);
 }
 
+/** Horizontal position of the trunk that leads to the children of a row at the given depth. */
+function trunkX(depth: number) {
+	return `${1 + depth * 1.5 + 0.4}rem`;
+}
+
+/** Whether another row of the same depth follows within the same parent (the branch continues below this row). */
+function continues(depths: number[], index: number, depth: number) {
+	for (let next = index + 1; next < depths.length; next++) {
+		if (depths[next] < depth) return false;
+		if (depths[next] === depth) return true;
+	}
+
+	return false;
+}
+
 /**
  * Parameters or typedef properties as a list (name, type, optional, default, description under them):
  * long descriptions stay readable on any width, unlike a table.
  */
 export async function ParamsTable({ params, version, label = 'Parameter' }: { readonly params: DocParam[]; readonly version: string; readonly label?: string }) {
+	const depths = params.map((param) => param.name.split('.').length - 1);
+
 	return (
 		<ul aria-label={`${label}s`} className="my-3 divide-y divide-line overflow-hidden rounded-lg border border-line">
-			{params.map((param) => {
+			{params.map((param, index) => {
 				const depth = param.name.split('.').length - 1;
 				const parent = depth ? `${param.name.slice(0, param.name.lastIndexOf('.'))}.` : '';
 				const name = param.name.slice(parent.length);
+				// The first child reaches up to the end of the parent's text (the row's top padding is 0.75rem)
+				const firstChild = depth > 0 && (depths[index - 1] ?? 0) < depth;
+				const top = firstChild ? '-top-3' : 'top-0';
 
 				return (
 					<li
-						className="scroll-mt-6 px-4 py-3 transition-colors hover:bg-black/[0.02] dark:hover:bg-white/[0.02]"
+						className="relative scroll-mt-6 px-4 py-3 transition-colors hover:bg-black/[0.02] dark:hover:bg-white/[0.02]"
 						id={label === 'Parameter' ? undefined : param.name}
 						key={param.name}
-						style={depth ? { paddingLeft: `${1 + depth * 1.25}rem` } : undefined}
+						style={depth ? { paddingLeft: `${1 + depth * 1.5}rem` } : undefined}
 					>
+						{depth ? (
+							<>
+								{/* Trunks of ancestors that have more children below this row */}
+								{Array.from({ length: depth - 1 }, (_, level) =>
+									continues(depths, index, level + 1) ? <span className="tree-trunk top-0" key={level} style={{ left: trunkX(level) }} /> : null,
+								)}
+								{/* Own branch: runs down to the next sibling, or ends with an elbow at the first line */}
+								{continues(depths, index, depth) ? <span className={`tree-trunk ${top}`} style={{ left: trunkX(depth - 1) }} /> : null}
+							</>
+						) : null}
 						<div className="flex flex-wrap items-baseline gap-x-2 gap-y-1">
-							<span className="font-mono text-[15px] font-semibold">
+							<span className="relative font-mono text-[15px] font-semibold">
+								{depth ? (
+									// Anchored to the name, so the knot sits at the vertical middle of the first line whatever the row height is.
+									// It reaches up to the row's top edge (0.75rem padding), or up to the parent's text for the first child
+									<span
+										className="tree-elbow"
+										style={{
+											left: '-1.1rem',
+											width: '0.7rem',
+											top: firstChild ? '-1.5rem' : '-0.75rem',
+											height: `calc(50% + ${firstChild ? '1.5rem' : '0.75rem'} + 1.5px)`,
+										}}
+									/>
+								) : null}
 								{parent ? <span className="font-normal text-muted">{parent}</span> : null}
 								{param.variable ? '...' : ''}
 								{name}

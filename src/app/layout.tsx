@@ -4,6 +4,7 @@ import type { Metadata, Viewport } from 'next';
 import type { PropsWithChildren } from 'react';
 import { Providers } from '@/components/Providers';
 import { LegacyRedirect } from '@/components/LegacyRedirect';
+import { ScrollToTop } from '@/components/ScrollToTop';
 import './globals.css';
 
 export const metadata: Metadata = {
@@ -46,6 +47,7 @@ export default function RootLayout({ children }: PropsWithChildren) {
 				<Providers>
 					<LegacyRedirect />
 					{children}
+					<ScrollToTop />
 				</Providers>
 			</body>
 		</html>

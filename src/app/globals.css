@@ -83,13 +83,26 @@
 /* Markdown pages */
 .docs-prose {
 	@apply prose max-w-none prose-neutral;
-	@apply prose-a:text-blurple prose-a:no-underline hover:prose-a:underline dark:prose-a:text-blurple-light;
+	@apply prose-a:text-blurple prose-a:no-underline dark:prose-a:text-blurple-light;
 	@apply prose-headings:scroll-mt-6 prose-h1:text-3xl prose-h2:mt-10 prose-h2:text-2xl;
 	@apply prose-code:rounded prose-code:bg-black/5 prose-code:px-1 prose-code:py-0.5 prose-code:font-mono prose-code:text-[0.875em] prose-code:font-normal;
 	@apply prose-code:before:content-none prose-code:after:content-none;
 	@apply prose-pre:m-0 prose-pre:bg-transparent prose-pre:p-0;
 	@apply prose-table:text-sm prose-th:border prose-th:border-line prose-th:px-3 prose-th:py-2 prose-td:border prose-td:border-line prose-td:px-3 prose-td:py-2;
 	@apply prose-img:inline prose-img:my-0;
+}
+
+/* Links of markdown pages: no underline, a soft glow that fades in on the hovered link only */
+.docs-prose a {
+	transition: text-shadow 250ms ease;
+}
+
+.docs-prose a:hover {
+	text-shadow: 0 0 10px color-mix(in srgb, var(--color-blurple) 45%, transparent);
+}
+
+.dark .docs-prose a:hover {
+	text-shadow: 0 0 12px color-mix(in srgb, var(--color-blurple-light) 55%, transparent);
 }
 
 .docs-prose .table-scroll {
@@ -314,6 +327,35 @@
 section:target {
 	animation: target-flash 1.6s ease-out;
 	border-radius: 0.5rem;
+}
+
+/* "Back to top" button: the arrow nudges up on hover */
+.scroll-top-icon {
+	transition: transform 200ms ease;
+}
+
+.scroll-top:hover .scroll-top-icon {
+	transform: translateY(-2px);
+}
+
+/* Tree connectors between a property of type object and its nested properties (ParamsTable):
+   2px lines, darker than the borders in the light theme and lighter in the dark one, a round knot at each branch end */
+.tree-trunk,
+.tree-elbow {
+	@apply pointer-events-none absolute border-neutral-400 dark:border-neutral-500;
+}
+
+.tree-trunk {
+	@apply -bottom-px border-l-2;
+}
+
+.tree-elbow {
+	@apply rounded-bl-xl border-b-2 border-l-2;
+}
+
+.tree-elbow::after {
+	content: '';
+	@apply absolute -right-[3px] -bottom-[4px] size-[6px] rounded-full bg-neutral-500 dark:bg-neutral-400;
 }
 
 /* Smooth scrolling for links inside a page. Not on the first load (Providers adds the class after it),
