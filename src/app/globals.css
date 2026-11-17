@@ -121,6 +121,64 @@
 	@apply my-4 p-4;
 }
 
+/* Copy button of code blocks: always visible, but quiet */
+pre.shiki {
+	position: relative;
+}
+
+.copy-code {
+	position: absolute;
+	top: 0.5rem;
+	right: 0.5rem;
+	display: inline-flex;
+	align-items: center;
+	gap: 0.375rem;
+	padding: 0.375rem;
+	border: 1px solid var(--color-line);
+	border-radius: 0.375rem;
+	background: var(--color-panel);
+	color: var(--color-muted);
+	font-family: var(--font-sans);
+	font-size: 0.75rem;
+	line-height: 1;
+	cursor: pointer;
+	opacity: 0.75;
+	transition: opacity 150ms ease, color 150ms ease, border-color 150ms ease;
+}
+
+.copy-code:hover,
+.copy-code:focus-visible {
+	opacity: 1;
+	color: var(--color-blurple);
+}
+
+.dark .copy-code:hover,
+.dark .copy-code:focus-visible {
+	color: var(--color-blurple-light);
+}
+
+.copy-code[data-state='copied'] {
+	opacity: 1;
+	color: var(--color-badge-class);
+	border-color: currentColor;
+}
+
+.copy-code[data-state='failed'] {
+	opacity: 1;
+	color: var(--color-badge-event);
+	border-color: currentColor;
+}
+
+.copy-code-label:empty {
+	display: none;
+}
+
+/* Keep the button from covering the first line of code */
+pre.shiki:has(> .copy-code) code {
+	display: block;
+	padding-right: 2.5rem;
+}
+
 .docs-prose .heading-anchor {
 	@apply text-inherit no-underline hover:underline;
 }
@@ -310,8 +368,20 @@
 }
 
 .version-menu-open .version-option {
-	animation: item-in 260ms cubic-bezier(0.16, 1, 0.3, 1) both;
+	animation: version-item-in 260ms cubic-bezier(0.16, 1, 0.3, 1) both;
 	animation-delay: calc(min(var(--i, 0), 10) * 30ms);
+}
+
+/* The options slide down from above: sliding up from below pushed the last one past the menu and flashed a scrollbar */
+@keyframes version-item-in {
+	from {
+		opacity: 0;
+		transform: translateY(-6px);
+	}
+	to {
+		opacity: 1;
+		transform: none;
+	}
 }
 
 /* Highlight of the member a link points to (#method) */

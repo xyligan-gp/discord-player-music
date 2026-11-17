@@ -51,6 +51,38 @@ async function listBranches(): Promise<string[]> {
 	}
 }
 
+/** Date of the last commit that changed a file of a branch, or undefined when GitHub does not tell (rate limit, offline). */
+async function lastChange(branch: string, path: string): Promise<string | undefined> {
+	const url = `https://api.github.com/repos/${repository}/commits?sha=${encodeURIComponent(branch)}&path=${encodeURIComponent(path)}&per_page=1`;
+
+	try {
+		const response = await fetch(url, { headers: headers() });
+		if (!response.ok) return undefined;
+
+		const [commit] = (await response.json()) as { commit: { committer: { date: string } } }[];
+
+		return commit?.commit.committer.date;
+	} catch {
+		return undefined;
+	}
+}
+
+/** Dates of the last change of every guide of a branch, by slug. */
+async function guideDates(branch: string, docs: string) {
+	const custom = (JSON.parse(docs) as { custom?: Record<string, { files: Record<string, { path?: string }> }> }).custom ?? {};
+	const guides = Object.values(custom).flatMap((category) => Object.entries(category.files));
+	const dates: Record<string, string> = {};
+
+	await Promise.all(
+		guides.map(async ([slug, file]) => {
+			const date = file.path ? await lastChange(branch, file.path) : undefined;
+			if (date) dates[slug] = date;
+		}),
+	);
+
+	return dates;
+}
+
 async function fetchDocs(branch: string): Promise<string | undefined> {
 	const url = `https://raw.githubusercontent.com/${repository}/${encodeURIComponent(branch).replace(/%2F/g, '/')}/docs/index.json`;
 	const response = await fetch(url, { headers: { 'User-Agent': 'dpm-website' } });
@@ -85,7 +117,7 @@ export async function fetchAllDocs() {
 	} catch (error) {
 		// Offline or rate limited (60 requests an hour without a token): keep what was downloaded last time,
 		// or at least try the main branches, raw.githubusercontent.com has no such limit
-		const kept = existsSync(DATA_DIR) ? readdirSync(DATA_DIR).filter((file) => file.endsWith('.json') && file !== 'versions.json') : [];
+		const kept = existsSync(DATA_DIR) ? readdirSync(DATA_DIR).filter((file) => file.endsWith('.json') && file !== 'versions.json' && !file.endsWith('.dates.json')) : [];
 
 		if (kept.length) {
 			console.warn(`[docs] ${(error as Error).message}. Using the ${kept.length} versions downloaded before.`);
@@ -112,6 +144,7 @@ export async function fetchAllDocs() {
 	for (const { branch, docs } of found) {
 		const name = versionSlug(branch);
 		writeFileSync(join(DATA_DIR, `${name}.json`), docs);
+		writeFileSync(join(DATA_DIR, `${name}.dates.json`), JSON.stringify(await guideDates(branch, docs)));
 		versions.push({ name, branch });
 	}
 

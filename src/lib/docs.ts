@@ -388,3 +388,26 @@ export function sourceUrl(version: string, meta?: DocMeta) {
 
 	return `https://github.com/${REPOSITORY}/blob/${branch}/${meta.path}/${meta.file}#L${meta.line}`;
 }
+
+const WORDS_PER_MINUTE = 200;
+
+/** Minutes to read a guide: the words of the text, code counted at half. At least one minute. */
+export function readingMinutes(markdown: string) {
+	const code = [...markdown.matchAll(/```[\s\S]*?```/g)].map((match) => match[0]).join(' ');
+	const text = markdown
+		.replace(/```[\s\S]*?```/g, ' ')
+		.replace(/<[^>]+>/g, ' ')
+		.replace(/!?\[([^\]]*)\]\([^)]*\)/g, '$1');
+	const count = (value: string) => value.split(/\s+/).filter((word) => /[\p{L}\p{N}]/u.test(word)).length;
+
+	return Math.max(1, Math.round((count(text) + count(code) / 2) / WORDS_PER_MINUTE));
+}
+
+/** Date (ISO) of the last commit that changed each guide, by slug. Written by scripts/fetch-docs.ts, may be empty. */
+export function getGuideDates(version: string): Record<string, string> {
+	try {
+		return JSON.parse(readFileSync(join(DATA_DIR, `${version}.dates.json`), 'utf8')) as Record<string, string>;
+	} catch {
+		return {};
+	}
+}

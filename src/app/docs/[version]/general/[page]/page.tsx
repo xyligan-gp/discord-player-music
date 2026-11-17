@@ -1,7 +1,10 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
+import { GuidePagination } from '@/components/GuidePagination';
 import { Outline } from '@/components/Outline';
-import { findGuide, getGuides, getVersions } from '@/lib/docs';
+import { siteConfig } from '@/config';
+import { GuideInfo } from '@/components/GuideInfo';
+import { findGuide, getGuideDates, getGuides, getVersions, readingMinutes } from '@/lib/docs';
 import { extractHeadings, renderMarkdown } from '@/lib/markdown';
 
 interface Params {
@@ -32,7 +35,11 @@ export default async function GuidePage({ params }: Params) {
 
 	return (
 		<div className="mx-auto flex max-w-6xl gap-10">
-			<article className="docs-prose min-w-0 grow" dangerouslySetInnerHTML={{ __html: html }} />
+			<div className="min-w-0 grow">
+				<GuideInfo minutes={readingMinutes(guide.content)} updatedAt={getGuideDates(version)[page]} />
+				<article className="docs-prose" dangerouslySetInnerHTML={{ __html: html }} />
+				{siteConfig.guidePagination && <GuidePagination slug={page} version={version} />}
+			</div>
 			<Outline
 				groups={[
 					{
