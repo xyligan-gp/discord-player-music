@@ -121,15 +121,20 @@
 	@apply my-4 p-4;
 }
 
-/* Copy button of code blocks: always visible, but quiet */
-pre.shiki {
+/* Copy button of code blocks: always visible, but quiet. It sits in a wrapper next to the <pre>, so it stays put when the code scrolls */
+.code-block {
 	position: relative;
+	margin: 1rem 0;
+}
+
+.docs-prose .code-block > pre.shiki {
+	margin: 0;
 }
 
 .copy-code {
 	position: absolute;
-	top: 0.5rem;
-	right: 0.5rem;
+	top: 0.625rem;
+	right: 0.625rem;
 	display: inline-flex;
 	align-items: center;
 	gap: 0.375rem;
@@ -174,9 +179,9 @@ pre.shiki {
 }
 
 /* Keep the button from covering the first line of code */
-pre.shiki:has(> .copy-code) code {
+.code-block > pre.shiki code {
 	display: block;
-	padding-right: 2.5rem;
+	padding-right: 2.75rem;
 }
 
 .docs-prose .heading-anchor {

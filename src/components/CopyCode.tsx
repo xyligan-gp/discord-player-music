@@ -45,7 +45,12 @@ export function CopyCode() {
 				button.className = 'copy-code';
 				button.setAttribute('aria-label', 'Copy code');
 				button.innerHTML = `<span class="copy-code-label" aria-live="polite"></span>${COPY_ICON}`;
-				pre.append(button);
+
+				// The button sits in a wrapper that does not scroll: inside the <pre> it would move with the code
+				const wrapper = document.createElement('div');
+				wrapper.className = 'code-block';
+				pre.replaceWith(wrapper);
+				wrapper.append(pre, button);
 			}
 		};
 
